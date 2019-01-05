@@ -12,7 +12,6 @@ import frc.robot.driver.common.Driver;
 import frc.robot.driver.common.IButtonMap;
 import frc.robot.driver.common.buttons.ButtonType;
 import frc.robot.driver.common.descriptions.*;
-import frc.robot.driver.common.user.UserDriver;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -59,7 +58,7 @@ public class FauxbotApplication extends Application
 
         this.mechanisms = this.getInjector().getInstance(MechanismManager.class);
         this.timer = this.getInjector().getInstance(ITimer.class);
-        this.driver = this.getInjector().getInstance(UserDriver.class);
+        this.driver = this.getInjector().getInstance(Driver.class);
         this.buttonMap = this.getInjector().getInstance(IButtonMap.class);
 
         this.mechanisms.setDriver(this.driver);

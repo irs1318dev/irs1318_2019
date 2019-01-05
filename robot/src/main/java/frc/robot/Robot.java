@@ -4,21 +4,19 @@ import frc.robot.common.MechanismManager;
 import frc.robot.common.robotprovider.IDashboardLogger;
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.common.Driver;
-import frc.robot.driver.common.autonomous.AutonomousDriver;
-import frc.robot.driver.common.user.UserDriver;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
- * Main class for the FRC ? [competition name] Competition
+ * Main class for the FRC 2019 "Destination: Deep Space" Competition
  * Robot for IRS1318 - [robot name]
  * 
  * 
  * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
+ * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package, you
  * must also update the manifest file in the resource directory.
  * 
@@ -31,12 +29,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * 
  * @author Will
  */
-public class Robot extends IterativeRobot
+public class Robot extends TimedRobot
 {
     // smartdash logging constants
     private static final String LogName = "r";
 
-    // Driver.  This could either be the UserDriver (joystick) or the AutonomousDriver
+    // Driver - used both for autonomous and teleop mode.
     private Driver driver;
 
     // Mechanisms and injector
@@ -60,6 +58,9 @@ public class Robot extends IterativeRobot
 
         this.timer = this.getInjector().getInstance(ITimer.class);
         this.logger.logNumber(Robot.LogName, "time", this.timer.get());
+
+        // create driver
+        this.driver = this.getInjector().getInstance(Driver.class);
     }
 
     /**
@@ -90,8 +91,7 @@ public class Robot extends IterativeRobot
      */
     public void autonomousInit()
     {
-        // Create an autonomous driver
-        this.driver = this.getInjector().getInstance(AutonomousDriver.class);
+        this.driver.startAutonomous();
 
         this.generalInit();
 
@@ -105,9 +105,6 @@ public class Robot extends IterativeRobot
      */
     public void teleopInit()
     {
-        // create driver for user's joystick
-        this.driver = this.getInjector().getInstance(UserDriver.class);
-
         this.generalInit();
 
         // log that we are in teleop mode
