@@ -7,10 +7,6 @@ import frc.robot.common.robotprovider.IJoystick;
 import frc.robot.driver.Operation;
 import frc.robot.driver.Shift;
 import frc.robot.driver.common.IControlTask;
-import frc.robot.driver.common.descriptions.AnalogOperationDescription;
-import frc.robot.driver.common.descriptions.MacroOperationDescription;
-
-import com.google.inject.Injector;
 
 /**
  * The state of the current autonomous operation.
@@ -24,6 +20,7 @@ public class AutonomousOperationState extends OperationState implements IMacroOp
 
     private boolean hasBegun;
     private boolean hasEnded;
+    private boolean isInterrupted;
 
     public AutonomousOperationState(
         IControlTask task,
@@ -36,6 +33,7 @@ public class AutonomousOperationState extends OperationState implements IMacroOp
 
         this.hasBegun = false;
         this.hasEnded = false;
+        this.isInterrupted = false;
     }
 
     /**
@@ -45,6 +43,7 @@ public class AutonomousOperationState extends OperationState implements IMacroOp
     @Override
     public void setIsInterrupted(boolean enable)
     {
+        this.isInterrupted = true;
     }
 
     /**
@@ -54,7 +53,7 @@ public class AutonomousOperationState extends OperationState implements IMacroOp
     @Override
     public boolean getIsInterrupted()
     {
-        return false;
+        return this.isInterrupted;
     }
 
     /**
@@ -79,30 +78,60 @@ public class AutonomousOperationState extends OperationState implements IMacroOp
 
     public boolean getIsActive()
     {
-        return this.hasBegun && !this.hasEnded;
+        return !this.hasEnded;
     }
 
     public void run()
     {
         if (!this.hasEnded)
         {
+            if (this.isInterrupted)
+            {
+                this.hasEnded = true;
+                if (this.hasBegun)
+                {
+                    this.task.stop();
+                    this.task = null;
+                }
+
+                for (Operation operation : this.getAffectedOperations())
+                {
+                    this.operationStateMap.get(operation).setIsInterrupted(false);
+                }
+
+                return;
+            }
+
             if (!this.hasBegun)
             {
+                for (Operation operation : this.getAffectedOperations())
+                {
+                    this.operationStateMap.get(operation).setIsInterrupted(true);
+                }
+
                 // if we haven't begun, begin
                 this.task.begin();
                 this.hasBegun = true;
             }
 
-            if (this.task.hasCompleted())
+            boolean complete = this.task.hasCompleted();
+            boolean cancel = this.task.shouldCancel();
+            if (complete || cancel)
             {
-                // if we shouldn't continue, end the task
-                this.task.end();
+                if (complete)
+                {
+                    this.task.end();
+                }
+                else
+                {
+                    this.task.stop();
+                }
+
                 this.hasEnded = true;
-            }
-            else if (this.task.shouldCancel())
-            {
-                this.task.stop();
-                this.hasEnded = true;
+                for (Operation operation : this.getAffectedOperations())
+                {
+                    this.operationStateMap.get(operation).setIsInterrupted(false);
+                }
             }
             else
             {
@@ -114,8 +143,13 @@ public class AutonomousOperationState extends OperationState implements IMacroOp
 
     public void cancel()
     {
+        this.hasEnded = true;
         this.task.stop();
         this.task = null;
-        this.hasEnded = true;
+
+        for (Operation operation : this.getAffectedOperations())
+        {
+            this.operationStateMap.get(operation).setIsInterrupted(false);
+        }
     }
 }

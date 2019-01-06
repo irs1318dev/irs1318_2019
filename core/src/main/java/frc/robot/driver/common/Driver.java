@@ -239,6 +239,11 @@ public class Driver
     {
         this.isAutonomous = false;
 
+        if (this.macroStateMap.containsKey(MacroOperation.AutonomousRoutine))
+        {
+            this.macroStateMap.remove(MacroOperation.AutonomousRoutine);
+        }
+
         // cancel all interruption of buttons:
         for (OperationState state : this.operationStateMap.values())
         {

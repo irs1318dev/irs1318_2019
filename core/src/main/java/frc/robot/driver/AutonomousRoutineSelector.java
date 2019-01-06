@@ -62,7 +62,7 @@ public class AutonomousRoutineSelector
      */
     private static IControlTask GetFillerRoutine()
     {
-        return new WaitTask(0);
+        return new DriveVelocityTimedTask(16.0, 1.0, 0.0);
     }
 }
 

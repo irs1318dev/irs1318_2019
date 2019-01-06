@@ -98,8 +98,10 @@ public class RobotSimulator implements IRealWorldSimulator
     {
         if (connection.equals(RobotSimulator.DriveLeftMasterChannel) ||
             connection.equals(RobotSimulator.DriveLeftFollower1Channel) ||
+            connection.equals(RobotSimulator.DriveLeftFollower2Channel) ||
             connection.equals(RobotSimulator.DriveRightMasterChannel) ||
-            connection.equals(RobotSimulator.DriveRightFollower1Channel))
+            connection.equals(RobotSimulator.DriveRightFollower1Channel) ||
+            connection.equals(RobotSimulator.DriveRightFollower2Channel))
         {
             return -1600.0;
         }
@@ -111,8 +113,10 @@ public class RobotSimulator implements IRealWorldSimulator
     {
         if (connection.equals(RobotSimulator.DriveLeftMasterChannel) ||
             connection.equals(RobotSimulator.DriveLeftFollower1Channel) ||
+            connection.equals(RobotSimulator.DriveLeftFollower2Channel) ||
             connection.equals(RobotSimulator.DriveRightMasterChannel) ||
-            connection.equals(RobotSimulator.DriveRightFollower1Channel))
+            connection.equals(RobotSimulator.DriveRightFollower1Channel) ||
+            connection.equals(RobotSimulator.DriveRightFollower2Channel))
         {
             return 1600.0;
         }
