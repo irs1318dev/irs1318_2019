@@ -595,6 +595,10 @@ public class DriveTrainMechanism implements IMechanism
                 // (if left error is greater than right error, left should be given some more power than right)
                 leftPower += TuningConstants.DRIVETRAIN_POSITION_PID_LEFT_KCC * positionErrorMagnitudeDelta;
                 rightPower -= TuningConstants.DRIVETRAIN_POSITION_PID_RIGHT_KCC * positionErrorMagnitudeDelta;
+
+                // cross-coupling could put us over our max or under our min power levels
+                leftPower = this.applyPowerLevelRange(leftPower);
+                rightPower = this.applyPowerLevelRange(rightPower);
             }
         }
         else

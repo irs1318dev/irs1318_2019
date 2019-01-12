@@ -17,6 +17,7 @@ import frc.robot.driver.common.descriptions.MacroOperationDescription;
 import frc.robot.driver.common.descriptions.OperationDescription;
 import frc.robot.driver.common.descriptions.ShiftDescription;
 import frc.robot.driver.common.descriptions.UserInputDevice;
+import frc.robot.driver.controltasks.NavxTurnTask;
 import frc.robot.driver.controltasks.PIDBrakeTask;
 import frc.robot.driver.controltasks.VisionAdvanceAndCenterTask;
 import frc.robot.driver.controltasks.VisionCenteringTask;
@@ -168,6 +169,46 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainUseBrakeMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
+                    }));
+            
+            // turn in place macros
+            put(
+                MacroOperation.TurnInPlaceRight,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    90,
+                    ButtonType.Toggle,
+                    () -> new NavxTurnTask(false, 180, true, true),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                    }));
+            put(
+                MacroOperation.TurnInPlaceLeft,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    270,
+                    ButtonType.Toggle,
+                    () -> new NavxTurnTask(false, -180, true, true),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
                     }));
 
             // Centering macro

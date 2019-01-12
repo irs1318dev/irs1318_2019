@@ -19,13 +19,14 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     private final double minRange;
     private final double maxRange;
     private final double waitTime;
+    private final boolean relativeMode;
+    private final boolean fastMode;
 
     private double desiredTurnVelocity;
     private PIDHandler turnPidHandler;
     private Double completeTime;
     protected PositionManager pManager;
     protected DriveTrainMechanism dt;
-    private boolean relativeMode;
     private double startingAngle;
 
     /**
@@ -49,15 +50,19 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             desiredAngle,
             TuningConstants.NAVX_TURN_MIN_ACCEPTABLE_ANGLE_VALUE,
             TuningConstants.NAVX_TURN_MAX_ACCEPTABLE_ANGLE_VALUE,
-            TuningConstants.NAVX_TURN_COMPLETE_TIME, false);
+            TuningConstants.NAVX_TURN_COMPLETE_TIME,
+            false,
+            false);
     }
 
-    public NavxTurnTask(boolean useTime, double desiredAngle, boolean relativeMode) {
+    public NavxTurnTask(boolean useTime, double desiredAngle, boolean relativeMode, boolean fastMode) {
         this(useTime,
         desiredAngle,
         TuningConstants.NAVX_TURN_MIN_ACCEPTABLE_ANGLE_VALUE,
         TuningConstants.NAVX_TURN_MAX_ACCEPTABLE_ANGLE_VALUE,
-        TuningConstants.NAVX_TURN_COMPLETE_TIME, relativeMode);
+        TuningConstants.NAVX_TURN_COMPLETE_TIME,
+        relativeMode,
+        fastMode);
     }
 
     /**
@@ -71,7 +76,9 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             desiredAngle,
             TuningConstants.NAVX_TURN_MIN_ACCEPTABLE_ANGLE_VALUE,
             TuningConstants.NAVX_TURN_MAX_ACCEPTABLE_ANGLE_VALUE,
-            waitTime, false);
+            waitTime,
+            false,
+            false);
 
     }
 
@@ -82,7 +89,7 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     * @param minRange the minimum of the measured angle range that we accept from the navx
     * @param maxRange the maximum of the measured angle range that we accept from the navx
     */
-    public NavxTurnTask(boolean useTime, double desiredAngle, double minRange, double maxRange, double waitTime, boolean relativeMode)
+    public NavxTurnTask(boolean useTime, double desiredAngle, double minRange, double maxRange, double waitTime, boolean relativeMode, boolean fastMode)
     {
         this.useTime = useTime;
         this.desiredAngle = desiredAngle;
@@ -90,8 +97,9 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
         this.maxRange = maxRange;
         this.waitTime = waitTime;
         this.relativeMode = relativeMode;
-        this.startingAngle = 0;
+        this.fastMode = fastMode;
 
+        this.startingAngle = 0;
         this.turnPidHandler = null;
         this.completeTime = null;
     }
@@ -124,6 +132,7 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     public void update()
     {
         this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
+        this.setDigitalOperationState(Operation.DriveTrainSimpleMode, this.fastMode);
 
         double currentMeasuredAngle = this.pManager.getNavxAngle();
 
@@ -148,6 +157,7 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     public void end()
     {
         this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
+        this.setDigitalOperationState(Operation.DriveTrainSimpleMode, false);
         this.setAnalogOperationState(Operation.DriveTrainTurn, 0.0);
     }
 
@@ -212,8 +222,8 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             TuningConstants.NAVX_TURN_PID_KD,
             TuningConstants.NAVX_TURN_PID_KF,
             TuningConstants.NAVX_TURN_PID_KS,
-            TuningConstants.NAVX_TURN_PID_MIN,
-            TuningConstants.NAVX_TURN_PID_MAX,
+            this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_MIN : TuningConstants.NAVX_TURN_PID_MIN,
+            this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_MAX : TuningConstants.NAVX_TURN_PID_MAX,
             this.getInjector().getInstance(ITimer.class));
     }
 }
