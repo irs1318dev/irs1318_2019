@@ -25,6 +25,8 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     private Double completeTime;
     protected PositionManager pManager;
     protected DriveTrainMechanism dt;
+    private boolean relativeMode;
+    private double startingAngle;
 
     /**
     * Initializes a new NavxTurnTask using time to make sure we completed turn
@@ -47,7 +49,15 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             desiredAngle,
             TuningConstants.NAVX_TURN_MIN_ACCEPTABLE_ANGLE_VALUE,
             TuningConstants.NAVX_TURN_MAX_ACCEPTABLE_ANGLE_VALUE,
-            TuningConstants.NAVX_TURN_COMPLETE_TIME);
+            TuningConstants.NAVX_TURN_COMPLETE_TIME, false);
+    }
+
+    public NavxTurnTask(boolean useTime, double desiredAngle, boolean relativeMode) {
+        this(useTime,
+        desiredAngle,
+        TuningConstants.NAVX_TURN_MIN_ACCEPTABLE_ANGLE_VALUE,
+        TuningConstants.NAVX_TURN_MAX_ACCEPTABLE_ANGLE_VALUE,
+        TuningConstants.NAVX_TURN_COMPLETE_TIME, relativeMode);
     }
 
     /**
@@ -61,7 +71,7 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             desiredAngle,
             TuningConstants.NAVX_TURN_MIN_ACCEPTABLE_ANGLE_VALUE,
             TuningConstants.NAVX_TURN_MAX_ACCEPTABLE_ANGLE_VALUE,
-            waitTime);
+            waitTime, false);
 
     }
 
@@ -72,13 +82,15 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     * @param minRange the minimum of the measured angle range that we accept from the navx
     * @param maxRange the maximum of the measured angle range that we accept from the navx
     */
-    public NavxTurnTask(boolean useTime, double desiredAngle, double minRange, double maxRange, double waitTime)
+    public NavxTurnTask(boolean useTime, double desiredAngle, double minRange, double maxRange, double waitTime, boolean relativeMode)
     {
         this.useTime = useTime;
         this.desiredAngle = desiredAngle;
         this.minRange = minRange;
         this.maxRange = maxRange;
         this.waitTime = waitTime;
+        this.relativeMode = relativeMode;
+        this.startingAngle = 0;
 
         this.turnPidHandler = null;
         this.completeTime = null;
@@ -93,6 +105,16 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
         this.pManager = this.getInjector().getInstance(PositionManager.class);
         this.dt = this.getInjector().getInstance(DriveTrainMechanism.class);
         this.turnPidHandler = this.createTurnHandler();
+        if (this.relativeMode)
+        {
+            this.startingAngle = this.pManager.getNavxAngle();
+
+            // if the navx isn't working, let's fall back to using odometry
+            if (!this.pManager.getNavxIsConnected())
+            {
+                this.startingAngle = this.pManager.getOdometryAngle();
+            }
+        }
     }
 
     /**
@@ -112,8 +134,8 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             currentMeasuredAngle = this.pManager.getOdometryAngle();
         }
 
-        this.desiredTurnVelocity = this.turnPidHandler.calculatePosition(this.desiredAngle, currentMeasuredAngle);
-
+        this.desiredTurnVelocity = this.turnPidHandler.calculatePosition(this.desiredAngle + this.startingAngle, currentMeasuredAngle);
+        
         this.setAnalogOperationState(
             Operation.DriveTrainTurn,
             this.desiredTurnVelocity);
@@ -146,7 +168,7 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
             currentMeasuredAngle = this.pManager.getOdometryAngle();
         }
 
-        double centerAngleDifference = Math.abs(currentMeasuredAngle - this.desiredAngle);
+        double centerAngleDifference = Math.abs(currentMeasuredAngle - (this.startingAngle + this.desiredAngle));
         if (centerAngleDifference > TuningConstants.MAX_NAVX_TURN_RANGE_DEGREES)
         {
             return false;
