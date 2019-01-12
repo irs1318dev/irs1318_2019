@@ -15,12 +15,12 @@ import javafx.scene.canvas.Canvas;
 @Singleton
 public class RobotSimulator implements IRealWorldSimulator
 {
-    private static final FauxbotActuatorConnection DriveLeftMasterChannel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_LEFT_MOTOR_CAN_ID);
-    private static final FauxbotActuatorConnection DriveLeftFollower1Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER_CAN_ID_1);
-    private static final FauxbotActuatorConnection DriveLeftFollower2Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER_CAN_ID_2);
-    private static final FauxbotActuatorConnection DriveRightMasterChannel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_RIGHT_MOTOR_CAN_ID);
-    private static final FauxbotActuatorConnection DriveRightFollower1Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER_CAN_ID_1);
-    private static final FauxbotActuatorConnection DriveRightFollower2Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER_CAN_ID_2);
+    private static final FauxbotActuatorConnection DriveLeftMasterChannel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
+    private static final FauxbotActuatorConnection DriveLeftFollower1Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
+    private static final FauxbotActuatorConnection DriveLeftFollower2Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
+    private static final FauxbotActuatorConnection DriveRightMasterChannel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
+    private static final FauxbotActuatorConnection DriveRightFollower1Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
+    private static final FauxbotActuatorConnection DriveRightFollower2Channel = new FauxbotActuatorConnection(FauxbotActuatorConnection.ActuatorConnector.CAN, ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
 
     private static final FauxbotSensorConnection DriveLeftEncoderChannel = new FauxbotSensorConnection(FauxbotSensorConnection.SensorConnector.CAN, RobotSimulator.DriveLeftMasterChannel.getPort());
     private static final FauxbotSensorConnection DriveRightEncoderChannel = new FauxbotSensorConnection(FauxbotSensorConnection.SensorConnector.CAN, RobotSimulator.DriveRightMasterChannel.getPort());
