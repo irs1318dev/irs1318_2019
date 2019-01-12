@@ -89,21 +89,21 @@ public class TuningConstants
     //================================================== DriveTrain ==============================================================
 
     // Drivetrain PID keys/default values:
-    public static final boolean DRIVETRAIN_USE_PID = false;
+    public static final boolean DRIVETRAIN_USE_PID = true;
     public static final boolean DRIVETRAIN_USE_CROSS_COUPLING = true;
 
     // Velocity PID (right)
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.05;
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.2;
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.10; // .2 ==> ~ 1023 / 5000 (100% control authority)
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 5000.0;
 
     // Velocity PID (left)
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.05;
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.2;
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.10; // .2 ==> ~ 1023 / 5000 (100% control authority)
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 5000.0;
 
     // Path PID (right)
