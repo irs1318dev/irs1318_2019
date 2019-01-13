@@ -42,8 +42,6 @@ public class TuningConstants
     public static final double MAX_VISION_CENTERING_RANGE_DEGREES = 5.0;
 
     // Navx Turn Constants
-    public static final double NAVX_TURN_MIN_ACCEPTABLE_ANGLE_VALUE = -720.0;
-    public static final double NAVX_TURN_MAX_ACCEPTABLE_ANGLE_VALUE = 720.0;
     public static final double MAX_NAVX_TURN_RANGE_DEGREES = 4.0;
     public static final double NAVX_TURN_COMPLETE_TIME = 0.4;
     public static final double NAVX_TURN_COMPLETE_CURRENT_VELOCITY_DELTA = 0;
