@@ -22,7 +22,7 @@ public class HardwareConstants
         * HardwareConstants.DRIVETRAIN_RIGHT_WHEEL_DIAMETER / HardwareConstants.DRIVETRAIN_RIGHT_ENCODER_PULSES_PER_REVOLUTION;
 
     // measure from outside of wheel:
-    public static final double DRIVETRAIN_WHEEL_SEPARATION_DISTANCE = 23.25; // (in inches)
+    public static final double DRIVETRAIN_WHEEL_SEPARATION_DISTANCE = 29; // (in inches)
 
     // DriveTrain motor/sensor orientations
     public static final boolean DRIVETRAIN_LEFT_MASTER_INVERT_OUTPUT = true;

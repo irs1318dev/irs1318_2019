@@ -55,8 +55,8 @@ public class TuningConstants
     public static final double NAVX_TURN_PID_KS = 1.0;
     public static final double NAVX_TURN_PID_MIN = -0.8;
     public static final double NAVX_TURN_PID_MAX = 0.8;
-    public static final double NAVX_FAST_TURN_PID_MIN = -1.0;
-    public static final double NAVX_FAST_TURN_PID_MAX = 1.0;
+    public static final double NAVX_FAST_TURN_PID_MIN = -0.8;
+    public static final double NAVX_FAST_TURN_PID_MAX = 0.8;
 
     // Acceptable vision distance from tape in inches
     public static final double MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE = 30.0;
