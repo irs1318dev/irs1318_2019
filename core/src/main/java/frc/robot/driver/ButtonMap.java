@@ -177,6 +177,7 @@ public class ButtonMap implements IButtonMap
                 new MacroOperationDescription(
                     UserInputDevice.Driver,
                     90,
+                    Shift.Any,
                     ButtonType.Toggle,
                     () -> new NavxTurnTask(false, 180, true, true),
                     new Operation[]
@@ -190,12 +191,20 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
                         Operation.DriveTrainSimpleMode,
+                    },
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
                     }));
             put(
                 MacroOperation.TurnInPlaceLeft,
                 new MacroOperationDescription(
                     UserInputDevice.Driver,
                     270,
+                    Shift.Any,
                     ButtonType.Toggle,
                     () -> new NavxTurnTask(false, -180, true, true),
                     new Operation[]
@@ -204,11 +213,16 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainUseBrakeMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
-                        Operation.DriveTrainLeftVelocity,
-                        Operation.DriveTrainRightVelocity,
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
                         Operation.DriveTrainSimpleMode,
+                    },
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
                     }));
 
             // Centering macro

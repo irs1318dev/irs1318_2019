@@ -34,6 +34,8 @@ public class TuningConstants
 
     //================================================== Autonomous ==============================================================
 
+    public static final boolean CANCEL_AUTONOMOUS_ROUTINE_ON_DISABLE = true;
+
     public static final double DRIVETRAIN_POSITIONAL_ACCEPTABLE_DELTA = 1.0;
 
     // Acceptable vision centering range values in degrees

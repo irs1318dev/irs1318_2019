@@ -166,6 +166,11 @@ public class MacroOperationState extends OperationState implements IMacroOperati
         return buttonPressed;
     }
 
+    public Operation[] getMacroCancelOperations()
+    {
+        return ((MacroOperationDescription)this.getDescription()).getMacroCancelOperations();
+    }
+
     public Operation[] getAffectedOperations()
     {
         return ((MacroOperationDescription)this.getDescription()).getAffectedOperations();

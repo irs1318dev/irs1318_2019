@@ -69,6 +69,11 @@ public class AutonomousOperationState extends OperationState implements IMacroOp
         return false;
     }
 
+    public Operation[] getMacroCancelOperations()
+    {
+        return this.getAffectedOperations();
+    }
+
     public Operation[] getAffectedOperations()
     {
         Set<Operation> keys = this.operationStateMap.keySet();

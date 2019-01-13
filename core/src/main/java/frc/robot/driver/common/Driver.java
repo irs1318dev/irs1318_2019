@@ -239,7 +239,8 @@ public class Driver
     {
         this.isAutonomous = false;
 
-        if (this.macroStateMap.containsKey(MacroOperation.AutonomousRoutine))
+        if (TuningConstants.CANCEL_AUTONOMOUS_ROUTINE_ON_DISABLE &&
+            this.macroStateMap.containsKey(MacroOperation.AutonomousRoutine))
         {
             this.macroStateMap.remove(MacroOperation.AutonomousRoutine);
         }
@@ -262,6 +263,12 @@ public class Driver
         this.isAutonomous = true;
         this.autonomousTask = this.routineSelector.selectRoutine();
         this.autonomousTask.initialize(this.operationStateMap, injector);
+        if (!TuningConstants.CANCEL_AUTONOMOUS_ROUTINE_ON_DISABLE &&
+            this.macroStateMap.containsKey(MacroOperation.AutonomousRoutine))
+        {
+            this.macroStateMap.remove(MacroOperation.AutonomousRoutine);
+        }
+
         this.macroStateMap.put(
             MacroOperation.AutonomousRoutine,
             new AutonomousOperationState(this.autonomousTask, this.operationStateMap));

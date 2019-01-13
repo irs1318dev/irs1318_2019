@@ -8,6 +8,8 @@ import frc.robot.driver.Operation;
  */
 public interface IMacroOperationState extends IOperationState
 {
+    public Operation[] getMacroCancelOperations();
+
     public Operation[] getAffectedOperations();
 
     public boolean getIsActive();
