@@ -83,16 +83,16 @@ public class FauxbotApplication extends Application
         grid.add(modeTitle, 0, rowCount, 1, 1);
 
         ToggleGroup modeGroup = new ToggleGroup();
+        RadioButton autonomousButton = new RadioButton("Autonomous");
+        autonomousButton.setUserData(FauxbotRunner.RobotMode.Autonomous);
+        autonomousButton.setToggleGroup(modeGroup);
+        grid.add(autonomousButton, 1, rowCount, 1, 1);
+
         RadioButton disabledButton = new RadioButton("Disabled");
         disabledButton.setUserData(FauxbotRunner.RobotMode.Disabled);
         disabledButton.setToggleGroup(modeGroup);
         disabledButton.setSelected(true);
-        grid.add(disabledButton, 1, rowCount, 1, 1);
-
-        RadioButton autonomousButton = new RadioButton("Autonomous");
-        autonomousButton.setUserData(FauxbotRunner.RobotMode.Autonomous);
-        autonomousButton.setToggleGroup(modeGroup);
-        grid.add(autonomousButton, 2, rowCount, 1, 1);
+        grid.add(disabledButton, 2, rowCount, 1, 1);
 
         RadioButton teleopButton = new RadioButton("Teleop");
         teleopButton.setUserData(FauxbotRunner.RobotMode.Teleop);

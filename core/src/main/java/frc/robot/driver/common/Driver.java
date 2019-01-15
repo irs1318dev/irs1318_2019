@@ -13,6 +13,7 @@ import frc.robot.common.robotprovider.IRobotProvider;
 import frc.robot.driver.AutonomousRoutineSelector;
 import frc.robot.driver.MacroOperation;
 import frc.robot.driver.Operation;
+import frc.robot.driver.PathManager;
 import frc.robot.driver.Shift;
 import frc.robot.driver.common.descriptions.MacroOperationDescription;
 import frc.robot.driver.common.descriptions.OperationDescription;
@@ -88,6 +89,10 @@ public class Driver
         }
 
         this.isAutonomous = false;
+
+        // initialize the path manager and load all of the paths
+        PathManager manager = injector.getInstance(PathManager.class);
+        manager.loadPaths();
     }
 
     /**

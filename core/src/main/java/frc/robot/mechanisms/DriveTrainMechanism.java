@@ -516,25 +516,23 @@ public class DriveTrainMechanism implements IMechanism
     private Setpoint calculatePathModeSetpoint()
     {
         // get the desired left and right values from the driver.
+        // note that position goals are in inches and velocity goals are in inches/second
         double leftPositionGoal = this.driver.getAnalog(Operation.DriveTrainLeftPosition);
         double rightPositionGoal = this.driver.getAnalog(Operation.DriveTrainRightPosition);
         double leftVelocityGoal = this.driver.getAnalog(Operation.DriveTrainLeftVelocity);
         double rightVelocityGoal = this.driver.getAnalog(Operation.DriveTrainRightVelocity);
-        double leftAccelerationGoal = this.driver.getAnalog(Operation.DriveTrainLeftAcceleration);
-        double rightAccelerationGoal = this.driver.getAnalog(Operation.DriveTrainRightAcceleration);
+        double headingGoal = this.driver.getAnalog(Operation.DriveTrainHeading);
 
         this.logger.logNumber(DriveTrainMechanism.LogName, "leftPositionGoal", leftPositionGoal);
         this.logger.logNumber(DriveTrainMechanism.LogName, "rightPositionGoal", rightPositionGoal);
 
         // use positional PID to get the relevant value
-        double leftGoal = this.leftPID.calculatePosition(leftPositionGoal, this.leftPosition);
-        double rightGoal = this.rightPID.calculatePosition(rightPositionGoal, this.rightPosition);
+        double leftGoal = this.leftPID.calculatePosition(leftPositionGoal * HardwareConstants.DRIVETRAIN_LEFT_TICKS_PER_INCH, this.leftPosition);
+        double rightGoal = this.rightPID.calculatePosition(rightPositionGoal * HardwareConstants.DRIVETRAIN_RIGHT_TICKS_PER_INCH, this.rightPosition);
 
-        // add in velocity and acceleration as a type of feed-forward
-        leftGoal += leftVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KV
-            + leftAccelerationGoal * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KA;
-        rightGoal += rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV
-            + rightAccelerationGoal * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KA;
+        // add in velocity as a type of feed-forward
+        leftGoal += leftVelocityGoal * TuningConstants.DRIVETRAIN_PATH_LEFT_VELOCITY_CONVERSION * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KV;
+        rightGoal += rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_RIGHT_VELOCITY_CONVERSION * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV;
 
         // apply cross-coupling changes
         double leftPositionError = this.leftPID.getError();

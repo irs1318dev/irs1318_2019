@@ -92,7 +92,7 @@ public class TuningConstants
 
     // Drivetrain PID keys/default values:
     public static final boolean DRIVETRAIN_USE_PID = true;
-    public static final boolean DRIVETRAIN_USE_CROSS_COUPLING = true;
+    public static final boolean DRIVETRAIN_USE_CROSS_COUPLING = false;
 
     // Velocity PID (right)
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.3;
@@ -114,8 +114,8 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KF = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KV = 1.0;
-    public static final double DRIVETRAIN_PATH_PID_RIGHT_KA = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KCC = 0.0001;
+    public static final double DRIVETRAIN_PATH_RIGHT_VELOCITY_CONVERSION = 0.1 / HardwareConstants.DRIVETRAIN_RIGHT_TICKS_PER_INCH; // convert inches per second into ticks per 100ms
 
     // Path PID (left)
     public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0002;
@@ -123,8 +123,8 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_LEFT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KF = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KV = 1.0;
-    public static final double DRIVETRAIN_PATH_PID_LEFT_KA = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KCC = 0.0001;
+    public static final double DRIVETRAIN_PATH_LEFT_VELOCITY_CONVERSION = 0.1 / HardwareConstants.DRIVETRAIN_LEFT_TICKS_PER_INCH; // convert inches per second into ticks per 100ms
 
     // Position PID (right)
     public static final double DRIVETRAIN_POSITION_PID_RIGHT_KP = 0.0002;

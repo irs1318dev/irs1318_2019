@@ -17,7 +17,7 @@ public class AutonomousRoutineSelector
     //    private final IDigitalInput dipSwitchA;
 
     /**
-     * Initializes a new AutonomousDriver
+     * Initializes a new AutonomousRoutineSelector
      */
     @Inject
     public AutonomousRoutineSelector(

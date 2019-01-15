@@ -123,14 +123,7 @@ public class ButtonMap implements IButtonMap
                     false,
                     0.0));
             put(
-                Operation.DriveTrainLeftAcceleration,
-                new AnalogOperationDescription(
-                    UserInputDevice.None,
-                    AnalogAxis.None,
-                    false,
-                    0.0));
-            put(
-                Operation.DriveTrainRightAcceleration,
+                Operation.DriveTrainHeading,
                 new AnalogOperationDescription(
                     UserInputDevice.None,
                     AnalogAxis.None,
