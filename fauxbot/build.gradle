@@ -41,12 +41,8 @@ test {
 mainClassName = 'Fauxbot'
 
 // Setting up my Jar File.
-// Note: we use a "fat jar" here (all class files in one jar instead of using sub-jars) because:
-// - this makes it more like the actual Robot, which uses a fat jar
-// - this makes resources from sub-jars actually available when running this jar
 version = '1.0'
 jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     manifest {
         attributes 'Implementation-Title': 'Fauxbot',
                    'Implementation-Version': version
