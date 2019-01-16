@@ -21,8 +21,10 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     private final boolean fastMode;
 
     private PIDHandler turnPidHandler;
-    protected PositionManager pManager;
-    protected DriveTrainMechanism dt;
+    private PositionManager pManager;
+    private DriveTrainMechanism dt;
+    private ITimer timer;
+
     private double desiredTurnVelocity;
     private Double completeTime;
     private double startingAngle;
@@ -88,8 +90,9 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     * Initializes a new NavxTurnTask
     * @param useTime whether to make sure we completed turn for a second or not
     * @param turnAngle the desired angle
-    * @param minRange the minimum of the measured angle range that we accept from the navx
-    * @param maxRange the maximum of the measured angle range that we accept from the navx
+    * @param waitTime the desired wait time
+    * @param relativeMode whether to use relative mode (turn relative to current angle), or absolute mode (turn relative to starting orientation)
+    * @param fastMode whether to use fast mode (or slow/consistent mode)
     */
     public NavxTurnTask(boolean useTime, double turnAngle, double waitTime, boolean relativeMode, boolean fastMode)
     {
@@ -112,6 +115,8 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     {
         this.pManager = this.getInjector().getInstance(PositionManager.class);
         this.dt = this.getInjector().getInstance(DriveTrainMechanism.class);
+        this.timer = this.getInjector().getInstance(ITimer.class);
+
         this.turnPidHandler = this.createTurnHandler();
         if (this.relativeMode)
         {
@@ -145,10 +150,8 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
         }
 
         this.desiredTurnVelocity = this.turnPidHandler.calculatePosition(currentDesiredAngle, currentMeasuredAngle);
-        
-        this.setAnalogOperationState(
-            Operation.DriveTrainTurn,
-            this.desiredTurnVelocity);
+
+        this.setAnalogOperationState(Operation.DriveTrainTurn, this.desiredTurnVelocity);
     }
 
     /**
@@ -199,7 +202,6 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
                 return true;
             }
 
-            ITimer timer = this.getInjector().getInstance(ITimer.class);
             if (this.completeTime == null)
             {
                 this.completeTime = timer.get();
@@ -219,11 +221,11 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
     protected PIDHandler createTurnHandler()
     {
         return new PIDHandler(
-            TuningConstants.NAVX_TURN_PID_KP,
-            TuningConstants.NAVX_TURN_PID_KI,
-            TuningConstants.NAVX_TURN_PID_KD,
-            TuningConstants.NAVX_TURN_PID_KF,
-            TuningConstants.NAVX_TURN_PID_KS,
+            this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_KP : TuningConstants.NAVX_TURN_PID_KP,
+            this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_KI : TuningConstants.NAVX_TURN_PID_KI,
+            this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_KD : TuningConstants.NAVX_TURN_PID_KD,
+            this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_KF : TuningConstants.NAVX_TURN_PID_KF,
+            this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_KS : TuningConstants.NAVX_TURN_PID_KS,
             this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_MIN : TuningConstants.NAVX_TURN_PID_MIN,
             this.fastMode ? TuningConstants.NAVX_FAST_TURN_PID_MAX : TuningConstants.NAVX_TURN_PID_MAX,
             this.getInjector().getInstance(ITimer.class));
