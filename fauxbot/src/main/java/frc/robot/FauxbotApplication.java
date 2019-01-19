@@ -9,8 +9,8 @@ import frc.robot.common.robotprovider.*;
 import frc.robot.driver.MacroOperation;
 import frc.robot.driver.Operation;
 import frc.robot.driver.common.IButtonMap;
+import frc.robot.driver.common.UserInputDeviceButton;
 import frc.robot.driver.common.buttons.ButtonType;
-import frc.robot.driver.common.buttons.ToggleButton;
 import frc.robot.driver.common.descriptions.*;
 
 import javafx.application.Application;
@@ -142,14 +142,14 @@ public class FauxbotApplication extends Application
                         if (description.getType() == OperationType.Digital)
                         {
                             DigitalOperationDescription digitalDescription = (DigitalOperationDescription)description;
-                            int buttonNumber = digitalDescription.getUserInputDeviceButton().Value;
+                            UserInputDeviceButton button = digitalDescription.getUserInputDeviceButton();
                             if (digitalDescription.getButtonType() == ButtonType.Click)
                             {
                                 Button operationButton = new Button("Click");
                                 operationButton.setOnMouseClicked(
                                     (MouseEvent event) ->
                                     {
-                                        joystick.getButtonProperty(buttonNumber).set(true);
+                                        joystick.getButtonProperty(button.Value).set(true);
                                     });
 
                                 grid.add(operationButton, 1, thisRowIndex);
@@ -158,18 +158,20 @@ public class FauxbotApplication extends Application
                             {
                                 CheckBox operationCheckBox = new CheckBox();
                                 grid.add(operationCheckBox, 1, thisRowIndex);
-                                Bindings.bindBidirectional(joystick.getButtonProperty(buttonNumber), operationCheckBox.selectedProperty());
+                                if (button != UserInputDeviceButton.JOYSTICK_POV)
+                                {
+                                    Bindings.bindBidirectional(joystick.getButtonProperty(button.Value), operationCheckBox.selectedProperty());
+                                }
+                                else
+                                {
+                                    operationCheckBox.selectedProperty();
+                                }
                             }
                             else if (digitalDescription.getButtonType() == ButtonType.Simple)
                             {
-                                Button operationButton = new Button("Simple");
-                                operationButton.setOnMouseClicked(
-                                    (MouseEvent event) ->
-                                    {
-                                        joystick.getButtonProperty(buttonNumber).set(true);
-                                    });
-
-                                grid.add(operationButton, 1, thisRowIndex);
+                                CheckBox operationCheckBox = new CheckBox();
+                                grid.add(operationCheckBox, 1, thisRowIndex);
+                                Bindings.bindBidirectional(joystick.getButtonProperty(button.Value), operationCheckBox.selectedProperty());
                             }
                         }
                         else if (description.getType() == OperationType.Analog)
