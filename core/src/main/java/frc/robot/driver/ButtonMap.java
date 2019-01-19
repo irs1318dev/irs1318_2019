@@ -141,6 +141,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Toggle)); 
+
             // Operations for the elevator
             put(
                 Operation.ElevatorForceUp,
