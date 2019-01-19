@@ -182,8 +182,6 @@ public class TuningConstants
     public static final double DRIVETRAIN_ENCODER_ODOMETRY_ANGLE_CORRECTION = 1.0; // account for turning weirdness (any degree offset in the angle)
 
     //================================================== Elevator ==============================================================
-    public static final boolean ELEVATOR_INVERT_OUTPUT = false;
-    public static final boolean ELEVATOR_INVERT_SENSOR = false;
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = false;
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
     public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED = false;
@@ -191,28 +189,29 @@ public class TuningConstants
 
     // MotionMagic
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
-    public static final double ELEVATOR_MM_POSITION_PID_KP = 0;
-    public static final double ELEVATOR_MM_POSITION_PID_KI = 0;
-    public static final double ELEVATOR_MM_POSITION_PID_KD = 0;
-    public static final double ELEVATOR_MM_POSITION_PID_KF = 0;
+    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KI = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.0;
     public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 0;
     public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 0;
 
     //PID
-    public static final double ELEVATOR_POSITION_PID_KP = 0;
-    public static final double ELEVATOR_POSITION_PID_KI = 0;
-    public static final double ELEVATOR_POSITION_PID_KD = 0;
-    public static final double ELEVATOR_POSITION_PID_KF = 0;
+    public static final double ELEVATOR_POSITION_PID_KP = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KI = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KD = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KF = 0.0;
 
     public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.0;
     public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = 0.0;
+    public static final double ELEVATOR_MOVE_VELOCITY = 0.0;
 
     //Positions
-    public static final double ELEVATOR_BOTTOM_POSITION = 0;
-    public static final double ELEVATOR_HATCH_2_POSITION = 0;
-    public static final double ELEVATOR_HATCH_3_POSITION = 0;
-    public static final double ELEVATOR_CARGO_1_POSITION = 0;
-    public static final double ELEVATOR_CARGO_2_POSITION = 0;
-    public static final double ELEVATOR_CARGO_3_POSITION = 0;
-    public static final double ELEVATOR_CARGO_LOAD_POSITION = 0;
+    public static final double ELEVATOR_BOTTOM_POSITION = 0.0;
+    public static final double ELEVATOR_HATCH_2_POSITION = 0.0;
+    public static final double ELEVATOR_HATCH_3_POSITION = 0.0;
+    public static final double ELEVATOR_CARGO_1_POSITION = 0.0;
+    public static final double ELEVATOR_CARGO_2_POSITION = 0.0;
+    public static final double ELEVATOR_CARGO_3_POSITION = 0.0;
+    public static final double ELEVATOR_CARGO_LOAD_POSITION = 0.0;
 }

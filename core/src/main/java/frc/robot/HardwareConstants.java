@@ -37,6 +37,10 @@ public class HardwareConstants
     public static final boolean DRIVETRAIN_RIGHT_INVERT_SENSOR = true;
 
     //================================================== Elevator ==============================================================
+ 
     public static final double ELEVATOR_PULSE_DISTANCE = 0.0;
     public static final double ELEVATOR_MAX_HEIGHT = 0.0;
+    public static final boolean ELEVATOR_MASTER_INVERT_OUTPUT = false;
+    public static final boolean ELEVATOR_FOLLOWER_INVERT_OUTPUT = false;
+    public static final boolean ELEVATOR_INVERT_SENSOR = false;
 }
