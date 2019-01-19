@@ -63,7 +63,7 @@ public class ElevatorMechanism implements IMechanism
 
         this.elevatorMotorMaster = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
         this.elevatorMotorMaster.setNeutralMode(TalonSRXNeutralMode.Brake);
-        this.elevatorMotorMaster.setInvertOutput(HardwareConstants.ELEVATOR_INVERT_OUTPUT);
+        this.elevatorMotorMaster.setInvertOutput(HardwareConstants.ELEVATOR_MASTER_INVERT_OUTPUT);
         this.elevatorMotorMaster.setInvertSensor(HardwareConstants.ELEVATOR_INVERT_SENSOR);
         this.elevatorMotorMaster.setSensorType(TalonSRXFeedbackDevice.QuadEncoder);
         this.elevatorMotorMaster.setPosition(
@@ -77,7 +77,7 @@ public class ElevatorMechanism implements IMechanism
         
         ITalonSRX elevatorFollowerMotor = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_FOLLOWER_CAN_ID);
         elevatorFollowerMotor.setNeutralMode(TalonSRXNeutralMode.Brake);
-        elevatorFollowerMotor.setInvertOutput(HardwareConstants.ELEVATOR_INVERT_OUTPUT);
+        elevatorFollowerMotor.setInvertOutput(HardwareConstants.ELEVATOR_FOLLOWER_INVERT_OUTPUT);
         elevatorFollowerMotor.setControlMode(TalonSRXControlMode.Follower);
         elevatorFollowerMotor.set(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
                 
