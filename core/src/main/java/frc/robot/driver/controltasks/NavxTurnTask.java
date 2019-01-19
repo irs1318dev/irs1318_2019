@@ -184,7 +184,8 @@ public class NavxTurnTask extends ControlTaskBase implements IControlTask
         }
 
         double centerAngleDifference = Math.abs(currentMeasuredAngle - currentDesiredAngle);
-        if (centerAngleDifference > TuningConstants.MAX_NAVX_TURN_RANGE_DEGREES)
+        if ((!this.fastMode && centerAngleDifference > TuningConstants.MAX_NAVX_TURN_RANGE_DEGREES) ||
+            (this.fastMode && centerAngleDifference > TuningConstants.MAX_NAVX_FAST_TURN_RANGE_DEGREES))
         {
             return false;
         }

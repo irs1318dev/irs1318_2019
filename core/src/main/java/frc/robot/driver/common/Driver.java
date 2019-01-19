@@ -171,7 +171,7 @@ public class Driver
             {
                 activeMacroOperations.add(macroOperation);
 
-                for (Operation affectedOperation : macroState.getAffectedOperations())
+                for (Operation affectedOperation : macroState.getMacroCancelOperations())
                 {
                     Set<MacroOperation> relevantMacroOperations = activeMacroOperationMap.get(affectedOperation);
                     if (relevantMacroOperations == null)
