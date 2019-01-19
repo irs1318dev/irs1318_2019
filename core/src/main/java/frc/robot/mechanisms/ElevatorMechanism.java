@@ -32,7 +32,7 @@ public class ElevatorMechanism implements IMechanism
 
     private final IDashboardLogger logger;
 
-    private final ITalonSRX elevatorMotor;
+    private final ITalonSRX elevatorMotorMaster;
 
     private final TalonSRXControlMode pidControlMode;
 
@@ -61,23 +61,30 @@ public class ElevatorMechanism implements IMechanism
             ? TalonSRXControlMode.MotionMagicPosition
             : TalonSRXControlMode.Position;
 
-        this.elevatorMotor = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_CAN_ID);
-        this.elevatorMotor.setNeutralMode(TalonSRXNeutralMode.Brake);
-        this.elevatorMotor.setInvertOutput(TuningConstants.ELEVATOR_INVERT_OUTPUT);
-        this.elevatorMotor.setInvertSensor(TuningConstants.ELEVATOR_INVERT_SENSOR);
-        this.elevatorMotor.setSensorType(TalonSRXFeedbackDevice.QuadEncoder);
-        this.elevatorMotor.setPosition(
+        this.elevatorMotorMaster = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
+        this.elevatorMotorMaster.setNeutralMode(TalonSRXNeutralMode.Brake);
+        this.elevatorMotorMaster.setInvertOutput(HardwareConstants.ELEVATOR_INVERT_OUTPUT);
+        this.elevatorMotorMaster.setInvertSensor(HardwareConstants.ELEVATOR_INVERT_SENSOR);
+        this.elevatorMotorMaster.setSensorType(TalonSRXFeedbackDevice.QuadEncoder);
+        this.elevatorMotorMaster.setPosition(
             (int)(TuningConstants.ELEVATOR_BOTTOM_POSITION / HardwareConstants.ELEVATOR_PULSE_DISTANCE));
-        this.elevatorMotor.setForwardLimitSwitch(
+        this.elevatorMotorMaster.setForwardLimitSwitch(
             TuningConstants.ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED,
             TuningConstants.ELEVATOR_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN);
-        this.elevatorMotor.setReverseLimitSwitch(
+        this.elevatorMotorMaster.setReverseLimitSwitch(
             TuningConstants.ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED,
             TuningConstants.ELEVATOR_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
+        
+        ITalonSRX elevatorFollowerMotor = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_FOLLOWER_CAN_ID);
+        elevatorFollowerMotor.setNeutralMode(TalonSRXNeutralMode.Brake);
+        elevatorFollowerMotor.setInvertOutput(HardwareConstants.ELEVATOR_INVERT_OUTPUT);
+        elevatorFollowerMotor.setControlMode(TalonSRXControlMode.Follower);
+        elevatorFollowerMotor.set(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
+                
 
         if (TuningConstants.ELEVATOR_USE_MOTION_MAGIC)
         {
-            this.elevatorMotor.setMotionMagicPIDF(
+            this.elevatorMotorMaster.setMotionMagicPIDF(
                 TuningConstants.ELEVATOR_MM_POSITION_PID_KP,
                 TuningConstants.ELEVATOR_MM_POSITION_PID_KI,
                 TuningConstants.ELEVATOR_MM_POSITION_PID_KD,
@@ -88,7 +95,7 @@ public class ElevatorMechanism implements IMechanism
         }
         else
         {
-            this.elevatorMotor.setPIDF(
+            this.elevatorMotorMaster.setPIDF(
                 TuningConstants.ELEVATOR_POSITION_PID_KP,
                 TuningConstants.ELEVATOR_POSITION_PID_KI,
                 TuningConstants.ELEVATOR_POSITION_PID_KD,
@@ -96,8 +103,8 @@ public class ElevatorMechanism implements IMechanism
                 ElevatorMechanism.pidSlotId);
         }
 
-        this.elevatorMotor.setControlMode(this.pidControlMode);
-        this.elevatorMotor.setSelectedSlot(ElevatorMechanism.pidSlotId);
+        this.elevatorMotorMaster.setControlMode(this.pidControlMode);
+        this.elevatorMotorMaster.setSelectedSlot(ElevatorMechanism.pidSlotId);
 
         this.elevatorVelocity = 0.0;
         this.elevatorError = 0.0;
@@ -143,12 +150,12 @@ public class ElevatorMechanism implements IMechanism
     @Override
     public void readSensors() 
     {
-        this.elevatorVelocity = this.elevatorMotor.getVelocity();
-        this.elevatorError = this.elevatorMotor.getError();
-        this.elevatorPosition = this.elevatorMotor.getPosition();
+        this.elevatorVelocity = this.elevatorMotorMaster.getVelocity();
+        this.elevatorError = this.elevatorMotorMaster.getError();
+        this.elevatorPosition = this.elevatorMotorMaster.getPosition();
         this.elevatorHeight = this.elevatorPosition * HardwareConstants.ELEVATOR_PULSE_DISTANCE;
 
-        TalonSRXLimitSwitchStatus limitSwitchStatus = this.elevatorMotor.getLimitSwitchStatus();
+        TalonSRXLimitSwitchStatus limitSwitchStatus = this.elevatorMotorMaster.getLimitSwitchStatus();
         this.elevatorForwardLimitSwitchStatus = limitSwitchStatus.isForwardClosed;
         this.elevatorReverseLimitSwitchStatus = limitSwitchStatus.isReverseClosed;
     
@@ -174,18 +181,18 @@ public class ElevatorMechanism implements IMechanism
             if (this.elevatorReverseLimitSwitchStatus || this.elevatorPosition < 0.0)
             {
                 this.desiredHeight = 0.0;
-                this.elevatorMotor.reset();
+                this.elevatorMotorMaster.reset();
             }
 
-            this.elevatorMotor.setControlMode(TalonSRXControlMode.PercentOutput);
+            this.elevatorMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
             if (forceUp)
             {
-                this.elevatorMotor.set(
+                this.elevatorMotorMaster.set(
                     this.elevatorForwardLimitSwitchStatus ? 0.0 : TuningConstants.ELEVATOR_DEBUG_UP_POWER_LEVEL);
             }
             else if (forceDown)
             {
-                this.elevatorMotor.set(
+                this.elevatorMotorMaster.set(
                     this.elevatorReverseLimitSwitchStatus ? 0.0 : -TuningConstants.ELEVATOR_DEBUG_DOWN_POWER_LEVEL);
             }
         }
@@ -228,7 +235,6 @@ public class ElevatorMechanism implements IMechanism
                 if (deltaPosition > remainingHeight)
                 {
                     newDesiredHeight = HardwareConstants.ELEVATOR_MAX_HEIGHT;
-                    newDesiredHeight += (deltaPosition - remainingHeight);
                 }
                 else
                 {
@@ -242,7 +248,6 @@ public class ElevatorMechanism implements IMechanism
                 if (deltaPosition > remainingHeight)
                 {
                     newDesiredHeight = 0.0;
-                    newDesiredHeight -= (deltaPosition - remainingHeight);
                 }
                 else
                 {
@@ -257,8 +262,8 @@ public class ElevatorMechanism implements IMechanism
 
             this.logger.logNumber(ElevatorMechanism.logName, "desiredHeight", this.desiredHeight);
 
-            this.elevatorMotor.setControlMode(this.pidControlMode);
-            this.elevatorMotor.set(this.desiredHeight / HardwareConstants.ELEVATOR_PULSE_DISTANCE);
+            this.elevatorMotorMaster.setControlMode(this.pidControlMode);
+            this.elevatorMotorMaster.set(this.desiredHeight / HardwareConstants.ELEVATOR_PULSE_DISTANCE);
         }
 
         this.lastUpdateTime = currentTime;
@@ -267,7 +272,7 @@ public class ElevatorMechanism implements IMechanism
     @Override
     public void stop()
     {
-        this.elevatorMotor.stop();
+        this.elevatorMotorMaster.stop();
         this.elevatorVelocity = 0.0;
         this.elevatorError = 0.0;
         this.elevatorPosition = 0;
