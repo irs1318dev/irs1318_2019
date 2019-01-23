@@ -10,27 +10,16 @@ import frc.robot.driver.Operation;
 import frc.robot.common.Helpers;
 import frc.robot.common.IMechanism;
 import frc.robot.common.robotprovider.ITalonSRX;
-import frc.robot.common.robotprovider.TalonSRXControlMode;
-import frc.robot.common.robotprovider.TalonSRXFeedbackDevice;
-import frc.robot.common.robotprovider.ITimer;
+//import frc.robot.common.robotprovider.TalonSRXControlMode;
+//import frc.robot.common.robotprovider.TalonSRXFeedbackDevice;
+//import frc.robot.common.robotprovider.ITimer;
 import frc.robot.common.robotprovider.DoubleSolenoidValue;
 import frc.robot.common.robotprovider.IDashboardLogger;
 import frc.robot.common.robotprovider.IDoubleSolenoid;
 import frc.robot.driver.common.Driver;
 import frc.robot.common.robotprovider.IRobotProvider;
-import frc.robot.common.robotprovider.TalonSRXNeutralMode;
-import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
-
-/////////////////////////TODO//////////////////////////////////
-//Add operations for:
-//Ejecting hatch
-//Cargo intake mode, cargo outtake mode
-//wrist positions
-//look at other code to see how to do this ^^
-//set buttons
-//add all constants (tuning, hardware, electronics)
-
-
+//import frc.robot.common.robotprovider.TalonSRXNeutralMode;
+//import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 
 @Singleton
 public class GrabberMechanism implements IMechanism{
