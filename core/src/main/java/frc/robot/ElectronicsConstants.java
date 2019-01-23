@@ -51,8 +51,8 @@ public class ElectronicsConstants
     public static final int KICKER_FORWARD_CHANNEL = -1;
     public static final int KICKER_REVERSE_CHANNEL = -1;
 
-    //Grabber TalonSRX
-    public static final int GRABBER_MOTOR_MASTER_CAN_ID = -1;
+    //Cargo intake/outtake TalonSRX
+    public static final int CARGO_MOTOR_CAN_ID = -1;
 
     //Wrist actuators
     public static final int WRIST_ONE_FORWARD_CHANNEL = -1;

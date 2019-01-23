@@ -215,4 +215,10 @@ public class TuningConstants
     public static final double ELEVATOR_CARGO_2_POSITION = 0.0;
     public static final double ELEVATOR_CARGO_3_POSITION = 0.0;
     public static final double ELEVATOR_CARGO_LOAD_POSITION = 0.0;
+
+    //======================================================== Grabber =====================================
+
+    //Cargo intake/outtake motor power
+    public static final double CARGO_INTAKE_MOTOR_POWER = 0.0;
+    public static final double CARGO_OUTTAKE_MOTOR_POWER = 0.0;
 }

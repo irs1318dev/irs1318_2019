@@ -32,5 +32,13 @@ public enum Operation
     ElevatorCargo1Position,
     ElevatorCargo2Position,
     ElevatorCargo3Position,
-    ElevatorCargoLoadPosition
+    ElevatorCargoLoadPosition,
+
+    //Grabber operations:
+    KickerStowedPosition,
+    KickerEjectHatchPosition,
+    CargoIntakeMode,
+    CargoOuttakeMode,
+    WristContractedPosition,
+    WristExtendedPosition
 }
