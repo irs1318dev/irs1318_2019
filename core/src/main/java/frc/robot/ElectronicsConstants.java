@@ -44,4 +44,20 @@ public class ElectronicsConstants
 
     public static final int ELEVATOR_MOTOR_MASTER_CAN_ID = 0;
     public static final int ELEVATOR_MOTOR_FOLLOWER_CAN_ID = 0;
+
+    //================================================== Grabber ============================================================
+
+    //Hatch ejection DoubleSolenoid
+    public static final int KICKER_FORWARD_CHANNEL = -1;
+    public static final int KICKER_REVERSE_CHANNEL = -1;
+
+    //Grabber TalonSRX
+    public static final int GRABBER_MOTOR_MASTER_CAN_ID = -1;
+
+    //Wrist actuators
+    public static final int WRIST_ONE_FORWARD_CHANNEL = -1;
+    public static final int WRIST_ONE_REVERSE_CHANNEL = -1;
+    
+    public static final int WRIST_TWO_FORWARD_CHANNEL = -1;
+    public static final int WRIST_TWO_REVERSE_CHANNEL = -1;
 }
