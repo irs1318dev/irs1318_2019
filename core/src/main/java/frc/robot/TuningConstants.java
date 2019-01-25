@@ -183,6 +183,7 @@ public class TuningConstants
 
     //================================================== Elevator ==============================================================
 
+    // Sensors
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = false;
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
     public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED = false;
@@ -190,29 +191,48 @@ public class TuningConstants
 
     // MotionMagic
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
-    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KI = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.0;
-    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 0;
-    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 0;
+    public static final double ELEVATOR_MM_POSITION_PID_KP = -1;
+    public static final double ELEVATOR_MM_POSITION_PID_KI = -1;
+    public static final double ELEVATOR_MM_POSITION_PID_KD = -1;
+    public static final double ELEVATOR_MM_POSITION_PID_KF = -1;
+    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = -1;
+    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = -1;
 
-    //PID
-    public static final double ELEVATOR_POSITION_PID_KP = 0.0;
-    public static final double ELEVATOR_POSITION_PID_KI = 0.0;
-    public static final double ELEVATOR_POSITION_PID_KD = 0.0;
-    public static final double ELEVATOR_POSITION_PID_KF = 0.0;
+    // PID
+    public static final double ELEVATOR_POSITION_PID_KP = -1;
+    public static final double ELEVATOR_POSITION_PID_KI = -1;
+    public static final double ELEVATOR_POSITION_PID_KD = -1;
+    public static final double ELEVATOR_POSITION_PID_KF = -1;
 
-    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.0;
-    public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = 0.0;
-    public static final double ELEVATOR_MOVE_VELOCITY = 0.0;
+    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = -1;
+    public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = -1;
+    public static final double ELEVATOR_MOVE_VELOCITY = -1;
 
-    //Positions
-    public static final double ELEVATOR_BOTTOM_POSITION = 0.0;
-    public static final double ELEVATOR_HATCH_2_POSITION = 0.0;
-    public static final double ELEVATOR_HATCH_3_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_1_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_2_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_3_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_LOAD_POSITION = 0.0;
+    // Positions
+    public static final double ELEVATOR_BOTTOM_POSITION = -1;
+    public static final double ELEVATOR_HATCH_2_POSITION = -1;
+    public static final double ELEVATOR_HATCH_3_POSITION = -1;
+    public static final double ELEVATOR_CARGO_1_POSITION = -1;
+    public static final double ELEVATOR_CARGO_2_POSITION = -1;
+    public static final double ELEVATOR_CARGO_3_POSITION = -1;
+    public static final double ELEVATOR_CARGO_LOAD_POSITION = -1;
+
+    //================================================== Climber ==============================================================
+
+    // Arm Positions
+    public static final double CLIMBER_ARMS_RETRACTED_POSITION = -1;
+    public static final double CLIMBER_ARMS_LEVEL_1_POSITION = -1;
+    public static final double CLIMBER_ARMS_LEVEL_2_POSITION = -1;
+
+
+    // Arm PID
+    public static final double CLIMBER_ARMS_MOVE_VELOCITY = -1;
+
+    // Cam Positions
+    public static final double CLIMBER_CAM_STORED_POSITION = -1;
+    public static final double CLIMBER_CAM_LEVEL_1_POSITION = -1;
+    public static final double CLIMBER_CAM_LEVEL_2_POSITION = -1;
+
+    // Cam PID
+    public static final double CLIMBER_CAM_MOVE_VELOCITY = -1;
 }

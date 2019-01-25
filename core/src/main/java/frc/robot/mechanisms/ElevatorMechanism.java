@@ -25,7 +25,7 @@ import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 public class ElevatorMechanism implements IMechanism 
 {
 
-    private static final String logName = "el";
+    private static final String logName = "elevator";
     private static final int pidSlotId = 0;
 
     private final ITimer timer;

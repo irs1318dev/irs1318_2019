@@ -21,7 +21,7 @@ public enum Operation
     DriveTrainHeading,
     DriveTrainSwapFrontOrientation,
 
-    //Elevator operations:
+    // Elevator operations:
     ElevatorForceUp,
     ElevatorForceDown,
     ElevatorMoveUp,
@@ -32,5 +32,17 @@ public enum Operation
     ElevatorCargo1Position,
     ElevatorCargo2Position,
     ElevatorCargo3Position,
-    ElevatorCargoLoadPosition
+    ElevatorCargoLoadPosition,
+
+    // Climber operations:
+    ClimberArmsRetractedPosition,
+    ClimberArmsLevel1Position,
+    ClimberArmsLevel2Position,
+    ClimberCamStoredPosition,
+    ClimberCamLevel1Position,
+    ClimberCamLevel2Position,
+    ClimberArmsMoveForward,
+    ClimberArmsMoveBackward,
+    ClimberCamMoveForward,
+    ClimberCamMoveBackward
 }

@@ -42,6 +42,16 @@ public class ElectronicsConstants
 
     //================================================== Elevator ==============================================================
 
-    public static final int ELEVATOR_MOTOR_MASTER_CAN_ID = 0;
-    public static final int ELEVATOR_MOTOR_FOLLOWER_CAN_ID = 0;
+    public static final int ELEVATOR_MOTOR_MASTER_CAN_ID = -1;
+    public static final int ELEVATOR_MOTOR_FOLLOWER_CAN_ID = -1;
+
+    //================================================== Climber ==============================================================
+
+    public static final int CLIMBER_ARMS_MOTOR_MASTER_ID = -1;
+    public static final int CLIMBER_ARMS_MOTOR_FOLLOWER_ID = -1;
+
+    public static final int CLIMBER_CAM_MOTOR_MASTER_ID = -1;
+    public static final int CLIMBER_CAM_MOTOR_FOLLOWER_ID = -1;
+
+
 }
