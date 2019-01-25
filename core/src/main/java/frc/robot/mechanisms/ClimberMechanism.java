@@ -22,7 +22,7 @@ import frc.robot.common.robotprovider.TalonSRXNeutralMode;
 @Singleton
 public class ClimberMechanism implements IMechanism
 {
-    private static final String logName = "climber";
+    private static final String logName = "cl";
     private static final int pidSlotId = 0;
 
     private final ITimer timer;
