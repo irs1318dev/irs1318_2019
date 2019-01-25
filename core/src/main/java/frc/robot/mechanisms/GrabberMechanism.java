@@ -22,7 +22,7 @@ import frc.robot.common.robotprovider.IRobotProvider;
 //import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 
 @Singleton
-public class GrabberMechanism implements IMechanism{
+public class GrabberMechanism implements IMechanism {
     //logger
     //private final IDashboardLogger logger;
     //private static final String logName = "grabMech";

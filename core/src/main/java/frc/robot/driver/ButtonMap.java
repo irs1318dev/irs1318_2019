@@ -209,6 +209,44 @@ public class ButtonMap implements IButtonMap
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click)); 
+
+            //operations for grabber mechanism
+            put(
+                Operation.CargoIntakeMode,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Toggle)); 
+            put(
+                Operation.CargoOuttakeMode,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Toggle));
+            put(
+                Operation.KickerEjectHatchPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.KickerStowedPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.WristExtendedPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.WristContractedPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
         }
     };
 
