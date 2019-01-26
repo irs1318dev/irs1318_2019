@@ -22,8 +22,11 @@ public class PathManager
     private static final String[] NAMES =
         new String[]
         {
-            "/Paths/TestPath1.csv",
-            "/Paths/TestPath2.csv"
+            "/Paths/Circle 40 inch radius.csv",
+            "/Paths/S path.csv",
+            "/Paths/Straight 4 feet.csv",
+            "/Paths/Turn left 4 feet.csv",
+            "/Paths/Turn right 4 feet.csv",
         };
 
     private static final String LEFT_POSITION_NAME = "LeftPosition";

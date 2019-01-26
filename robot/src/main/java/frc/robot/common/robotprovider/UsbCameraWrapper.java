@@ -72,7 +72,7 @@ public class UsbCameraWrapper implements IUsbCamera
 
         public void copyPipelineOutputs(VisionPipeline pipeline)
         {
-            this.wrappedObject.copyPipelineOutputs((T)pipeline);
+            this.wrappedObject.copyPipelineOutputs(((VisionPipelineWrapper<T>)pipeline).wrappedObject);
         }
     }
 }

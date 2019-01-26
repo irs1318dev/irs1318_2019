@@ -17,10 +17,7 @@ import frc.robot.driver.common.descriptions.MacroOperationDescription;
 import frc.robot.driver.common.descriptions.OperationDescription;
 import frc.robot.driver.common.descriptions.ShiftDescription;
 import frc.robot.driver.common.descriptions.UserInputDevice;
-import frc.robot.driver.controltasks.NavxTurnTask;
-import frc.robot.driver.controltasks.PIDBrakeTask;
-import frc.robot.driver.controltasks.VisionAdvanceAndCenterTask;
-import frc.robot.driver.controltasks.VisionCenteringTask;
+import frc.robot.driver.controltasks.*;
 
 @Singleton
 public class ButtonMap implements IButtonMap
@@ -336,6 +333,35 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainUseBrakeMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                    },
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                    }));
+            put(
+                MacroOperation.FollowSomePath,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    0,
+                    Shift.Any,
+                    ButtonType.Toggle,
+                    () -> new FollowPathTask("/Paths/Straight 4 feet.csv"),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainHeading,
+                        Operation.DriveTrainUsePathMode,
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
                         Operation.DriveTrainSimpleMode,
