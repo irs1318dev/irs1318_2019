@@ -219,20 +219,30 @@ public class TuningConstants
 
     //================================================== Climber ==============================================================
 
-    // Arm Positions
+    // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = -1;
-    public static final double CLIMBER_ARMS_LEVEL_1_POSITION = -1;
-    public static final double CLIMBER_ARMS_LEVEL_2_POSITION = -1;
+    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = -1;
+    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = -1;
 
-
-    // Arm PID
     public static final double CLIMBER_ARMS_MOVE_VELOCITY = -1;
 
-    // Cam Positions
-    public static final double CLIMBER_CAM_STORED_POSITION = -1;
-    public static final double CLIMBER_CAM_LEVEL_1_POSITION = -1;
-    public static final double CLIMBER_CAM_LEVEL_2_POSITION = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KP = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KI = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KD = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KF = -1;
 
-    // Cam PID
+
+    // Cam
+    public static final double CLIMBER_CAM_STORED_POSITION = -1;
+    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = -1;
+    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = -1;
+
     public static final double CLIMBER_CAM_MOVE_VELOCITY = -1;
+
+    public static final double CLIMBER_CAM_POSITION_PID_KP = -1;
+    public static final double CLIMBER_CAM_POSITION_PID_KI = -1;
+    public static final double CLIMBER_CAM_POSITION_PID_KD = -1;
+    public static final double CLIMBER_CAM_POSITION_PID_KF = -1;
+
+
 }

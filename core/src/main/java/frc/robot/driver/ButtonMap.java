@@ -242,13 +242,13 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.NONE,
                     ButtonType.Simple));
             put(
-                Operation.ClimberArmsLevel1Position,
+                Operation.ClimberArmsLowClimbPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Simple));
             put(
-                Operation.ClimberArmsLevel2Position,
+                Operation.ClimberArmsHighClimbPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
@@ -260,13 +260,13 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.NONE,
                     ButtonType.Simple));
             put(
-                Operation.ClimberCamLevel1Position,
+                Operation.ClimberCamLowClimbPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Simple));
             put(
-                Operation.ClimberCamLevel2Position,
+                Operation.ClimberCamHighClimbPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
