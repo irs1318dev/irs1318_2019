@@ -7,6 +7,7 @@ public enum MacroOperation
     PIDBrake,
     TurnInPlaceLeft,
     TurnInPlaceRight,
+    FollowSomePath,
 
     VisionCenter,
     VisionCenterAndAdvance,

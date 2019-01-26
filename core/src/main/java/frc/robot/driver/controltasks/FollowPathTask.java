@@ -58,6 +58,7 @@ public class FollowPathTask extends ControlTaskBase implements IControlTask
         this.setAnalogOperationState(Operation.DriveTrainRightPosition, this.startRightPosition);
         this.setAnalogOperationState(Operation.DriveTrainLeftVelocity, 0.0);
         this.setAnalogOperationState(Operation.DriveTrainRightVelocity, 0.0);
+        this.setAnalogOperationState(Operation.DriveTrainHeading, this.startHeading);
     }
 
     /**
