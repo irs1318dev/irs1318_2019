@@ -2,6 +2,7 @@ package frc.robot.driver.controltasks;
 
 import java.util.List;
 
+import frc.robot.HardwareConstants;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.Operation;
 import frc.robot.driver.PathManager;
@@ -80,8 +81,10 @@ public class FollowPathTask extends ControlTaskBase implements IControlTask
         }
 
         PathStep step = this.path.get((int)currentIndex);
-        this.setAnalogOperationState(Operation.DriveTrainLeftPosition, this.startLeftPosition + step.getLeftPosition());
-        this.setAnalogOperationState(Operation.DriveTrainRightPosition, this.startRightPosition + step.getRightPosition());
+        double leftGoalPosition = step.getLeftPosition() * HardwareConstants.DRIVETRAIN_LEFT_TICKS_PER_INCH;
+        double rightGoalPosition = step.getRightPosition() * HardwareConstants.DRIVETRAIN_RIGHT_TICKS_PER_INCH;
+        this.setAnalogOperationState(Operation.DriveTrainLeftPosition, this.startLeftPosition + leftGoalPosition);
+        this.setAnalogOperationState(Operation.DriveTrainRightPosition, this.startRightPosition + rightGoalPosition);
         this.setAnalogOperationState(Operation.DriveTrainLeftVelocity, step.getLeftVelocity());
         this.setAnalogOperationState(Operation.DriveTrainRightVelocity, step.getRightVelocity());
         this.setAnalogOperationState(Operation.DriveTrainHeading, this.startHeading + step.getHeading());

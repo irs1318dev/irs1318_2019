@@ -351,7 +351,7 @@ public class ButtonMap implements IButtonMap
                     0,
                     Shift.Any,
                     ButtonType.Toggle,
-                    () -> new FollowPathTask("/Paths/Straight 4 feet.csv"),
+                    () -> new FollowPathTask("/Paths/Turn left 4 feet.csv"),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,
