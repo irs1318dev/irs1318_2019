@@ -236,7 +236,7 @@ public class ClimberMechanism implements IMechanism
         this.armsVelocity = 0.0;
         this.armsError = 0.0;
         this.armsPosition = 0;
-        
+
         this.climberCamMotorMaster.stop();
         this.camVelocity = 0.0;
         this.camError = 0.0;
