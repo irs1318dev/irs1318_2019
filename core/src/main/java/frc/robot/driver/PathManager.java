@@ -69,11 +69,11 @@ public class PathManager
                     String rightVelocity = row.getField(PathManager.RIGHT_VELOCITY_NAME);
                     String heading = row.getField(PathManager.HEADING_NAME);
 
-                    if (leftPosition != null && leftPosition.equals("") &&
-                        rightPosition != null && rightPosition.equals("") &&
-                        leftVelocity != null && leftVelocity.equals("") &&
-                        rightVelocity != null && rightVelocity.equals("") &&
-                        heading != null && heading.equals(""))
+                    if (leftPosition != null && !leftPosition.equals("") &&
+                        rightPosition != null && !rightPosition.equals("") &&
+                        leftVelocity != null && !leftVelocity.equals("") &&
+                        rightVelocity != null && !rightVelocity.equals("") &&
+                        heading != null && !heading.equals(""))
                     {
                         double lpos = Double.parseDouble(leftPosition);
                         double rpos = Double.parseDouble(rightPosition);
