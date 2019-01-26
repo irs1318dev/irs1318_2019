@@ -19,21 +19,16 @@ import frc.robot.common.robotprovider.IRobotProvider;
 import frc.robot.common.robotprovider.TalonSRXNeutralMode;
 import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 
-
-
 @Singleton
 public class ElevatorMechanism implements IMechanism 
 {
-
     private static final String logName = "el";
     private static final int pidSlotId = 0;
 
     private final ITimer timer;
-
     private final IDashboardLogger logger;
 
     private final ITalonSRX elevatorMotorMaster;
-
     private final TalonSRXControlMode pidControlMode;
 
     private Driver driver;
@@ -46,13 +41,10 @@ public class ElevatorMechanism implements IMechanism
     private boolean elevatorReverseLimitSwitchStatus;
 
     private double desiredHeight;
-
     private double lastUpdateTime;
 
     @Inject
-    public ElevatorMechanism(IDashboardLogger logger,
-                             IRobotProvider provider,
-                             ITimer timer) 
+    public ElevatorMechanism(IDashboardLogger logger, IRobotProvider provider, ITimer timer) 
     {
         this.logger = logger;
         this.timer = timer;
@@ -226,7 +218,7 @@ public class ElevatorMechanism implements IMechanism
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CARGO_LOAD_POSITION;
             }
-            
+
             if (this.driver.getDigital(Operation.ElevatorMoveUp))
             {
                 double deltaPosition = deltaTime * TuningConstants.ELEVATOR_MOVE_VELOCITY;
