@@ -33,26 +33,34 @@ $names = $files | %{ $_.Name.Split(".")[0] } | group -NoElement | ?{ $_.Count -e
 
 $names | %{
     $name = $_
-    $leftCsv = Import-Csv $(Join-Path $Path -ChildPath $($name + ".left.pf1.csv"))
-    $rightCsv = Import-Csv $(Join-Path $Path -ChildPath $($name +  ".right.pf1.csv"))
+    $leftCsv = Import-Csv $(Join-Path $Path -ChildPath $($name + ".right.pf1.csv"))
+    $rightCsv = Import-Csv $(Join-Path $Path -ChildPath $($name +  ".left.pf1.csv"))
 
     if ($leftCsv.Count -ne $rightCsv.Count)
     {
         throw "Mismatched counts between right and left files ($name)"
     }
 
+    $firstHeading = $null;
     $result = @()
     0..$($leftCsv.Count) | %{
         $leftRow = $leftCsv[$_]
-        $rightRow = $rightCsv[$_]
+        $rightRow = $rightCsv[$_] 
         if (-not [String]::IsNullOrEmpty($rightRow.position) -and -not [String]::IsNullOrEmpty($rightRow.velocity))
         {
+            $heading = [double]::Parse($leftRow.heading)
+            if ($firstHeading -eq $null)
+            {
+                $firstHeading = $heading
+            }
+
+            $heading = ($heading - $firstHeading + 4*[Math]::PI) % (2 * [Math]::PI)
             $row = New-Object -TypeName PSCustomObject
             $row | Add-Member -NotePropertyName LeftPosition -NotePropertyValue $($leftRow.position)
             $row | Add-Member -NotePropertyName RightPosition -NotePropertyValue $($rightRow.position)
             $row | Add-Member -NotePropertyName LeftVelocity -NotePropertyValue $($leftRow.velocity)
             $row | Add-Member -NotePropertyName RightVelocity -NotePropertyValue $($rightRow.velocity)
-            $row | Add-Member -NotePropertyName Heading -NotePropertyValue $($leftRow.heading)
+            $row | Add-Member -NotePropertyName Heading -NotePropertyValue $($heading)
             $result += $row
         }
     }

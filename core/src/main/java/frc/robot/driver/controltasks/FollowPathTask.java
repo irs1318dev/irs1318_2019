@@ -13,7 +13,7 @@ import frc.robot.mechanisms.PositionManager;
 
 public class FollowPathTask extends ControlTaskBase implements IControlTask
 {
-    private static final double Timestep = 0.02;
+    private static final double Timestep = 0.01;
     private final String pathName;
 
     protected ITimer timer;
