@@ -523,16 +523,21 @@ public class DriveTrainMechanism implements IMechanism
         double rightVelocityGoal = this.driver.getAnalog(Operation.DriveTrainRightVelocity);
         double headingGoal = this.driver.getAnalog(Operation.DriveTrainHeading);
 
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftPositionGoal", leftPositionGoal);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightPositionGoal", rightPositionGoal);
+        leftVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND;
+        rightVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND;
+
+        this.logger.logNumber(DriveTrainMechanism.LogName, "leftPositionPathGoal", leftPositionGoal);
+        this.logger.logNumber(DriveTrainMechanism.LogName, "rightPositionPathGoal", rightPositionGoal);
+        this.logger.logNumber(DriveTrainMechanism.LogName, "leftVelocityPathGoal", leftVelocityGoal);
+        this.logger.logNumber(DriveTrainMechanism.LogName, "rightVelocityPathGoal", rightVelocityGoal);
 
         // use positional PID to get the relevant value
         double leftGoal = this.leftPID.calculatePosition(leftPositionGoal, this.leftPosition);
         double rightGoal = this.rightPID.calculatePosition(rightPositionGoal, this.rightPosition);
 
         // add in velocity as a type of feed-forward
-        leftGoal += leftVelocityGoal * TuningConstants.DRIVETRAIN_PATH_LEFT_VELOCITY_CONVERSION * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KV;
-        rightGoal += rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_RIGHT_VELOCITY_CONVERSION * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV;
+        leftGoal += leftVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KV;
+        rightGoal += rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV;
 
         // apply cross-coupling changes
         //double leftPositionError = this.leftPID.getError();

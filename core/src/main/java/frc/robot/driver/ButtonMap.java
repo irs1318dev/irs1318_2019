@@ -29,8 +29,8 @@ public class ButtonMap implements IButtonMap
             put(
                 Shift.Debug,
                 new ShiftDescription(
-                    UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_1));
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE));
         }
     };
 
@@ -351,7 +351,7 @@ public class ButtonMap implements IButtonMap
                     0,
                     Shift.Any,
                     ButtonType.Toggle,
-                    () -> new FollowPathTask("/Paths/Turn left 4 feet.csv"),
+                    () -> new FollowPathTask("/Paths/Circle 40 inch radius.csv"),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,
