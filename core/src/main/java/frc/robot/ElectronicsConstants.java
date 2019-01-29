@@ -55,9 +55,9 @@ public class ElectronicsConstants
     public static final int CARGO_MOTOR_CAN_ID = -1;
 
     //Wrist actuators
-    public static final int WRIST_ONE_FORWARD_CHANNEL = -1;
-    public static final int WRIST_ONE_REVERSE_CHANNEL = -1;
+    public static final int WRIST_INNER_FORWARD_CHANNEL = -1;
+    public static final int WRIST_INNER_REVERSE_CHANNEL = -1;
     
-    public static final int WRIST_TWO_FORWARD_CHANNEL = -1;
-    public static final int WRIST_TWO_REVERSE_CHANNEL = -1;
+    public static final int WRIST_OUTER_FORWARD_CHANNEL = -1;
+    public static final int WRIST_OUTER_REVERSE_CHANNEL = -1;
 }

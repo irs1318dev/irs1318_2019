@@ -39,6 +39,8 @@ public enum Operation
     KickerEjectHatchPosition,
     CargoIntakeMode,
     CargoOuttakeMode,
-    WristContractedPosition,
-    WristExtendedPosition
+    WristInnerContract,
+    WristInnerExtend,
+    WristOuterContract,
+    WristOuterExtend
 }

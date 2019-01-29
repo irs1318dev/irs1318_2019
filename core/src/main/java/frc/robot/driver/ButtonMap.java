@@ -236,13 +236,25 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
             put(
-                Operation.WristExtendedPosition,
+                Operation.WristInnerContract,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
             put(
-                Operation.WristContractedPosition,
+                Operation.WristInnerExtend,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.WristOuterContract,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.WristOuterExtend,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
