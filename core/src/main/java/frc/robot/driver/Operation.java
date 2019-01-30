@@ -34,6 +34,16 @@ public enum Operation
     ElevatorCargo3Position,
     ElevatorCargoLoadPosition,
 
+    // Grabber operations:
+    GrabberStowKicker,
+    GrabberKickPanel,
+    GrabberIntakeCargo,
+    GrabberOuttakeCargo,
+    GrabberWristStartPosition,
+    GrabberWristHatchPosition,
+    GrabberWristCargoPosition,
+    GrabberWristFloorPosition,
+
     // Climber operations:
     ClimberArmsRetractedPosition,
     ClimberArmsLowClimbPosition,
@@ -44,5 +54,5 @@ public enum Operation
     ClimberArmsMoveForward,
     ClimberArmsMoveBackward,
     ClimberCamMoveForward,
-    ClimberCamMoveBackward
+    ClimberCamMoveBackward,
 }

@@ -205,9 +205,59 @@ public class ButtonMap implements IButtonMap
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
+                    ButtonType.Click)); 
+
+            // Operations for grabber mechanism
+            put(
+                Operation.GrabberIntakeCargo,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Toggle)); 
+            put(
+                Operation.GrabberOuttakeCargo,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Toggle));
+            put(
+                Operation.GrabberKickPanel,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
                     ButtonType.Click));
-            
-            //Operations for the climber
+            put(
+                Operation.GrabberStowKicker,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.GrabberWristStartPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.GrabberWristHatchPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.GrabberWristCargoPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+            put(
+                Operation.GrabberWristFloorPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Click));
+
+            // Operations for the climber
             put(
                 Operation.ClimberArmsMoveForward,
                 new DigitalOperationDescription(

@@ -191,6 +191,7 @@ public class TuningConstants
 
     // MotionMagic
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
+
     public static final double ELEVATOR_MM_POSITION_PID_KP = -1;
     public static final double ELEVATOR_MM_POSITION_PID_KI = -1;
     public static final double ELEVATOR_MM_POSITION_PID_KD = -1;
@@ -217,6 +218,12 @@ public class TuningConstants
     public static final double ELEVATOR_CARGO_3_POSITION = -1;
     public static final double ELEVATOR_CARGO_LOAD_POSITION = -1;
 
+    //======================================================== Grabber =====================================
+
+    // Cargo intake/outtake motor power
+    public static final double CARGO_INTAKE_MOTOR_POWER = 0.0;
+    public static final double CARGO_OUTTAKE_MOTOR_POWER = 0.0;
+
     //================================================== Climber ==============================================================
 
     // Arms
@@ -231,7 +238,6 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_POSITION_PID_KD = -1;
     public static final double CLIMBER_ARMS_POSITION_PID_KF = -1;
 
-
     // Cam
     public static final double CLIMBER_CAM_STORED_POSITION = -1;
     public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = -1;
@@ -243,6 +249,4 @@ public class TuningConstants
     public static final double CLIMBER_CAM_POSITION_PID_KI = -1;
     public static final double CLIMBER_CAM_POSITION_PID_KD = -1;
     public static final double CLIMBER_CAM_POSITION_PID_KF = -1;
-
-
 }
