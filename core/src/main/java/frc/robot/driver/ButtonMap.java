@@ -210,51 +210,51 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.NONE,
                     ButtonType.Click)); 
 
-            //operations for grabber mechanism
+            // Operations for grabber mechanism
             put(
-                Operation.CargoIntakeMode,
+                Operation.GrabberIntakeCargo,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Toggle)); 
             put(
-                Operation.CargoOuttakeMode,
+                Operation.GrabberOuttakeCargo,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Toggle));
             put(
-                Operation.KickerEjectHatchPosition,
+                Operation.GrabberKickPanel,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
             put(
-                Operation.KickerStowedPosition,
+                Operation.GrabberStowKicker,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
             put(
-                Operation.WristInnerContract,
+                Operation.GrabberWristStartPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
             put(
-                Operation.WristInnerExtend,
+                Operation.GrabberWristHatchPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
             put(
-                Operation.WristOuterContract,
+                Operation.GrabberWristCargoPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
             put(
-                Operation.WristOuterExtend,
+                Operation.GrabberWristFloorPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,

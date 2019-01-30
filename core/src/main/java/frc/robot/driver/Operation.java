@@ -21,7 +21,7 @@ public enum Operation
     DriveTrainHeading,
     DriveTrainSwapFrontOrientation,
 
-    //Elevator operations:
+    // Elevator operations:
     ElevatorForceUp,
     ElevatorForceDown,
     ElevatorMoveUp,
@@ -34,13 +34,13 @@ public enum Operation
     ElevatorCargo3Position,
     ElevatorCargoLoadPosition,
 
-    //Grabber operations:
-    KickerStowedPosition,
-    KickerEjectHatchPosition,
-    CargoIntakeMode,
-    CargoOuttakeMode,
-    WristInnerContract,
-    WristInnerExtend,
-    WristOuterContract,
-    WristOuterExtend
+    // Grabber operations:
+    GrabberStowKicker,
+    GrabberKickPanel,
+    GrabberIntakeCargo,
+    GrabberOuttakeCargo,
+    GrabberWristStartPosition,
+    GrabberWristHatchPosition,
+    GrabberWristCargoPosition,
+    GrabberWristFloorPosition,
 }
