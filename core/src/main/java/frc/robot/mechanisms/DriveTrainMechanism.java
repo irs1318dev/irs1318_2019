@@ -523,30 +523,39 @@ public class DriveTrainMechanism implements IMechanism
         double rightVelocityGoal = this.driver.getAnalog(Operation.DriveTrainRightVelocity);
         double headingGoal = this.driver.getAnalog(Operation.DriveTrainHeading);
 
-        this.logger.logNumber(DriveTrainMechanism.LogName, "leftPositionGoal", leftPositionGoal);
-        this.logger.logNumber(DriveTrainMechanism.LogName, "rightPositionGoal", rightPositionGoal);
+        leftVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND;
+        rightVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND;
+
+        this.logger.logNumber(DriveTrainMechanism.LogName, "leftPositionPathGoal", leftPositionGoal);
+        this.logger.logNumber(DriveTrainMechanism.LogName, "rightPositionPathGoal", rightPositionGoal);
+        this.logger.logNumber(DriveTrainMechanism.LogName, "leftVelocityPathGoal", leftVelocityGoal);
+        this.logger.logNumber(DriveTrainMechanism.LogName, "rightVelocityPathGoal", rightVelocityGoal);
 
         // use positional PID to get the relevant value
-        double leftGoal = this.leftPID.calculatePosition(leftPositionGoal * HardwareConstants.DRIVETRAIN_LEFT_TICKS_PER_INCH, this.leftPosition);
-        double rightGoal = this.rightPID.calculatePosition(rightPositionGoal * HardwareConstants.DRIVETRAIN_RIGHT_TICKS_PER_INCH, this.rightPosition);
+        double leftGoal = this.leftPID.calculatePosition(leftPositionGoal, this.leftPosition);
+        double rightGoal = this.rightPID.calculatePosition(rightPositionGoal, this.rightPosition);
 
         // add in velocity as a type of feed-forward
-        leftGoal += leftVelocityGoal * TuningConstants.DRIVETRAIN_PATH_LEFT_VELOCITY_CONVERSION * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KV;
-        rightGoal += rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_RIGHT_VELOCITY_CONVERSION * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV;
+        leftGoal += leftVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KV;
+        rightGoal += rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV;
 
         // apply cross-coupling changes
-        double leftPositionError = this.leftPID.getError();
-        double rightPositionError = this.rightPID.getError();
+        //double leftPositionError = this.leftPID.getError();
+        //double rightPositionError = this.rightPID.getError();
 
-        double positionErrorMagnitudeDelta = leftPositionError - rightPositionError;
-        if (TuningConstants.DRIVETRAIN_USE_CROSS_COUPLING
-            && !Helpers.WithinDelta(positionErrorMagnitudeDelta, 0.0, TuningConstants.DRIVETRAIN_CROSS_COUPLING_ZERO_ERROR_RANGE))
-        {
-            // add the delta times the coupling factor to the left, and subtract from the right
-            // (if left error is greater than right error, left should be given some more power than right)
-            leftGoal += TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KCC * positionErrorMagnitudeDelta;
-            rightGoal -= TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KCC * positionErrorMagnitudeDelta;
-        }
+        //double positionErrorMagnitudeDelta = leftPositionError - rightPositionError;
+        //if (TuningConstants.DRIVETRAIN_USE_CROSS_COUPLING
+        //    && !Helpers.WithinDelta(positionErrorMagnitudeDelta, 0.0, TuningConstants.DRIVETRAIN_CROSS_COUPLING_ZERO_ERROR_RANGE))
+        //{
+        //    // add the delta times the coupling factor to the left, and subtract from the right
+        //    // (if left error is greater than right error, left should be given some more power than right)
+        //    leftGoal += TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KCC * positionErrorMagnitudeDelta;
+        //    rightGoal -= TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KCC * positionErrorMagnitudeDelta;
+        //}
+
+        // velocity plus position correction could put us over our max or under our min power levels
+        leftGoal = this.applyPowerLevelRange(leftGoal);
+        rightGoal = this.applyPowerLevelRange(rightGoal);
 
         this.assertPowerLevelRange(leftGoal, "left velocity (goal)");
         this.assertPowerLevelRange(rightGoal, "right velocity (goal)");

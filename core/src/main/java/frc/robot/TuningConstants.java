@@ -26,7 +26,7 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
         mechanismList.add(injector.getInstance(PowerManager.class));
         mechanismList.add(injector.getInstance(PositionManager.class));
-        //mechanismList.add(injector.getInstance(VisionManager.class));
+        mechanismList.add(injector.getInstance(VisionManager.class));
         //mechanismList.add(injector.getInstance(CompressorMechanism.class));
         //mechanismList.add(injector.getInstance(SomeMechanism.class));
         return mechanismList;
@@ -56,7 +56,7 @@ public class TuningConstants
     public static final double NAVX_TURN_PID_KS = 1.0;
     public static final double NAVX_TURN_PID_MIN = -0.8;
     public static final double NAVX_TURN_PID_MAX = 0.8;
-    public static final double NAVX_FAST_TURN_PID_KP = 0.007;
+    public static final double NAVX_FAST_TURN_PID_KP = 0.0045;
     public static final double NAVX_FAST_TURN_PID_KI = 0.0;
     public static final double NAVX_FAST_TURN_PID_KD = 0.0;
     public static final double NAVX_FAST_TURN_PID_KF = 0.0;
@@ -104,14 +104,14 @@ public class TuningConstants
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.10; // .2 ==> ~ 1023 / 5000 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.2; // .2 ==> ~ 1023 / 5000 (100% control authority)
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 5000.0;
 
     // Velocity PID (left)
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.10; // .2 ==> ~ 1023 / 5000 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.2; // .2 ==> ~ 1023 / 5000 (100% control authority)
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 5000.0;
 
     // Path PID (right)
@@ -120,8 +120,8 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KF = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KV = 1.0;
-    public static final double DRIVETRAIN_PATH_PID_RIGHT_KCC = 0.0001;
-    public static final double DRIVETRAIN_PATH_RIGHT_VELOCITY_CONVERSION = 0.1 / HardwareConstants.DRIVETRAIN_RIGHT_TICKS_PER_INCH; // convert inches per second into ticks per 100ms
+    public static final double DRIVETRAIN_PATH_PID_RIGHT_KCC = 0.0;
+    public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KS * HardwareConstants.DRIVETRAIN_RIGHT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
 
     // Path PID (left)
     public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0002;
@@ -129,8 +129,8 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_LEFT_KD = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KF = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KV = 1.0;
-    public static final double DRIVETRAIN_PATH_PID_LEFT_KCC = 0.0001;
-    public static final double DRIVETRAIN_PATH_LEFT_VELOCITY_CONVERSION = 0.1 / HardwareConstants.DRIVETRAIN_LEFT_TICKS_PER_INCH; // convert inches per second into ticks per 100ms
+    public static final double DRIVETRAIN_PATH_PID_LEFT_KCC = 0.0;
+    public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
 
     // Position PID (right)
     public static final double DRIVETRAIN_POSITION_PID_RIGHT_KP = 0.0002;
@@ -183,6 +183,7 @@ public class TuningConstants
 
     //================================================== Elevator ==============================================================
 
+    // Sensors
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = false;
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
     public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED = false;
@@ -190,35 +191,63 @@ public class TuningConstants
 
     // MotionMagic
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
-    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KI = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.0;
-    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 0;
-    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 0;
 
-    //PID
-    public static final double ELEVATOR_POSITION_PID_KP = 0.0;
-    public static final double ELEVATOR_POSITION_PID_KI = 0.0;
-    public static final double ELEVATOR_POSITION_PID_KD = 0.0;
-    public static final double ELEVATOR_POSITION_PID_KF = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KP = -1;
+    public static final double ELEVATOR_MM_POSITION_PID_KI = -1;
+    public static final double ELEVATOR_MM_POSITION_PID_KD = -1;
+    public static final double ELEVATOR_MM_POSITION_PID_KF = -1;
+    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = -1;
+    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = -1;
 
-    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.0;
-    public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = 0.0;
-    public static final double ELEVATOR_MOVE_VELOCITY = 0.0;
+    // PID
+    public static final double ELEVATOR_POSITION_PID_KP = -1;
+    public static final double ELEVATOR_POSITION_PID_KI = -1;
+    public static final double ELEVATOR_POSITION_PID_KD = -1;
+    public static final double ELEVATOR_POSITION_PID_KF = -1;
 
-    //Positions
-    public static final double ELEVATOR_BOTTOM_POSITION = 0.0;
-    public static final double ELEVATOR_HATCH_2_POSITION = 0.0;
-    public static final double ELEVATOR_HATCH_3_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_1_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_2_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_3_POSITION = 0.0;
-    public static final double ELEVATOR_CARGO_LOAD_POSITION = 0.0;
+    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = -1;
+    public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = -1;
+    public static final double ELEVATOR_MOVE_VELOCITY = -1;
+
+    // Positions
+    public static final double ELEVATOR_BOTTOM_POSITION = -1;
+    public static final double ELEVATOR_HATCH_2_POSITION = -1;
+    public static final double ELEVATOR_HATCH_3_POSITION = -1;
+    public static final double ELEVATOR_CARGO_1_POSITION = -1;
+    public static final double ELEVATOR_CARGO_2_POSITION = -1;
+    public static final double ELEVATOR_CARGO_3_POSITION = -1;
+    public static final double ELEVATOR_CARGO_LOAD_POSITION = -1;
 
     //======================================================== Grabber =====================================
 
     //Cargo intake/outtake motor power
     public static final double CARGO_INTAKE_MOTOR_POWER = 0.0;
     public static final double CARGO_OUTTAKE_MOTOR_POWER = 0.0;
+
+    //================================================== Climber ==============================================================
+
+    // Arms
+    public static final double CLIMBER_ARMS_RETRACTED_POSITION = -1;
+    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = -1;
+    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = -1;
+
+    public static final double CLIMBER_ARMS_MOVE_VELOCITY = -1;
+
+    public static final double CLIMBER_ARMS_POSITION_PID_KP = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KI = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KD = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KF = -1;
+
+
+    // Cam
+    public static final double CLIMBER_CAM_STORED_POSITION = -1;
+    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = -1;
+    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = -1;
+
+    public static final double CLIMBER_CAM_MOVE_VELOCITY = -1;
+
+    public static final double CLIMBER_CAM_POSITION_PID_KP = -1;
+    public static final double CLIMBER_CAM_POSITION_PID_KI = -1;
+    public static final double CLIMBER_CAM_POSITION_PID_KD = -1;
+    public static final double CLIMBER_CAM_POSITION_PID_KF = -1;
 }

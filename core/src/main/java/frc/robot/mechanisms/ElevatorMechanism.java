@@ -19,21 +19,16 @@ import frc.robot.common.robotprovider.IRobotProvider;
 import frc.robot.common.robotprovider.TalonSRXNeutralMode;
 import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 
-
-
 @Singleton
 public class ElevatorMechanism implements IMechanism 
 {
-
     private static final String logName = "el";
     private static final int pidSlotId = 0;
 
     private final ITimer timer;
-
     private final IDashboardLogger logger;
 
     private final ITalonSRX elevatorMotorMaster;
-
     private final TalonSRXControlMode pidControlMode;
 
     private Driver driver;
@@ -46,13 +41,10 @@ public class ElevatorMechanism implements IMechanism
     private boolean elevatorReverseLimitSwitchStatus;
 
     private double desiredHeight;
-
     private double lastUpdateTime;
 
     @Inject
-    public ElevatorMechanism(IDashboardLogger logger,
-                             IRobotProvider provider,
-                             ITimer timer) 
+    public ElevatorMechanism(IDashboardLogger logger, IRobotProvider provider, ITimer timer) 
     {
         this.logger = logger;
         this.timer = timer;
@@ -74,13 +66,6 @@ public class ElevatorMechanism implements IMechanism
         this.elevatorMotorMaster.setReverseLimitSwitch(
             TuningConstants.ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED,
             TuningConstants.ELEVATOR_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
-        
-        ITalonSRX elevatorFollowerMotor = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_FOLLOWER_CAN_ID);
-        elevatorFollowerMotor.setNeutralMode(TalonSRXNeutralMode.Brake);
-        elevatorFollowerMotor.setInvertOutput(HardwareConstants.ELEVATOR_FOLLOWER_INVERT_OUTPUT);
-        elevatorFollowerMotor.setControlMode(TalonSRXControlMode.Follower);
-        elevatorFollowerMotor.set(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
-                
 
         if (TuningConstants.ELEVATOR_USE_MOTION_MAGIC)
         {
@@ -105,6 +90,12 @@ public class ElevatorMechanism implements IMechanism
 
         this.elevatorMotorMaster.setControlMode(this.pidControlMode);
         this.elevatorMotorMaster.setSelectedSlot(ElevatorMechanism.pidSlotId);
+        
+        ITalonSRX elevatorFollowerMotor = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_FOLLOWER_CAN_ID);
+        elevatorFollowerMotor.setNeutralMode(TalonSRXNeutralMode.Brake);
+        elevatorFollowerMotor.setInvertOutput(HardwareConstants.ELEVATOR_FOLLOWER_INVERT_OUTPUT);
+        elevatorFollowerMotor.setControlMode(TalonSRXControlMode.Follower);
+        elevatorFollowerMotor.set(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
 
         this.elevatorVelocity = 0.0;
         this.elevatorError = 0.0;
@@ -227,7 +218,7 @@ public class ElevatorMechanism implements IMechanism
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CARGO_LOAD_POSITION;
             }
-            
+
             if (this.driver.getDigital(Operation.ElevatorMoveUp))
             {
                 double deltaPosition = deltaTime * TuningConstants.ELEVATOR_MOVE_VELOCITY;

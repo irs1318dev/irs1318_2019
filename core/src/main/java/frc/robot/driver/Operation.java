@@ -43,4 +43,16 @@ public enum Operation
     GrabberWristHatchPosition,
     GrabberWristCargoPosition,
     GrabberWristFloorPosition,
+
+    // Climber operations:
+    ClimberArmsRetractedPosition,
+    ClimberArmsLowClimbPosition,
+    ClimberArmsHighClimbPosition,
+    ClimberCamStoredPosition,
+    ClimberCamLowClimbPosition,
+    ClimberCamHighClimbPosition,
+    ClimberArmsMoveForward,
+    ClimberArmsMoveBackward,
+    ClimberCamMoveForward,
+    ClimberCamMoveBackward,
 }

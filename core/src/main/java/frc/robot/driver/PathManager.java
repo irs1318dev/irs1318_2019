@@ -22,8 +22,11 @@ public class PathManager
     private static final String[] NAMES =
         new String[]
         {
-            "/Paths/TestPath1.csv",
-            "/Paths/TestPath2.csv"
+            "/Paths/Circle 40 inch radius.csv",
+            "/Paths/S path.csv",
+            "/Paths/Straight 4 feet.csv",
+            "/Paths/Turn left 4 feet.csv",
+            "/Paths/Turn right 4 feet.csv",
         };
 
     private static final String LEFT_POSITION_NAME = "LeftPosition";
@@ -66,11 +69,11 @@ public class PathManager
                     String rightVelocity = row.getField(PathManager.RIGHT_VELOCITY_NAME);
                     String heading = row.getField(PathManager.HEADING_NAME);
 
-                    if (leftPosition != null && leftPosition.equals("") &&
-                        rightPosition != null && rightPosition.equals("") &&
-                        leftVelocity != null && leftVelocity.equals("") &&
-                        rightVelocity != null && rightVelocity.equals("") &&
-                        heading != null && heading.equals(""))
+                    if (leftPosition != null && !leftPosition.equals("") &&
+                        rightPosition != null && !rightPosition.equals("") &&
+                        leftVelocity != null && !leftVelocity.equals("") &&
+                        rightVelocity != null && !rightVelocity.equals("") &&
+                        heading != null && !heading.equals(""))
                     {
                         double lpos = Double.parseDouble(leftPosition);
                         double rpos = Double.parseDouble(rightPosition);

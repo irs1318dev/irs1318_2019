@@ -17,10 +17,7 @@ import frc.robot.driver.common.descriptions.MacroOperationDescription;
 import frc.robot.driver.common.descriptions.OperationDescription;
 import frc.robot.driver.common.descriptions.ShiftDescription;
 import frc.robot.driver.common.descriptions.UserInputDevice;
-import frc.robot.driver.controltasks.NavxTurnTask;
-import frc.robot.driver.controltasks.PIDBrakeTask;
-import frc.robot.driver.controltasks.VisionAdvanceAndCenterTask;
-import frc.robot.driver.controltasks.VisionCenteringTask;
+import frc.robot.driver.controltasks.*;
 
 @Singleton
 public class ButtonMap implements IButtonMap
@@ -32,8 +29,8 @@ public class ButtonMap implements IButtonMap
             put(
                 Shift.Debug,
                 new ShiftDescription(
-                    UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_1));
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE));
         }
     };
 
@@ -259,6 +256,68 @@ public class ButtonMap implements IButtonMap
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Click));
+
+            // Operations for the climber
+            put(
+                Operation.ClimberArmsMoveForward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberArmsMoveBackward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberCamMoveForward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberCamMoveBackward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberArmsRetractedPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberArmsLowClimbPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberArmsHighClimbPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberCamStoredPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberCamLowClimbPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberCamHighClimbPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
         }
     };
 
@@ -324,6 +383,35 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainUseBrakeMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                    },
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                    }));
+            put(
+                MacroOperation.FollowSomePath,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    0,
+                    Shift.Any,
+                    ButtonType.Toggle,
+                    () -> new FollowPathTask("/Paths/Circle 40 inch radius.csv"),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainHeading,
+                        Operation.DriveTrainUsePathMode,
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
                         Operation.DriveTrainSimpleMode,
