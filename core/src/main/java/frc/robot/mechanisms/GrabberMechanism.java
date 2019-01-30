@@ -59,11 +59,11 @@ public class GrabberMechanism implements IMechanism {
         double cargoMotorPower = 0.0;
         if (this.driver.getDigital(Operation.GrabberIntakeCargo))
         {
-            cargoMotorPower = TuningConstants.CARGO_INTAKE_MOTOR_POWER;
+            cargoMotorPower = TuningConstants.GRABBER_CARGO_INTAKE_MOTOR_POWER;
         }
         else if (this.driver.getDigital(Operation.GrabberOuttakeCargo))
         {
-            cargoMotorPower = TuningConstants.CARGO_OUTTAKE_MOTOR_POWER;
+            cargoMotorPower = TuningConstants.GRABBER_CARGO_OUTTAKE_MOTOR_POWER;
         }
 
         this.logger.logNumber(GrabberMechanism.logName, "cargo", cargoMotorPower);

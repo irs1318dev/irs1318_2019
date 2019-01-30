@@ -223,8 +223,8 @@ public class TuningConstants
     //======================================================== Grabber =====================================
 
     // Cargo intake/outtake motor power
-    public static final double CARGO_INTAKE_MOTOR_POWER = 0.0;
-    public static final double CARGO_OUTTAKE_MOTOR_POWER = 0.0;
+    public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
+    public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.6;
 
     //================================================== Climber ==============================================================
 
