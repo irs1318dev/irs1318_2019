@@ -27,11 +27,11 @@ public class GrabberMechanism implements IMechanism {
     @Inject
     public GrabberMechanism(IRobotProvider provider, IDashboardLogger logger) {
 
-        this.kicker = provider.getDoubleSolenoid(ElectronicsConstants.KICKER_FORWARD_CHANNEL, ElectronicsConstants.KICKER_REVERSE_CHANNEL);
-        this.cargoMotor = provider.getTalonSRX(ElectronicsConstants.CARGO_MOTOR_CAN_ID);
+        this.kicker = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_KICKER_FORWARD_CHANNEL, ElectronicsConstants.GRABBER_KICKER_REVERSE_CHANNEL);
+        this.cargoMotor = provider.getTalonSRX(ElectronicsConstants.GRABBER_CARGO_MOTOR_CAN_ID);
 
-        this.wristInner = provider.getDoubleSolenoid(ElectronicsConstants.WRIST_INNER_FORWARD_CHANNEL, ElectronicsConstants.WRIST_INNER_REVERSE_CHANNEL);
-        this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.WRIST_OUTER_FORWARD_CHANNEL, ElectronicsConstants.WRIST_OUTER_REVERSE_CHANNEL);
+        this.wristInner = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_INNER_FORWARD_CHANNEL, ElectronicsConstants.GRABBER_WRIST_INNER_REVERSE_CHANNEL);
+        this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_OUTER_FORWARD_CHANNEL, ElectronicsConstants.GRABBER_WRIST_OUTER_REVERSE_CHANNEL);
 
         this.logger = logger;
     }

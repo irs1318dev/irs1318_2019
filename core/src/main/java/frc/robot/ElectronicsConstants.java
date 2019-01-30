@@ -42,30 +42,30 @@ public class ElectronicsConstants
 
     //================================================== Elevator ==============================================================
 
-    public static final int ELEVATOR_MOTOR_MASTER_CAN_ID = -1;
-    public static final int ELEVATOR_MOTOR_FOLLOWER_CAN_ID = -1;
+    public static final int ELEVATOR_MOTOR_MASTER_CAN_ID = 7;
+    public static final int ELEVATOR_MOTOR_FOLLOWER_CAN_ID = 8;
 
     //================================================== Grabber ============================================================
 
     // Hatch ejection DoubleSolenoid
-    public static final int KICKER_FORWARD_CHANNEL = -1;
-    public static final int KICKER_REVERSE_CHANNEL = -1;
+    public static final int GRABBER_KICKER_FORWARD_CHANNEL = 0;
+    public static final int GRABBER_KICKER_REVERSE_CHANNEL = 1;
 
     // Cargo intake/outtake TalonSRX
-    public static final int CARGO_MOTOR_CAN_ID = -1;
+    public static final int GRABBER_CARGO_MOTOR_CAN_ID = 9;
 
     // Wrist actuators
-    public static final int WRIST_INNER_FORWARD_CHANNEL = -1;
-    public static final int WRIST_INNER_REVERSE_CHANNEL = -1;
+    public static final int GRABBER_WRIST_INNER_FORWARD_CHANNEL = 2;
+    public static final int GRABBER_WRIST_INNER_REVERSE_CHANNEL = 3;
     
-    public static final int WRIST_OUTER_FORWARD_CHANNEL = -1;
-    public static final int WRIST_OUTER_REVERSE_CHANNEL = -1;
+    public static final int GRABBER_WRIST_OUTER_FORWARD_CHANNEL = 4;
+    public static final int GRABBER_WRIST_OUTER_REVERSE_CHANNEL = 5;
 
     //================================================== Climber ==============================================================
 
-    public static final int CLIMBER_ARMS_MOTOR_MASTER_ID = -1;
-    public static final int CLIMBER_ARMS_MOTOR_FOLLOWER_ID = -1;
+    public static final int CLIMBER_ARMS_MOTOR_MASTER_ID = 10;
+    public static final int CLIMBER_ARMS_MOTOR_FOLLOWER_ID = 11;
 
-    public static final int CLIMBER_CAM_MOTOR_MASTER_ID = -1;
-    public static final int CLIMBER_CAM_MOTOR_FOLLOWER_ID = -1;
+    public static final int CLIMBER_CAM_MOTOR_MASTER_ID = 12;
+    public static final int CLIMBER_CAM_MOTOR_FOLLOWER_ID = 13;
 }
