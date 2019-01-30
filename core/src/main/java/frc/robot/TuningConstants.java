@@ -220,7 +220,7 @@ public class TuningConstants
 
     //======================================================== Grabber =====================================
 
-    //Cargo intake/outtake motor power
+    // Cargo intake/outtake motor power
     public static final double CARGO_INTAKE_MOTOR_POWER = 0.0;
     public static final double CARGO_OUTTAKE_MOTOR_POWER = 0.0;
 
@@ -237,7 +237,6 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_POSITION_PID_KI = -1;
     public static final double CLIMBER_ARMS_POSITION_PID_KD = -1;
     public static final double CLIMBER_ARMS_POSITION_PID_KF = -1;
-
 
     // Cam
     public static final double CLIMBER_CAM_STORED_POSITION = -1;
