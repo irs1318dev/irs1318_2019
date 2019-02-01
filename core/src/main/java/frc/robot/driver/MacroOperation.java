@@ -12,4 +12,7 @@ public enum MacroOperation
     VisionCenter,
     VisionCenterAndAdvance,
     DriveForwardTurnRight,
+
+    ClimbHab2,
+    ClimbHab3,
 }
