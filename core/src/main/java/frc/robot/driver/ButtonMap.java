@@ -29,8 +29,8 @@ public class ButtonMap implements IButtonMap
             put(
                 Shift.Debug,
                 new ShiftDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE));
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_TRIGGER_BUTTON));
         }
     };
 
@@ -143,88 +143,102 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.ElevatorForceUp,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_TOP_RIGHT_BUTTON,
+                    Shift.Debug,
                     ButtonType.Simple));
             put(
                 Operation.ElevatorForceDown,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_MIDDLE_RIGHT_BUTTON,
+                    Shift.Debug,
                     ButtonType.Simple));
             put(
                 Operation.ElevatorMoveUp,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_TOP_RIGHT_BUTTON,
+                    Shift.None,
                     ButtonType.Simple));
             put(
                 Operation.ElevatorMoveDown,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_MIDDLE_RIGHT_BUTTON,
+                    Shift.None,
                     ButtonType.Simple));  
             put(
                 Operation.ElevatorBottomPosition,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_LEFT_BUTTON,
+                    Shift.None,
                     ButtonType.Click)); 
             put(
                 Operation.ElevatorHatch2Position,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_MIDDLE_LEFT_BUTTON,
+                    Shift.None,
                     ButtonType.Click));
             put(
                 Operation.ElevatorHatch3Position,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_TOP_LEFT_BUTTON,
+                    Shift.None,
                     ButtonType.Click)); 
             put(
                 Operation.ElevatorCargo1Position,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_LEFT_BUTTON,
+                    Shift.Debug,
                     ButtonType.Click)); 
             put(
                 Operation.ElevatorCargo2Position,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_MIDDLE_LEFT_BUTTON,
+                    Shift.Debug,
                     ButtonType.Click)); 
             put(
                 Operation.ElevatorCargo3Position,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_TOP_LEFT_BUTTON,
+                    Shift.Debug,
                     ButtonType.Click));
             put(
                 Operation.ElevatorCargoLoadPosition,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_RIGHT_BUTTON,
+                    Shift.Debug,
                     ButtonType.Click)); 
 
             // Operations for grabber mechanism
             put(
                 Operation.GrabberIntakeCargo,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_TOP_LEFT_BUTTON,
+                    Shift.None,
                     ButtonType.Toggle)); 
             put(
                 Operation.GrabberOuttakeCargo,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_LEFT_BUTTON,
+                    Shift.None,
                     ButtonType.Toggle));
             put(
                 Operation.GrabberKickPanel,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
+                    Shift.None,
                     ButtonType.Click));
             put(
                 Operation.GrabberStowKicker,
@@ -235,26 +249,30 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.GrabberWristStartPosition,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    180,
+                    Shift.None,
                     ButtonType.Click));
             put(
                 Operation.GrabberWristHatchPosition,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    90,
+                    Shift.None,
                     ButtonType.Click));
             put(
                 Operation.GrabberWristCargoPosition,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    270,
+                    Shift.None,
                     ButtonType.Click));
             put(
                 Operation.GrabberWristFloorPosition,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    0,
+                    Shift.None,
                     ButtonType.Click));
 
             // Operations for the climber
@@ -397,8 +415,8 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.FollowSomePath,
                 new MacroOperationDescription(
-                    UserInputDevice.Driver,
-                    0,
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
                     Shift.Any,
                     ButtonType.Toggle,
                     () -> new FollowPathTask("/Paths/Circle 40 inch radius.csv"),
@@ -424,12 +442,17 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                     }));
 
+            //Climbing macros
+                //ClimbHab2
+                //ClimbHab3
+
             // Centering macro
             put(
                 MacroOperation.VisionCenter,
                 new MacroOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    0,
+                    Shift.Debug,
                     ButtonType.Toggle,
                     () -> new VisionCenteringTask(),
                     new Operation[]

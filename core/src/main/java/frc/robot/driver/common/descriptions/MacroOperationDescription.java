@@ -115,6 +115,36 @@ public class MacroOperationDescription extends OperationDescription
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
+     */
+    public MacroOperationDescription(
+        UserInputDevice userInputDevice,
+        int povValue,
+        Shift requiredShift,
+        ButtonType buttonType,
+        Supplier<IControlTask> taskSupplier,
+        Operation[] affectedOperations)
+    {
+        this(
+            true,
+            userInputDevice,
+            UserInputDeviceButton.JOYSTICK_POV,
+            povValue,
+            DigitalSensor.None,
+            requiredShift,
+            buttonType,
+            taskSupplier,
+            affectedOperations,
+            null);
+    }
+
+    /**
+     * Initializes a new MacroOperationDescription based on a user interaction on the POV
+     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param povValue the value of the POV (hat) used to perform the macro operation
+     * @param requiredShift the shift button that must be applied to perform macro
+     * @param buttonType the behavior type to use for the macro operation
+     * @param taskSupplier the function that creates the tasks that should be performed by the macro
+     * @param affectedOperations the list of operations that will be utilized by this macro
      * @param macroCancelOperations the list of operations that can be used to cancel this macro
      */
     public MacroOperationDescription(
