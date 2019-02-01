@@ -223,29 +223,23 @@ public class ButtonMap implements IButtonMap
                 Operation.GrabberIntakeCargo,
                 new DigitalOperationDescription(
                     UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_TOP_LEFT_BUTTON,
+                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_LEFT_BUTTON,
                     Shift.None,
-                    ButtonType.Toggle)); 
+                    ButtonType.Simple)); 
             put(
                 Operation.GrabberOuttakeCargo,
                 new DigitalOperationDescription(
                     UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_LEFT_BUTTON,
+                    UserInputDeviceButton.JOYSTICK_STICK_TOP_LEFT_BUTTON,
                     Shift.None,
-                    ButtonType.Toggle));
+                    ButtonType.Simple));
             put(
                 Operation.GrabberKickPanel,
                 new DigitalOperationDescription(
                     UserInputDevice.Driver,
                     UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
                     Shift.None,
-                    ButtonType.Click));
-            put(
-                Operation.GrabberStowKicker,
-                new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
-                    ButtonType.Click));
+                    ButtonType.Simple));
             put(
                 Operation.GrabberWristStartPosition,
                 new DigitalOperationDescription(
@@ -358,8 +352,8 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
                     }));
-            
-            // turn in place macros
+
+            // Driving macros
             put(
                 MacroOperation.TurnInPlaceRight,
                 new MacroOperationDescription(
@@ -442,11 +436,77 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                     }));
 
-            //Climbing macros
-                //ClimbHab2
-                //ClimbHab3
+            // Climbing macros
+            put(
+                MacroOperation.ClimbHab2,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_TOP_LEFT_BUTTON,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new WaitTask(0.0),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainHeading,
+                        Operation.DriveTrainUsePathMode,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition,
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,
+                    },
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                    }));
+            put(
+                MacroOperation.ClimbHab3,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new WaitTask(0.0),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainHeading,
+                        Operation.DriveTrainUsePathMode,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                    },
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                    }));
 
-            // Centering macro
+            // Vision macros
             put(
                 MacroOperation.VisionCenter,
                 new MacroOperationDescription(
@@ -467,8 +527,9 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.VisionCenterAndAdvance,
                 new MacroOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    180,
+                    Shift.Debug,
                     ButtonType.Toggle,
                     () -> new VisionAdvanceAndCenterTask(),
                     new Operation[]
