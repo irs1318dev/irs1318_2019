@@ -365,7 +365,7 @@ public class ButtonMap implements IButtonMap
                 new MacroOperationDescription(
                     UserInputDevice.Driver,
                     90,
-                    Shift.Any,
+                    Shift.Debug,
                     ButtonType.Toggle,
                     () -> new NavxTurnTask(false, 180, true, true),
                     new Operation[]
@@ -392,7 +392,7 @@ public class ButtonMap implements IButtonMap
                 new MacroOperationDescription(
                     UserInputDevice.Driver,
                     270,
-                    Shift.Any,
+                    Shift.Debug,
                     ButtonType.Toggle,
                     () -> new NavxTurnTask(false, -180, true, true),
                     new Operation[]
