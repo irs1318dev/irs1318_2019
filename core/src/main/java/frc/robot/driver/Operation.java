@@ -35,7 +35,6 @@ public enum Operation
     ElevatorCargoLoadPosition,
 
     // Grabber operations:
-    GrabberStowKicker,
     GrabberKickPanel,
     GrabberIntakeCargo,
     GrabberOuttakeCargo,

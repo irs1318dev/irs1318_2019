@@ -45,16 +45,9 @@ public class GrabberMechanism implements IMechanism {
     @Override
     public void update()
     {
-        if (this.driver.getDigital(Operation.GrabberKickPanel))
-        {
-            this.kicker.set(DoubleSolenoidValue.Forward);
-            this.logger.logBoolean(GrabberMechanism.logName, "kicker", true);
-        }
-        else if (this.driver.getDigital(Operation.GrabberStowKicker))
-        {
-            this.kicker.set(DoubleSolenoidValue.Reverse);
-            this.logger.logBoolean(GrabberMechanism.logName, "kicker", false);
-        }
+        boolean kickPanel = this.driver.getDigital(Operation.GrabberKickPanel);
+        this.kicker.set(kickPanel ? DoubleSolenoidValue.Forward : DoubleSolenoidValue.Reverse);
+        this.logger.logBoolean(GrabberMechanism.logName, "kicker", kickPanel);
 
         double cargoMotorPower = 0.0;
         if (this.driver.getDigital(Operation.GrabberIntakeCargo))
