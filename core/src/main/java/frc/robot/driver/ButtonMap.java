@@ -497,6 +497,12 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
                         Operation.DriveTrainSimpleMode,
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition,
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,
                     },
                     new Operation[]
                     {
@@ -504,6 +510,10 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainUseBrakeMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
                     }));
 
             // Vision macros
