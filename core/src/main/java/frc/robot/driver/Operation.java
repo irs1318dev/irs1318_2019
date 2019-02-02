@@ -54,4 +54,8 @@ public enum Operation
     ClimberArmsMoveBackward,
     ClimberCamMoveForward,
     ClimberCamMoveBackward,
+    ClimberArmsForceForward,
+    ClimberArmsForceBackward,
+    ClimberCamForceForward,
+    ClimberCamForceBackward,
 }
