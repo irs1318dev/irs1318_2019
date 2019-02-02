@@ -166,7 +166,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
                 this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
             }
 
-            this.ringLight.set(desiredState == VisionProcessingState.Active ? 1.0 : 0.0);
+            this.ringLight.set(desiredState == VisionProcessingState.Active ? VisionConstants.RING_LIGHT_ON : VisionConstants.RING_LIGHT_OFF);
             this.visionPipeline.setActivation(desiredState == VisionProcessingState.Active);
 
             this.currentState = desiredState;
