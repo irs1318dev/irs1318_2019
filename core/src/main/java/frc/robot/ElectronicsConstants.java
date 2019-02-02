@@ -29,7 +29,7 @@ public class ElectronicsConstants
 
     //================================================== Vision ==============================================================
 
-    public static final int VISION_RING_LIGHT_PCM_CHANNEL = 2;
+    public static final int VISION_RING_LIGHT_PWM_CHANNEL = 0;
 
     //================================================== DriveTrain ==============================================================
 
