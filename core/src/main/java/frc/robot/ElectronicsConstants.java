@@ -69,6 +69,6 @@ public class ElectronicsConstants
     public static final int CLIMBER_CAM_MOTOR_MASTER_ID = 12;
     public static final int CLIMBER_CAM_MOTOR_FOLLOWER_ID = 13;
 
-    public static final int CLIMBER_CAM_LIMIT_SWITCH_ID = 14;
-    public static final int CLIMBER_HEIGHT_SENSOR_ID = 15;
+    public static final int CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL = 3;
+    public static final int CLIMBER_HEIGHT_SENSOR_ANALOG_CHANNEL = 0;
 }

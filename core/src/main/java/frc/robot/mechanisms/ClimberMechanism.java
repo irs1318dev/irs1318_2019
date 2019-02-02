@@ -118,8 +118,8 @@ public class ClimberMechanism implements IMechanism
         climberCamMotorFollower.setControlMode(TalonSRXControlMode.Follower);
         climberCamMotorFollower.set(ElectronicsConstants.CLIMBER_CAM_MOTOR_MASTER_ID);
 
-        this.climberCamLimitSwitch = provider.getDigitalInput(ElectronicsConstants.CLIMBER_CAM_LIMIT_SWITCH_ID);
-        this.climberHeightSensor = provider.getAnalogInput(ElectronicsConstants.CLIMBER_HEIGHT_SENSOR_ID);
+        this.climberCamLimitSwitch = provider.getDigitalInput(ElectronicsConstants.CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL);
+        this.climberHeightSensor = provider.getAnalogInput(ElectronicsConstants.CLIMBER_HEIGHT_SENSOR_ANALOG_CHANNEL);
 
         this.climbedHeight = 0.0;
         this.camVelocity = 0.0;
@@ -250,6 +250,37 @@ public class ClimberMechanism implements IMechanism
                 this.climberArmsMotorMaster.set(TuningConstants.CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL);
             }
         }
+        else
+        {
+            if (this.driver.getDigital(Operation.ClimberArmsRetractedPosition))
+            {
+                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_RETRACTED_POSITION;
+            }
+            else if (this.driver.getDigital(Operation.ClimberArmsLowClimbPosition))
+            {
+                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_LOW_CLIMB_POSITION;
+            }
+            else if (this.driver.getDigital(Operation.ClimberArmsHighClimbPosition))
+            {
+                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_HIGH_CLIMB_POSITION;
+            }
+
+            if (this.driver.getDigital(Operation.ClimberArmsMoveForward))
+            {
+                double deltaPosition = deltaTime * TuningConstants.CLIMBER_ARMS_MOVE_VELOCITY;
+                this.desiredArmsPosition += deltaPosition;
+            }
+            else if (this.driver.getDigital(Operation.ClimberArmsMoveBackward))
+            {
+                double deltaPosition = deltaTime * TuningConstants.CLIMBER_ARMS_MOVE_VELOCITY;
+                this.desiredArmsPosition -= deltaPosition;
+            }
+
+            this.logger.logNumber(ClimberMechanism.logName, "desiredArmsPosition", this.desiredArmsPosition);
+            
+            this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
+            this.climberArmsMotorMaster.set(this.desiredArmsPosition / HardwareConstants.CLIMBER_ARMS_PULSE_DISTANCE);
+        }
 
         boolean forceCamForward = this.driver.getDigital(Operation.ClimberCamForceForward);
         boolean forceCamBack = this.driver.getDigital(Operation.ClimberCamForceBackward);
@@ -274,20 +305,7 @@ public class ClimberMechanism implements IMechanism
             }
         }
         else
-        {
-            if (this.driver.getDigital(Operation.ClimberArmsRetractedPosition))
-            {
-                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_RETRACTED_POSITION;
-            }
-            else if (this.driver.getDigital(Operation.ClimberArmsLowClimbPosition))
-            {
-                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_LOW_CLIMB_POSITION;
-            }
-            else if (this.driver.getDigital(Operation.ClimberArmsHighClimbPosition))
-            {
-                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_HIGH_CLIMB_POSITION;
-            }
-            
+        {   
             if (this.driver.getDigital(Operation.ClimberCamStoredPosition))
             {
                 this.desiredCamPosition = TuningConstants.CLIMBER_CAM_STORED_POSITION;
@@ -301,17 +319,6 @@ public class ClimberMechanism implements IMechanism
                 this.desiredCamPosition = TuningConstants.CLIMBER_CAM_HIGH_CLIMB_POSITION;
             }
 
-            if (this.driver.getDigital(Operation.ClimberArmsMoveForward))
-            {
-                double deltaPosition = deltaTime * TuningConstants.CLIMBER_ARMS_MOVE_VELOCITY;
-                this.desiredArmsPosition += deltaPosition;
-            }
-            else if (this.driver.getDigital(Operation.ClimberArmsMoveBackward))
-            {
-                double deltaPosition = deltaTime * TuningConstants.CLIMBER_ARMS_MOVE_VELOCITY;
-                this.desiredArmsPosition -= deltaPosition;
-            }
-
             if (this.driver.getDigital(Operation.ClimberCamMoveForward))
             {
                 double deltaPosition = deltaTime * TuningConstants.CLIMBER_CAM_MOVE_VELOCITY;
@@ -323,12 +330,8 @@ public class ClimberMechanism implements IMechanism
                 this.desiredCamPosition -= deltaPosition;
             }
 
-            this.logger.logNumber(ClimberMechanism.logName, "desiredArmsPosition", this.desiredArmsPosition);
             this.logger.logNumber(ClimberMechanism.logName, "desiredCamPosition", this.desiredCamPosition);
-        
-            this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
-            this.climberArmsMotorMaster.set(this.desiredArmsPosition / HardwareConstants.CLIMBER_ARMS_PULSE_DISTANCE);
-        
+                
             this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
             this.climberCamMotorMaster.set(this.desiredCamPosition / HardwareConstants.CLIMBER_CAM_PULSE_DISTANCE);
         }

@@ -259,7 +259,6 @@ public class TuningConstants
     public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_ENABLED = false;
     public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
 
-    public static final double CLIMBER_CAM_POSITION_MAX = -1;
     public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = -1;
     public static final double CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL = -1;
 
