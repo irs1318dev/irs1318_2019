@@ -57,7 +57,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     {
         this.logger = logger;
         this.timer = timer;
-        this.ringLight = provider.getTalon(ElectronicsConstants.VISION_RING_LIGHT_PCM_CHANNEL);
+        this.ringLight = provider.getTalon(ElectronicsConstants.VISION_RING_LIGHT_PWM_CHANNEL);
 
         this.visionLock = new Object();
 
