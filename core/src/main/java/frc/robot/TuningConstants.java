@@ -233,6 +233,15 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = -1;
     public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = -1;
 
+    public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
+    public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
+
+    public static final double CLIMBER_ARMS_POSITION_MAX = -1;
+    public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = -1;
+    public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -1;
+
     public static final double CLIMBER_ARMS_MOVE_VELOCITY = -1;
 
     public static final double CLIMBER_ARMS_POSITION_PID_KP = -1;
@@ -245,10 +254,21 @@ public class TuningConstants
     public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = -1;
     public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = -1;
 
+    public static final boolean CLIMBER_CAM_FORWARD_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean CLIMBER_CAM_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
+    public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
+
+    public static final double CLIMBER_CAM_POSITION_MAX = -1;
+    public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = -1;
+    public static final double CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL = -1;
+
     public static final double CLIMBER_CAM_MOVE_VELOCITY = -1;
 
     public static final double CLIMBER_CAM_POSITION_PID_KP = -1;
     public static final double CLIMBER_CAM_POSITION_PID_KI = -1;
     public static final double CLIMBER_CAM_POSITION_PID_KD = -1;
     public static final double CLIMBER_CAM_POSITION_PID_KF = -1;
+
+    public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = -1;
 }

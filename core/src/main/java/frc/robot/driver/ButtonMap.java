@@ -318,6 +318,30 @@ public class ButtonMap implements IButtonMap
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Simple));
+            put(
+                Operation.ClimberArmsForceForward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberArmsForceBackward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberCamForceForward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberCamForceBackward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
         }
     };
 
