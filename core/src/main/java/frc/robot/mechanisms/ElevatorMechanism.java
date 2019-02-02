@@ -117,9 +117,18 @@ public class ElevatorMechanism implements IMechanism
         return this.elevatorError;
     }
 
-    public double getPosition()
+    public int getPosition()
     {
         return this.elevatorPosition;
+    }
+
+    public double getHeight()
+    {
+        return this.elevatorHeight;
+    }
+
+    public double getDesiredHeight() {
+        return this.desiredHeight;
     }
 
     public boolean getForwardLimitSwitchStatus() 
