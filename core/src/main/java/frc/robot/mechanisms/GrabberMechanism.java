@@ -24,22 +24,42 @@ public class GrabberMechanism implements IMechanism {
     private final IDoubleSolenoid wristInner; // for controlling the piston closest to the elevator
     private final IDoubleSolenoid wristOuter; // for controlling the piston farthest from the elevator
 
+    private final IDigitalInput cargoLimitSwitch;
+    private final IDigitalInput hatchLimitSwtich;
+
+    private boolean cargoLimitSwitchStatus;
+    private boolean hatchLimitSwitchStatus;
+
     @Inject
     public GrabberMechanism(IRobotProvider provider, IDashboardLogger logger) {
 
-        this.kicker = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_KICKER_FORWARD_CHANNEL, ElectronicsConstants.GRABBER_KICKER_REVERSE_CHANNEL);
+        this.kicker = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_KICKER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_KICKER_REVERSE_PCM_CHANNEL);
         this.cargoMotor = provider.getTalonSRX(ElectronicsConstants.GRABBER_CARGO_MOTOR_CAN_ID);
 
-        this.wristInner = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_INNER_FORWARD_CHANNEL, ElectronicsConstants.GRABBER_WRIST_INNER_REVERSE_CHANNEL);
-        this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_OUTER_FORWARD_CHANNEL, ElectronicsConstants.GRABBER_WRIST_OUTER_REVERSE_CHANNEL);
+        this.wristInner = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL);
+        this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL);
+
+        this.cargoLimitSwitch = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_DIGITAL_CHANNEL);
+        this.hatchLimitSwtich = provider.getDigitalInput(ElectronicsConstants.GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL);
 
         this.logger = logger;
+    }
+
+    public boolean hasCargo()
+    {
+        return this.cargoLimitSwitchStatus;
+    }
+
+    public boolean hasHatch()
+    {
+        return this.hatchLimitSwitchStatus;
     }
 
     @Override
     public void readSensors()
     {
-        // no sensors to read
+        this.cargoLimitSwitchStatus = this.cargoLimitSwitch.get();
+        this.hatchLimitSwitchStatus = this.hatchLimitSwtich.get();
     }
 
     @Override

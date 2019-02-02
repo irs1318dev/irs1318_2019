@@ -50,7 +50,7 @@ public class ClimberMechanism implements IMechanism
         this.logger = logger;
         this.timer = timer;
 
-        this.climberArmsMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_ARMS_MOTOR_MASTER_ID);
+        this.climberArmsMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_ARMS_MOTOR_MASTER_CAN_ID);
         this.climberArmsMotorMaster.setNeutralMode(TalonSRXNeutralMode.Brake);
         this.climberArmsMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_ARMS_MASTER_INVERT_OUTPUT);
         this.climberArmsMotorMaster.setInvertSensor(HardwareConstants.CLIMBER_ARMS_INVERT_SENSOR);
@@ -67,17 +67,17 @@ public class ClimberMechanism implements IMechanism
         this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
         this.climberArmsMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);    
 
-        ITalonSRX climberArmsMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_ARMS_MOTOR_FOLLOWER_ID);
+        ITalonSRX climberArmsMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_ARMS_MOTOR_FOLLOWER_CAN_ID);
         climberArmsMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
         climberArmsMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_ARMS_FOLLOWER_INVERT_OUTPUT);
         climberArmsMotorFollower.setControlMode(TalonSRXControlMode.Follower);
-        climberArmsMotorFollower.set(ElectronicsConstants.CLIMBER_ARMS_MOTOR_MASTER_ID);
+        climberArmsMotorFollower.set(ElectronicsConstants.CLIMBER_ARMS_MOTOR_MASTER_CAN_ID);
 
         this.armsVelocity = 0.0;
         this.armsError = 0.0;
         this.armsPosition = 0;
         
-        this.climberCamMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_CAM_MOTOR_MASTER_ID);
+        this.climberCamMotorMaster = provider.getTalonSRX(ElectronicsConstants.CLIMBER_CAM_MOTOR_MASTER__CAN_ID);
         this.climberCamMotorMaster.setNeutralMode(TalonSRXNeutralMode.Brake);
         this.climberCamMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_CAM_MASTER_INVERT_OUTPUT);
         this.climberCamMotorMaster.setInvertSensor(HardwareConstants.CLIMBER_CAM_INVERT_SENSOR);
@@ -95,11 +95,11 @@ public class ClimberMechanism implements IMechanism
         this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
         this.climberCamMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);    
 
-        ITalonSRX climberCamMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_CAM_MOTOR_FOLLOWER_ID);
+        ITalonSRX climberCamMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_CAM_MOTOR_FOLLOWER__CAN_ID);
         climberCamMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
         climberCamMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_CAM_FOLLOWER_INVERT_OUTPUT);
         climberCamMotorFollower.setControlMode(TalonSRXControlMode.Follower);
-        climberCamMotorFollower.set(ElectronicsConstants.CLIMBER_CAM_MOTOR_MASTER_ID);
+        climberCamMotorFollower.set(ElectronicsConstants.CLIMBER_CAM_MOTOR_MASTER__CAN_ID);
 
         this.camVelocity = 0.0;
         this.camError = 0.0;

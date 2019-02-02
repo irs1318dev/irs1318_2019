@@ -48,24 +48,28 @@ public class ElectronicsConstants
     //================================================== Grabber ============================================================
 
     // Hatch ejection DoubleSolenoid
-    public static final int GRABBER_KICKER_FORWARD_CHANNEL = 0;
-    public static final int GRABBER_KICKER_REVERSE_CHANNEL = 1;
+    public static final int GRABBER_KICKER_FORWARD_PCM_CHANNEL = 0;
+    public static final int GRABBER_KICKER_REVERSE_PCM_CHANNEL = 1;
 
     // Cargo intake/outtake TalonSRX
     public static final int GRABBER_CARGO_MOTOR_CAN_ID = 9;
 
     // Wrist actuators
-    public static final int GRABBER_WRIST_INNER_FORWARD_CHANNEL = 2;
-    public static final int GRABBER_WRIST_INNER_REVERSE_CHANNEL = 3;
+    public static final int GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL = 2;
+    public static final int GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL = 3;
     
-    public static final int GRABBER_WRIST_OUTER_FORWARD_CHANNEL = 4;
-    public static final int GRABBER_WRIST_OUTER_REVERSE_CHANNEL = 5;
+    public static final int GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL = 4;
+    public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 5;
+
+    //Limit switches
+    public static final int GRABBER_CARGO_LIMIT_SWITCH_DIGITAL_CHANNEL = 0;
+    public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 1;
 
     //================================================== Climber ==============================================================
 
-    public static final int CLIMBER_ARMS_MOTOR_MASTER_ID = 10;
-    public static final int CLIMBER_ARMS_MOTOR_FOLLOWER_ID = 11;
+    public static final int CLIMBER_ARMS_MOTOR_MASTER_CAN_ID = 10;
+    public static final int CLIMBER_ARMS_MOTOR_FOLLOWER_CAN_ID = 11;
 
-    public static final int CLIMBER_CAM_MOTOR_MASTER_ID = 12;
-    public static final int CLIMBER_CAM_MOTOR_FOLLOWER_ID = 13;
+    public static final int CLIMBER_CAM_MOTOR_MASTER__CAN_ID = 12;
+    public static final int CLIMBER_CAM_MOTOR_FOLLOWER__CAN_ID = 13;
 }
