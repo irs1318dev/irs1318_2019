@@ -9,10 +9,6 @@ public class ElevatorMovementTask extends CompositeOperationTask {
     private static final Operation[] possibleOperations = 
         new Operation[] 
         {
-            Operation.ElevatorForceUp,
-            Operation.ElevatorForceDown,
-            Operation.ElevatorMoveUp,
-            Operation.ElevatorMoveDown,
             Operation.ElevatorBottomPosition,
             Operation.ElevatorHatch2Position,
             Operation.ElevatorHatch3Position,
