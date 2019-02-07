@@ -1,7 +1,6 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.Operation;
-import frc.robot.mechanisms.GrabberMechanism;
 
 public class GrabberSetWristPositionTask extends CompositeOperationTask 
 {
@@ -13,17 +12,9 @@ public class GrabberSetWristPositionTask extends CompositeOperationTask
             Operation.GrabberWristFloorPosition,
         };
 
-    private GrabberMechanism grabber;
 
     public GrabberSetWristPositionTask(double duration, Operation toPerfrom)
     {
         super(duration, toPerfrom, GrabberSetWristPositionTask.possibleOperations);
-    }
-
-    @Override
-    public void begin()
-    {
-        super.begin();
-        this.grabber = this.getInjector().getInstance(GrabberMechanism.class);
     }
 }

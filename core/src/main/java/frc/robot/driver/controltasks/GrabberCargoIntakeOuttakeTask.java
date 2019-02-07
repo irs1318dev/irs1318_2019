@@ -38,12 +38,11 @@ public class GrabberCargoIntakeOuttakeTask extends CompositeOperationTask
     @Override 
     public boolean hasCompleted()
     {
-            if(this.completeWithThroughBeam)
-            {
-                return grabber.hasCargo();
-            }
-            return super.hasCompleted();
-    }
+        if (this.completeWithThroughBeam)
+        {
+            return this.grabber.hasCargo();
+        }
 
-    
+        return super.hasCompleted();
+    } 
 }

@@ -1,12 +1,9 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.Operation;
-import frc.robot.mechanisms.GrabberMechanism;
 
 public class GrabberKickPanelTask extends TimedTask
 {
-    private GrabberMechanism grabber;
-
     public GrabberKickPanelTask(double duration)
     {
         super(duration);
@@ -22,7 +19,7 @@ public class GrabberKickPanelTask extends TimedTask
     @Override
     public void update() 
     {
-        
+        this.setDigitalOperationState(Operation.GrabberKickPanel, true);
     }
 
     @Override
@@ -30,11 +27,4 @@ public class GrabberKickPanelTask extends TimedTask
     {
         this.setDigitalOperationState(Operation.GrabberKickPanel,false);
     }
-
-    @Override
-    public void stop()
-    {
-        this.setDigitalOperationState(Operation.GrabberKickPanel,false);
-    }
-
 }
