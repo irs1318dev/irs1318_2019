@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Injector;
+import com.sun.tools.classfile.StackMapTable_attribute.stack_map_frame;
 
 import frc.robot.common.IMechanism;
 import frc.robot.mechanisms.*;
@@ -226,6 +227,7 @@ public class TuningConstants
     //======================================================== Grabber =====================================
 
     public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = -1;
+    public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = -1;
     
     // Cargo intake/outtake motor power
     public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
