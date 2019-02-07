@@ -13,6 +13,9 @@ public class VisionConstants
     public static final int DEBUG_FRAME_OUTPUT_GAP = 20; // the number of frames to wait between saving debug image output
     public static final String DEBUG_OUTPUT_FOLDER = "/home/lvuser/vision/";
 
+	public static final double RING_LIGHT_OFF = 0.0;
+	public static final double RING_LIGHT_ON = 1.0;
+
     // Conversion constants...
     public static final double ANGLE_TO_RADIANS = (Math.PI / 180.0f);
     public static final double RADIANS_TO_ANGLE = (180.0f / Math.PI);

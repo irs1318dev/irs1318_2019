@@ -42,8 +42,9 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.EnableVision,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    90, // POV right
+                    UserInputDevice.Driver,
+                    180, // POV back
+                    Shift.Debug,
                     ButtonType.Toggle));
 
             // Operations for the drive train
@@ -561,7 +562,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.VisionCenterAndAdvance,
                 new MacroOperationDescription(
-                    UserInputDevice.Driver,
+                    UserInputDevice.None,
                     180,
                     Shift.Debug,
                     ButtonType.Toggle,
