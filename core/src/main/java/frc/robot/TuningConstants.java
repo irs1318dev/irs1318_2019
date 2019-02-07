@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Injector;
-
 import frc.robot.common.IMechanism;
 import frc.robot.mechanisms.*;
 import frc.robot.vision.*;
@@ -228,11 +227,16 @@ public class TuningConstants
 
     //======================================================== Grabber =====================================
 
+    public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = -1;
+    public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = -1;
+    
     // Cargo intake/outtake motor power
     public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
     public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.6;
 
     //================================================== Climber ==============================================================
+
+    public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = -1;
 
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = -1;
@@ -255,6 +259,9 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_POSITION_PID_KD = -1;
     public static final double CLIMBER_ARMS_POSITION_PID_KF = -1;
 
+    public static final double CLIMBER_ARMS_MOVEMENT_TIME_THRESHOLD = -1;
+    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = -1;
+
     // Cam
     public static final double CLIMBER_CAM_STORED_POSITION = -1;
     public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = -1;
@@ -275,5 +282,6 @@ public class TuningConstants
     public static final double CLIMBER_CAM_POSITION_PID_KD = -1;
     public static final double CLIMBER_CAM_POSITION_PID_KF = -1;
 
-    public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = -1;
+    public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = -1;
+    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = -1;
 }
