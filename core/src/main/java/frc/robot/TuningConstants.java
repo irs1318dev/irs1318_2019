@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Injector;
-import com.sun.tools.classfile.StackMapTable_attribute.stack_map_frame;
-
 import frc.robot.common.IMechanism;
 import frc.robot.mechanisms.*;
 import frc.robot.vision.*;
@@ -235,6 +233,8 @@ public class TuningConstants
 
     //================================================== Climber ==============================================================
 
+    public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = -1;
+
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = -1;
     public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = -1;
@@ -256,6 +256,9 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_POSITION_PID_KD = -1;
     public static final double CLIMBER_ARMS_POSITION_PID_KF = -1;
 
+    public static final double CLIMBER_ARMS_MOVEMENT_TIME_THRESHOLD = -1;
+    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = -1;
+
     // Cam
     public static final double CLIMBER_CAM_STORED_POSITION = -1;
     public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = -1;
@@ -276,5 +279,6 @@ public class TuningConstants
     public static final double CLIMBER_CAM_POSITION_PID_KD = -1;
     public static final double CLIMBER_CAM_POSITION_PID_KF = -1;
 
-    public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = -1;
+    public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = -1;
+    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = -1;
 }
