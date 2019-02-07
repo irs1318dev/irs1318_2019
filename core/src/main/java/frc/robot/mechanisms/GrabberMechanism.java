@@ -24,10 +24,12 @@ public class GrabberMechanism implements IMechanism {
     private final IDoubleSolenoid wristInner; // for controlling the piston closest to the elevator
     private final IDoubleSolenoid wristOuter; // for controlling the piston farthest from the elevator
 
-    private final IDigitalInput cargoLimitSwitch;
+    private final IDigitalInput cargoLimitSwitch1;
+    private final IDigitalInput cargoLimitSwitch2;
     private final IDigitalInput hatchLimitSwtich;
 
-    private boolean cargoLimitSwitchStatus;
+    private boolean cargoLimitSwitch1Status;
+    private boolean cargoLimitSwitch2Status;
     private boolean hatchLimitSwitchStatus;
 
     @Inject
@@ -39,7 +41,8 @@ public class GrabberMechanism implements IMechanism {
         this.wristInner = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL);
         this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL);
 
-        this.cargoLimitSwitch = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_DIGITAL_CHANNEL);
+        this.cargoLimitSwitch1 = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL);
+        this.cargoLimitSwitch2 = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL);
         this.hatchLimitSwtich = provider.getDigitalInput(ElectronicsConstants.GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL);
 
         this.logger = logger;
@@ -47,7 +50,7 @@ public class GrabberMechanism implements IMechanism {
 
     public boolean hasCargo()
     {
-        return this.cargoLimitSwitchStatus;
+        return this.cargoLimitSwitch1Status && this.cargoLimitSwitch2Status;
     }
 
     public boolean hasHatch()
@@ -58,7 +61,8 @@ public class GrabberMechanism implements IMechanism {
     @Override
     public void readSensors()
     {
-        this.cargoLimitSwitchStatus = this.cargoLimitSwitch.get();
+        this.cargoLimitSwitch1Status = this.cargoLimitSwitch1.get();
+        this.cargoLimitSwitch2Status = this.cargoLimitSwitch2.get();
         this.hatchLimitSwitchStatus = this.hatchLimitSwtich.get();
     }
 

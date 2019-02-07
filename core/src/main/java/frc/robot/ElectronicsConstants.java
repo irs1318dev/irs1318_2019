@@ -62,8 +62,9 @@ public class ElectronicsConstants
     public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 5;
 
     //Limit switches
-    public static final int GRABBER_CARGO_LIMIT_SWITCH_DIGITAL_CHANNEL = 0;
-    public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 1;
+    public static final int GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL = 0;
+    public static final int GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL = 1;
+    public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 2;
 
     //================================================== Climber ==============================================================
 
