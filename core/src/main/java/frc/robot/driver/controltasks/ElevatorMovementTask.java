@@ -7,7 +7,6 @@ import frc.robot.mechanisms.ElevatorMechanism;
 public class ElevatorMovementTask extends CompositeOperationTask {
 
     private static final Operation[] possibleOperations = 
-        new Operation[] 
         {
             Operation.ElevatorBottomPosition,
             Operation.ElevatorHatch2Position,

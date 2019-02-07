@@ -225,6 +225,8 @@ public class TuningConstants
 
     //======================================================== Grabber =====================================
 
+    public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = -1;
+    
     // Cargo intake/outtake motor power
     public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
     public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.6;
