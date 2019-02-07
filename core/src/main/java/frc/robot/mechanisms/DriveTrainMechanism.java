@@ -521,7 +521,7 @@ public class DriveTrainMechanism implements IMechanism
         double rightPositionGoal = this.driver.getAnalog(Operation.DriveTrainRightPosition);
         double leftVelocityGoal = this.driver.getAnalog(Operation.DriveTrainLeftVelocity);
         double rightVelocityGoal = this.driver.getAnalog(Operation.DriveTrainRightVelocity);
-        double headingGoal = this.driver.getAnalog(Operation.DriveTrainHeading);
+        double headingCorrection = this.driver.getAnalog(Operation.DriveTrainHeadingCorrection);
 
         leftVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND;
         rightVelocityGoal /= TuningConstants.DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND;
@@ -540,18 +540,26 @@ public class DriveTrainMechanism implements IMechanism
         rightGoal += rightVelocityGoal * TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KV;
 
         // apply cross-coupling changes
-        //double leftPositionError = this.leftPID.getError();
-        //double rightPositionError = this.rightPID.getError();
+        double leftPositionError = this.leftPID.getError();
+        double rightPositionError = this.rightPID.getError();
 
-        //double positionErrorMagnitudeDelta = leftPositionError - rightPositionError;
-        //if (TuningConstants.DRIVETRAIN_USE_CROSS_COUPLING
-        //    && !Helpers.WithinDelta(positionErrorMagnitudeDelta, 0.0, TuningConstants.DRIVETRAIN_CROSS_COUPLING_ZERO_ERROR_RANGE))
-        //{
-        //    // add the delta times the coupling factor to the left, and subtract from the right
-        //    // (if left error is greater than right error, left should be given some more power than right)
-        //    leftGoal += TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KCC * positionErrorMagnitudeDelta;
-        //    rightGoal -= TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KCC * positionErrorMagnitudeDelta;
-        //}
+        double positionErrorMagnitudeDelta = leftPositionError - rightPositionError;
+        if (TuningConstants.DRIVETRAIN_USE_CROSS_COUPLING
+            && !Helpers.WithinDelta(positionErrorMagnitudeDelta, 0.0, TuningConstants.DRIVETRAIN_CROSS_COUPLING_ZERO_ERROR_RANGE))
+        {
+            // add the delta times the coupling factor to the left, and subtract from the right
+            // (if left error is greater than right error, left should be given some more power than right)
+            leftGoal += TuningConstants.DRIVETRAIN_PATH_PID_LEFT_KCC * positionErrorMagnitudeDelta;
+            rightGoal -= TuningConstants.DRIVETRAIN_PATH_PID_RIGHT_KCC * positionErrorMagnitudeDelta;
+        }
+
+        // apply heading correction
+        if (TuningConstants.DRIVETRAIN_USE_HEADING_CORRECTION
+            && headingCorrection != 0.0)
+        {
+            leftGoal += TuningConstants.DRIVETRAIN_PATH_LEFT_HEADING_CORRECTION * headingCorrection;
+            rightGoal -= TuningConstants.DRIVETRAIN_PATH_RIGHT_HEADING_CORRECTION * headingCorrection;
+        }
 
         // velocity plus position correction could put us over our max or under our min power levels
         leftGoal = this.applyPowerLevelRange(leftGoal);

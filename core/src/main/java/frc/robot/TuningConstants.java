@@ -101,6 +101,7 @@ public class TuningConstants
     // Drivetrain PID keys/default values:
     public static final boolean DRIVETRAIN_USE_PID = true;
     public static final boolean DRIVETRAIN_USE_CROSS_COUPLING = false;
+    public static final boolean DRIVETRAIN_USE_HEADING_CORRECTION = true;
 
     // Velocity PID (right)
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.3;
@@ -123,6 +124,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KF = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KV = 1.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KCC = 0.0;
+    public static final double DRIVETRAIN_PATH_RIGHT_HEADING_CORRECTION = 0.0;
     public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KS * HardwareConstants.DRIVETRAIN_RIGHT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
 
     // Path PID (left)
@@ -132,6 +134,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_PID_LEFT_KF = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KV = 1.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KCC = 0.0;
+    public static final double DRIVETRAIN_PATH_LEFT_HEADING_CORRECTION = 0.0;
     public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
 
     // Position PID (right)

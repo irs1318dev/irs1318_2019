@@ -18,7 +18,7 @@ public enum Operation
     DriveTrainRightPosition,
     DriveTrainLeftVelocity,
     DriveTrainRightVelocity,
-    DriveTrainHeading,
+    DriveTrainHeadingCorrection,
     DriveTrainSwapFrontOrientation,
 
     // Elevator operations:

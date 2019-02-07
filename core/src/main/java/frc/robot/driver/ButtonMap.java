@@ -121,7 +121,7 @@ public class ButtonMap implements IButtonMap
                     false,
                     0.0));
             put(
-                Operation.DriveTrainHeading,
+                Operation.DriveTrainHeadingCorrection,
                 new AnalogOperationDescription(
                     UserInputDevice.None,
                     AnalogAxis.None,
@@ -447,7 +447,7 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                         Operation.DriveTrainLeftVelocity,
                         Operation.DriveTrainRightVelocity,
-                        Operation.DriveTrainHeading,
+                        Operation.DriveTrainHeadingCorrection,
                         Operation.DriveTrainUsePathMode,
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
@@ -478,7 +478,7 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                         Operation.DriveTrainLeftVelocity,
                         Operation.DriveTrainRightVelocity,
-                        Operation.DriveTrainHeading,
+                        Operation.DriveTrainHeadingCorrection,
                         Operation.DriveTrainUsePathMode,
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
@@ -517,7 +517,7 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                         Operation.DriveTrainLeftVelocity,
                         Operation.DriveTrainRightVelocity,
-                        Operation.DriveTrainHeading,
+                        Operation.DriveTrainHeadingCorrection,
                         Operation.DriveTrainUsePathMode,
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
