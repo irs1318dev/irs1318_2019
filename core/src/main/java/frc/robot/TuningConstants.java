@@ -6,7 +6,6 @@ import java.util.List;
 import com.google.inject.Injector;
 import frc.robot.common.IMechanism;
 import frc.robot.mechanisms.*;
-import frc.robot.vision.*;
 
 /**
  * All constants related to tuning the operation of the robot.
@@ -26,10 +25,12 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(PowerManager.class));
         mechanismList.add(injector.getInstance(PositionManager.class));
         mechanismList.add(injector.getInstance(VisionManager.class));
+        //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         //mechanismList.add(injector.getInstance(CompressorMechanism.class));
         //mechanismList.add(injector.getInstance(ElevatorMechanism.class));
         //mechanismList.add(injector.getInstance(GrabberMechanism.class));
         //mechanismList.add(injector.getInstance(ClimberMechanism.class));
+        //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
     }
 

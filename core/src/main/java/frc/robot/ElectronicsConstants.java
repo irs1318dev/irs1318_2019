@@ -31,6 +31,11 @@ public class ElectronicsConstants
 
     public static final int VISION_RING_LIGHT_PWM_CHANNEL = 0;
 
+    //================================================== Indicator Lights ==============================================================
+
+    public static final int INDICATOR_HATCH_RELAY_CHANNEL = 0;
+    public static final int INDICATOR_CARGO_RELAY_CHANNEL = 1;
+
     //================================================== DriveTrain ==============================================================
 
     public static final int DRIVETRAIN_LEFT_MASTER_CAN_ID = 1;
@@ -61,7 +66,7 @@ public class ElectronicsConstants
     public static final int GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL = 4;
     public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 5;
 
-    //Limit switches
+    // Limit switches
     public static final int GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL = 0;
     public static final int GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL = 1;
     public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 2;
