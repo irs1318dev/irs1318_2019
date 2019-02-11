@@ -5,7 +5,7 @@ import frc.robot.common.PIDHandler;
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.Operation;
 import frc.robot.driver.common.IControlTask;
-import frc.robot.vision.VisionManager;
+import frc.robot.mechanisms.VisionManager;
 
 /**
  * Task that turns the robot a certain amount clockwise or counterclockwise in-place based on vision center

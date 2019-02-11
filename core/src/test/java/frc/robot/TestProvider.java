@@ -242,4 +242,10 @@ public class TestProvider implements IRobotProvider
     {
         return null;
     }
+
+    @Override
+    public INetworkTableProvider getNetworkTableProvider()
+    {
+        return null;
+    }
 }
