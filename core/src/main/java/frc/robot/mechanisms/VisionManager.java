@@ -1,10 +1,11 @@
-package frc.robot.vision;
+package frc.robot.mechanisms;
 
 import frc.robot.ElectronicsConstants;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.Operation;
 import frc.robot.driver.common.*;
+import frc.robot.vision.*;
 import frc.robot.vision.common.*;
 import frc.robot.vision.pipelines.*;
 
