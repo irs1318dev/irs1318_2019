@@ -147,7 +147,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     public void update()
     {
         VisionProcessingState desiredState = VisionProcessingState.None;
-        if (this.driver.getDigital(Operation.EnableVision))
+        if (this.driver.getDigital(Operation.VisionEnable))
         {
             desiredState = VisionProcessingState.Active;
         }
@@ -172,6 +172,11 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
 
             this.currentState = desiredState;
         }
+
+        // vision pipeline should only write frames to the stream when we are not having the offboard
+        // vision system do streaming
+        boolean enableOffboardStream = this.driver.getDigital(Operation.VisionEnableOffboardStream);
+        this.visionPipeline.setStreamMode(!enableOffboardStream);
     }
 
     @Override

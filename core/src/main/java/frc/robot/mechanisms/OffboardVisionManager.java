@@ -2,7 +2,9 @@ package frc.robot.mechanisms;
 
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
+import frc.robot.driver.Operation;
 import frc.robot.driver.common.*;
+import jdk.jfr.Enabled;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -16,7 +18,12 @@ import com.google.inject.Singleton;
 @Singleton
 public class OffboardVisionManager implements IMechanism
 {
+    private static final String logName = "rpi";
+
     private final INetworkTableProvider networkTable;
+    private final IDashboardLogger logger;
+
+    private Driver driver;
 
     private double ballCenterX;
     private double ballCenterY;
@@ -26,11 +33,13 @@ public class OffboardVisionManager implements IMechanism
     /**
      * Initializes a new OffboardVisionManager
      * @param provider for obtaining electronics objects
+     * @param logger for logging to smart dashboard
      */
     @Inject
-    public OffboardVisionManager(IRobotProvider provider)
+    public OffboardVisionManager(IRobotProvider provider, IDashboardLogger logger)
     {
         this.networkTable = provider.getNetworkTableProvider();
+        this.logger = logger;
 
         this.ballCenterX = 0.0;
         this.ballCenterY = 0.0;
@@ -73,15 +82,19 @@ public class OffboardVisionManager implements IMechanism
     @Override
     public void update()
     {
+        boolean enableVideoStream = this.driver.getDigital(Operation.VisionEnableOffboardStream);
+        this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", enableVideoStream);
     }
 
     @Override
     public void stop()
     {
+        this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", false);
     }
 
     @Override
     public void setDriver(Driver driver)
     {
+        this.driver = driver;
     }
 }

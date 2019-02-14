@@ -28,6 +28,7 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
 
     // active status
     private volatile boolean isActive;
+    private volatile boolean streamEnabled;
 
     /**
      * Initializes a new instance of the HSVCenterPipeline class.
@@ -56,15 +57,7 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
 
         this.isActive = true;
 
-        if (VisionConstants.SHOW_INPUT_FRAMES ||
-            (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
-        {
-            this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
-        }
-        else
-        {
-            this.frameInput = null;
-        }
+        this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
 
         if (VisionConstants.DEBUG &&
             VisionConstants.DEBUG_OUTPUT_FRAMES)
@@ -95,7 +88,7 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
             }
         }
 
-        if (VisionConstants.SHOW_INPUT_FRAMES ||
+        if (this.streamEnabled ||
             (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
         {
             this.frameInput.putFrame(image);
@@ -210,6 +203,11 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
     {
         this.isActive = isActive;
     }
+
+    public void setStreamMode(boolean isEnabled)
+    {
+        this.streamEnabled = isEnabled;
+	}
 
     public boolean isActive()
     {

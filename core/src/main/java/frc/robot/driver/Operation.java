@@ -3,7 +3,8 @@ package frc.robot.driver;
 public enum Operation
 {
     // Vision operations:
-    EnableVision,
+    VisionEnable,
+    VisionEnableOffboardStream,
 
     // DriveTrain operations:
     DriveTrainEnablePID,
