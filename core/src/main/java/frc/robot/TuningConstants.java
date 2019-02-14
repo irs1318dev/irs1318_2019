@@ -229,6 +229,7 @@ public class TuningConstants
 
     public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = -1;
     public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = -1;
+    public static final double GRABBER_KICK_PANEL_DURATION = -1;
     
     // Cargo intake/outtake motor power
     public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;

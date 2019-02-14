@@ -4,6 +4,7 @@ import frc.robot.common.robotprovider.*;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.driver.controltasks.*;
 import frc.robot.ElectronicsConstants;
+import frc.robot.TuningConstants;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -153,59 +154,174 @@ public class AutonomousRoutineSelector
 
     private static IControlTask startCenterGoLeftPlace2()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("CenterL1 to FrontL.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask(),
+            new NavxTurnTask(-180), // change direction depending on whether we are more likely to over or under shoot
+            new FollowPathTask("FrontL to LLoading.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new NavxTurnTask(-180),
+            new FollowPathTask("LLoading to L1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startCenterGoLeftPlace1()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("CenterL1 to FrontL.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
     private static IControlTask startCenterGoRightPlace2()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("CenterL1 to FrontR.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("FrontR to RLoading.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("RLoading to R1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
+
     }
     private static IControlTask startCenterGoRightPlace1()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("CenterL1 to FrontR.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
     private static IControlTask startLeftGoFrontPlace2()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("LeftL1 to FrontL.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("FrontL to LLoading.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("LLoading to L1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startLeftGoFrontPlace1()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("LeftL1 to FrontL.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startLeftGoSidePlace2()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("LeftL1 to L1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("L1 to LLoading.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("LLoading to L2.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startLeftGoSidePlace1()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("LeftL1 to L1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startRightGoFrontPlace2()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("RightL1 to FrontR.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("FrontR to RLoading.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("RLoading to R1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startRightGoFrontPlace1()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("RightL1 to FrontR.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startRightGoSidePlace2()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("RightL1 to R1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("R1 to RLoading.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new NavxTurnTask(180),
+            new FollowPathTask("RLoading to R2.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
     private static IControlTask startRightGoSidePlace1()
     {
-        return;
+        return SequentialTask.Sequence(
+            new FollowPathTask("RightL1 to R1.csv"),
+            new VisionCenteringTask(),
+            new VisionAdvanceAndCenterTask(),
+            new GrabberKickPanelTask()
+        );
     }
 
 }

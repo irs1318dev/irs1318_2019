@@ -1,12 +1,13 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.driver.Operation;
+import frc.robot.TuningConstants;
 
 public class GrabberKickPanelTask extends TimedTask
 {
-    public GrabberKickPanelTask(double duration)
+    public GrabberKickPanelTask()
     {
-        super(duration);
+        super(TuningConstants.GRABBER_KICK_PANEL_DURATION);
     }
 
     @Override
