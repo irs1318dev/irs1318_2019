@@ -13,8 +13,8 @@ public interface IOpenCVProvider
     IMatOfPoint2f convertToMatOfPoints2f(IMatOfPoint points);
     void imwrite(String format, IMat image);
     double contourArea(IMatOfPoint contour);
+    IRotatedRect minAreaRect(IMatOfPoint2f countour);
     IRect boundingRect(IMatOfPoint contour);
-    IRotatedRect minAreaRect(IMatOfPoint2f points);
     IMoments moments(IMatOfPoint contour);
     void findContours(IMat frame, List<IMatOfPoint> contours, IMat unused, int retrExternal, int chainApproxTc89Kcos);
     void cvtColor(IMat sourceBGR, IMat frame, int imgprocColorBgr2hsv);

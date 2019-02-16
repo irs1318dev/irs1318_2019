@@ -1,8 +1,11 @@
 package frc.robot.vision;
 
+import frc.robot.TuningConstants;
+
 public class VisionConstants
 {
     // Debug output settings:
+    public static final boolean SHOW_INPUT_FRAMES = true;
     public static final boolean DEBUG = false;
     public static final boolean DEBUG_PRINT_OUTPUT = false;
     public static final boolean DEBUG_PRINT_ANALYZER_DATA = false;
@@ -61,4 +64,18 @@ public class VisionConstants
 
     // Contour filtering constants
     public static final double CONTOUR_MIN_AREA = 25.0;
+
+    //Real measurements
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_HEIGHT = 5.5; //5.5 inches tall
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_WIDTH = 2.0; // 2 inches wide
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_HxW_RATIO = 2.75; // height-to-width ratio
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_RATIO_RANGE = 1.0; //change? --> allowable height-to-width ratio range
+    public static final double DOCKING_CONTOUR_ALLOWABLE_RATIO = 0.9; // change? --> the ratio of the second-largest contour to the largest
+    public static final double DOCKING_CAMERA_MOUNTING_DISTANCE = 12.0; // change --> camera is ? inches back from the end of the robot in front of the camera
+    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET = 8.0; // change? --> camera is x inches to the left from center line of the robot, tape center is x inches to the left of the center of the robot
+    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE = TuningConstants.COMPETITION_ROBOT ? 0.0 : -1.0; // change or remove???? 
+
+    public static final double ROCKET_TO_GROUND_TAPE_HEIGHT = 30.0;
+    public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 0.0;
+    public static final double DOCKING_TAPE_OFFSET = 5.7065;
 }

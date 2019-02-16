@@ -28,6 +28,16 @@ public class RotatedRectWrapper implements IRotatedRect
     {
         return new SizeWrapper(this.wrappedObject.size);
     }
+    @Override
+    public IPoint getCenter()
+    {
+        return new PointWrapper(this.wrappedObject.center);
+    }
+
+    @Override
+    public double getHeight() {
+        return this.wrappedObject.size.height;
+    }
 
     @Override
     public double getAngle()
