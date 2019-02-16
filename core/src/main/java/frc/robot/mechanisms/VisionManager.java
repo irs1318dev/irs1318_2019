@@ -184,6 +184,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     {
         this.ringLight.set(0.0);
         this.visionPipeline.setActivation(false);
+        this.visionPipeline.setStreamMode(true);
 
         this.center = null;
 
