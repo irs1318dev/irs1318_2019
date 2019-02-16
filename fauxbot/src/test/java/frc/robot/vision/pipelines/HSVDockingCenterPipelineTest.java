@@ -10,7 +10,7 @@ import frc.robot.common.robotprovider.*;
 
 public class HSVDockingCenterPipelineTest
 {
-    @Test
+    //@Test
     public void testLoadImage()
     {
         nu.pattern.OpenCV.loadShared();
@@ -22,12 +22,4 @@ public class HSVDockingCenterPipelineTest
         pipeline.process(wrapper);
         assertNotNull(pipeline.getCenter());
     }
-
-    @Test
-    public void sampleTest()
-    {
-
-    }
-
-
 }
