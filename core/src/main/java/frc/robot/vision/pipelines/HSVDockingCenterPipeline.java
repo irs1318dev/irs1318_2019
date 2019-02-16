@@ -271,10 +271,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
         double measuredAngleY = Math.atan(yOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y) * VisionConstants.RADIANS_TO_ANGLE;
 
-        System.out.println("measuredAngleY " + measuredAngleY);
-
         double distanceFromCam = -1.0 * (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan(VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE + measuredAngleY));
-        System.out.println("distanceFromCam: " + distanceFromCam);
         this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
         this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET -VisionConstants.DOCKING_TAPE_OFFSET)/ distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
     }

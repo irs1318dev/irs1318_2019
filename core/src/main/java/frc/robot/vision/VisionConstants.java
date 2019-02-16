@@ -1,13 +1,11 @@
 package frc.robot.vision;
 
-import frc.robot.TuningConstants;
-
 public class VisionConstants
 {
     // Debug output settings:
     public static final boolean DEBUG = true;
-    public static final boolean DEBUG_PRINT_OUTPUT = true;
-    public static final boolean DEBUG_PRINT_ANALYZER_DATA = true;
+    public static final boolean DEBUG_PRINT_OUTPUT = false;
+    public static final boolean DEBUG_PRINT_ANALYZER_DATA = false;
     public static final int DEBUG_FPS_AVERAGING_INTERVAL = 25;
     public static final boolean DEBUG_OUTPUT_FRAMES = true;
     public static final boolean DEBUG_SAVE_FRAMES = false;
