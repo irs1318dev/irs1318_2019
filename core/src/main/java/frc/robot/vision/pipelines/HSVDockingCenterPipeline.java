@@ -26,6 +26,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     //need to be calculated
     private Double measuredAngleX;
+    private Double measuredAngleY;
     private Double desiredAngleX;
     private Double distanceFromRobot;
 
@@ -36,7 +37,6 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     // active status
     private volatile boolean isActive;
-    private volatile boolean streamEnabled;
 
     /**
      * Initializes a new instance of the HSVCenterPipeline class.
@@ -69,7 +69,15 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
         this.isActive = true;
 
-        this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
+        if (VisionConstants.SHOW_INPUT_FRAMES ||
+            (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
+        {
+            this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
+        }
+        else
+        {
+            this.frameInput = null;
+        }
 
         if (VisionConstants.DEBUG &&
             VisionConstants.DEBUG_OUTPUT_FRAMES)
@@ -100,7 +108,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             }
         }
 
-        if (this.streamEnabled ||
+        if (VisionConstants.SHOW_INPUT_FRAMES ||
             (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
         {
             this.frameInput.putFrame(image);
@@ -183,20 +191,22 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         // fourth, find the center of mass for the largest two contours
         IPoint largestCenterOfMass = null;
         IPoint secondLargestCenterOfMass = null;
-        IRect largestBoundingRect = null;
-        IRect secondLargestBoundingRect = null;
+        IRotatedRect largestMinAreaRect = null;
+        IRotatedRect secondLargestMinAreaRect = null;
         
         if (largestContour != null)
         {
-            largestCenterOfMass = ContourHelper.findCenterOfMass(this.openCVProvider, largestContour);
-            largestBoundingRect = openCVProvider.boundingRect(largestContour);
+            largestMinAreaRect = openCVProvider.minAreaRect(openCVProvider.convertToMatOfPoints2f(largestContour));
+            largestCenterOfMass = largestMinAreaRect.getCenter();
+
             largestContour.release();
         }
 
         if (secondLargestContour != null)
         {
-            secondLargestCenterOfMass = ContourHelper.findCenterOfMass(this.openCVProvider, secondLargestContour);
-            secondLargestBoundingRect = openCVProvider.boundingRect(secondLargestContour);
+            secondLargestMinAreaRect = openCVProvider.minAreaRect(openCVProvider.convertToMatOfPoints2f(secondLargestContour));
+            secondLargestCenterOfMass = secondLargestMinAreaRect.getCenter();
+
             secondLargestContour.release();
         }
 
@@ -243,45 +253,43 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
         IPoint dockingMarkerCenter;
         IPoint otherMarkerCenter;
-        IRect boundingRect;
+        IRotatedRect minAreaRect;
     
         //Finding which side is robot on by finding the center value
         //left
         if (this.largestCenter != null && this.secondLargestCenter != null && this.largestCenter.getX() > this.secondLargestCenter.getX())
         {
            dockingMarkerCenter = this.secondLargestCenter;
-           boundingRect = secondLargestBoundingRect; 
+           minAreaRect = secondLargestMinAreaRect; 
            otherMarkerCenter = this.largestCenter;
         }
         //right
         else
         {
             dockingMarkerCenter = this.largestCenter;
-            boundingRect = largestBoundingRect;
+            minAreaRect = largestMinAreaRect;
             otherMarkerCenter = this.secondLargestCenter;
         }
 
-        double dockingMarkerHeight = boundingRect.getHeight();
+        double dockingMarkerHeight = minAreaRect.getHeight();
         if (dockingMarkerHeight == 0)
         {
             return;
         }
 
         double xOffsetMeasured = dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
+        double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - dockingMarkerCenter.getY();
         this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
+        this.measuredAngleY = Math.atan(yOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y) * VisionConstants.RADIANS_TO_ANGLE;
 
-        double distanceFromCam = ((VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_HEIGHT) / (Math.tan(VisionConstants.LIFECAM_CAMERA_FIELD_OF_VIEW_Y_RADIANS)))
-        * ((double)VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y / dockingMarkerHeight);
+        double distanceFromCam = (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan(VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE + this.measuredAngleY));
+        // double distanceFromCam = ((VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_HEIGHT) / (Math.tan(VisionConstants.LIFECAM_CAMERA_FIELD_OF_VIEW_Y_RADIANS)))
+        // * ((double)VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y / dockingMarkerHeight);
 
 
         //Need to figure out???? 
-    this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) + VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
-    this.desiredAngleX = Math.asin(VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET / distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
-
-    // double[] centerGoal= new double[1];
-    // centerGoal[0]= ((dockingMarkerCenter.getX()-otherMarkerCenter.getX())/2) + dockingMarkerCenter.getX();
-    // centerGoal[1] = dockingMarkerCenter.getY();
-    // centerGoalPoint.set(centerGoal);
+    this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
+    this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET -VisionConstants.DOCKING_TAPE_OFFSET)/ distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
     }
 
     public void setActivation(boolean isActive)
@@ -291,9 +299,8 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     public void setStreamMode(boolean isEnabled)
     {
-        this.streamEnabled = isEnabled;
-	}
-
+        
+    }
     public boolean isActive()
     {
         return this.isActive;
@@ -303,11 +310,6 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
     {
         return this.largestCenter;
     }
-
-    // public IPoint getCenterGoal()
-    // {
-    //     return this.centerGoalPoint;
-    // }
 
     public Double getDesiredAngleX()
     {

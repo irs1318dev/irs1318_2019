@@ -5,6 +5,7 @@ import frc.robot.TuningConstants;
 public class VisionConstants
 {
     // Debug output settings:
+    public static final boolean SHOW_INPUT_FRAMES = true;
     public static final boolean DEBUG = false;
     public static final boolean DEBUG_PRINT_OUTPUT = false;
     public static final boolean DEBUG_PRINT_ANALYZER_DATA = false;
@@ -73,4 +74,8 @@ public class VisionConstants
     public static final double DOCKING_CAMERA_MOUNTING_DISTANCE = 12.0; // change --> camera is ? inches back from the end of the robot in front of the camera
     public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET = 8.0; // change? --> camera is x inches to the left from center line of the robot, tape center is x inches to the left of the center of the robot
     public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE = TuningConstants.COMPETITION_ROBOT ? 0.0 : -1.0; // change or remove???? 
+
+    public static final double ROCKET_TO_GROUND_TAPE_HEIGHT = 30.0;
+    public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 0.0;
+    public static final double DOCKING_TAPE_OFFSET = 5.7065;
 }
