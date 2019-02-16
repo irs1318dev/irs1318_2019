@@ -269,6 +269,11 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             otherMarkerCenter = this.secondLargestCenter;
         }
 
+        if (minAreaRect.size().getHeight() == 0.0)
+        {
+            return;
+        }
+
         double xOffsetMeasured = dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
         double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - dockingMarkerCenter.getY();
         this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
