@@ -42,8 +42,9 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.VisionEnable,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_1,
+                    UserInputDevice.Driver,
+                    0,
+                    Shift.Debug,
                     ButtonType.Toggle));
             put(
                 Operation.VisionEnableOffboardStream,
@@ -550,7 +551,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.VisionCenter,
                 new MacroOperationDescription(
-                    UserInputDevice.Driver,
+                    UserInputDevice.None,
                     0,
                     Shift.Debug,
                     ButtonType.Toggle,
@@ -567,7 +568,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.VisionCenterAndAdvance,
                 new MacroOperationDescription(
-                    UserInputDevice.None,
+                    UserInputDevice.Driver,
                     180,
                     Shift.Debug,
                     ButtonType.Toggle,

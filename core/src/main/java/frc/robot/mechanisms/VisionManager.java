@@ -31,7 +31,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
 
     private final IUsbCamera camera;
     private final Thread visionThread;
-    private final HSVCenterPipeline visionPipeline;
+    private final HSVDockingCenterPipeline visionPipeline;
 
     private Driver driver;
     private VisionProcessingState currentState;
@@ -69,7 +69,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
         this.camera.setBrightness(VisionConstants.LIFECAM_CAMERA_OPERATOR_BRIGHTNESS);
         this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
 
-        this.visionPipeline = new HSVCenterPipeline(this.timer, provider, VisionConstants.SHOULD_UNDISTORT);
+        this.visionPipeline = new HSVDockingCenterPipeline(this.timer, provider, VisionConstants.SHOULD_UNDISTORT);
         this.visionThread = this.camera.createVisionThread(this, this.visionPipeline);
         this.visionThread.start();
 

@@ -67,15 +67,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         this.isActive = false;
         this.streamEnabled = true;
 
-        if (VisionConstants.SHOW_INPUT_FRAMES ||
-            (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
-        {
-            this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
-        }
-        else
-        {
-            this.frameInput = null;
-        }
+        this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
 
         if (VisionConstants.DEBUG &&
             VisionConstants.DEBUG_OUTPUT_FRAMES)
@@ -279,7 +271,10 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
         double measuredAngleY = Math.atan(yOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y) * VisionConstants.RADIANS_TO_ANGLE;
 
-        double distanceFromCam = (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan(VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE + measuredAngleY));
+        System.out.println("measuredAngleY " + measuredAngleY);
+
+        double distanceFromCam = -1.0 * (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan(VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE + measuredAngleY));
+        System.out.println("distanceFromCam: " + distanceFromCam);
         this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
         this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET -VisionConstants.DOCKING_TAPE_OFFSET)/ distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
     }
@@ -306,7 +301,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     public Double getDesiredAngleX()
     {
-        return 0.0;
+        return this.desiredAngleX;
     }
 
     public Double getMeasuredAngleX()
@@ -316,7 +311,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     public Double getRobotDistance()
     {
-        return null;
+        return this.distanceFromRobot;
     }
 
     public double getFps()

@@ -5,10 +5,9 @@ import frc.robot.TuningConstants;
 public class VisionConstants
 {
     // Debug output settings:
-    public static final boolean SHOW_INPUT_FRAMES = true;
-    public static final boolean DEBUG = false;
-    public static final boolean DEBUG_PRINT_OUTPUT = false;
-    public static final boolean DEBUG_PRINT_ANALYZER_DATA = false;
+    public static final boolean DEBUG = true;
+    public static final boolean DEBUG_PRINT_OUTPUT = true;
+    public static final boolean DEBUG_PRINT_ANALYZER_DATA = true;
     public static final int DEBUG_FPS_AVERAGING_INTERVAL = 25;
     public static final boolean DEBUG_OUTPUT_FRAMES = true;
     public static final boolean DEBUG_SAVE_FRAMES = false;
@@ -63,19 +62,19 @@ public class VisionConstants
     public static final int LIFECAM_HSV_FILTER_HIGH_V2 = 255;
 
     // Contour filtering constants
-    public static final double CONTOUR_MIN_AREA = 25.0;
+    public static final double CONTOUR_MIN_AREA = 0.0;
 
     //Real measurements
-    public static final double DOCKING_RETROREFLECTIVE_TAPE_HEIGHT = 5.5; // 5.5 inches tall
-    public static final double DOCKING_RETROREFLECTIVE_TAPE_WIDTH = 2.0; // 2 inches wide
-    public static final double DOCKING_RETROREFLECTIVE_TAPE_HxW_RATIO = 2.75; // height-to-width ratio
-    public static final double DOCKING_RETROREFLECTIVE_TAPE_RATIO_RANGE = 1.0; // change? --> allowable height-to-width ratio range
-    public static final double DOCKING_CONTOUR_ALLOWABLE_RATIO = 0.9; // change? --> the ratio of the second-largest contour to the largest
-    public static final double DOCKING_CAMERA_MOUNTING_DISTANCE = 12.0; // change? --> (Y) distance from the front of the robot to the viewport of the camera
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_HEIGHT = 5.875; // 5.5 inches tall
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_WIDTH = 3.5; // 2 inches wide
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_HxW_RATIO = -1.679; // height-to-width ratio
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_RATIO_RANGE = -10.0; // change? --> allowable height-to-width ratio range
+    public static final double DOCKING_CONTOUR_ALLOWABLE_RATIO = -10.0; // change? --> the ratio of the second-largest contour to the largest
+    public static final double DOCKING_CAMERA_MOUNTING_DISTANCE = 19.5; // change? --> (Y) distance from the front of the robot to the viewport of the camera
     public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET = 8.0; // change? --> (X) distance from the center line of the robot to the viewport of the camera
-    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE = -18.0; // change? --> (Y) degrees camera is mounted from level
+    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE = -20.0; // change? --> (Y) degrees camera is mounted from level
 
     public static final double ROCKET_TO_GROUND_TAPE_HEIGHT = 28.5875; // (Z) distance from floor to center of tape
-    public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 40.0; // (Z) distance from floor to the viewport of the camera
+    public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 42.5; // (Z) distance from floor to the viewport of the camera
     public static final double DOCKING_TAPE_OFFSET = 5.7065; // horizontal offset from center of the two tape strips to the center of one of the pieces of tape
 }

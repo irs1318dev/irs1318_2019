@@ -98,6 +98,11 @@ public class OpenCVProvider implements IOpenCVProvider
     }
 
     Imgproc.findContours(OpenCVProvider.unwrap(image), unwrappedContours, OpenCVProvider.unwrap(hierarchy), mode, method);
+
+    for (int i = 0; i < unwrappedContours.size(); i++)
+    {
+      contours.add(i, new MatOfPointWrapper(unwrappedContours.get(i)));
+    }
   }
 
   @Override
