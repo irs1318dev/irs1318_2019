@@ -148,4 +148,10 @@ public class RobotProvider implements IRobotProvider
     {
         return new OpenCVProvider();
     }
+
+    @Override
+    public INetworkTableProvider getNetworkTableProvider()
+    {
+        return new NetworkTableProvider();
+    }
 }

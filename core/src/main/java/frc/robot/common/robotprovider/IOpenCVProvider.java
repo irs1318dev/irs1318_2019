@@ -10,9 +10,11 @@ public interface IOpenCVProvider
     IScalar newScalar(int i);
     IScalar newScalar(int lifecamHsvFilterLowV0, int lifecamHsvFilterLowV1, int lifecamHsvFilterLowV2);
     ISize newSize(int i, int j);
+    IMatOfPoint2f convertToMatOfPoints2f(IMatOfPoint points);
     void imwrite(String format, IMat image);
     double contourArea(IMatOfPoint contour);
     IRect boundingRect(IMatOfPoint contour);
+    IRotatedRect minAreaRect(IMatOfPoint2f points);
     IMoments moments(IMatOfPoint contour);
     void findContours(IMat frame, List<IMatOfPoint> contours, IMat unused, int retrExternal, int chainApproxTc89Kcos);
     void cvtColor(IMat sourceBGR, IMat frame, int imgprocColorBgr2hsv);

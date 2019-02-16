@@ -158,7 +158,7 @@ public class ElevatorMechanism implements IMechanism
         TalonSRXLimitSwitchStatus limitSwitchStatus = this.elevatorMotorMaster.getLimitSwitchStatus();
         this.elevatorForwardLimitSwitchStatus = limitSwitchStatus.isForwardClosed;
         this.elevatorReverseLimitSwitchStatus = limitSwitchStatus.isReverseClosed;
-    
+
         this.logger.logNumber(ElevatorMechanism.logName, "elevatorVelocity", this.elevatorVelocity);
         this.logger.logNumber(ElevatorMechanism.logName, "elevatorError", this.elevatorError);
         this.logger.logNumber(ElevatorMechanism.logName, "elevatorPosition", this.elevatorPosition);

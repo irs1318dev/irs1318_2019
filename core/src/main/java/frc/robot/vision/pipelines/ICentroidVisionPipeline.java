@@ -4,7 +4,8 @@ import frc.robot.common.robotprovider.*;
 
 public interface ICentroidVisionPipeline extends IVisionPipeline
 {
-    void setActivation(boolean active);
+    void setActivation(boolean isActive);
+    void setStreamMode(boolean isEnabled);
     boolean isActive();
     IPoint getCenter();
     Double getDesiredAngleX();

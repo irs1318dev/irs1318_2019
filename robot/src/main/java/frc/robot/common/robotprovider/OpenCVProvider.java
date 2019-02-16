@@ -49,6 +49,14 @@ public class OpenCVProvider implements IOpenCVProvider
     return new SizeWrapper(new Size(i, j));
   }
 
+  @Override
+  public IMatOfPoint2f convertToMatOfPoints2f(IMatOfPoint points)
+  {
+    MatOfPoint unwrapped = OpenCVProvider.unwrap(points);
+    MatOfPoint2f newMop2f = new MatOfPoint2f();
+    unwrapped.convertTo(newMop2f, CvType.CV_32FC2);
+    return new MatOfPoint2fWrapper(newMop2f);
+  }
 
   @Override
   public void imwrite(String format, IMat image)
@@ -61,20 +69,25 @@ public class OpenCVProvider implements IOpenCVProvider
   {
     return Imgproc.contourArea(OpenCVProvider.unwrap(contour));
   }
-  
+
   @Override
   public IRect boundingRect(IMatOfPoint points)
   {
     return new RectWrapper(Imgproc.boundingRect(OpenCVProvider.unwrap(points)));
   }
-  
+
+  @Override
+  public IRotatedRect minAreaRect(IMatOfPoint2f points)
+  {
+    return new RotatedRectWrapper(Imgproc.minAreaRect(OpenCVProvider.unwrap(points)));
+  }
+
   @Override
   public IMoments moments(IMatOfPoint array)
   {
     return new MomentsWrapper(Imgproc.moments(OpenCVProvider.unwrap(array)));
   }
 
-  
   @Override
   public void findContours(IMat image, List<IMatOfPoint> contours, IMat hierarchy, int mode, int method)
   {
@@ -86,19 +99,19 @@ public class OpenCVProvider implements IOpenCVProvider
 
     Imgproc.findContours(OpenCVProvider.unwrap(image), unwrappedContours, OpenCVProvider.unwrap(hierarchy), mode, method);
   }
-  
+
   @Override
   public void cvtColor(IMat src, IMat dst, int code)
   {
     Imgproc.cvtColor(OpenCVProvider.unwrap(src), OpenCVProvider.unwrap(dst), code);
   }
-  
+
   @Override
   public void inRange(IMat src, IScalar lowerb, IScalar upperb, IMat dst)
   {
     Core.inRange(OpenCVProvider.unwrap(src), OpenCVProvider.unwrap(lowerb), OpenCVProvider.unwrap(upperb), OpenCVProvider.unwrap(dst));
   }
-  
+
   @Override
   public void initUndistortRectifyMap(IMat intrinsicMatrix, IMat distCoeffs, IMat r, IMat newCameraMatrix, ISize size, int cvType, IMat mapX, IMat mapY)
   {
@@ -117,7 +130,7 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((MatWrapper)wrapper).wrappedObject;
   }
 
@@ -127,8 +140,18 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((MatOfPointWrapper)wrapper).wrappedObject;
+  }
+
+  public static MatOfPoint2f unwrap(IMatOfPoint2f wrapper)
+  {
+    if (wrapper == null)
+    {
+      return null;
+    }
+
+    return ((MatOfPoint2fWrapper)wrapper).wrappedObject;
   }
 
   public static Moments unwrap(IMoments wrapper)
@@ -137,7 +160,7 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((MomentsWrapper)wrapper).wrappedObject;
   }
 
@@ -147,7 +170,7 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((PointWrapper)wrapper).wrappedObject;
   }
 
@@ -157,7 +180,7 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((RangeWrapper)wrapper).wrappedObject;
   }
 
@@ -167,7 +190,7 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((RectWrapper)wrapper).wrappedObject;
   }
 
@@ -177,7 +200,7 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((ScalarWrapper)wrapper).wrappedObject;
   }
 
@@ -187,7 +210,7 @@ public class OpenCVProvider implements IOpenCVProvider
     {
       return null;
     }
-  
+
     return ((SizeWrapper)wrapper).wrappedObject;
   }
 }

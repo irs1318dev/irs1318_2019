@@ -31,6 +31,11 @@ public class ElectronicsConstants
 
     public static final int VISION_RING_LIGHT_PWM_CHANNEL = 0;
 
+    //================================================== Indicator Lights ==============================================================
+
+    public static final int INDICATOR_HATCH_RELAY_CHANNEL = 0;
+    public static final int INDICATOR_CARGO_RELAY_CHANNEL = 1;
+
     //================================================== DriveTrain ==============================================================
 
     public static final int DRIVETRAIN_LEFT_MASTER_CAN_ID = 1;
@@ -49,19 +54,19 @@ public class ElectronicsConstants
 
     // Hatch ejection DoubleSolenoid
     public static final int GRABBER_KICKER_FORWARD_PCM_CHANNEL = 0;
-    public static final int GRABBER_KICKER_REVERSE_PCM_CHANNEL = 1;
+    public static final int GRABBER_KICKER_REVERSE_PCM_CHANNEL = 7;
 
     // Cargo intake/outtake TalonSRX
     public static final int GRABBER_CARGO_MOTOR_CAN_ID = 9;
 
     // Wrist actuators
     public static final int GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL = 2;
-    public static final int GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL = 3;
+    public static final int GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL = 5;
     
-    public static final int GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL = 4;
-    public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 5;
+    public static final int GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL = 1;
+    public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 6;
 
-    //Limit switches
+    // Limit switches
     public static final int GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL = 0;
     public static final int GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL = 1;
     public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 2;

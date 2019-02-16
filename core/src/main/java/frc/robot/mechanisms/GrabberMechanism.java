@@ -64,6 +64,10 @@ public class GrabberMechanism implements IMechanism {
         this.cargoLimitSwitch1Status = this.cargoLimitSwitch1.get();
         this.cargoLimitSwitch2Status = this.cargoLimitSwitch2.get();
         this.hatchLimitSwitchStatus = this.hatchLimitSwtich.get();
+
+        this.logger.logBoolean(GrabberMechanism.logName, "cargo1", this.cargoLimitSwitch1Status);
+        this.logger.logBoolean(GrabberMechanism.logName, "cargo2", this.cargoLimitSwitch2Status);
+        this.logger.logBoolean(GrabberMechanism.logName, "hatch", this.hatchLimitSwitchStatus);
     }
 
     @Override

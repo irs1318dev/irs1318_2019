@@ -40,11 +40,16 @@ public class ButtonMap implements IButtonMap
         {
             // Operations for vision
             put(
-                Operation.EnableVision,
+                Operation.VisionEnable,
                 new DigitalOperationDescription(
-                    UserInputDevice.Driver,
-                    180, // POV back
-                    Shift.Debug,
+                    UserInputDevice.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_1,
+                    ButtonType.Toggle));
+            put(
+                Operation.VisionEnableOffboardStream,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     ButtonType.Toggle));
 
             // Operations for the drive train
@@ -552,7 +557,7 @@ public class ButtonMap implements IButtonMap
                     () -> new VisionCenteringTask(),
                     new Operation[]
                     {
-                        Operation.EnableVision,
+                        Operation.VisionEnable,
                         Operation.DriveTrainUsePositionalMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
@@ -569,7 +574,7 @@ public class ButtonMap implements IButtonMap
                     () -> new VisionAdvanceAndCenterTask(),
                     new Operation[]
                     {
-                        Operation.EnableVision,
+                        Operation.VisionEnable,
                         Operation.DriveTrainUsePositionalMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
