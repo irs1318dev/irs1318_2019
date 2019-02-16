@@ -50,9 +50,9 @@ public class AutonomousRoutineSelector
         boolean switchC = !this.dipSwitchC.get();
         boolean switchD = !this.dipSwitchD.get();
 
-        boolean startCenter = switchA != switchB;
-        boolean startLeft = switchA && switchB;
-        boolean startRight = !switchA && !switchB;
+        boolean startCenter = !switchA && !switchB;
+        boolean startLeft = switchA;
+        boolean startRight = switchB;
         boolean startSlot = switchC; // if center -> left(t)/right(f), if side -> front(t)/side(f)
         boolean placeTwo = switchD;
 
@@ -149,7 +149,7 @@ public class AutonomousRoutineSelector
      */
     private static IControlTask GetFillerRoutine()
     {
-        return new DriveVelocityTimedTask(16.0, 1.0, 0.0);
+        return new WaitTask(0);
     }
 
     private static IControlTask startCenterGoLeftPlace2()
@@ -158,16 +158,23 @@ public class AutonomousRoutineSelector
             new FollowPathTask("CenterL1 to FrontL.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask(),
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(-180), // change direction depending on whether we are more likely to over or under shoot
             new FollowPathTask("FrontL to LLoading.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(-180),
             new FollowPathTask("LLoading to L1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -177,7 +184,10 @@ public class AutonomousRoutineSelector
             new FollowPathTask("CenterL1 to FrontL.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
     private static IControlTask startCenterGoRightPlace2()
@@ -186,16 +196,23 @@ public class AutonomousRoutineSelector
             new FollowPathTask("CenterL1 to FrontR.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask(),
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("FrontR to RLoading.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("RLoading to R1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
 
     }
@@ -205,7 +222,10 @@ public class AutonomousRoutineSelector
             new FollowPathTask("CenterL1 to FrontR.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
     private static IControlTask startLeftGoFrontPlace2()
@@ -214,16 +234,23 @@ public class AutonomousRoutineSelector
             new FollowPathTask("LeftL1 to FrontL.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask(),
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("FrontL to LLoading.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("LLoading to L1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -233,7 +260,10 @@ public class AutonomousRoutineSelector
             new FollowPathTask("LeftL1 to FrontL.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -243,16 +273,23 @@ public class AutonomousRoutineSelector
             new FollowPathTask("LeftL1 to L1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask(),
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("L1 to LLoading.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("LLoading to L2.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -262,7 +299,10 @@ public class AutonomousRoutineSelector
             new FollowPathTask("LeftL1 to L1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -272,16 +312,23 @@ public class AutonomousRoutineSelector
             new FollowPathTask("RightL1 to FrontR.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask(),
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("FrontR to RLoading.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("RLoading to R1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -291,7 +338,10 @@ public class AutonomousRoutineSelector
             new FollowPathTask("RightL1 to FrontR.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -301,16 +351,23 @@ public class AutonomousRoutineSelector
             new FollowPathTask("RightL1 to R1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask(),
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("R1 to RLoading.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
+            new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("RLoading to R2.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
@@ -320,7 +377,10 @@ public class AutonomousRoutineSelector
             new FollowPathTask("RightL1 to R1.csv"),
             new VisionCenteringTask(),
             new VisionAdvanceAndCenterTask(),
-            new GrabberKickPanelTask()
+            ConcurrentTask.AnyTasks(
+                new GrabberKickPanelTask(),
+                new PIDBrakeTask()),
+            new DriveDistanceTimedTask(-25, 1.5)
         );
     }
 
