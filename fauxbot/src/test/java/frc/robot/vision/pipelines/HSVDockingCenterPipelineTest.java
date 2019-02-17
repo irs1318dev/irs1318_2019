@@ -11,7 +11,7 @@ import frc.robot.vision.common.VisionProcessingState;
 
 public class HSVDockingCenterPipelineTest
 {
-    //@Test
+    @Test
     public void testLoadImage()
     {
         nu.pattern.OpenCV.loadShared();
