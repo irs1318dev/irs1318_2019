@@ -179,7 +179,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
             }
 
             this.ringLight.set(hsvMode ? VisionConstants.RING_LIGHT_ON : VisionConstants.RING_LIGHT_OFF);
-            this.visionPipeline.setActivation(desiredState);
+            this.visionPipeline.setMode(desiredState);
 
             this.currentState = desiredState;
         }
@@ -207,7 +207,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     public void stop()
     {
         this.ringLight.set(0.0);
-        this.visionPipeline.setActivation(VisionProcessingState.Disabled);
+        this.visionPipeline.setMode(VisionProcessingState.Disabled);
         this.visionPipeline.setStreamMode(true);
 
         this.center = null;
