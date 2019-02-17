@@ -223,7 +223,7 @@ public class ClimberMechanism implements IMechanism
 
         boolean forceArmsForward = this.driver.getDigital(Operation.ClimberArmsForceForward);
         boolean forceArmsBack = this.driver.getDigital(Operation.ClimberArmsForceBackward);
-        if (forceArmsForward || forceArmsBack) 
+        if (forceArmsForward || forceArmsBack || !TuningConstants.CLIMBER_ARMS_USE_PID) 
         {
             this.desiredArmsPosition = this.armsPosition;
             if (this.armsReverseLimitSwitchStatus || this.armsPosition < 0.0)
@@ -247,6 +247,10 @@ public class ClimberMechanism implements IMechanism
             else if (forceArmsBack)
             {
                 this.climberArmsMotorMaster.set(TuningConstants.CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL);
+            }
+            else
+            {
+                this.climberArmsMotorMaster.set(0.0);
             }
         }
         else
@@ -283,7 +287,7 @@ public class ClimberMechanism implements IMechanism
 
         boolean forceCamForward = this.driver.getDigital(Operation.ClimberCamForceForward);
         boolean forceCamBack = this.driver.getDigital(Operation.ClimberCamForceBackward);
-        if (forceCamForward || forceCamBack) 
+        if (forceCamForward || forceCamBack || !TuningConstants.CLIMBER_CAM_USE_PID) 
         {
             this.desiredCamPosition = this.camPosition;
             if (this.camLimitSwitchStatus)
@@ -301,6 +305,10 @@ public class ClimberMechanism implements IMechanism
             else if (forceCamBack)
             {
                 this.climberCamMotorMaster.set(TuningConstants.CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL);
+            }
+            else
+            {
+                this.climberCamMotorMaster.set(0.0);
             }
         }
         else

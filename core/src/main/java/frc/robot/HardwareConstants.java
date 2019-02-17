@@ -46,7 +46,7 @@ public class HardwareConstants
 
     //================================================== Climber ==============================================================
 
-    public static boolean CLIMBER_ARMS_MASTER_INVERT_OUTPUT = false;
+    public static boolean CLIMBER_ARMS_MASTER_INVERT_OUTPUT = true;
     public static boolean CLIMBER_ARMS_INVERT_SENSOR = false;
     public static double CLIMBER_ARMS_PULSE_DISTANCE = 1.0;
     public static boolean CLIMBER_ARMS_FOLLOWER_INVERT_OUTPUT = false;

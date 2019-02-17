@@ -198,6 +198,7 @@ public class TuningConstants
     public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
     // MotionMagic
+    public static final boolean ELEVATOR_USE_PID = false;
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
 
     public static final double ELEVATOR_MM_POSITION_PID_KP = 0.133;
@@ -240,6 +241,9 @@ public class TuningConstants
 
     public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = 3.0;
 
+    public static final boolean CLIMBER_ARMS_USE_PID = false; 
+    public static final boolean CLIMBER_CAM_USE_PID = false;
+
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
     public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 10.0;
@@ -251,8 +255,8 @@ public class TuningConstants
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
     public static final double CLIMBER_ARMS_POSITION_MAX = 20.0;
-    public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 0.2;
-    public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.2;
+    public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 0.6;
+    public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
 
     public static final double CLIMBER_ARMS_MOVE_VELOCITY = 10.0;
 

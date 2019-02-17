@@ -127,7 +127,8 @@ public class ElevatorMechanism implements IMechanism
         return this.elevatorHeight;
     }
 
-    public double getDesiredHeight() {
+    public double getDesiredHeight()
+    {
         return this.desiredHeight;
     }
 
@@ -175,7 +176,7 @@ public class ElevatorMechanism implements IMechanism
 
         boolean forceUp = this.driver.getDigital(Operation.ElevatorForceUp);
         boolean forceDown = this.driver.getDigital(Operation.ElevatorForceDown);
-        if (forceUp || forceDown)
+        if (forceUp || forceDown || ! TuningConstants.ELEVATOR_USE_PID)
         {
             this.desiredHeight = this.elevatorHeight;
             if (this.elevatorReverseLimitSwitchStatus || this.elevatorPosition < 0.0)
@@ -194,6 +195,10 @@ public class ElevatorMechanism implements IMechanism
             {
                 this.elevatorMotorMaster.set(
                     this.elevatorReverseLimitSwitchStatus ? 0.0 : TuningConstants.ELEVATOR_DEBUG_DOWN_POWER_LEVEL);
+            }
+            else
+            {
+                this.elevatorMotorMaster.set(0.0);
             }
         }
         else
