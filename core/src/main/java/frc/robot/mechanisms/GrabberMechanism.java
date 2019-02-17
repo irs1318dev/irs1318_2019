@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import frc.robot.ElectronicsConstants;
+import frc.robot.HardwareConstants;
 import frc.robot.TuningConstants;
 import frc.robot.driver.Operation;
 import frc.robot.common.IMechanism;
@@ -37,6 +38,7 @@ public class GrabberMechanism implements IMechanism {
 
         this.kicker = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_KICKER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_KICKER_REVERSE_PCM_CHANNEL);
         this.cargoMotor = provider.getTalonSRX(ElectronicsConstants.GRABBER_CARGO_MOTOR_CAN_ID);
+        this.cargoMotor.setInvertOutput(HardwareConstants.GRABBER_CARGO_MOTOR_INVERT_OUTPUT);
 
         this.wristInner = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL);
         this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL);

@@ -13,6 +13,7 @@ import frc.robot.common.robotprovider.TalonSRXControlMode;
 import frc.robot.common.robotprovider.TalonSRXFeedbackDevice;
 import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 import frc.robot.common.robotprovider.ITimer;
+import frc.robot.common.robotprovider.IVictorSPX;
 import frc.robot.common.robotprovider.IAnalogInput;
 import frc.robot.common.robotprovider.IDashboardLogger;
 import frc.robot.common.robotprovider.IDigitalInput;
@@ -86,8 +87,7 @@ public class ClimberMechanism implements IMechanism
         ITalonSRX climberArmsMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_ARMS_MOTOR_FOLLOWER_CAN_ID);
         climberArmsMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
         climberArmsMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_ARMS_FOLLOWER_INVERT_OUTPUT);
-        climberArmsMotorFollower.setControlMode(TalonSRXControlMode.Follower);
-        climberArmsMotorFollower.set(ElectronicsConstants.CLIMBER_ARMS_MOTOR_MASTER_CAN_ID);
+        climberArmsMotorFollower.follow(this.climberArmsMotorMaster);
 
         this.armsVelocity = 0.0;
         this.armsError = 0.0;
@@ -112,11 +112,10 @@ public class ClimberMechanism implements IMechanism
         this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
         this.climberCamMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);
 
-        ITalonSRX climberCamMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_CAM_MOTOR_FOLLOWER_CAN_ID);
+        IVictorSPX climberCamMotorFollower = provider.getVictorSPX(ElectronicsConstants.CLIMBER_CAM_MOTOR_FOLLOWER_CAN_ID);
         climberCamMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
         climberCamMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_CAM_FOLLOWER_INVERT_OUTPUT);
-        climberCamMotorFollower.setControlMode(TalonSRXControlMode.Follower);
-        climberCamMotorFollower.set(ElectronicsConstants.CLIMBER_CAM_MOTOR_MASTER_CAN_ID);
+        climberCamMotorFollower.follow(this.climberCamMotorMaster);
 
         this.climberCamLimitSwitch = provider.getDigitalInput(ElectronicsConstants.CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL);
         this.climberHeightSensor = provider.getAnalogInput(ElectronicsConstants.CLIMBER_HEIGHT_SENSOR_ANALOG_CHANNEL);

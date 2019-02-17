@@ -48,11 +48,15 @@ public class HardwareConstants
 
     public static boolean CLIMBER_ARMS_MASTER_INVERT_OUTPUT = false;
     public static boolean CLIMBER_ARMS_INVERT_SENSOR = false;
-    public static double CLIMBER_ARMS_PULSE_DISTANCE = -1;
+    public static double CLIMBER_ARMS_PULSE_DISTANCE = 1.0;
     public static boolean CLIMBER_ARMS_FOLLOWER_INVERT_OUTPUT = false;
 
     public static boolean CLIMBER_CAM_MASTER_INVERT_OUTPUT = false;
     public static boolean CLIMBER_CAM_INVERT_SENSOR = false;
-    public static double CLIMBER_CAM_PULSE_DISTANCE = -1;
-    public static boolean CLIMBER_CAM_FOLLOWER_INVERT_OUTPUT = false;
+    public static double CLIMBER_CAM_PULSE_DISTANCE = 1.0;
+    public static boolean CLIMBER_CAM_FOLLOWER_INVERT_OUTPUT = true;
+
+    //================================================== Grabber ==============================================================
+
+    public static final boolean GRABBER_CARGO_MOTOR_INVERT_OUTPUT = true;
 }
