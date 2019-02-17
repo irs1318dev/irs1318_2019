@@ -8,7 +8,7 @@ import org.opencv.imgcodecs.*;
 
 import frc.robot.common.robotprovider.*;
 
-public class HSVDockingCenterPipelineTest
+public class Vision2019ApproachAndDockPipelineTest
 {
     @Test
     public void testLoadImage()
@@ -19,17 +19,10 @@ public class HSVDockingCenterPipelineTest
         String resourceImage = "fauxbot/src/test/resources/frc.robot.vision.pipelines/Capture.PNG";
         Mat mat = Imgcodecs.imread(testImage);
         MatWrapper wrapper = new MatWrapper(mat);
-        HSVDockingCenterPipeline pipeline = new HSVDockingCenterPipeline(new FauxbotTimer(), new FauxbotProvider(), true);
+        Vision2019ApproachAndDockPipeline pipeline = new Vision2019ApproachAndDockPipeline(new FauxbotTimer(), new FauxbotProvider(), true);
         pipeline.setActivation(true);
         pipeline.process(wrapper);
         assertNotNull(pipeline.getCenter());
     }
-
-    @Test
-    public void sampleTest()
-    {
-
-    }
-
 
 }

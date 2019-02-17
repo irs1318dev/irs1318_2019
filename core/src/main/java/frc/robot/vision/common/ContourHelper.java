@@ -265,6 +265,28 @@ public class ContourHelper
         return (IMatOfPoint[])contours.toArray();
     }
 
+    public static List<IMatOfPoint> getAllContours(IOpenCVProvider provider, IMat frame, double minContourArea){
+        IMat unused = provider.newMat();
+        List<IMatOfPoint> contours = new ArrayList<IMatOfPoint>();
+        provider.findContours(frame, contours, unused, ContourHelper.IMGPROC_RETR_EXTERNAL, ContourHelper.IMGPROC_CHAIN_APPROX_TC89_KCOS);
+        unused.release();
+
+        List<IMatOfPoint> largeContours = new ArrayList<IMatOfPoint>();
+        for(IMatOfPoint contour: contours){
+            double area = provider.contourArea(contour);
+            if(area >= minContourArea)
+            {
+                largeContours.add(contour);
+            }
+            else
+            {
+                contour.release();
+            }
+        }
+        return largeContours;
+
+    }
+
     /**
      * Find the center of mass for a contour using Moments.
      * http://docs.opencv.org/3.1.0/d8/d23/classcv_1_1Moments.html

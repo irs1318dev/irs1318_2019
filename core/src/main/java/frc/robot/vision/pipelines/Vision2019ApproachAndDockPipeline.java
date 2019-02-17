@@ -1,0 +1,224 @@
+package frc.robot.vision.pipelines;
+
+import frc.robot.common.robotprovider.*;
+import frc.robot.vision.VisionConstants;
+import frc.robot.vision.common.ContourHelper;
+import frc.robot.vision.common.HSVFilter;
+import frc.robot.vision.common.ImageUndistorter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipeline
+{
+    private final ITimer timer;
+    private final IOpenCVProvider openCVProvider;
+    private final boolean shouldUndistort;
+    private final ImageUndistorter undistorter;
+    private final HSVFilter hsvFilter;
+
+    private final IVideoStream frameInput;
+    private final IVideoStream hsvOutput;
+
+    // measured values
+    private IPoint largestCenter;
+    private IPoint secondLargestCenter;
+
+    // need to be calculated
+    private Double measuredAngleX;
+    private Double desiredAngleX;
+    private Double distanceFromRobot;
+
+    // FPS Measurement
+    private long analyzedFrameCount;
+    private double lastMeasuredTime;
+    private double lastFpsMeasurement;
+
+    // active status
+    private volatile boolean isActive;
+    private volatile boolean streamEnabled;
+
+    /**
+     * Initializes a new instance of the HSVCenterPipeline class.
+     * @param timer to use for any timing purposes
+     * @param shouldUndistort whether to undistort the image or not
+     */
+    public Vision2019ApproachAndDockPipeline(
+        ITimer timer,
+        IRobotProvider provider,
+        boolean shouldUndistort)
+    {
+        this.shouldUndistort = shouldUndistort;
+
+        this.openCVProvider = provider.getOpenCVProvider();
+        this.undistorter = new ImageUndistorter(this.openCVProvider);
+        IScalar lowFilter = this.openCVProvider.newScalar(VisionConstants.LIFECAM_HSV_FILTER_LOW_V0, VisionConstants.LIFECAM_HSV_FILTER_LOW_V1, VisionConstants.LIFECAM_HSV_FILTER_LOW_V2);
+        IScalar highFilter = this.openCVProvider.newScalar(VisionConstants.LIFECAM_HSV_FILTER_HIGH_V0, VisionConstants.LIFECAM_HSV_FILTER_HIGH_V1, VisionConstants.LIFECAM_HSV_FILTER_HIGH_V2);
+        this.hsvFilter = new HSVFilter(this.openCVProvider, lowFilter, highFilter);
+
+        this.largestCenter = null;
+        this.secondLargestCenter = null;
+
+        this.measuredAngleX = null;
+        this.desiredAngleX = null;
+        this.distanceFromRobot = null; 
+
+        this.analyzedFrameCount = 0;
+        this.timer = timer;
+        this.lastMeasuredTime = this.timer.get();
+
+        this.isActive = false;
+        this.streamEnabled = true;
+
+        this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
+
+        if (VisionConstants.DEBUG &&
+            VisionConstants.DEBUG_OUTPUT_FRAMES)
+        {
+            this.hsvOutput =  provider.getMJPEGStream("center.hsv", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
+        }
+        else
+        {
+            this.hsvOutput = null;
+        }
+    }
+
+    /**
+     * Process a single image frame
+     */
+    @Override
+    public void process(IMat image)
+    {
+        if (VisionConstants.DEBUG)
+        {
+            if (VisionConstants.DEBUG_SAVE_FRAMES &&
+                this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
+            {
+                this.openCVProvider.imwrite(
+                    String.format("%simage%d-1.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
+                    image);
+            }
+        }
+
+        if (this.streamEnabled ||
+            (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
+        {
+            this.frameInput.putFrame(image);
+        }
+
+        if (!this.isActive)
+        {
+            return;
+        }
+
+        this.analyzedFrameCount++;
+        if (VisionConstants.DEBUG &&
+            VisionConstants.DEBUG_PRINT_OUTPUT &&
+            this.analyzedFrameCount % VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL == 0)
+        {
+            double now = this.timer.get();
+            double elapsedTime = now - this.lastMeasuredTime;
+
+            this.lastFpsMeasurement = ((double)VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL) / elapsedTime;
+            this.lastMeasuredTime = this.timer.get();
+        }
+
+        // first, undistort the image.
+        IMat undistortedImage;
+        if (this.shouldUndistort)
+        {
+            image = this.undistorter.undistortFrame(image);
+        }
+
+        // save the undistorted image for possible output later...
+        if (this.shouldUndistort)
+        {
+            undistortedImage = image.clone();
+        }
+        else
+        {
+            undistortedImage = image;
+        }
+
+        // second, filter HSV
+        image = this.hsvFilter.filterHSV(undistortedImage);
+        if (VisionConstants.DEBUG)
+        {
+            if (VisionConstants.DEBUG_SAVE_FRAMES &&
+                this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
+            {
+                this.openCVProvider.imwrite(
+                    String.format("%simage%d-2.hsvfiltered.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
+                    image);
+            }
+
+            if (VisionConstants.DEBUG_OUTPUT_FRAMES)
+            {
+                this.hsvOutput.putFrame(image);
+            }
+        }
+
+        List<IRotatedRect> rectangles =  processOpenCV(image);
+        for (IRotatedRect rectangle : rectangles) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            sb.append(String.format("\"centerX\": %f,\"centerY\": %f",
+                    rectangle.getCenter().getX(), rectangle.getCenter().getY()));
+            sb.append("}\n");
+            System.out.println(sb);
+        }
+
+    }
+
+    public List<IRotatedRect> processOpenCV(IMat image){
+        List<IMatOfPoint> contours = ContourHelper.getAllContours(openCVProvider, image, VisionConstants.CONTOUR_MIN_AREA);
+
+        List<IRotatedRect> rotatedRect = new ArrayList<>();
+
+        for(IMatOfPoint contour: contours){
+            rotatedRect.add(openCVProvider.minAreaRect(openCVProvider.convertToMatOfPoints2f(contour)));
+            contour.release();
+        }
+        return rotatedRect;
+    }
+
+    public void setActivation(boolean isActive)
+    {
+        this.isActive = isActive;
+    }
+
+    public void setStreamMode(boolean isEnabled)
+    {
+        this.streamEnabled = isEnabled;
+    }
+
+    public boolean isActive()
+    {
+        return this.isActive;
+    }
+
+    public IPoint getCenter()
+    {
+        return this.largestCenter;
+    }
+
+    public Double getDesiredAngleX()
+    {
+        return this.desiredAngleX;
+    }
+
+    public Double getMeasuredAngleX()
+    {
+        return this.measuredAngleX;
+    }
+
+    public Double getRobotDistance()
+    {
+        return this.distanceFromRobot;
+    }
+
+    public double getFps()
+    {
+        return this.lastFpsMeasurement;
+    }
+}
