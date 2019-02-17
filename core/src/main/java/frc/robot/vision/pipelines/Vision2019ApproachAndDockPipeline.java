@@ -75,6 +75,8 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
 
         this.isActive = false;
         this.streamEnabled = true;
+        this.gamePiece = GamePiece.None;
+        this.processingState = VisionProcessingState.Disabled;
 
         this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
 
@@ -166,6 +168,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
 
         List<IRotatedRect> rectangles =  processOpenCV(image);
         List<Set<IRotatedRect>> selectedRect = selectedRotatedRect(rectangles);
+        Set<IRotatedRect> row = pickRow(selectedRect);
         for (IRotatedRect rectangle : rectangles) {
             StringBuilder sb = new StringBuilder();
             sb.append("{");
@@ -214,6 +217,45 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         }
         return rows;
     }
+
+    public Set<IRotatedRect> pickRow(List<Set<IRotatedRect>> rows)
+    {
+        if(rows.size() == 1){
+            return rows.get(0);
+        }
+        if(this.gamePiece.equals(GamePiece.Cargo) && this.processingState.equals(VisionProcessingState.ActiveRocket))
+        {
+            double lowestY = 1000;
+            Set<IRotatedRect> lowestRow = null;
+            for(Set<IRotatedRect> row : rows)
+            {
+                IRotatedRect rect = row.stream().findFirst().get();
+                if(rect.getCenter().getY() < lowestY){
+                    lowestY = rect.getCenter().getY();
+                    lowestRow = row;
+                }
+
+            }
+           return lowestRow; 
+        }
+        else
+        {
+            double highestY = 0;
+            Set<IRotatedRect> highestRow = null;
+            for(Set<IRotatedRect> row : rows)
+            {
+                IRotatedRect rect = row.stream().findFirst().get();
+                if(rect.getCenter().getY() > highestY){
+                    highestY = rect.getCenter().getY();
+                    highestRow = row;
+                }
+
+            }
+            return highestRow;
+        }
+    }
+
+    
 
     public void setActivation(boolean isActive)
     {
