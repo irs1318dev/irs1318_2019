@@ -94,15 +94,11 @@ public class DriveTrainMechanism implements IMechanism
         IVictorSPX leftFollowerMotor1 = provider.getVictorSPX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER1_CAN_ID);
         leftFollowerMotor1.setNeutralMode(TalonSRXNeutralMode.Brake);
         leftFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER1_INVERT_OUTPUT);
-        //leftFollowerMotor1.setControlMode(TalonSRXControlMode.Follower);
-        //leftFollowerMotor1.set(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
         leftFollowerMotor1.follow(this.leftMotor);
 
         ITalonSRX leftFollowerMotor2 = provider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_LEFT_FOLLOWER2_CAN_ID);
         leftFollowerMotor2.setNeutralMode(TalonSRXNeutralMode.Brake);
         leftFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_LEFT_FOLLOWER2_INVERT_OUTPUT);
-        //leftFollowerMotor2.setControlMode(TalonSRXControlMode.Follower);
-        //leftFollowerMotor2.set(ElectronicsConstants.DRIVETRAIN_LEFT_MASTER_CAN_ID);
         leftFollowerMotor2.follow(this.leftMotor);
 
         this.rightMotor = provider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
@@ -123,15 +119,11 @@ public class DriveTrainMechanism implements IMechanism
         IVictorSPX rightFollowerMotor1 = provider.getVictorSPX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER1_CAN_ID);
         rightFollowerMotor1.setNeutralMode(TalonSRXNeutralMode.Brake);
         rightFollowerMotor1.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER1_INVERT_OUTPUT);
-        //rightFollowerMotor1.setControlMode(TalonSRXControlMode.Follower);
-        //rightFollowerMotor1.set(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
         rightFollowerMotor1.follow(this.rightMotor);
 
         ITalonSRX rightFollowerMotor2 = provider.getTalonSRX(ElectronicsConstants.DRIVETRAIN_RIGHT_FOLLOWER2_CAN_ID);
         rightFollowerMotor2.setNeutralMode(TalonSRXNeutralMode.Brake);
         rightFollowerMotor2.setInvertOutput(HardwareConstants.DRIVETRAIN_RIGHT_FOLLOWER2_INVERT_OUTPUT);
-        //rightFollowerMotor2.setControlMode(TalonSRXControlMode.Follower);
-        //rightFollowerMotor2.set(ElectronicsConstants.DRIVETRAIN_RIGHT_MASTER_CAN_ID);
         rightFollowerMotor2.follow(this.rightMotor);
 
         this.leftPID = null;

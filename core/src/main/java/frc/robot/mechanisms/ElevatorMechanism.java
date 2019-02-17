@@ -95,8 +95,6 @@ public class ElevatorMechanism implements IMechanism
         IVictorSPX elevatorFollowerMotor = provider.getVictorSPX(ElectronicsConstants.ELEVATOR_MOTOR_FOLLOWER_CAN_ID);
         elevatorFollowerMotor.setNeutralMode(TalonSRXNeutralMode.Brake);
         elevatorFollowerMotor.setInvertOutput(HardwareConstants.ELEVATOR_FOLLOWER_INVERT_OUTPUT);
-        //elevatorFollowerMotor.setControlMode(TalonSRXControlMode.Follower);
-        //elevatorFollowerMotor.set(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
         elevatorFollowerMotor.follow(this.elevatorMotorMaster);
 
         this.elevatorVelocity = 0.0;

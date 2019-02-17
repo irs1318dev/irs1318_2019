@@ -192,9 +192,9 @@ public class TuningConstants
     public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 200.0;
 
     // Sensors
-    public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = true;
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
-    public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED = false;
+    public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
 
     // MotionMagic
