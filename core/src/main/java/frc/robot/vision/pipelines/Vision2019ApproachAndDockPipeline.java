@@ -1,13 +1,17 @@
 package frc.robot.vision.pipelines;
 
+import frc.robot.GamePiece;
 import frc.robot.common.robotprovider.*;
 import frc.robot.vision.VisionConstants;
 import frc.robot.vision.common.ContourHelper;
 import frc.robot.vision.common.HSVFilter;
 import frc.robot.vision.common.ImageUndistorter;
+import frc.robot.vision.common.VisionProcessingState;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipeline
 {
@@ -36,7 +40,9 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
 
     // active status
     private volatile boolean isActive;
+    private volatile GamePiece gamePiece;
     private volatile boolean streamEnabled;
+    private volatile VisionProcessingState processingState;
 
     /**
      * Initializes a new instance of the HSVCenterPipeline class.
@@ -159,6 +165,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         }
 
         List<IRotatedRect> rectangles =  processOpenCV(image);
+        List<Set<IRotatedRect>> selectedRect = selectedRotatedRect(rectangles);
         for (IRotatedRect rectangle : rectangles) {
             StringBuilder sb = new StringBuilder();
             sb.append("{");
@@ -180,6 +187,32 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             contour.release();
         }
         return rotatedRect;
+    }
+
+    public List<Set<IRotatedRect>> selectedRotatedRect(List<IRotatedRect> rotatedRect)
+    {
+        List<Set<IRotatedRect>> rows = new ArrayList<>();
+        for(IRotatedRect rect : rotatedRect)
+        {
+            boolean added = false;
+            for(Set<IRotatedRect> row: rows)
+            {
+                IRotatedRect compare = row.stream().findFirst().get();
+                if(Math.abs(rect.getCenter().getY() - compare.getCenter().getY())< 30)
+                {
+                    row.add(rect);
+                    added = true;
+                    break;
+                }
+            }
+            if(added){
+                continue;
+            }
+            Set<IRotatedRect> row = new HashSet<>();
+            row.add(rect);
+            rows.add(row);
+        }
+        return rows;
     }
 
     public void setActivation(boolean isActive)
@@ -220,5 +253,11 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     public double getFps()
     {
         return this.lastFpsMeasurement;
+    }
+    public void setGamePiece(GamePiece gamePiece){
+        this.gamePiece = gamePiece;
+    }
+    public void setMode(VisionProcessingState processingState){
+        this.processingState = processingState;
     }
 }
