@@ -1,10 +1,12 @@
 package frc.robot.vision.pipelines;
 
+import frc.robot.GamePiece;
 import frc.robot.common.robotprovider.*;
 import frc.robot.vision.VisionConstants;
 import frc.robot.vision.common.ContourHelper;
 import frc.robot.vision.common.HSVFilter;
 import frc.robot.vision.common.ImageUndistorter;
+import frc.robot.vision.common.VisionProcessingState;
 
 public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 {
@@ -32,7 +34,8 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
     private double lastFpsMeasurement;
 
     // active status
-    private volatile boolean isActive;
+    private volatile VisionProcessingState processingState;
+    private volatile GamePiece gamePiece;
     private volatile boolean streamEnabled;
 
     /**
@@ -64,7 +67,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         this.timer = timer;
         this.lastMeasuredTime = this.timer.get();
 
-        this.isActive = false;
+        this.processingState = VisionProcessingState.Disabled;
         this.streamEnabled = true;
 
         this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
@@ -104,7 +107,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             this.frameInput.putFrame(image);
         }
 
-        if (!this.isActive)
+        if (this.processingState == VisionProcessingState.Disabled)
         {
             return;
         }
@@ -276,10 +279,15 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET -VisionConstants.DOCKING_TAPE_OFFSET)/ distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
     }
 
-    public void setActivation(boolean isActive)
+    public void setMode(VisionProcessingState state)
     {
-        this.isActive = isActive;
+        this.processingState = state;
     }
+
+    public void setGamePiece(GamePiece gamePiece)
+    {
+        this.gamePiece = gamePiece;
+	}
 
     public void setStreamMode(boolean isEnabled)
     {
@@ -288,7 +296,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     public boolean isActive()
     {
-        return this.isActive;
+        return this.processingState != VisionProcessingState.Disabled;
     }
 
     public IPoint getCenter()
