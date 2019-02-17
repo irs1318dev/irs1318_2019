@@ -156,21 +156,21 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("CenterL1 to FrontL.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(-180), // change direction depending on whether we are more likely to over or under shoot
             new FollowPathTask("FrontL to LLoading.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(-180),
             new FollowPathTask("LLoading to L1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -182,8 +182,8 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("CenterL1 to FrontL.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -194,21 +194,21 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("CenterL1 to FrontR.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("FrontR to RLoading.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("RLoading to R1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -220,8 +220,8 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("CenterL1 to FrontR.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -232,21 +232,21 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("LeftL1 to FrontL.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("FrontL to LLoading.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("LLoading to L1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -258,8 +258,8 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("LeftL1 to FrontL.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -271,21 +271,21 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("LeftL1 to L1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("L1 to LLoading.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("LLoading to L2.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -297,8 +297,8 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("LeftL1 to L1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -310,21 +310,21 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("RightL1 to FrontR.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("FrontR to RLoading.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("RLoading to R1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -336,8 +336,8 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("RightL1 to FrontR.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -349,21 +349,21 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("RightL1 to R1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("R1 to RLoading.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             new DriveDistanceTimedTask(-25, 1.5),
             new NavxTurnTask(180),
             new FollowPathTask("RLoading to R2.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),
@@ -375,8 +375,8 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             new FollowPathTask("RightL1 to R1.csv"),
-            new VisionCenteringTask(),
-            new VisionAdvanceAndCenterTask(),
+            new VisionCenteringTask(Operation.VisionEnableCargoShip),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
                 new GrabberKickPanelTask(),
                 new PIDBrakeTask()),

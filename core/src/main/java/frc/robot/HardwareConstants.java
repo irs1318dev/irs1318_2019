@@ -38,10 +38,10 @@ public class HardwareConstants
 
     //================================================== Elevator ==============================================================
  
-    public static final double ELEVATOR_PULSE_DISTANCE = -1;
-    public static final double ELEVATOR_MAX_HEIGHT = -1;
-    public static final boolean ELEVATOR_MASTER_INVERT_OUTPUT = false;
-    public static final boolean ELEVATOR_FOLLOWER_INVERT_OUTPUT = false;
+    public static final double ELEVATOR_PULSE_DISTANCE = 1.0;
+    public static final double ELEVATOR_MAX_HEIGHT = 1000000.0;
+    public static final boolean ELEVATOR_MASTER_INVERT_OUTPUT = true;
+    public static final boolean ELEVATOR_FOLLOWER_INVERT_OUTPUT = true;
     public static final boolean ELEVATOR_INVERT_SENSOR = false;
 
     //================================================== Climber ==============================================================
