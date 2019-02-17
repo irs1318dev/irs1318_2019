@@ -42,7 +42,7 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.VisionEnableCargoShip,
                 new DigitalOperationDescription(
-                    UserInputDevice.Driver,
+                    UserInputDevice.None,
                     0,
                     Shift.Debug,
                     ButtonType.Toggle));
@@ -50,7 +50,8 @@ public class ButtonMap implements IButtonMap
                 Operation.VisionEnableOffboardStream,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
+                    0,
+                    Shift.Debug,
                     ButtonType.Toggle));
 
             // Operations for the drive train
@@ -549,30 +550,13 @@ public class ButtonMap implements IButtonMap
 
             // Vision macros
             put(
-                MacroOperation.VisionCenter,
-                new MacroOperationDescription(
-                    UserInputDevice.None,
-                    0,
-                    Shift.Debug,
-                    ButtonType.Toggle,
-                    () -> new VisionCenteringTask(),
-                    new Operation[]
-                    {
-                        Operation.VisionEnableCargoShip,
-                        Operation.DriveTrainUsePositionalMode,
-                        Operation.DriveTrainLeftPosition,
-                        Operation.DriveTrainRightPosition,
-                        Operation.DriveTrainTurn,
-                        Operation.DriveTrainMoveForward,
-                    }));
-            put(
-                MacroOperation.VisionCenterAndAdvance,
+                MacroOperation.VisionCenterAndAdvanceRocket,
                 new MacroOperationDescription(
                     UserInputDevice.Driver,
                     180,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new VisionAdvanceAndCenterTask(),
+                    () -> new VisionAdvanceAndCenterTask(Operation.VisionEnableRocket),
                     new Operation[]
                     {
                         Operation.VisionEnableCargoShip,
@@ -581,6 +565,25 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
+                        Operation.VisionEnableRocket
+                    }));
+            put(
+                MacroOperation.VisionCenterAndAdvanceCargoShip,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    0,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                    new Operation[]
+                    {
+                        Operation.VisionEnableCargoShip,
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.VisionEnableRocket
                     }));
         }
     };

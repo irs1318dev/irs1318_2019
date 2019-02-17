@@ -9,8 +9,8 @@ public enum MacroOperation
     TurnInPlaceRight,
     FollowSomePath,
 
-    VisionCenter,
-    VisionCenterAndAdvance,
+    VisionCenterAndAdvanceRocket,
+    VisionCenterAndAdvanceCargoShip,
     DriveForwardTurnRight,
 
     ClimbHab2,
