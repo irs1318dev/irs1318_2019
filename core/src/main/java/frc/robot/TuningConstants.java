@@ -24,10 +24,10 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
         mechanismList.add(injector.getInstance(PowerManager.class));
         mechanismList.add(injector.getInstance(PositionManager.class));
-        mechanismList.add(injector.getInstance(VisionManager.class));
+        //mechanismList.add(injector.getInstance(VisionManager.class));
         //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         //mechanismList.add(injector.getInstance(CompressorMechanism.class));
-        //mechanismList.add(injector.getInstance(ElevatorMechanism.class));
+        mechanismList.add(injector.getInstance(ElevatorMechanism.class));
         //mechanismList.add(injector.getInstance(GrabberMechanism.class));
         //mechanismList.add(injector.getInstance(ClimberMechanism.class));
         //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
@@ -99,7 +99,7 @@ public class TuningConstants
     //================================================== DriveTrain ==============================================================
 
     // Drivetrain PID keys/default values:
-    public static final boolean DRIVETRAIN_USE_PID = true;
+    public static final boolean DRIVETRAIN_USE_PID = false;
     public static final boolean DRIVETRAIN_USE_CROSS_COUPLING = false;
     public static final boolean DRIVETRAIN_USE_HEADING_CORRECTION = true;
 
@@ -188,8 +188,8 @@ public class TuningConstants
 
     //================================================== Elevator ==============================================================
 
-    public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = -1;
-    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = -1;
+    public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = 20.0;
+    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 200.0;
 
     // Sensors
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = false;
@@ -200,31 +200,31 @@ public class TuningConstants
     // MotionMagic
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
 
-    public static final double ELEVATOR_MM_POSITION_PID_KP = -1;
-    public static final double ELEVATOR_MM_POSITION_PID_KI = -1;
-    public static final double ELEVATOR_MM_POSITION_PID_KD = -1;
-    public static final double ELEVATOR_MM_POSITION_PID_KF = -1;
-    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = -1;
-    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = -1;
+    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KI = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.0;
+    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 0;
+    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 0;
 
     // PID
-    public static final double ELEVATOR_POSITION_PID_KP = -1;
-    public static final double ELEVATOR_POSITION_PID_KI = -1;
-    public static final double ELEVATOR_POSITION_PID_KD = -1;
-    public static final double ELEVATOR_POSITION_PID_KF = -1;
+    public static final double ELEVATOR_POSITION_PID_KP = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KI = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KD = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KF = 0.0;
 
-    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = -1;
-    public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = -1;
-    public static final double ELEVATOR_MOVE_VELOCITY = -1;
+    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.2;
+    public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = -0.2;
+    public static final double ELEVATOR_MOVE_VELOCITY = 100.0;
 
     // Positions
-    public static final double ELEVATOR_BOTTOM_POSITION = -1;
-    public static final double ELEVATOR_HATCH_2_POSITION = -1;
-    public static final double ELEVATOR_HATCH_3_POSITION = -1;
-    public static final double ELEVATOR_CARGO_1_POSITION = -1;
-    public static final double ELEVATOR_CARGO_2_POSITION = -1;
-    public static final double ELEVATOR_CARGO_3_POSITION = -1;
-    public static final double ELEVATOR_CARGO_LOAD_POSITION = -1;
+    public static final double ELEVATOR_BOTTOM_POSITION = 0.0;
+    public static final double ELEVATOR_HATCH_2_POSITION = 10.0;
+    public static final double ELEVATOR_HATCH_3_POSITION = 20.0;
+    public static final double ELEVATOR_CARGO_1_POSITION = 30.0;
+    public static final double ELEVATOR_CARGO_2_POSITION = 40.0;
+    public static final double ELEVATOR_CARGO_3_POSITION = 50.0;
+    public static final double ELEVATOR_CARGO_LOAD_POSITION = 60.0;
 
     //======================================================== Grabber =====================================
 

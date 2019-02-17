@@ -15,7 +15,7 @@ public class TalonSRXWrapper implements ITalonSRX
     private static final int pidIdx = 0;
     private static final int timeoutMS = 10;
 
-    private final TalonSRX wrappedObject;
+    final TalonSRX wrappedObject;
 
     private ControlMode controlMode;
 
@@ -28,6 +28,16 @@ public class TalonSRXWrapper implements ITalonSRX
     public void set(double value)
     {
         this.wrappedObject.set(this.controlMode, value);
+    }
+
+    public void follow(ITalonSRX talonSRX)
+    {
+        this.wrappedObject.follow(((TalonSRXWrapper)talonSRX).wrappedObject);
+    }
+
+    public void follow(IVictorSPX victorSPX)
+    {
+        this.wrappedObject.follow(((VictorSPXWrapper)victorSPX).wrappedObject);
     }
 
     public void setControlMode(TalonSRXControlMode mode)
