@@ -20,6 +20,14 @@ public class FauxbotTalonSRX extends FauxbotAdvancedMotorBase implements ITalonS
         this.currentMode = TalonSRXControlMode.PercentOutput;
     }
 
+    public void follow(ITalonSRX talonSRX)
+    {
+    }
+
+    public void follow(IVictorSPX victorSPX)
+    {
+    }
+
     public void setControlMode(TalonSRXControlMode mode)
     {
         this.currentMode = mode;

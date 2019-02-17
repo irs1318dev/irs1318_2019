@@ -1,6 +1,7 @@
 package frc.robot.mechanisms;
 
 import frc.robot.ElectronicsConstants;
+import frc.robot.GamePiece;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.Operation;
@@ -26,6 +27,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     private final IDashboardLogger logger;
     private final ITimer timer;
     private final IMotor ringLight;
+    private final GrabberMechanism grabberMechanism;
 
     private final Object visionLock;
 
@@ -54,11 +56,13 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     public VisionManager(
         IDashboardLogger logger,
         ITimer timer,
-        IRobotProvider provider)
+        IRobotProvider provider,
+        GrabberMechanism grabberMechanism)
     {
         this.logger = logger;
         this.timer = timer;
         this.ringLight = provider.getTalon(ElectronicsConstants.VISION_RING_LIGHT_PWM_CHANNEL);
+        this.grabberMechanism = grabberMechanism;
 
         this.visionLock = new Object();
 
@@ -74,7 +78,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
         this.visionThread.start();
 
         this.driver = null;
-        this.currentState = VisionProcessingState.None;
+        this.currentState = VisionProcessingState.Disabled;
 
         this.center = null;
         this.desiredAngleX = null;
@@ -146,15 +150,22 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     @Override
     public void update()
     {
-        VisionProcessingState desiredState = VisionProcessingState.None;
-        if (this.driver.getDigital(Operation.VisionEnable))
+        VisionProcessingState desiredState = VisionProcessingState.Disabled;
+        if (this.driver.getDigital(Operation.VisionEnableCargoShip))
         {
-            desiredState = VisionProcessingState.Active;
+            desiredState = VisionProcessingState.ActiveCargoShip;
+        }
+        else if (this.driver.getDigital(Operation.VisionEnableRocket))
+        {
+            desiredState = VisionProcessingState.ActiveRocket;
         }
 
         if (this.currentState != desiredState)
         {
-            if (desiredState == VisionProcessingState.Active)
+            boolean hsvMode = desiredState == VisionProcessingState.ActiveCargoShip ||
+                desiredState == VisionProcessingState.ActiveRocket;
+
+            if (hsvMode)
             {
                 this.camera.setExposureManual(VisionConstants.LIFECAM_CAMERA_VISION_EXPOSURE);
                 this.camera.setBrightness(VisionConstants.LIFECAM_CAMERA_VISION_BRIGHTNESS);
@@ -167,8 +178,8 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
                 this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
             }
 
-            this.ringLight.set(desiredState == VisionProcessingState.Active ? VisionConstants.RING_LIGHT_ON : VisionConstants.RING_LIGHT_OFF);
-            this.visionPipeline.setActivation(desiredState == VisionProcessingState.Active);
+            this.ringLight.set(hsvMode ? VisionConstants.RING_LIGHT_ON : VisionConstants.RING_LIGHT_OFF);
+            this.visionPipeline.setMode(desiredState);
 
             this.currentState = desiredState;
         }
@@ -177,13 +188,27 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
         // vision system do streaming
         boolean enableOffboardStream = this.driver.getDigital(Operation.VisionEnableOffboardStream);
         this.visionPipeline.setStreamMode(!enableOffboardStream);
+
+        // vision pipeline cares about whether we are currently holding a hatch panel or cargo:
+        GamePiece gamePiece = GamePiece.None;
+        if (this.grabberMechanism.hasHatch())
+        {
+            gamePiece = GamePiece.HatchPanel;
+        }
+        else if (this.grabberMechanism.hasCargo())
+        {
+            gamePiece = GamePiece.Cargo;
+        }
+
+        this.visionPipeline.setGamePiece(gamePiece);
     }
 
     @Override
     public void stop()
     {
         this.ringLight.set(0.0);
-        this.visionPipeline.setActivation(false);
+        this.visionPipeline.setMode(VisionProcessingState.Disabled);
+        this.visionPipeline.setStreamMode(true);
 
         this.center = null;
 

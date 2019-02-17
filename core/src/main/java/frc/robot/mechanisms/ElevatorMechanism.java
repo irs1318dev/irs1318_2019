@@ -13,6 +13,7 @@ import frc.robot.common.robotprovider.ITalonSRX;
 import frc.robot.common.robotprovider.TalonSRXControlMode;
 import frc.robot.common.robotprovider.TalonSRXFeedbackDevice;
 import frc.robot.common.robotprovider.ITimer;
+import frc.robot.common.robotprovider.IVictorSPX;
 import frc.robot.common.robotprovider.IDashboardLogger;
 import frc.robot.driver.common.Driver;
 import frc.robot.common.robotprovider.IRobotProvider;
@@ -91,11 +92,10 @@ public class ElevatorMechanism implements IMechanism
         this.elevatorMotorMaster.setControlMode(this.pidControlMode);
         this.elevatorMotorMaster.setSelectedSlot(ElevatorMechanism.pidSlotId);
         
-        ITalonSRX elevatorFollowerMotor = provider.getTalonSRX(ElectronicsConstants.ELEVATOR_MOTOR_FOLLOWER_CAN_ID);
+        IVictorSPX elevatorFollowerMotor = provider.getVictorSPX(ElectronicsConstants.ELEVATOR_MOTOR_FOLLOWER_CAN_ID);
         elevatorFollowerMotor.setNeutralMode(TalonSRXNeutralMode.Brake);
         elevatorFollowerMotor.setInvertOutput(HardwareConstants.ELEVATOR_FOLLOWER_INVERT_OUTPUT);
-        elevatorFollowerMotor.setControlMode(TalonSRXControlMode.Follower);
-        elevatorFollowerMotor.set(ElectronicsConstants.ELEVATOR_MOTOR_MASTER_CAN_ID);
+        elevatorFollowerMotor.follow(this.elevatorMotorMaster);
 
         this.elevatorVelocity = 0.0;
         this.elevatorError = 0.0;
@@ -193,7 +193,7 @@ public class ElevatorMechanism implements IMechanism
             else if (forceDown)
             {
                 this.elevatorMotorMaster.set(
-                    this.elevatorReverseLimitSwitchStatus ? 0.0 : -TuningConstants.ELEVATOR_DEBUG_DOWN_POWER_LEVEL);
+                    this.elevatorReverseLimitSwitchStatus ? 0.0 : TuningConstants.ELEVATOR_DEBUG_DOWN_POWER_LEVEL);
             }
         }
         else

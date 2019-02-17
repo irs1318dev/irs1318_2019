@@ -15,6 +15,7 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     private static final int NO_CENTER_THRESHOLD = 20;
 
     private final boolean useTime;
+    private final Operation toPerform;
 
     private PIDHandler turnPidHandler;
     private Double centeredTime;
@@ -25,18 +26,19 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     /**
     * Initializes a new VisionCenteringTask
     */
-    public VisionCenteringTask()
+    public VisionCenteringTask(Operation toPerform)
     {
-        this(true);
+        this(true, toPerform);
     }
 
     /**
     * Initializes a new VisionCenteringTask
     * @param useTime whether to make sure we are centered for a second or not
     */
-    public VisionCenteringTask(boolean useTime)
+    public VisionCenteringTask(boolean useTime, Operation toPerform)
     {
         this.useTime = useTime;
+        this.toPerform = toPerform;
 
         this.turnPidHandler = null;
         this.centeredTime = null;
@@ -61,7 +63,7 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     public void update()
     {
         this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
-        this.setDigitalOperationState(Operation.VisionEnable, true);
+        this.setDigitalOperationState(this.toPerform, true);
 
         Double currentMeasuredAngle = this.visionManager.getMeasuredAngle();
         Double currentDesiredAngle = this.visionManager.getDesiredAngle();
@@ -82,7 +84,7 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
         this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
         this.setAnalogOperationState(Operation.DriveTrainTurn, 0.0);
 
-        this.setDigitalOperationState(Operation.VisionEnable, false);
+        this.setDigitalOperationState(Operation.VisionEnableCargoShip, false);
     }
 
     /**

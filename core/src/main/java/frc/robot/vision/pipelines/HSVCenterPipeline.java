@@ -1,10 +1,12 @@
 package frc.robot.vision.pipelines;
 
+import frc.robot.GamePiece;
 import frc.robot.common.robotprovider.*;
 import frc.robot.vision.VisionConstants;
 import frc.robot.vision.common.ContourHelper;
 import frc.robot.vision.common.HSVFilter;
 import frc.robot.vision.common.ImageUndistorter;
+import frc.robot.vision.common.VisionProcessingState;
 
 public class HSVCenterPipeline implements ICentroidVisionPipeline
 {
@@ -27,7 +29,7 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
     private double lastFpsMeasurement;
 
     // active status
-    private volatile boolean isActive;
+    private volatile VisionProcessingState processingState;
     private volatile boolean streamEnabled;
 
     /**
@@ -55,7 +57,7 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
         this.timer = timer;
         this.lastMeasuredTime = this.timer.get();
 
-        this.isActive = true;
+        this.processingState = VisionProcessingState.Disabled;
 
         this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
 
@@ -94,7 +96,7 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
             this.frameInput.putFrame(image);
         }
 
-        if (!this.isActive)
+        if (this.processingState == VisionProcessingState.Disabled)
         {
             return;
         }
@@ -199,9 +201,13 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
         }
     }
 
-    public void setActivation(boolean isActive)
+    public void setMode(VisionProcessingState state)
     {
-        this.isActive = isActive;
+        this.processingState = state;
+    }
+
+    public void setGamePiece(GamePiece gamePiece)
+    {
     }
 
     public void setStreamMode(boolean isEnabled)
@@ -211,7 +217,7 @@ public class HSVCenterPipeline implements ICentroidVisionPipeline
 
     public boolean isActive()
     {
-        return this.isActive;
+        return this.processingState != VisionProcessingState.Disabled;
     }
 
     public IPoint getCenter()
