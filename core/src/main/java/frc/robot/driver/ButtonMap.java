@@ -40,7 +40,7 @@ public class ButtonMap implements IButtonMap
         {
             // Operations for vision
             put(
-                Operation.VisionEnable,
+                Operation.VisionEnableCargoShip,
                 new DigitalOperationDescription(
                     UserInputDevice.Driver,
                     0,
@@ -558,7 +558,7 @@ public class ButtonMap implements IButtonMap
                     () -> new VisionCenteringTask(),
                     new Operation[]
                     {
-                        Operation.VisionEnable,
+                        Operation.VisionEnableCargoShip,
                         Operation.DriveTrainUsePositionalMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
@@ -575,7 +575,7 @@ public class ButtonMap implements IButtonMap
                     () -> new VisionAdvanceAndCenterTask(),
                     new Operation[]
                     {
-                        Operation.VisionEnable,
+                        Operation.VisionEnableCargoShip,
                         Operation.DriveTrainUsePositionalMode,
                         Operation.DriveTrainLeftPosition,
                         Operation.DriveTrainRightPosition,
