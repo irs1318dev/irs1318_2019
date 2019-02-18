@@ -420,6 +420,52 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         return inches;
     }
 
+    
+    public double azimuth(double avgPixels, List<IRotatedRect> list)
+    {
+        IRotatedRect left = list.get(0);
+        IRotatedRect right = list.get(1);
+        //TODO: check for divide by zero
+        double inchesPerPixels = VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_HEIGHT_STRAIGHT / avgPixels;
+        double observedPixels = (right.getCenter().getX() - left.getCenter().getX());
+        double distanceBetweenCenters = VisionConstants.DOCKING_DISTANCE_BETWEEN_TAPE_TARGETS / inchesPerPixels;
+        double azimuth = Math.acos(observedPixels/ distanceBetweenCenters);
+        return azimuth;
+    }
+
+    public double calculateIntitialApproachTurnAngle(double azimuth, double pixelsPerInch, List<IRotatedRect> list, double distance)
+    {
+        IRotatedRect left = list.get(0);
+        IRotatedRect right = list.get(1);
+        //In radians
+        double targetCenter = VisionConstants.LIFECAM_CAMERA_RESOLUTION_X 
+                            + pixelsPerInch * VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET
+                            * Math.cos(azimuth);
+
+        double observedTargetCenter = left.getCenter().getX() 
+                                    + (right.getCenter().getX() -left.getCenter().getX()) / 2.0; 
+        double initialTurnAngle = (Math.atan(targetCenter - observedTargetCenter))/ distance;
+        return initialTurnAngle;
+    }
+
+    public double calculateTravelDistance(double azimuth, double distance)
+    {
+        double travelDistance = Math.sqrt(
+            Math.pow(
+                (distance*Math.sin(azimuth) 
+                - VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET), 2) 
+            + Math.pow((distance*Math.cos(azimuth)), 2));
+            return travelDistance;
+    }
+
+    public double finalApproachTurn(double azimuth, double distance)
+    {
+        //24 is fill-in for docking offset
+        double approachAngle = Math.atan2(distance*Math.sin(azimuth)- 24, distance*Math.cos(azimuth));
+        //convert to radians!!!!!
+        return Math.PI/2 - approachAngle;
+    }
+
 
     public void setActivation(boolean isActive)
     {
