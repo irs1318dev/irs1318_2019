@@ -2,6 +2,7 @@ package frc.robot.vision.pipelines;
 
 import frc.robot.GamePiece;
 import frc.robot.common.robotprovider.*;
+import frc.robot.vision.PixelsToInches;
 import frc.robot.vision.VisionConstants;
 import frc.robot.vision.common.ContourHelper;
 import frc.robot.vision.common.HSVFilter;
@@ -399,7 +400,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
                 return i - 1;
             }
         }
-
+        return 0;
     }
 
     public double computeAvgPixel(List<IRotatedRect> rects)
@@ -413,9 +414,10 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     public double interpolateInchesFromPixels(double avgPixel, int interval, List<PixelsToInches> interpolateList)
     {
         PixelsToInches low = interpolateList.get(interval);
-        PixelsToInches high = interpolateList.PIXELS_TO_INCHES.get(interval + 1);
+        PixelsToInches high = interpolateList.get(interval + 1);
         double slope = (low.getInches()- high.getInches())/(low.getPixels() - high.getPixels());
         double inches = slope * (avgPixel - low.getPixels()) + low.getInches();
+        return inches;
     }
 
 
