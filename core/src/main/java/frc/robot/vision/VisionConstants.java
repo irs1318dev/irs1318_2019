@@ -1,5 +1,9 @@
 package frc.robot.vision;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class VisionConstants
 {
     // Debug output settings:
@@ -75,4 +79,12 @@ public class VisionConstants
     public static final double ROCKET_TO_GROUND_TAPE_HEIGHT = 28.5875; // (Z) distance from floor to center of tape
     public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 42.5; // (Z) distance from floor to the viewport of the camera
     public static final double DOCKING_TAPE_OFFSET = 5.7065; // horizontal offset from center of the two tape strips to the center of one of the pieces of tape
+
+
+    public static final List<PixelsToInches> PIXELS_TO_INCHES = new ArrayList<>() {{
+        add(new PixelsToInches(60, 0));
+        add(new PixelsToInches(40, 24.0));
+        add(new PixelsToInches(29, 42.0));
+        add(new PixelsToInches(10, 100));
+    }};
 }
