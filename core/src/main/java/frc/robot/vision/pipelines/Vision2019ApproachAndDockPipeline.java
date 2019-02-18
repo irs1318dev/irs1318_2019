@@ -8,7 +8,16 @@ import frc.robot.vision.common.HSVFilter;
 import frc.robot.vision.common.ImageUndistorter;
 import frc.robot.vision.common.VisionProcessingState;
 
+<<<<<<< HEAD
 import java.util.*;
+=======
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+>>>>>>>  created methods to find paired set of rectangles
 
 public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipeline
 {
@@ -163,13 +172,13 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             }
         }
 
-        List<IRotatedRect> rectangles =  processOpenCV(image);
+        List<IRotatedRect> rectangles =  findRectangles(image);
         for (int i = 0; i< rectangles.size(); i++) {
             IRotatedRect rectangle = rectangles.get(i);
             System.out.println("R_"+ i +" : "
                     + Arrays.toString(rectangle.getRawValues()));
         }
-        List<Set<IRotatedRect>> groupedRects = selectedRotatedRect(rectangles);
+        List<Set<IRotatedRect>> groupedRects = groupRotatedRect(rectangles);
         int setNum = 0;
         for (Set<IRotatedRect> group : groupedRects) {
             for (int i = 0; i< rectangles.size(); i++) {
@@ -179,8 +188,8 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             }
             setNum++;
         }
-//        Set<IRotatedRect> row = pickRow(groupedRects);
-
+        Set<IRotatedRect> row = pickRow(groupedRects);
+        List<IRotatedRect> pair = pickPairedRect(row);
     }
 
     public void prepareImage(IMat image) {
@@ -255,7 +264,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
 //        undistortedImage.release();
     }
 
-    public List<IRotatedRect> processOpenCV(IMat image){
+    public List<IRotatedRect> findRectangles(IMat image){
         List<IMatOfPoint> contours = ContourHelper.getAllContours(openCVProvider, image, VisionConstants.CONTOUR_MIN_AREA);
 
         List<IRotatedRect> rotatedRect = new ArrayList<>();
@@ -267,7 +276,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         return rotatedRect;
     }
 
-    public List<Set<IRotatedRect>> selectedRotatedRect(List<IRotatedRect> rotatedRect)
+    public List<Set<IRotatedRect>> groupRotatedRect(List<IRotatedRect> rotatedRect)
     {
         List<Set<IRotatedRect>> rows = new ArrayList<>();
         for(IRotatedRect rect : rotatedRect)
@@ -330,7 +339,65 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         }
     }
 
-    
+    boolean isLeft(IRotatedRect rect) {
+        if(rect.getAngle() < -65 && rect.getAngle() > -85) {
+            return true;
+        }
+        return false;
+    }
+
+    boolean isRight(IRotatedRect rect) {
+        if(rect.getAngle() < 0  && rect.getAngle() > -15) {
+            return true;
+        }
+        return false;
+    }
+    List<IRotatedRect> largestRect(List<IRotatedRect> rect)
+    {
+        double area = 0;
+        List<IRotatedRect> pair = new ArrayList<>();
+        IRotatedRect left = null;
+        IRotatedRect right = null;
+        for(int i = 0; i < rect.size(); i++)
+        {
+            if(isLeft(rect.get(i))){
+                if(area < (rect.get(i).size().getHeight() * rect.get(i).size().getWidth()))
+                {
+                    area = (rect.get(i).size().getHeight() * rect.get(i).size().getWidth());
+                    left = rect.get(i);
+                    right = rect.get(i+1);
+                }
+            }
+        }
+        pair.add(left);
+        pair.add(right);
+        return pair;
+    }
+
+    public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects)
+    {
+        List<IRotatedRect> rectList = new ArrayList<>();
+        List<IRotatedRect> pairedRect = new ArrayList<>();
+
+        rectList.addAll(rects);
+        Collections.sort(rectList, new Comparator<IRotatedRect>() {
+
+        @Override
+        public int compare(IRotatedRect arg0, IRotatedRect arg1) {
+            return Double.compare(arg0.getCenter().getX(), arg1.getCenter().getX());
+        }
+        });
+        for(int i = 0; i < rectList.size() - 1; i++)
+        {
+            if(isLeft(rectList.get(i)))
+            {
+                pairedRect.add(rectList.get(i));
+                pairedRect.add(rectList.get(i+1));
+            }
+        }
+        return largestRect(pairedRect);
+    }
+
 
     public void setActivation(boolean isActive)
     {
