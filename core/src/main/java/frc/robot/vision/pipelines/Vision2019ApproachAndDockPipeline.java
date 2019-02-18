@@ -8,10 +8,7 @@ import frc.robot.vision.common.HSVFilter;
 import frc.robot.vision.common.ImageUndistorter;
 import frc.robot.vision.common.VisionProcessingState;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipeline
 {
@@ -100,16 +97,16 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         if (VisionConstants.DEBUG)
         {
             if (VisionConstants.DEBUG_SAVE_FRAMES &&
-                this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
+                    this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
             {
                 this.openCVProvider.imwrite(
-                    String.format("%simage%d-1.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
-                    image);
+                        String.format("%simage%d-1.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
+                        image);
             }
         }
 
         if (this.streamEnabled ||
-            (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
+                (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
         {
             this.frameInput.putFrame(image);
         }
@@ -121,8 +118,8 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
 
         this.analyzedFrameCount++;
         if (VisionConstants.DEBUG &&
-            VisionConstants.DEBUG_PRINT_OUTPUT &&
-            this.analyzedFrameCount % VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL == 0)
+                VisionConstants.DEBUG_PRINT_OUTPUT &&
+                this.analyzedFrameCount % VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL == 0)
         {
             double now = this.timer.get();
             double elapsedTime = now - this.lastMeasuredTime;
@@ -153,11 +150,11 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         if (VisionConstants.DEBUG)
         {
             if (VisionConstants.DEBUG_SAVE_FRAMES &&
-                this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
+                    this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
             {
                 this.openCVProvider.imwrite(
-                    String.format("%simage%d-2.hsvfiltered.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
-                    image);
+                        String.format("%simage%d-2.hsvfiltered.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
+                        image);
             }
 
             if (VisionConstants.DEBUG_OUTPUT_FRAMES)
@@ -167,17 +164,95 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         }
 
         List<IRotatedRect> rectangles =  processOpenCV(image);
-        List<Set<IRotatedRect>> selectedRect = selectedRotatedRect(rectangles);
-        Set<IRotatedRect> row = pickRow(selectedRect);
-        for (IRotatedRect rectangle : rectangles) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("{");
-            sb.append(String.format("\"centerX\": %f,\"centerY\": %f",
-                    rectangle.getCenter().getX(), rectangle.getCenter().getY()));
-            sb.append("}\n");
-            System.out.println(sb);
+        for (int i = 0; i< rectangles.size(); i++) {
+            IRotatedRect rectangle = rectangles.get(i);
+            System.out.println("R_"+ i +" : "
+                    + Arrays.toString(rectangle.getRawValues()));
+        }
+        List<Set<IRotatedRect>> groupedRects = selectedRotatedRect(rectangles);
+        int setNum = 0;
+        for (Set<IRotatedRect> group : groupedRects) {
+            for (int i = 0; i< rectangles.size(); i++) {
+                IRotatedRect rectangle = rectangles.get(i);
+                System.out.println("S_" + setNum + "_R_"+ i +" : "
+                        + Arrays.toString(rectangle.getRawValues()));
+            }
+            setNum++;
+        }
+//        Set<IRotatedRect> row = pickRow(groupedRects);
+
+    }
+
+    public void prepareImage(IMat image) {
+        if (VisionConstants.DEBUG)
+        {
+            if (VisionConstants.DEBUG_SAVE_FRAMES &&
+                    this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
+            {
+                this.openCVProvider.imwrite(
+                        String.format("%simage%d-1.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
+                        image);
+            }
         }
 
+        if (this.streamEnabled ||
+                (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
+        {
+            this.frameInput.putFrame(image);
+        }
+
+        if (!this.isActive)
+        {
+            return;
+        }
+
+        this.analyzedFrameCount++;
+        if (VisionConstants.DEBUG &&
+                VisionConstants.DEBUG_PRINT_OUTPUT &&
+                this.analyzedFrameCount % VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL == 0)
+        {
+            double now = this.timer.get();
+            double elapsedTime = now - this.lastMeasuredTime;
+
+            this.lastFpsMeasurement = ((double)VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL) / elapsedTime;
+            this.lastMeasuredTime = this.timer.get();
+        }
+
+        // first, undistort the image.
+        IMat undistortedImage;
+        if (this.shouldUndistort)
+        {
+            image = this.undistorter.undistortFrame(image);
+        }
+
+        // save the undistorted image for possible output later...
+        if (this.shouldUndistort)
+        {
+            undistortedImage = image.clone();
+        }
+        else
+        {
+            undistortedImage = image;
+        }
+
+        // second, filter HSV
+        image = this.hsvFilter.filterHSV(undistortedImage);
+        if (VisionConstants.DEBUG)
+        {
+            if (VisionConstants.DEBUG_SAVE_FRAMES &&
+                    this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
+            {
+                this.openCVProvider.imwrite(
+                        String.format("%simage%d-2.hsvfiltered.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
+                        image);
+            }
+
+            if (VisionConstants.DEBUG_OUTPUT_FRAMES)
+            {
+                this.hsvOutput.putFrame(image);
+            }
+        }
+//        undistortedImage.release();
     }
 
     public List<IRotatedRect> processOpenCV(IMat image){
