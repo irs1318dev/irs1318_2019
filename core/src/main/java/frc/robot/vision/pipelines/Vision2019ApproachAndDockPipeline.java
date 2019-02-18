@@ -389,6 +389,35 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         return largestRect(pairedRect);
     }
 
+    public int findInterval(double avgPixelValue, List<PixelsToInches> interpolateList)
+    {
+        for(int i = 0; i < interpolateList.size(); i++)
+        {
+            PixelsToInches pixelsToInches = VisionConstants.PIXELS_TO_INCHES.get(i);
+            if(avgPixelValue > pixelsToInches.getPixels())
+            {
+                return i - 1;
+            }
+        }
+
+    }
+
+    public double computeAvgPixel(List<IRotatedRect> rects)
+    {
+        IRotatedRect left = rects.get(0);
+        IRotatedRect right = rects.get(1);
+
+        return ((left.size().getWidth() + right.size().getHeight())/ 2.0);
+    }
+
+    public double interpolateInchesFromPixels(double avgPixel, int interval, List<PixelsToInches> interpolateList)
+    {
+        PixelsToInches low = interpolateList.get(interval);
+        PixelsToInches high = interpolateList.PIXELS_TO_INCHES.get(interval + 1);
+        double slope = (low.getInches()- high.getInches())/(low.getPixels() - high.getPixels());
+        double inches = slope * (avgPixel - low.getPixels()) + low.getInches();
+    }
+
 
     public void setActivation(boolean isActive)
     {
