@@ -9,20 +9,43 @@ import org.opencv.imgcodecs.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.vision.common.VisionProcessingState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HSVDockingCenterPipelineTest
 {
+
+    // TODO
+    String basePath = "C:\\Users\\james\\IdeaProjects2018\\irs1318_2019\\";
+    String repoPath = "fauxbot\\src\\test\\resources\\frc.robot.vision.pipelines\\";
+
     @Test
     public void testLoadImage()
     {
         nu.pattern.OpenCV.loadShared();
+        List<String> images = new ArrayList<>();
+        images.add("Capture.PNG");
+        images.add("Capture2.PNG");
+        images.add("Capture3.PNG");
+        images.add("Capture4.PNG");
+        images.add("Capture5.PNG");
+        images.add("Capture6.PNG");
+        images.add("Capture7.PNG");
 
-        String imagePath = "C:\\Users\\james\\IdeaProjects2018\\irs1318_2019\\fauxbot\\src\\test\\resources\\frc.robot.vision.pipelines\\Capture.PNG";
-        // "fauxbot/src/test/resources/frc.robot.vision.pipelines/Capture.PNG"
+        for (String imageStr : images) {
+            String imagePath =  basePath + repoPath + imageStr;
+            testImagePath(imagePath);
+        }
+    }
+
+    private void testImagePath(String imagePath) {
+        System.out.println(imagePath);
         Mat mat = Imgcodecs.imread(imagePath);
         MatWrapper wrapper = new MatWrapper(mat);
         HSVDockingCenterPipeline pipeline = new HSVDockingCenterPipeline(new FauxbotTimer(), new FauxbotProvider(), true);
         pipeline.setMode(VisionProcessingState.ActiveCargoShip);
         pipeline.process(wrapper);
         assertNotNull(pipeline.getCenter());
+
     }
 }

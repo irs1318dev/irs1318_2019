@@ -8,4 +8,5 @@ public interface IRotatedRect
     void set(double[] vals);
     IRect boundingRect();
     IRotatedRect clone();
+    double[] getRawValues();
 }
