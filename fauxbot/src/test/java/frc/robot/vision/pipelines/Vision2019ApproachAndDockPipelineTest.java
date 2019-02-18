@@ -18,7 +18,7 @@ public class Vision2019ApproachAndDockPipelineTest
     String basePath = TestConstants.BASE_PATH;
     String repoPath = "fauxbot\\src\\test\\resources\\frc.robot.vision.pipelines\\";
 
-    @Test
+    //@Test
     public void testLoadImage()
     {
         nu.pattern.OpenCV.loadShared();
