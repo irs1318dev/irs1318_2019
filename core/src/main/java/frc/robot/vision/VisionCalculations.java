@@ -40,7 +40,7 @@ public class VisionCalculations
         return rows;
     }
 
-    public Set<IRotatedRect> pickRow(List<Set<IRotatedRect>> rows)
+    public Set<IRotatedRect> pickRow(List<Set<IRotatedRect>> rows, GamePiece gamePiece, VisionProcessingState processingState)
     {
         if(rows.size() == 1){
             return rows.get(0);
@@ -210,6 +210,34 @@ public class VisionCalculations
         double approachAngle = Math.atan2(distance*Math.sin(azimuth)- 24, distance*Math.cos(azimuth));
         //convert to radians!!!!!
         return Math.PI/2 - approachAngle;
+    }
+
+    public double glideRadius(double azimuth, double distance)
+    {
+        double radius = (Math.pow((distance * 
+                                Math.cos(azimuth) 
+                                - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE),2) 
+                        + Math.pow((distance * Math.sin(azimuth)
+                                - VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET), 2))
+                        /(2*distance*Math.sin(azimuth)
+                         + VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET);
+
+        return radius;
+    }
+
+    public double findSweepAngle(double distance, double azimuth, double radius)
+    {
+        double angle = (Math.atan(distance * Math.cos(azimuth) 
+                    - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE))
+                    / (radius - (distance * Math.sin(azimuth) 
+                    + VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET));
+
+        return angle;
+    }
+
+    public double findGlideDistance(double radius, double angle)
+    {
+        return radius * angle; 
     }
     
 }
