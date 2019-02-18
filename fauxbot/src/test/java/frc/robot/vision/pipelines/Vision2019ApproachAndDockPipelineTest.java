@@ -10,7 +10,7 @@ import frc.robot.common.robotprovider.*;
 
 public class Vision2019ApproachAndDockPipelineTest
 {
-    @Test
+    //@Test
     public void testLoadImage()
     {
         nu.pattern.OpenCV.loadShared();
