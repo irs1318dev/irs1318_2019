@@ -1,5 +1,7 @@
 package frc.robot.common.robotprovider;
 
+import frc.robot.vision.VisionCalculations;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -160,5 +162,10 @@ public class FauxbotProvider implements IRobotProvider
     public INetworkTableProvider getNetworkTableProvider()
     {
         return new FauxbotNetworkTableProvider();
+    }
+
+    @Override
+    public VisionCalculations getVisionCalculations() {
+        return new VisionCalculations();
     }
 }
