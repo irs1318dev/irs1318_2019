@@ -40,6 +40,13 @@ public class ButtonMap implements IButtonMap
         {
             // Operations for vision
             put(
+                Operation.VisionEnableRocket,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    0,
+                    Shift.Debug,
+                    ButtonType.Toggle));
+            put(
                 Operation.VisionEnableCargoShip,
                 new DigitalOperationDescription(
                     UserInputDevice.None,

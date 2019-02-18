@@ -24,13 +24,13 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
         mechanismList.add(injector.getInstance(PowerManager.class));
         mechanismList.add(injector.getInstance(PositionManager.class));
-        //mechanismList.add(injector.getInstance(VisionManager.class));
-        mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         mechanismList.add(injector.getInstance(CompressorMechanism.class));
         mechanismList.add(injector.getInstance(ElevatorMechanism.class));
         mechanismList.add(injector.getInstance(GrabberMechanism.class));
         mechanismList.add(injector.getInstance(ClimberMechanism.class));
-        mechanismList.add(injector.getInstance(IndicatorLightManager.class));
+        //mechanismList.add(injector.getInstance(VisionManager.class));
+        //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
+        //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
     }
 
@@ -254,7 +254,7 @@ public class TuningConstants
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final double CLIMBER_ARMS_POSITION_MAX = 20.0;
+    public static final double CLIMBER_ARMS_POSITION_MAX = 100000.0;
     public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 0.6;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
 
@@ -272,11 +272,6 @@ public class TuningConstants
     public static final double CLIMBER_CAM_STORED_POSITION = 0.0;
     public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 10.0;
     public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 20.0;
-
-    public static final boolean CLIMBER_CAM_FORWARD_LIMIT_SWITCH_ENABLED = false;
-    public static final boolean CLIMBER_CAM_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
-    public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_ENABLED = false;
-    public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
 
     public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = 0.8;
     public static final double CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL = -0.8;
