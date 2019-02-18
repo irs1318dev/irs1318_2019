@@ -269,7 +269,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             otherMarkerCenter = this.secondLargestCenter;
         }
 
-        if (minAreaRect.size().getHeight() == 0.0)
+        if (minAreaRect.getSize().getHeight() == 0.0)
         {
             return;
         }

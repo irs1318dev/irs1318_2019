@@ -3,10 +3,7 @@ package frc.robot.vision.pipelines;
 import frc.robot.GamePiece;
 import frc.robot.common.robotprovider.*;
 import frc.robot.vision.VisionConstants;
-import frc.robot.vision.common.ContourHelper;
-import frc.robot.vision.common.HSVFilter;
-import frc.robot.vision.common.ImageUndistorter;
-import frc.robot.vision.common.VisionProcessingState;
+import frc.robot.vision.common.*;
 import frc.robot.vision.VisionCalculations;
 
 import java.util.*;
@@ -47,6 +44,8 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     private double lastMeasuredTime;
     private double lastFpsMeasurement;
 
+    private VisionResult visionResult;
+
     // active status
     private volatile boolean isActive;
     private volatile GamePiece gamePiece;
@@ -63,7 +62,10 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         IRobotProvider provider,
         boolean shouldUndistort)
     {
+        this.visionResult = VisionResult.NONE;
+
         this.shouldUndistort = shouldUndistort;
+
 
         this.calc = provider.getVisionCalculations();
         this.openCVProvider = provider.getOpenCVProvider();
@@ -193,28 +195,34 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         List<Set<IRotatedRect>> groupedRects = calc.groupRotatedRect(rectangles);
         int setNum = 0;
         for (Set<IRotatedRect> group : groupedRects) {
-            for (int i = 0; i< rectangles.size(); i++) {
-                IRotatedRect rectangle = rectangles.get(i);
+            List<IRotatedRect> groupList = new ArrayList<>();
+                    groupList.addAll(group);
+            for (int i = 0; i< groupList.size(); i++) {
+                IRotatedRect rectangle = groupList.get(i);
                 System.out.println("S_" + setNum + "_R_"+ i +" : "
                         + Arrays.toString(rectangle.getRawValues()));
             }
             setNum++;
         }
-        Set<IRotatedRect> row = calc.pickRow(groupedRects, gamePiece, processingState);
+        this.visionResult = calc.determineVisionResult(gamePiece, processingState);
+        Set<IRotatedRect> row = calc.pickRow(groupedRects, this.visionResult);
         List<IRotatedRect> pair = calc.pickPairedRect(row);
-        double avgPixel = calc.computeAvgPixel(pair);
-        int interval = calc.findInterval(avgPixel, VisionConstants.PIXELS_TO_INCHES);
-        double pixelsPerInch = calc.interpolateInchesFromPixels(avgPixel, interval, VisionConstants.PIXELS_TO_INCHES);
-        double azimuth = calc.azimuth(avgPixel, pair);
-        this.initialTurnAngle = calc.calculateIntitialApproachTurnAngle(azimuth, pixelsPerInch, pair, pixelsPerInch);
-        this.travelDistance = calc.calculateTravelDistance(azimuth, pixelsPerInch);
-        this.finalApproachTurn = calc.finalApproachTurn(azimuth, pixelsPerInch);
+        if (pair.size()==2) {
+            double avgPixel = calc.computeAvgPixel(pair);
+            int interval = calc.findInterval(avgPixel, VisionConstants.PIXELS_TO_INCHES);
+            double pixelsPerInch = calc.interpolateInchesFromPixels(avgPixel, interval, VisionConstants.PIXELS_TO_INCHES);
+            double azimuth = calc.azimuth(avgPixel, pair);
+            this.initialTurnAngle = calc.calculateIntitialApproachTurnAngle(azimuth, pixelsPerInch, pair, pixelsPerInch);
+            this.travelDistance = calc.calculateTravelDistance(azimuth, pixelsPerInch);
+            this.finalApproachTurn = calc.finalApproachTurn(azimuth, pixelsPerInch);
 
-        this.glideRadius = calc.glideRadius(azimuth, pixelsPerInch);
-        this.sweepAngle = calc.findSweepAngle(pixelsPerInch, azimuth, glideRadius);
-        this.glideDistance = calc.findGlideDistance(glideRadius, sweepAngle);
-
-
+            this.glideRadius = calc.glideRadius(azimuth, pixelsPerInch);
+            this.sweepAngle = calc.findSweepAngle(pixelsPerInch, azimuth, glideRadius);
+            this.glideDistance = calc.findGlideDistance(glideRadius, sweepAngle);
+        }
+        else {
+            this.visionResult = VisionResult.NONE;
+        }
     }
 
     public void prepareImage(IMat image) {
