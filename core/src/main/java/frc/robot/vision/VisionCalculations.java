@@ -11,8 +11,9 @@ import java.util.*;
 public class VisionCalculations
 {
 
-    GamePiece gamePiece;
-    VisionProcessingState processingState;
+
+    public VisionCalculations() {
+    }
 
     public List<Set<IRotatedRect>> groupRotatedRect(List<IRotatedRect> rotatedRect)
     {
@@ -45,7 +46,8 @@ public class VisionCalculations
         if(rows.size() == 1){
             return rows.get(0);
         }
-        if(this.gamePiece.equals(GamePiece.Cargo) && this.processingState.equals(VisionProcessingState.ActiveRocket))
+        if(GamePiece.Cargo.equals(gamePiece)
+        && VisionProcessingState.ActiveRocket.equals(processingState))
         {
             double lowestY = 1000;
             Set<IRotatedRect> lowestRow = null;
