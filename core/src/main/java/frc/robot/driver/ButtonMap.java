@@ -60,6 +60,13 @@ public class ButtonMap implements IButtonMap
                     0,
                     Shift.Debug,
                     ButtonType.Toggle));
+            put(
+                Operation.VisionEnableOffboardProcessing,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    0,
+                    Shift.Debug,
+                    ButtonType.Toggle));
 
             // Operations for the drive train
             put(
