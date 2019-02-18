@@ -15,10 +15,7 @@ import java.util.List;
 public class HSVDockingCenterPipelineTest
 {
 
-    // commit empty string
-    String basePath = "";
-    // use for local testing, in InteliJ, do not commit
-    //String basePath = "C:\\Users\\james\\IdeaProjects2018\\irs1318_2019\\";
+    String basePath = TestConstants.BASE_PATH;
     String repoPath = "fauxbot\\src\\test\\resources\\frc.robot.vision.pipelines\\";
 
     @Test
