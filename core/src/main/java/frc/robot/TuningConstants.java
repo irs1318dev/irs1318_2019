@@ -198,34 +198,34 @@ public class TuningConstants
     public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
     // MotionMagic
-    public static final boolean ELEVATOR_USE_PID = false;
-    public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
+    public static final boolean ELEVATOR_USE_PID = true;
+    public static final boolean ELEVATOR_USE_MOTION_MAGIC = true;
 
-    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.133;
+    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.15;
     public static final double ELEVATOR_MM_POSITION_PID_KI = 0.0;
     public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.378;
+    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.18;
     public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 3000;
-    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 6000;
+    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 2000;
 
     // PID
-    public static final double ELEVATOR_POSITION_PID_KP = 0.3;
+    public static final double ELEVATOR_POSITION_PID_KP = 0.05;
     public static final double ELEVATOR_POSITION_PID_KI = 0.0;
-    public static final double ELEVATOR_POSITION_PID_KD = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KD = 100.0;
     public static final double ELEVATOR_POSITION_PID_KF = 0.0;
 
-    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.2;
+    public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.6;
     public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = -0.2;
-    public static final double ELEVATOR_MOVE_VELOCITY = 100.0;
+    public static final double ELEVATOR_MOVE_VELOCITY = 10.0;
 
     // Positions
     public static final double ELEVATOR_BOTTOM_POSITION = 0.0;
-    public static final double ELEVATOR_HATCH_2_POSITION = 10.0;
-    public static final double ELEVATOR_HATCH_3_POSITION = 20.0;
-    public static final double ELEVATOR_CARGO_1_POSITION = 30.0;
-    public static final double ELEVATOR_CARGO_2_POSITION = 40.0;
-    public static final double ELEVATOR_CARGO_3_POSITION = 50.0;
-    public static final double ELEVATOR_CARGO_LOAD_POSITION = 60.0;
+    public static final double ELEVATOR_HATCH_2_POSITION = 30.0; // 30 inches
+    public static final double ELEVATOR_HATCH_3_POSITION = 60.0;
+    public static final double ELEVATOR_CARGO_1_POSITION = 15.0;
+    public static final double ELEVATOR_CARGO_2_POSITION = 45.0;
+    public static final double ELEVATOR_CARGO_3_POSITION = 65.0;
+    public static final double ELEVATOR_CARGO_LOAD_POSITION = 10.0;
 
     //======================================================== Grabber =====================================
 
