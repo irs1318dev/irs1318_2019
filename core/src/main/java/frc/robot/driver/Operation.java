@@ -6,6 +6,7 @@ public enum Operation
     VisionEnableCargoShip,
     VisionEnableRocket,
     VisionEnableOffboardStream,
+    VisionEnableOffboardProcessing,
 
     // DriveTrain operations:
     DriveTrainEnablePID,
