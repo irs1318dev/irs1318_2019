@@ -216,16 +216,16 @@ public class TuningConstants
 
     public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.6;
     public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = -0.2;
-    public static final double ELEVATOR_MOVE_VELOCITY = 10.0;
+    public static final double ELEVATOR_MOVE_VELOCITY = 15.0;
 
     // Positions
     public static final double ELEVATOR_BOTTOM_POSITION = 0.0;
-    public static final double ELEVATOR_HATCH_2_POSITION = 30.0; // 30 inches
-    public static final double ELEVATOR_HATCH_3_POSITION = 60.0;
-    public static final double ELEVATOR_CARGO_1_POSITION = 15.0;
-    public static final double ELEVATOR_CARGO_2_POSITION = 45.0;
-    public static final double ELEVATOR_CARGO_3_POSITION = 65.0;
-    public static final double ELEVATOR_CARGO_LOAD_POSITION = 10.0;
+    public static final double ELEVATOR_HATCH_2_POSITION = 28.0; // 28 inches
+    public static final double ELEVATOR_HATCH_3_POSITION = 56.0;
+    public static final double ELEVATOR_CARGO_1_POSITION = 11.5;
+    public static final double ELEVATOR_CARGO_2_POSITION = 39.5;
+    public static final double ELEVATOR_CARGO_3_POSITION = 67.5;
+    public static final double ELEVATOR_CARGO_LOAD_POSITION = 29.0;
 
     //======================================================== Grabber =====================================
 
@@ -236,7 +236,7 @@ public class TuningConstants
     
     // Cargo intake/outtake motor power
     public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
-    public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.6;
+    public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.9;
 
     //================================================== Climber ==============================================================
 

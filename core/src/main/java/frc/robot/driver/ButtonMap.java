@@ -155,6 +155,12 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.NONE,
                     ButtonType.Toggle));
             put(
+                Operation.DriveTrainUseSimplePathMode,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Toggle)); 
+            put(
                 Operation.DriveTrainUsePathMode,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
