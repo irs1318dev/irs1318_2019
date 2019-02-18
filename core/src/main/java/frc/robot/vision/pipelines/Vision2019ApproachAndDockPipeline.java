@@ -191,7 +191,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             }
             setNum++;
         }
-        Set<IRotatedRect> row = calc.pickRow(groupedRects);
+        Set<IRotatedRect> row = calc.pickRow(groupedRects, gamePiece, processingState);
         List<IRotatedRect> pair = calc.pickPairedRect(row);
         double avgPixel = calc.computeAvgPixel(pair);
         int interval = calc.findInterval(avgPixel, VisionConstants.PIXELS_TO_INCHES);
