@@ -1,5 +1,7 @@
 package frc.robot.common.robotprovider;
 
+import frc.robot.vision.VisionCalculations;
+
 public interface IRobotProvider
 {
     public IAnalogInput getAnalogInput(int channel);
@@ -27,4 +29,5 @@ public interface IRobotProvider
     public IDriverStation getDriverStation();
     public IOpenCVProvider getOpenCVProvider();
     public INetworkTableProvider getNetworkTableProvider();
+    public VisionCalculations getVisionCalculations();
 }

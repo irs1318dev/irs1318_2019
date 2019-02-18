@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import java.util.HashMap;
 
 import frc.robot.common.robotprovider.*;
+import frc.robot.vision.VisionCalculations;
 
 public class TestProvider implements IRobotProvider
 {
@@ -245,6 +246,12 @@ public class TestProvider implements IRobotProvider
 
     @Override
     public INetworkTableProvider getNetworkTableProvider()
+    {
+        return null;
+    }
+
+    @Override
+    public VisionCalculations getVisionCalculations()
     {
         return null;
     }

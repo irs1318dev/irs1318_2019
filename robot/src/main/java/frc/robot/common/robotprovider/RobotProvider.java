@@ -2,6 +2,8 @@ package frc.robot.common.robotprovider;
 
 import javax.inject.Singleton;
 
+import frc.robot.vision.VisionCalculations;
+
 @Singleton
 public class RobotProvider implements IRobotProvider
 {
@@ -153,5 +155,11 @@ public class RobotProvider implements IRobotProvider
     public INetworkTableProvider getNetworkTableProvider()
     {
         return new NetworkTableProvider();
+    }
+
+    @Override
+    public VisionCalculations getVisionCalculations()
+    {
+        return new VisionCalculations();
     }
 }
