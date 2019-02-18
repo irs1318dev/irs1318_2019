@@ -8,16 +8,7 @@ import frc.robot.vision.common.HSVFilter;
 import frc.robot.vision.common.ImageUndistorter;
 import frc.robot.vision.common.VisionProcessingState;
 
-<<<<<<< HEAD
 import java.util.*;
-=======
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
->>>>>>>  created methods to find paired set of rectangles
 
 public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipeline
 {
