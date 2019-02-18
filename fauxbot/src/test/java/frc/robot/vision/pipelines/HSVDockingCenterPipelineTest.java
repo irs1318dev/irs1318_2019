@@ -19,7 +19,7 @@ public class HSVDockingCenterPipelineTest
     String basePath = "C:\\Users\\james\\IdeaProjects2018\\irs1318_2019\\";
     String repoPath = "fauxbot\\src\\test\\resources\\frc.robot.vision.pipelines\\";
 
-    //@Test
+    @Test
     public void testLoadImage()
     {
         nu.pattern.OpenCV.loadShared();
@@ -33,7 +33,7 @@ public class HSVDockingCenterPipelineTest
         images.add("Capture7.PNG");
 
         for (String imageStr : images) {
-            String imagePath =  basePath + repoPath + imageStr;
+            String imagePath = repoPath + imageStr;
             testImagePath(imagePath);
         }
     }
