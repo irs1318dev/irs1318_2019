@@ -68,6 +68,8 @@ public class VisionConstants
 
     //Real measurements
     public static final double DOCKING_RETROREFLECTIVE_TAPE_HEIGHT = 5.875; // 5.5 inches tall
+    public static final double DOCKING_RETROREFLECTIVE_TAPE_HEIGHT_STRAIGHT = 5.5;
+    public static final double DOCKING_DISTANCE_BETWEEN_TAPE_TARGETS = 11.5; //change
     public static final double DOCKING_RETROREFLECTIVE_TAPE_WIDTH = 3.5; // 2 inches wide
     public static final double DOCKING_RETROREFLECTIVE_TAPE_HxW_RATIO = -1.679; // height-to-width ratio
     public static final double DOCKING_RETROREFLECTIVE_TAPE_RATIO_RANGE = -10.0; // change? --> allowable height-to-width ratio range
