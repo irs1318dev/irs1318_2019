@@ -13,6 +13,7 @@ import frc.robot.common.robotprovider.TalonSRXControlMode;
 import frc.robot.common.robotprovider.TalonSRXFeedbackDevice;
 import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 import frc.robot.common.robotprovider.ITimer;
+import frc.robot.common.robotprovider.IVictorSPX;
 import frc.robot.common.robotprovider.IAnalogInput;
 import frc.robot.common.robotprovider.IDashboardLogger;
 import frc.robot.common.robotprovider.IDigitalInput;
@@ -86,8 +87,7 @@ public class ClimberMechanism implements IMechanism
         ITalonSRX climberArmsMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_ARMS_MOTOR_FOLLOWER_CAN_ID);
         climberArmsMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
         climberArmsMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_ARMS_FOLLOWER_INVERT_OUTPUT);
-        climberArmsMotorFollower.setControlMode(TalonSRXControlMode.Follower);
-        climberArmsMotorFollower.set(ElectronicsConstants.CLIMBER_ARMS_MOTOR_MASTER_CAN_ID);
+        climberArmsMotorFollower.follow(this.climberArmsMotorMaster);
 
         this.armsVelocity = 0.0;
         this.armsError = 0.0;
@@ -112,11 +112,10 @@ public class ClimberMechanism implements IMechanism
         this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
         this.climberCamMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);
 
-        ITalonSRX climberCamMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_CAM_MOTOR_FOLLOWER_CAN_ID);
+        IVictorSPX climberCamMotorFollower = provider.getVictorSPX(ElectronicsConstants.CLIMBER_CAM_MOTOR_FOLLOWER_CAN_ID);
         climberCamMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
         climberCamMotorFollower.setInvertOutput(HardwareConstants.CLIMBER_CAM_FOLLOWER_INVERT_OUTPUT);
-        climberCamMotorFollower.setControlMode(TalonSRXControlMode.Follower);
-        climberCamMotorFollower.set(ElectronicsConstants.CLIMBER_CAM_MOTOR_MASTER_CAN_ID);
+        climberCamMotorFollower.follow(this.climberCamMotorMaster);
 
         this.climberCamLimitSwitch = provider.getDigitalInput(ElectronicsConstants.CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL);
         this.climberHeightSensor = provider.getAnalogInput(ElectronicsConstants.CLIMBER_HEIGHT_SENSOR_ANALOG_CHANNEL);
@@ -199,7 +198,7 @@ public class ClimberMechanism implements IMechanism
         this.camError = this.climberCamMotorMaster.getError();
         this.camPosition = this.climberCamMotorMaster.getPosition();
 
-        this.camLimitSwitchStatus = this.climberCamLimitSwitch.get();
+        this.camLimitSwitchStatus = false; //this.climberCamLimitSwitch.get();
 
         this.climbedHeight = this.climberHeightSensor.getVoltage();
 
@@ -224,7 +223,7 @@ public class ClimberMechanism implements IMechanism
 
         boolean forceArmsForward = this.driver.getDigital(Operation.ClimberArmsForceForward);
         boolean forceArmsBack = this.driver.getDigital(Operation.ClimberArmsForceBackward);
-        if (forceArmsForward || forceArmsBack) 
+        if (forceArmsForward || forceArmsBack || !TuningConstants.CLIMBER_ARMS_USE_PID) 
         {
             this.desiredArmsPosition = this.armsPosition;
             if (this.armsReverseLimitSwitchStatus || this.armsPosition < 0.0)
@@ -248,6 +247,10 @@ public class ClimberMechanism implements IMechanism
             else if (forceArmsBack)
             {
                 this.climberArmsMotorMaster.set(TuningConstants.CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL);
+            }
+            else
+            {
+                this.climberArmsMotorMaster.set(0.0);
             }
         }
         else
@@ -284,7 +287,7 @@ public class ClimberMechanism implements IMechanism
 
         boolean forceCamForward = this.driver.getDigital(Operation.ClimberCamForceForward);
         boolean forceCamBack = this.driver.getDigital(Operation.ClimberCamForceBackward);
-        if (forceCamForward || forceCamBack) 
+        if (forceCamForward || forceCamBack || !TuningConstants.CLIMBER_CAM_USE_PID) 
         {
             this.desiredCamPosition = this.camPosition;
             if (this.camLimitSwitchStatus)
@@ -302,6 +305,10 @@ public class ClimberMechanism implements IMechanism
             else if (forceCamBack)
             {
                 this.climberCamMotorMaster.set(TuningConstants.CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL);
+            }
+            else
+            {
+                this.climberCamMotorMaster.set(0.0);
             }
         }
         else

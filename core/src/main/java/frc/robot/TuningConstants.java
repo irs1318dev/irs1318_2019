@@ -24,12 +24,12 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(DriveTrainMechanism.class));
         mechanismList.add(injector.getInstance(PowerManager.class));
         mechanismList.add(injector.getInstance(PositionManager.class));
+        mechanismList.add(injector.getInstance(CompressorMechanism.class));
+        mechanismList.add(injector.getInstance(ElevatorMechanism.class));
+        mechanismList.add(injector.getInstance(GrabberMechanism.class));
+        mechanismList.add(injector.getInstance(ClimberMechanism.class));
         //mechanismList.add(injector.getInstance(VisionManager.class));
         //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
-        //mechanismList.add(injector.getInstance(CompressorMechanism.class));
-        mechanismList.add(injector.getInstance(ElevatorMechanism.class));
-        //mechanismList.add(injector.getInstance(GrabberMechanism.class));
-        //mechanismList.add(injector.getInstance(ClimberMechanism.class));
         //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
     }
@@ -99,7 +99,7 @@ public class TuningConstants
     //================================================== DriveTrain ==============================================================
 
     // Drivetrain PID keys/default values:
-    public static final boolean DRIVETRAIN_USE_PID = false;
+    public static final boolean DRIVETRAIN_USE_PID = true;
     public static final boolean DRIVETRAIN_USE_CROSS_COUPLING = false;
     public static final boolean DRIVETRAIN_USE_HEADING_CORRECTION = true;
 
@@ -188,27 +188,28 @@ public class TuningConstants
 
     //================================================== Elevator ==============================================================
 
-    public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = 20.0;
-    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 200.0;
+    public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = 10.0;
+    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 1.0;
 
     // Sensors
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = true;
-    public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
+    public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = true;
     public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_ENABLED = true;
-    public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
+    public static final boolean ELEVATOR_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
     // MotionMagic
+    public static final boolean ELEVATOR_USE_PID = false;
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = false;
 
-    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.0;
+    public static final double ELEVATOR_MM_POSITION_PID_KP = 0.133;
     public static final double ELEVATOR_MM_POSITION_PID_KI = 0.0;
     public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
-    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.0;
-    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 0;
-    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 0;
+    public static final double ELEVATOR_MM_POSITION_PID_KF = 0.378;
+    public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 3000;
+    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 6000;
 
     // PID
-    public static final double ELEVATOR_POSITION_PID_KP = 0.0;
+    public static final double ELEVATOR_POSITION_PID_KP = 0.3;
     public static final double ELEVATOR_POSITION_PID_KI = 0.0;
     public static final double ELEVATOR_POSITION_PID_KD = 0.0;
     public static final double ELEVATOR_POSITION_PID_KF = 0.0;
@@ -228,9 +229,9 @@ public class TuningConstants
 
     //======================================================== Grabber =====================================
 
-    public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = -1;
-    public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = -1;
-    public static final double GRABBER_KICK_PANEL_DURATION = -1;
+    public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = 10.0;
+    public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = 10.0;
+    public static final double GRABBER_KICK_PANEL_DURATION = 1.0;
     
     // Cargo intake/outtake motor power
     public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
@@ -238,52 +239,50 @@ public class TuningConstants
 
     //================================================== Climber ==============================================================
 
-    public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = -1;
+    public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = 3.0;
+
+    public static final boolean CLIMBER_ARMS_USE_PID = false; 
+    public static final boolean CLIMBER_CAM_USE_PID = false;
 
     // Arms
-    public static final double CLIMBER_ARMS_RETRACTED_POSITION = -1;
-    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = -1;
-    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = -1;
+    public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
+    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 10.0;
+    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 20.0;
 
-    public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_ENABLED = false;
-    public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
-    public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = false;
-    public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
+    public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_ENABLED = true;
+    public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = true;
+    public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
+    public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final double CLIMBER_ARMS_POSITION_MAX = -1;
-    public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = -1;
-    public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -1;
+    public static final double CLIMBER_ARMS_POSITION_MAX = 100000.0;
+    public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 0.6;
+    public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
 
-    public static final double CLIMBER_ARMS_MOVE_VELOCITY = -1;
+    public static final double CLIMBER_ARMS_MOVE_VELOCITY = 10.0;
 
-    public static final double CLIMBER_ARMS_POSITION_PID_KP = -1;
-    public static final double CLIMBER_ARMS_POSITION_PID_KI = -1;
-    public static final double CLIMBER_ARMS_POSITION_PID_KD = -1;
-    public static final double CLIMBER_ARMS_POSITION_PID_KF = -1;
+    public static final double CLIMBER_ARMS_POSITION_PID_KP = 0.3;
+    public static final double CLIMBER_ARMS_POSITION_PID_KI = 0.0;
+    public static final double CLIMBER_ARMS_POSITION_PID_KD = 0.0;
+    public static final double CLIMBER_ARMS_POSITION_PID_KF = 0.0;
 
-    public static final double CLIMBER_ARMS_MOVEMENT_TIME_THRESHOLD = -1;
-    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = -1;
+    public static final double CLIMBER_ARMS_MOVEMENT_TIME_THRESHOLD = 10.0;
+    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = 1.0;
 
     // Cam
-    public static final double CLIMBER_CAM_STORED_POSITION = -1;
-    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = -1;
-    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = -1;
+    public static final double CLIMBER_CAM_STORED_POSITION = 0.0;
+    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 10.0;
+    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 20.0;
 
-    public static final boolean CLIMBER_CAM_FORWARD_LIMIT_SWITCH_ENABLED = false;
-    public static final boolean CLIMBER_CAM_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = false;
-    public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_ENABLED = false;
-    public static final boolean CLIMBER_CAM_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = false;
+    public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = 0.8;
+    public static final double CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL = -0.8;
 
-    public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = -1;
-    public static final double CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL = -1;
+    public static final double CLIMBER_CAM_MOVE_VELOCITY = 10.0;
 
-    public static final double CLIMBER_CAM_MOVE_VELOCITY = -1;
+    public static final double CLIMBER_CAM_POSITION_PID_KP = 0.3;
+    public static final double CLIMBER_CAM_POSITION_PID_KI = 0.0;
+    public static final double CLIMBER_CAM_POSITION_PID_KD = 0.0;
+    public static final double CLIMBER_CAM_POSITION_PID_KF = 0.0;
 
-    public static final double CLIMBER_CAM_POSITION_PID_KP = -1;
-    public static final double CLIMBER_CAM_POSITION_PID_KI = -1;
-    public static final double CLIMBER_CAM_POSITION_PID_KD = -1;
-    public static final double CLIMBER_CAM_POSITION_PID_KF = -1;
-
-    public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = -1;
-    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = -1;
+    public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = 10.0;
+    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = 1.0;
 }

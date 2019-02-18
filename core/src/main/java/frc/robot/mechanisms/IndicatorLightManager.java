@@ -3,6 +3,7 @@ package frc.robot.mechanisms;
 import frc.robot.*;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
+import frc.robot.driver.Operation;
 import frc.robot.driver.common.Driver;
 
 import com.google.inject.Inject;
@@ -21,10 +22,13 @@ public class IndicatorLightManager implements IMechanism
     private static final double FlashingComparisonFrequency = IndicatorLightManager.FlashingFrequency / 2.0;
 
     private final GrabberMechanism grabberMechanism;
+    private final VisionManager visionManager;
     private final ITimer timer;
 
     private final IRelay hatchIndicator;
     private final IRelay cargoIndicator;
+
+    private Driver driver;
 
     private LightMode hatchMode;
     private LightMode cargoMode;
@@ -33,15 +37,18 @@ public class IndicatorLightManager implements IMechanism
      * Initializes a new IndicatorLightManager
      * @param provider for obtaining electronics objects
      * @param timer to use
-     * @param grabberMechanism for drivetrain reference
+     * @param grabberMechanism for grabber reference
+     * @param visionManager for vision reference
      */
     @Inject
     public IndicatorLightManager(
         IRobotProvider provider,
         ITimer timer,
-        GrabberMechanism grabberMechanism)
+        GrabberMechanism grabberMechanism,
+        VisionManager visionManager)
     {
         this.grabberMechanism = grabberMechanism;
+        this.visionManager = visionManager;
         this.timer = timer;
 
         this.hatchIndicator = provider.getRelay(ElectronicsConstants.INDICATOR_HATCH_RELAY_CHANNEL);
@@ -58,6 +65,7 @@ public class IndicatorLightManager implements IMechanism
     @Override
     public void setDriver(Driver driver)
     {
+        this.driver = driver;
     }
 
     @Override
@@ -73,7 +81,16 @@ public class IndicatorLightManager implements IMechanism
     {
         if (this.grabberMechanism.hasHatch())
         {
-            this.hatchMode = LightMode.On;
+            if (this.visionManager != null &&
+                (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
+                this.visionManager.getCenter() == null)
+            {
+                this.hatchMode = LightMode.Flashing;
+            }
+            else
+            {
+                this.hatchMode = LightMode.On;
+            }
         }
         else
         {
@@ -82,7 +99,16 @@ public class IndicatorLightManager implements IMechanism
 
         if (this.grabberMechanism.hasCargo())
         {
-            this.cargoMode = LightMode.On;
+            if (this.visionManager != null &&
+                (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
+                this.visionManager.getCenter() == null)
+            {
+                this.hatchMode = LightMode.Flashing;
+            }
+            else
+            {
+                this.hatchMode = LightMode.On;
+            }
         }
         else
         {

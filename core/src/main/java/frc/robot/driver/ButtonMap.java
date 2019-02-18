@@ -40,6 +40,13 @@ public class ButtonMap implements IButtonMap
         {
             // Operations for vision
             put(
+                Operation.VisionEnableRocket,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    0,
+                    Shift.Debug,
+                    ButtonType.Toggle));
+            put(
                 Operation.VisionEnableCargoShip,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
@@ -341,26 +348,26 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.ClimberArmsForceForward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_1,
                     ButtonType.Simple));
             put(
                 Operation.ClimberArmsForceBackward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     ButtonType.Simple));
             put(
                 Operation.ClimberCamForceForward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
                     ButtonType.Simple));
             put(
                 Operation.ClimberCamForceBackward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
                     ButtonType.Simple));
         }
     };

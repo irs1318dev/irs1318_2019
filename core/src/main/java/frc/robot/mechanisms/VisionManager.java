@@ -240,6 +240,14 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
 
                 this.lastMeasuredFps = pipeline.getFps();
             }
+            else
+            {
+                this.center = null;
+                this.desiredAngleX = null;
+                this.measuredAngleX = null;
+                this.distanceFromRobot = null;
+                this.lastMeasuredFps = 0.0;
+            }
         }
     }
 }

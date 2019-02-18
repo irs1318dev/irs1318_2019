@@ -8,6 +8,8 @@ import frc.robot.vision.common.HSVFilter;
 import frc.robot.vision.common.ImageUndistorter;
 import frc.robot.vision.common.VisionProcessingState;
 
+import java.util.Arrays;
+
 public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 {
     private final ITimer timer;
@@ -85,7 +87,6 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     /**
      * Process a single image frame
-     * @param frame image to analyze
      */
     @Override
     public void process(IMat image)
@@ -191,6 +192,8 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         {
             largestMinAreaRect = this.openCVProvider.minAreaRect(this.openCVProvider.convertToMatOfPoints2f(largestContour));
             largestCenterOfMass = largestMinAreaRect.getCenter();
+            System.out.println("LargestRect: "
+                    + Arrays.toString(largestMinAreaRect.getRawValues()));
 
             largestContour.release();
         }
@@ -201,6 +204,8 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             secondLargestCenterOfMass = secondLargestMinAreaRect.getCenter();
 
             secondLargestContour.release();
+            System.out.println("SecondLargestRect: "
+                    +Arrays.toString(secondLargestMinAreaRect.getRawValues()));
         }
 
         if (VisionConstants.DEBUG)
