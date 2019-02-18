@@ -37,6 +37,11 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     private Double finalApproachTurn;
     private Double travelDistance;
 
+    //glide calcs
+    private Double glideDistance;
+    private Double sweepAngle;
+    private Double glideRadius;
+
     // FPS Measurement
     private long analyzedFrameCount;
     private double lastMeasuredTime;
@@ -77,6 +82,10 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         this.travelDistance = null;
         this.finalApproachTurn = null;
         this.initialTurnAngle = null;
+
+        this.glideDistance = null;
+        this.glideRadius = null;
+        this.sweepAngle = null;
 
         this.analyzedFrameCount = 0;
         this.timer = timer;
@@ -201,6 +210,10 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         this.travelDistance = calc.calculateTravelDistance(azimuth, pixelsPerInch);
         this.finalApproachTurn = calc.finalApproachTurn(azimuth, pixelsPerInch);
 
+        this.glideRadius = calc.glideRadius(azimuth, pixelsPerInch);
+        this.sweepAngle = calc.findSweepAngle(pixelsPerInch, azimuth, glideRadius);
+        this.glideDistance = calc.findGlideDistance(glideRadius, sweepAngle);
+
 
     }
 
@@ -301,6 +314,21 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     public double getTravelDistance()
     {
         return this.travelDistance;
+    }
+
+    public double getSweepAngle()
+    {
+        return this.sweepAngle;
+    }
+
+    public double getGlideDistance()
+    {
+        return this.glideDistance;
+    }
+
+    public double getGlideRadius()
+    {
+        return this.glideRadius;
     }
 
     public void setActivation(boolean isActive)
