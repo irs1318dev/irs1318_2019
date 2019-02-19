@@ -30,7 +30,7 @@ public class RotatedRectWrapper implements IRotatedRect
     }
 
     @Override
-    public ISize size()
+    public ISize getSize()
     {
         return new SizeWrapper(this.wrappedObject.size);
     }
@@ -39,6 +39,23 @@ public class RotatedRectWrapper implements IRotatedRect
     public double getAngle()
     {
         return this.wrappedObject.angle;
+    }
+
+    @Override
+    public double getAspectRatio() {
+        // return the aspect ratio that is always greater than 1.0
+        double height = wrappedObject.size.height;
+        double width = wrappedObject.size.width;
+
+        // return a large number if either width or height is zero
+        if (Math.abs(height) < 0.1 || Math.abs(width) < 0.1) {
+            return 10000;
+        }
+        if (height > width) {
+            return height / width;
+        } else {
+            return width / height;
+        }
     }
 
     @Override
