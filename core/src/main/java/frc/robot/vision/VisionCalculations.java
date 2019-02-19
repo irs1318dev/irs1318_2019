@@ -80,14 +80,14 @@ public class VisionCalculations {
     }
 
     boolean isLeft(IRotatedRect rect) {
-        if (rect.getAngle() < -65 && rect.getAngle() > -85) {
+        if (rect.getAngle() < -45 && rect.getAngle() > -90) {
             return true;
         }
         return false;
     }
 
     boolean isRight(IRotatedRect rect) {
-        if (rect.getAngle() < 0 && rect.getAngle() > -15) {
+        if (rect.getAngle() < 0 && rect.getAngle() > -44) {
             return true;
         }
         return false;
@@ -145,6 +145,10 @@ public class VisionCalculations {
         return 0;
     }
 
+    /**
+     * @param rects
+     * @return the average of length of the target rectangles
+     */
     public double computeAvgPixel(List<IRotatedRect> rects) {
         if (rects.size() != 2) {
             return -1.0;
@@ -174,7 +178,13 @@ public class VisionCalculations {
         double inchesPerPixels = VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_HEIGHT_STRAIGHT / avgPixels;
         double observedPixels = (right.getCenter().getX() - left.getCenter().getX());
         double distanceBetweenCenters = VisionConstants.DOCKING_DISTANCE_BETWEEN_TAPE_TARGETS / inchesPerPixels;
-        double azimuth = Math.acos(observedPixels / distanceBetweenCenters);
+        System.out.println(String.format("o=%f, d=%f", observedPixels, distanceBetweenCenters));
+        double azimuth = 0.0;
+        // only look up angle if it is not close to straight on
+        if ((Math.abs(observedPixels - distanceBetweenCenters)/distanceBetweenCenters) > 0.01) {
+            azimuth = Math.acos(observedPixels / distanceBetweenCenters);
+        }
+        System.out.println(String.format("a=%f, adeg=%f", azimuth, azimuth*180/Math.PI));
         return azimuth;
     }
 
