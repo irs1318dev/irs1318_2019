@@ -651,7 +651,7 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorMoveUp,
                         Operation.ElevatorMoveDown,
                         Operation.ElevatorForceUp,
-                        Operation.ElevatorMoveDown
+                        Operation.ElevatorForceDown,
                     }));
             put(
                 MacroOperation.ElevatorMoveDown,
@@ -666,7 +666,7 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorMoveUp,
                         Operation.ElevatorMoveDown,
                         Operation.ElevatorForceUp,
-                        Operation.ElevatorMoveDown
+                        Operation.ElevatorForceDown,
                     }));
             put(
                 MacroOperation.ElevatorForceUp,
@@ -681,7 +681,7 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorMoveUp,
                         Operation.ElevatorMoveDown,
                         Operation.ElevatorForceUp,
-                        Operation.ElevatorMoveDown                                
+                        Operation.ElevatorForceDown,                               
                     }));
             put(
                 MacroOperation.ElevatorForceDown,
@@ -696,7 +696,7 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorMoveUp,
                         Operation.ElevatorMoveDown,
                         Operation.ElevatorForceUp,
-                        Operation.ElevatorMoveDown                                
+                        Operation.ElevatorForceDown,                               
                     }));
             put(
                 MacroOperation.ElevatorBottomPosition,
@@ -705,7 +705,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorBottomPosition),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorBottomPosition),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -723,7 +723,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorHatch2Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorHatch2Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -741,7 +741,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorHatch3Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorHatch3Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -759,7 +759,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_10,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo1Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargo1Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -777,7 +777,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_9,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo2Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargo2Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -795,7 +795,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_8,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo3Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargo3Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -813,7 +813,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargoLoadPosition),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargoLoadPosition),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -831,7 +831,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo1Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargo1Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -849,7 +849,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo2Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargo2Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -867,7 +867,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo3Position),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargo3Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -885,7 +885,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargoLoadPosition),
+                    () -> new ElevatorPositionTask(0.2, Operation.ElevatorCargoLoadPosition),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,

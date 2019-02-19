@@ -7,7 +7,8 @@ public class GrabberKickPanelRepeatedlyTask extends ControlTaskBase
 {
     private ITimer timer;
 
-    private static final double cycleTime = 0.2;
+    private static final double cycleTime = 0.4;
+    private static final double kickTime = 0.25;
 
     public GrabberKickPanelRepeatedlyTask()
     {
@@ -23,7 +24,7 @@ public class GrabberKickPanelRepeatedlyTask extends ControlTaskBase
     @Override
     public void update()
     {
-        if((timer.get() % GrabberKickPanelRepeatedlyTask.cycleTime) > (GrabberKickPanelRepeatedlyTask.cycleTime / 2))
+        if((timer.get() % GrabberKickPanelRepeatedlyTask.cycleTime) > (GrabberKickPanelRepeatedlyTask.kickTime))
         {
             this.setDigitalOperationState(Operation.GrabberKickPanel, true);
         }

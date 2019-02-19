@@ -59,9 +59,5 @@ public class ElevatorPositionTask extends CompositeOperationTask {
         }
 
         return false;
-    }
-
-
-
-    
+    }    
 }
