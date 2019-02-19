@@ -40,6 +40,7 @@ public enum Operation
 
     // Grabber operations:
     GrabberKickPanel,
+    GrabberPointFinger,
     GrabberIntakeCargo,
     GrabberOuttakeCargo,
     GrabberWristStartPosition,

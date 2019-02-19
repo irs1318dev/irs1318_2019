@@ -269,6 +269,13 @@ public class ButtonMap implements IButtonMap
                     Shift.None,
                     ButtonType.Simple));
             put(
+                Operation.GrabberPointFinger,
+                new DigitalOperationDescription(
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
+                    Shift.None,
+                    ButtonType.Simple));
+            put(
                 Operation.GrabberWristStartPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.Driver,

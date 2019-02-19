@@ -59,6 +59,10 @@ public class ElectronicsConstants
     public static final int GRABBER_KICKER_FORWARD_PCM_CHANNEL = 7;
     public static final int GRABBER_KICKER_REVERSE_PCM_CHANNEL = 0;
 
+    // Hatch finger
+    public static final int GRABBER_FINGER_FORWARD_PCM_CHANNEL = 4;
+    public static final int GRABBER_FINGER_REVERSE_PCM_CHANNEL = 3;
+
     // Cargo intake/outtake TalonSRX
     public static final int GRABBER_CARGO_MOTOR_CAN_ID = 9;
 
