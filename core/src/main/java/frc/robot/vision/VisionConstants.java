@@ -83,7 +83,7 @@ public class VisionConstants
     public static final double DOCKING_TAPE_OFFSET = 5.7065; // horizontal offset from center of the two tape strips to the center of one of the pieces of tape
 
 
-    public static final List<PixelsToInches> PIXELS_TO_INCHES = new ArrayList() {{
+    public static final List<PixelsToInches> PIXELS_TO_INCHES = new ArrayList<PixelsToInches>() {{
         add(new PixelsToInches(60, 0));
         add(new PixelsToInches(40, 24.0));
         add(new PixelsToInches(29, 42.0));
