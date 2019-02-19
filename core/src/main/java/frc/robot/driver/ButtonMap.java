@@ -31,6 +31,11 @@ public class ButtonMap implements IButtonMap
                 new ShiftDescription(
                     UserInputDevice.Driver,
                     UserInputDeviceButton.JOYSTICK_STICK_TRIGGER_BUTTON));
+            put(
+                Shift.ButtonPadDebug,
+                new ShiftDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_16));
         }
     };
 
@@ -370,24 +375,28 @@ public class ButtonMap implements IButtonMap
                 new DigitalOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_1,
+                    Shift.ButtonPadDebug,
                     ButtonType.Simple));
             put(
                 Operation.ClimberArmsForceBackward,
                 new DigitalOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
+                    Shift.ButtonPadDebug,
                     ButtonType.Simple));
             put(
                 Operation.ClimberCamForceForward,
                 new DigitalOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
+                    Shift.ButtonPadDebug,
                     ButtonType.Simple));
             put(
                 Operation.ClimberCamForceBackward,
                 new DigitalOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
+                    Shift.ButtonPadDebug,
                     ButtonType.Simple));
         }
     };
@@ -612,6 +621,207 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainMoveForward,
                         Operation.VisionEnableRocket
                     }));
+
+            // Elevator Macros
+            put(
+                MacroOperation.ElevatorBottomPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorBottomPosition),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorHatch2Position,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorHatch2Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorHatch3Position,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorHatch3Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargo1Position,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_10,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargo1Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargo2Position,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_9,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargo2Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargo3Position,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_8,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargo3Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargoLoadPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargoLoadPosition),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargo1PositionShifted,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargo1Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargo2PositionShifted,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargo2Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargo3PositionShifted,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargo3Position),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+            put(
+                MacroOperation.ElevatorCargoLoadPositionShifted,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new ElevatorMovementTask(Operation.ElevatorCargoLoadPosition),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,                    
+                    }));
+
         }
     };
 
