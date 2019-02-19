@@ -421,7 +421,7 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                     }));
 
-            // Driving macros
+            // Driving Macros
             put(
                 MacroOperation.TurnInPlaceRight,
                 new MacroOperationDescription(
@@ -504,13 +504,13 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainRightPosition,
                     }));
 
-            // Climbing macros
+            // Climbing Macros
             put(
                 MacroOperation.ClimbHab2,
                 new MacroOperationDescription(
-                    UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_TOP_LEFT_BUTTON,
-                    Shift.Debug,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_10,
+                    Shift.ButtonPadDebug,
                     ButtonType.Toggle,
                     () -> new WaitTask(0.0),
                     new Operation[]
@@ -547,9 +547,9 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ClimbHab3,
                 new MacroOperationDescription(
-                    UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
-                    Shift.Debug,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
+                    Shift.ButtonPadDebug,
                     ButtonType.Toggle,
                     () -> new WaitTask(0.0),
                     new Operation[]
@@ -584,7 +584,7 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberCamMoveForward,
                     }));
 
-            // Vision macros
+            // Vision Macros
             put(
                 MacroOperation.VisionCenterAndAdvanceRocket,
                 new MacroOperationDescription(
@@ -622,7 +622,82 @@ public class ButtonMap implements IButtonMap
                         Operation.VisionEnableRocket
                     }));
 
+            // Grabber Macro
+            put(
+                MacroOperation.GrabberKickPanelRepeatedlyTask,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
+                    Shift.Debug,
+                    ButtonType.Simple,
+                    () -> new GrabberKickPanelRepeatedlyTask(),
+                    new Operation[]
+                    {
+                        Operation.GrabberKickPanel,
+                    }));
+
+
             // Elevator Macros
+            put(
+                MacroOperation.ElevatorMoveUp,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
+                    Shift.None,
+                    ButtonType.Simple,
+                    () -> new ElevatorMovementTask(Operation.ElevatorMoveUp),
+                    new Operation[]
+                    {
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorMoveDown
+                    }));
+            put(
+                MacroOperation.ElevatorMoveDown,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
+                    Shift.None,
+                    ButtonType.Simple,
+                    () -> new ElevatorMovementTask(Operation.ElevatorMoveDown),
+                    new Operation[]
+                    {
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorMoveDown
+                    }));
+            put(
+                MacroOperation.ElevatorForceUp,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
+                    Shift.Debug,
+                    ButtonType.Simple,
+                    () -> new ElevatorMovementTask(Operation.ElevatorMoveDown),
+                    new Operation[]
+                    {
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorMoveDown                                
+                    }));
+            put(
+                MacroOperation.ElevatorForceDown,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_16,
+                    Shift.Debug,
+                    ButtonType.Simple,
+                    () -> new ElevatorMovementTask(Operation.ElevatorMoveDown),
+                    new Operation[]
+                    {
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorMoveDown                                
+                    }));
             put(
                 MacroOperation.ElevatorBottomPosition,
                 new MacroOperationDescription(
@@ -630,7 +705,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorBottomPosition),
+                    () -> new ElevatorPositionTask(Operation.ElevatorBottomPosition),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -648,7 +723,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorHatch2Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorHatch2Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -666,7 +741,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorHatch3Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorHatch3Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -684,7 +759,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_10,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargo1Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargo1Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -702,7 +777,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_9,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargo2Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargo2Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -720,7 +795,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_8,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargo3Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargo3Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -738,7 +813,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
                     Shift.None,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargoLoadPosition),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargoLoadPosition),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -756,7 +831,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargo1Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargo1Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -774,7 +849,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargo2Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargo2Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -792,7 +867,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargo3Position),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargo3Position),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -810,7 +885,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorMovementTask(Operation.ElevatorCargoLoadPosition),
+                    () -> new ElevatorPositionTask(Operation.ElevatorCargoLoadPosition),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -820,6 +895,218 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
                         Operation.ElevatorCargoLoadPosition,                    
+                    }));
+
+            // Climber Macros
+            put(
+                MacroOperation.ClimberArmsRetractedPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> new ClimberArmsPositionTask(Operation.ClimberArmsRetractedPosition),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition  
+                    }));
+
+            put(
+                MacroOperation.ClimberArmsLowClimbPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> new ClimberArmsPositionTask(Operation.ClimberArmsLowClimbPosition),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition                                  
+                    }));
+
+            put(
+                MacroOperation.ClimberArmsHighClimbPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> new ClimberArmsPositionTask(Operation.ClimberArmsHighClimbPosition),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition                                  
+                    }));
+
+            put(
+                MacroOperation.ClimberCamStoredPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> new ClimberCamPositionTask(Operation.ClimberCamStoredPosition),
+                    new Operation[]
+                    {
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,                                   
+                    }));
+
+            put(
+                MacroOperation.ClimberCamLowClimbPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> new ClimberCamPositionTask(Operation.ClimberCamLowClimbPosition),
+                    new Operation[]
+                    {
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,                                    
+                    }));
+
+            put(
+                MacroOperation.ClimberCamHighClimbPosition,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> new ClimberCamPositionTask(Operation.ClimberCamHighClimbPosition),
+                    new Operation[]
+                    {
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,                                   
+                    }));
+
+            put(
+                MacroOperation.ClimberArmsMoveForward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_6,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberArmsMovementTask(Operation.ClimberArmsMoveForward),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberArmsForceBackward                
+                    }));
+            put(
+                MacroOperation.ClimberArmsMoveBackward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberArmsMovementTask(Operation.ClimberArmsMoveBackward),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberArmsForceBackward                            
+                    }));
+            put(
+                MacroOperation.ClimberArmsForceForward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_1,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberArmsMovementTask(Operation.ClimberArmsForceForward),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberArmsForceBackward                            
+                    }));
+            put(
+                MacroOperation.ClimberArmsForceBackward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberArmsMovementTask(Operation.ClimberArmsForceBackward),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberArmsForceBackward                            
+                    }));
+            put(
+                MacroOperation.ClimberCamMoveForward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_8,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberCamMovementTask(Operation.ClimberCamMoveForward),
+                    new Operation[]
+                    {
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ClimberCamForceBackward
+                    }));
+            put(
+                MacroOperation.ClimberCamMoveBackward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_9,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberCamMovementTask(Operation.ClimberCamMoveBackward),
+                    new Operation[]
+                    {
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ClimberCamForceBackward                            
+                    }));
+            put(
+                MacroOperation.ClimberCamForceForward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberCamMovementTask(Operation.ClimberCamForceForward),
+                    new Operation[]
+                    {
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ClimberCamForceBackward                            
+                    }));
+            put(
+                MacroOperation.ClimberCamForceBackward,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberCamMovementTask(Operation.ClimberCamForceBackward),
+                    new Operation[]
+                    {
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ClimberCamForceBackward                            
                     }));
 
         }

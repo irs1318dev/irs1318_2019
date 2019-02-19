@@ -18,6 +18,26 @@ public enum MacroOperation
     ClimbHab2,
     ClimbHab3,
 
+    // Grabber operation:
+    GrabberKickPanelRepeatedlyTask,
+
+    // Climber operations:
+    ClimberArmsRetractedPosition,
+    ClimberArmsLowClimbPosition,
+    ClimberArmsHighClimbPosition,
+    ClimberCamStoredPosition,
+    ClimberCamLowClimbPosition,
+    ClimberCamHighClimbPosition,
+    ClimberArmsMoveForward,
+    ClimberArmsMoveBackward,
+    ClimberCamMoveForward,
+    ClimberCamMoveBackward,
+    ClimberArmsForceForward,
+    ClimberArmsForceBackward,
+    ClimberCamForceForward,
+    ClimberCamForceBackward,
+
+
     // Elevator operations:
     ElevatorBottomPosition,
     ElevatorHatch2Position,
@@ -30,5 +50,8 @@ public enum MacroOperation
     ElevatorCargo2PositionShifted,
     ElevatorCargo3PositionShifted,
     ElevatorCargoLoadPositionShifted,
-
+    ElevatorMoveUp,
+    ElevatorMoveDown,
+    ElevatorForceUp,
+    ElevatorForceDown,
 }
