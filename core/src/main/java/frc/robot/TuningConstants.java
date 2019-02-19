@@ -46,6 +46,7 @@ public class TuningConstants
     // Navx Turn Constants
     public static final double MAX_NAVX_TURN_RANGE_DEGREES = 4.0;
     public static final double MAX_NAVX_FAST_TURN_RANGE_DEGREES = 5.0;
+    public static final double NAVX_FAST_TURN_TIMEOUT = 2.5;
     public static final double NAVX_TURN_COMPLETE_TIME = 0.4;
     public static final double NAVX_TURN_COMPLETE_CURRENT_VELOCITY_DELTA = 0;
     public static final double NAVX_TURN_COMPLETE_DESIRED_VELOCITY_DELTA = 0;

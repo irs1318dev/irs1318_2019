@@ -420,7 +420,7 @@ public class ButtonMap implements IButtonMap
                     90,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new NavxTurnTask(false, 180, true, true),
+                    () -> new NavxTurnTask(true, 180, TuningConstants.NAVX_FAST_TURN_TIMEOUT, true, true),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,
@@ -447,7 +447,7 @@ public class ButtonMap implements IButtonMap
                     270,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new NavxTurnTask(false, -180, true, true),
+                    () -> new NavxTurnTask(true, -180, TuningConstants.NAVX_FAST_TURN_TIMEOUT, true, true),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,
