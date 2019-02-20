@@ -16,6 +16,7 @@ public enum Operation
     DriveTrainSimpleMode,
     DriveTrainUseBrakeMode,
     DriveTrainUsePositionalMode,
+    DriveTrainUseSimplePathMode,
     DriveTrainUsePathMode,
     DriveTrainLeftPosition,
     DriveTrainRightPosition,
@@ -39,6 +40,7 @@ public enum Operation
 
     // Grabber operations:
     GrabberKickPanel,
+    GrabberPointFinger,
     GrabberIntakeCargo,
     GrabberOuttakeCargo,
     GrabberWristStartPosition,

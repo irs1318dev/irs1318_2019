@@ -21,6 +21,7 @@ public class GrabberMechanism implements IMechanism {
 
     // actuators
     private final IDoubleSolenoid kicker; // for ejecting hatches
+    private final IDoubleSolenoid finger; // for pulling panels out of brushes
     private final ITalonSRX cargoMotor; // for cargo intake/outtake
     private final IDoubleSolenoid wristInner; // for controlling the piston closest to the elevator
     private final IDoubleSolenoid wristOuter; // for controlling the piston farthest from the elevator
@@ -37,6 +38,7 @@ public class GrabberMechanism implements IMechanism {
     public GrabberMechanism(IRobotProvider provider, IDashboardLogger logger) {
 
         this.kicker = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_KICKER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_KICKER_REVERSE_PCM_CHANNEL);
+        this.finger = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_FINGER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_FINGER_REVERSE_PCM_CHANNEL);
         this.cargoMotor = provider.getTalonSRX(ElectronicsConstants.GRABBER_CARGO_MOTOR_CAN_ID);
         this.cargoMotor.setInvertOutput(HardwareConstants.GRABBER_CARGO_MOTOR_INVERT_OUTPUT);
 
@@ -78,6 +80,10 @@ public class GrabberMechanism implements IMechanism {
         boolean kickPanel = this.driver.getDigital(Operation.GrabberKickPanel);
         this.kicker.set(kickPanel ? DoubleSolenoidValue.Forward : DoubleSolenoidValue.Reverse);
         this.logger.logBoolean(GrabberMechanism.logName, "kicker", kickPanel);
+
+        boolean pointFinger = this.driver.getDigital(Operation.GrabberPointFinger);
+        this.finger.set(pointFinger ? DoubleSolenoidValue.Reverse : DoubleSolenoidValue.Forward);
+        this.logger.logBoolean(GrabberMechanism.logName, "finger", pointFinger);
 
         double cargoMotorPower = 0.0;
         if (this.driver.getDigital(Operation.GrabberIntakeCargo))
@@ -129,6 +135,7 @@ public class GrabberMechanism implements IMechanism {
     public void stop()
     {
         this.kicker.set(DoubleSolenoidValue.Off);
+        this.finger.set(DoubleSolenoidValue.Off);
         this.cargoMotor.set(0.0);
 
         this.wristInner.set(DoubleSolenoidValue.Off);

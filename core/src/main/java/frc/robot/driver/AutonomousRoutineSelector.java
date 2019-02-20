@@ -155,7 +155,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startCenterGoLeftPlace2()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("CenterL1 to FrontL.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("CenterL1 to FrontL.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -181,7 +183,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startCenterGoLeftPlace1()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("CenterL1 to FrontL.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("CenterL1 to FrontL.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -193,7 +197,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startCenterGoRightPlace2()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("CenterL1 to FrontR.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("CenterL1 to FrontR.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -219,7 +225,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startCenterGoRightPlace1()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("CenterL1 to FrontR.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("CenterL1 to FrontR.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -231,7 +239,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startLeftGoFrontPlace2()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("LeftL1 to FrontL.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("LeftL1 to FrontL.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -257,7 +267,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startLeftGoFrontPlace1()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("LeftL1 to FrontL.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("LeftL1 to FrontL.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -270,7 +282,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startLeftGoSidePlace2()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("LeftL1 to L1.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("LeftL1 to L1.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -296,7 +310,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startLeftGoSidePlace1()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("LeftL1 to L1.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("LeftL1 to L1.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -309,7 +325,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startRightGoFrontPlace2()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("RightL1 to FrontR.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("RightL1 to FrontR.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -335,7 +353,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startRightGoFrontPlace1()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("RightL1 to FrontR.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("RightL1 to FrontR.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -348,7 +368,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startRightGoSidePlace2()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("RightL1 to R1.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("RightL1 to R1.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
@@ -374,7 +396,9 @@ public class AutonomousRoutineSelector
     private static IControlTask startRightGoSidePlace1()
     {
         return SequentialTask.Sequence(
-            new FollowPathTask("RightL1 to R1.csv"),
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new FollowPathTask("RightL1 to R1.csv")),
             new VisionCenteringTask(Operation.VisionEnableCargoShip),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AnyTasks(
