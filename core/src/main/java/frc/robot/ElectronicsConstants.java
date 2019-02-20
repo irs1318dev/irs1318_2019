@@ -60,18 +60,18 @@ public class ElectronicsConstants
     public static final int GRABBER_KICKER_REVERSE_PCM_CHANNEL = 0;
 
     // Hatch finger
-    public static final int GRABBER_FINGER_FORWARD_PCM_CHANNEL = 4;
-    public static final int GRABBER_FINGER_REVERSE_PCM_CHANNEL = 3;
+    public static final int GRABBER_FINGER_FORWARD_PCM_CHANNEL = 6;
+    public static final int GRABBER_FINGER_REVERSE_PCM_CHANNEL = 1;
 
     // Cargo intake/outtake TalonSRX
     public static final int GRABBER_CARGO_MOTOR_CAN_ID = 9;
 
     // Wrist actuators
-    public static final int GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL = 5;
-    public static final int GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL = 2;
+    public static final int GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL = 4;
+    public static final int GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL = 3;
     
-    public static final int GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL = 6;
-    public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 1;
+    public static final int GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL = 5;
+    public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 2;
 
     // Limit switches
     public static final int GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL = 5;

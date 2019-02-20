@@ -675,7 +675,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
                     Shift.Debug,
                     ButtonType.Simple,
-                    () -> new ElevatorMovementTask(Operation.ElevatorMoveDown),
+                    () -> new ElevatorMovementTask(Operation.ElevatorForceUp),
                     new Operation[]
                     {
                         Operation.ElevatorMoveUp,
@@ -690,7 +690,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_16,
                     Shift.Debug,
                     ButtonType.Simple,
-                    () -> new ElevatorMovementTask(Operation.ElevatorMoveDown),
+                    () -> new ElevatorMovementTask(Operation.ElevatorForceDown),
                     new Operation[]
                     {
                         Operation.ElevatorMoveUp,
