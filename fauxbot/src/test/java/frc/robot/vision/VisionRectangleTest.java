@@ -2,6 +2,7 @@ package frc.robot.vision;
 
 import frc.robot.common.robotprovider.IRotatedRect;
 import frc.robot.common.robotprovider.RotatedRectWrapper;
+import frc.robot.vision.common.VisionResult;
 import org.junit.jupiter.api.Test;
 import org.opencv.core.RotatedRect;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VisionRectangleTest {
     /*
@@ -74,6 +76,9 @@ S_1_R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.411796
         List<Set<IRotatedRect>> grouped = calc.groupRotatedRect(CAPTURE4_RECT_LIST);
         assertEquals(1, grouped.size());
 
+        Set<IRotatedRect> pickRowRects = calc.pickRow(grouped, VisionResult.HIGH_TARGET);
+        assertEquals(2, pickRowRects.size());
+
         List<IRotatedRect> pairedRects = calc.pickPairedRect(grouped.get(0));
         assertEquals(2, pairedRects.size());
 
@@ -99,6 +104,53 @@ S_1_R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.411796
 
         List<IRotatedRect> pairedRects = calc.pickPairedRect(grouped.get(0));
         assertEquals(0, pairedRects.size());
+
+    }
+
+    /*
+
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture3.PNG
+R_0 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
+R_1 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
+R_2 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
+R_3 : [250.0, 19.0, 8.0, 34.0, -0.0]
+S_0_R_0 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
+S_0_R_1 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
+S_1_R_0 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
+S_1_R_1 : [250.0, 19.0, 8.0, 34.0, -0.0]
+
+*/
+    public static final List<IRotatedRect> CAPTURE3_RECT_LIST =
+            new ArrayList() {{
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{250.0, 19.0, 8.0, 34.0, -0.0})));
+            }};
+    @Test
+    public void testPickRow_capture3() {
+        VisionCalculations calc = new VisionCalculations();
+        List<Set<IRotatedRect>> grouped = calc.groupRotatedRect(CAPTURE3_RECT_LIST);
+        assertEquals(2, grouped.size());
+
+        assertTrue(calc.isRight(CAPTURE3_RECT_LIST.get(0)));
+
+        Set<IRotatedRect> pickRowRectsLow = calc.pickRow(grouped, VisionResult.LOW_TARGET);
+        assertEquals(2, pickRowRectsLow.size());
+
+        Set<IRotatedRect> pickRowRectsHigh = calc.pickRow(grouped, VisionResult.HIGH_TARGET);
+        assertEquals(2, pickRowRectsHigh.size());
+
+        List<IRotatedRect> pairedRects = calc.pickPairedRect(grouped.get(0));
+        assertEquals(2, pairedRects.size());
 
     }
 
