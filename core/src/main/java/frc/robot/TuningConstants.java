@@ -28,7 +28,7 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(ElevatorMechanism.class));
         mechanismList.add(injector.getInstance(GrabberMechanism.class));
         mechanismList.add(injector.getInstance(ClimberMechanism.class));
-        //mechanismList.add(injector.getInstance(VisionManager.class));
+        mechanismList.add(injector.getInstance(VisionManager.class));
         //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
         //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
@@ -46,6 +46,7 @@ public class TuningConstants
     // Navx Turn Constants
     public static final double MAX_NAVX_TURN_RANGE_DEGREES = 4.0;
     public static final double MAX_NAVX_FAST_TURN_RANGE_DEGREES = 5.0;
+    public static final double NAVX_FAST_TURN_TIMEOUT = 2.5;
     public static final double NAVX_TURN_COMPLETE_TIME = 0.4;
     public static final double NAVX_TURN_COMPLETE_CURRENT_VELOCITY_DELTA = 0;
     public static final double NAVX_TURN_COMPLETE_DESIRED_VELOCITY_DELTA = 0;
@@ -216,26 +217,27 @@ public class TuningConstants
 
     public static final double ELEVATOR_DEBUG_UP_POWER_LEVEL = 0.6;
     public static final double ELEVATOR_DEBUG_DOWN_POWER_LEVEL = -0.2;
-    public static final double ELEVATOR_MOVE_VELOCITY = 10.0;
+    public static final double ELEVATOR_MOVE_VELOCITY = 15.0;
 
     // Positions
     public static final double ELEVATOR_BOTTOM_POSITION = 0.0;
-    public static final double ELEVATOR_HATCH_2_POSITION = 30.0; // 30 inches
-    public static final double ELEVATOR_HATCH_3_POSITION = 60.0;
-    public static final double ELEVATOR_CARGO_1_POSITION = 15.0;
-    public static final double ELEVATOR_CARGO_2_POSITION = 45.0;
-    public static final double ELEVATOR_CARGO_3_POSITION = 65.0;
-    public static final double ELEVATOR_CARGO_LOAD_POSITION = 10.0;
+    public static final double ELEVATOR_HATCH_2_POSITION = 28.0; // 28 inches
+    public static final double ELEVATOR_HATCH_3_POSITION = 56.0;
+    public static final double ELEVATOR_CARGO_1_POSITION = 11.5;
+    public static final double ELEVATOR_CARGO_2_POSITION = 39.5;
+    public static final double ELEVATOR_CARGO_3_POSITION = 67.5;
+    public static final double ELEVATOR_CARGO_LOAD_POSITION = 29.0;
 
     //======================================================== Grabber =====================================
 
     public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = 10.0;
+    public static final double GRABBER_SET_WRIST_TIME_DURATION = 0.75;
     public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = 10.0;
     public static final double GRABBER_KICK_PANEL_DURATION = 1.0;
     
     // Cargo intake/outtake motor power
     public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
-    public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.6;
+    public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.9;
 
     //================================================== Climber ==============================================================
 
@@ -254,8 +256,8 @@ public class TuningConstants
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final double CLIMBER_ARMS_POSITION_MAX = 100000.0;
-    public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 0.6;
+    public static final double CLIMBER_ARMS_POSITION_MAX = 4900.0; // 3375.0 old, practice
+    public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 1.0;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
 
     public static final double CLIMBER_ARMS_MOVE_VELOCITY = 10.0;
