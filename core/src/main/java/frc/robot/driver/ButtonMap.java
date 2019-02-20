@@ -532,6 +532,14 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberCamStoredPosition,
                         Operation.ClimberCamLowClimbPosition,
                         Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
                     },
                     new Operation[]
                     {
@@ -543,6 +551,10 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberCamMoveBackward,
                         Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
                     }));
             put(
                 MacroOperation.ClimbHab3,
@@ -571,6 +583,14 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberCamStoredPosition,
                         Operation.ClimberCamLowClimbPosition,
                         Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
                     },
                     new Operation[]
                     {
@@ -582,6 +602,10 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberCamMoveBackward,
                         Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
                     }));
 
             // Vision Macros
