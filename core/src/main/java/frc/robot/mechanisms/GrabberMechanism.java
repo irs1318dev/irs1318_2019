@@ -82,7 +82,7 @@ public class GrabberMechanism implements IMechanism {
         this.logger.logBoolean(GrabberMechanism.logName, "kicker", kickPanel);
 
         boolean pointFinger = this.driver.getDigital(Operation.GrabberPointFinger);
-        this.finger.set(pointFinger ? DoubleSolenoidValue.Forward : DoubleSolenoidValue.Reverse);
+        this.finger.set(pointFinger ? DoubleSolenoidValue.Reverse : DoubleSolenoidValue.Forward);
         this.logger.logBoolean(GrabberMechanism.logName, "finger", pointFinger);
 
         double cargoMotorPower = 0.0;

@@ -1,0 +1,415 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ContourHelper</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">frc.robot.vision.common</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ContourHelper (frc.robot.vision.common)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ContourHelper</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 106)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ContourHelper$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 114)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package frc.robot.vision.common;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;import java.util.Comparator;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import frc.robot.common.robotprovider.*;
+<i>8</i>&nbsp;
+<b class="nc"><i>9</i>&nbsp;public class ContourHelper</b>
+<i>10</i>&nbsp;{
+<i>11</i>&nbsp;    private static final int IMGPROC_RETR_EXTERNAL = 0;
+<i>12</i>&nbsp;    private static final int IMGPROC_CHAIN_APPROX_TC89_KCOS = 4;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * Find the largest contour in the frame
+<i>16</i>&nbsp;     * @param frame in which to look for contours
+<i>17</i>&nbsp;     * @return largest contour
+<i>18</i>&nbsp;     */
+<i>19</i>&nbsp;    public static IMatOfPoint findLargestContour(IOpenCVProvider provider, IMat frame)
+<i>20</i>&nbsp;    {
+<b class="nc"><i>21</i>&nbsp;        return ContourHelper.findLargestContour(provider, frame, 0.0);</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * Find the largest contour in the frame
+<i>26</i>&nbsp;     * @param frame in which to look for contours
+<i>27</i>&nbsp;     * @param minContourArea is the minimum contour area allowable
+<i>28</i>&nbsp;     * @return largest contour
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    public static IMatOfPoint findLargestContour(IOpenCVProvider provider, IMat frame, double minContourArea)
+<i>31</i>&nbsp;    {
+<i>32</i>&nbsp;        // find the contours using OpenCV API...
+<b class="nc"><i>33</i>&nbsp;        IMat unused = provider.newMat();</b>
+<b class="nc"><i>34</i>&nbsp;        List&lt;IMatOfPoint&gt; contours = new ArrayList&lt;IMatOfPoint&gt;();</b>
+<b class="nc"><i>35</i>&nbsp;        provider.findContours(frame, contours, unused, ContourHelper.IMGPROC_RETR_EXTERNAL, ContourHelper.IMGPROC_CHAIN_APPROX_TC89_KCOS);</b>
+<b class="nc"><i>36</i>&nbsp;        unused.release();</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;        // find the largest contour...
+<b class="nc"><i>39</i>&nbsp;        double largestContourArea = 0.0;</b>
+<b class="nc"><i>40</i>&nbsp;        IMatOfPoint largestContour = null;</b>
+<b class="nc"><i>41</i>&nbsp;        for (IMatOfPoint contour : contours)</b>
+<i>42</i>&nbsp;        {
+<b class="nc"><i>43</i>&nbsp;            double area = provider.contourArea(contour);</b>
+<b class="nc"><i>44</i>&nbsp;            if (area &gt;= minContourArea &amp;&amp; area &gt; largestContourArea)</b>
+<i>45</i>&nbsp;            {
+<b class="nc"><i>46</i>&nbsp;                if (largestContour != null)</b>
+<i>47</i>&nbsp;                {
+<b class="nc"><i>48</i>&nbsp;                    largestContour.release();</b>
+<i>49</i>&nbsp;                }
+<i>50</i>&nbsp;
+<b class="nc"><i>51</i>&nbsp;                largestContour = contour;</b>
+<b class="nc"><i>52</i>&nbsp;                largestContourArea = area;</b>
+<i>53</i>&nbsp;            }
+<i>54</i>&nbsp;            else
+<i>55</i>&nbsp;            {
+<b class="nc"><i>56</i>&nbsp;                contour.release();</b>
+<i>57</i>&nbsp;            }
+<b class="nc"><i>58</i>&nbsp;        }</b>
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        return largestContour;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    /**
+<i>64</i>&nbsp;     * Find the two largest contours in the frame
+<i>65</i>&nbsp;     * @param frame in which to look for contours
+<i>66</i>&nbsp;     * @return two largest contours, largest then second largest
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    public static IMatOfPoint[] findTwoLargestContours(IOpenCVProvider provider, IMat frame)
+<i>69</i>&nbsp;    {
+<b class="nc"><i>70</i>&nbsp;        return ContourHelper.findTwoLargestContours(provider, frame, 0.0);</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    /**
+<i>74</i>&nbsp;     * Find the two largest contours in the frame
+<i>75</i>&nbsp;     * @param frame in which to look for contours
+<i>76</i>&nbsp;     * @param minContourArea is the minimum contour area allowable
+<i>77</i>&nbsp;     * @return two largest contours, largest then second largest
+<i>78</i>&nbsp;     */
+<i>79</i>&nbsp;    public static IMatOfPoint[] findTwoLargestContours(IOpenCVProvider provider, IMat frame, double minContourArea)
+<i>80</i>&nbsp;    {
+<i>81</i>&nbsp;        // find the contours using OpenCV API...
+<b class="nc"><i>82</i>&nbsp;        IMat unused = provider.newMat();</b>
+<b class="nc"><i>83</i>&nbsp;        List&lt;IMatOfPoint&gt; contours = new ArrayList&lt;IMatOfPoint&gt;();</b>
+<b class="nc"><i>84</i>&nbsp;        provider.findContours(frame, contours, unused, ContourHelper.IMGPROC_RETR_EXTERNAL, ContourHelper.IMGPROC_CHAIN_APPROX_TC89_KCOS);</b>
+<b class="nc"><i>85</i>&nbsp;        unused.release();</b>
+<i>86</i>&nbsp;
+<b class="nc"><i>87</i>&nbsp;        double largestContourArea = 0.0;</b>
+<b class="nc"><i>88</i>&nbsp;        IMatOfPoint largestContour = null;</b>
+<i>89</i>&nbsp;
+<b class="nc"><i>90</i>&nbsp;        double secondLargestContourArea = 0.0;</b>
+<b class="nc"><i>91</i>&nbsp;        IMatOfPoint secondLargestContour = null;</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;        // find the two largest contours...
+<b class="nc"><i>94</i>&nbsp;        for (IMatOfPoint contour : contours)</b>
+<i>95</i>&nbsp;        {
+<b class="nc"><i>96</i>&nbsp;            double area = provider.contourArea(contour);</b>
+<b class="nc"><i>97</i>&nbsp;            if (area &gt;= minContourArea &amp;&amp; area &gt; largestContourArea)</b>
+<i>98</i>&nbsp;            {
+<b class="nc"><i>99</i>&nbsp;                if (largestContour != null)</b>
+<i>100</i>&nbsp;                {
+<b class="nc"><i>101</i>&nbsp;                    if (secondLargestContour != null)</b>
+<i>102</i>&nbsp;                    {
+<b class="nc"><i>103</i>&nbsp;                        secondLargestContour.release();</b>
+<i>104</i>&nbsp;                    }
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;                    secondLargestContour = largestContour;</b>
+<b class="nc"><i>107</i>&nbsp;                    secondLargestContourArea = largestContourArea;</b>
+<i>108</i>&nbsp;                }
+<i>109</i>&nbsp;
+<b class="nc"><i>110</i>&nbsp;                largestContour = contour;</b>
+<b class="nc"><i>111</i>&nbsp;                largestContourArea = area;</b>
+<i>112</i>&nbsp;            }
+<b class="nc"><i>113</i>&nbsp;            else if (area &gt;= minContourArea &amp;&amp; area &gt; secondLargestContourArea)</b>
+<i>114</i>&nbsp;            {
+<b class="nc"><i>115</i>&nbsp;                if (secondLargestContour != null)</b>
+<i>116</i>&nbsp;                {
+<b class="nc"><i>117</i>&nbsp;                    secondLargestContour.release();</b>
+<i>118</i>&nbsp;                }
+<i>119</i>&nbsp;
+<b class="nc"><i>120</i>&nbsp;                secondLargestContour = contour;</b>
+<b class="nc"><i>121</i>&nbsp;                secondLargestContourArea = area;</b>
+<i>122</i>&nbsp;            }
+<i>123</i>&nbsp;            else
+<i>124</i>&nbsp;            {
+<b class="nc"><i>125</i>&nbsp;                contour.release();</b>
+<i>126</i>&nbsp;            }
+<b class="nc"><i>127</i>&nbsp;        }</b>
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        return new IMatOfPoint[] { largestContour, secondLargestContour };</b>
+<i>130</i>&nbsp;    }
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;    /**
+<i>133</i>&nbsp;     * Find the two largest contours in the frame
+<i>134</i>&nbsp;     * @param frame in which to look for contours
+<i>135</i>&nbsp;     * @param minContourArea is the minimum contour area allowable
+<i>136</i>&nbsp;     * @param desiredContourHxWRatio is the desired height-to-width ratio for the contours (0.0 or below means ignore this)
+<i>137</i>&nbsp;     * @param allowableContourHxWRatioRange is the allowable range for the height-to-width ratio for the contours
+<i>138</i>&nbsp;     * @param allowableContourAreaRatio indicates the max allowable ratio between the area of the contours (0.0 or below means ignore this)
+<i>139</i>&nbsp;     * @return two largest contours, largest then second largest
+<i>140</i>&nbsp;     */
+<i>141</i>&nbsp;    public static IMatOfPoint[] findTwoLargestContours(IOpenCVProvider provider, IMat frame, double minContourArea, double desiredContourHxWRatio, double allowableContourHxWRatioRange, double allowableContourAreaRatio)
+<i>142</i>&nbsp;    {
+<i>143</i>&nbsp;        // find the contours using OpenCV API...
+<b class="nc"><i>144</i>&nbsp;        IMat unused = provider.newMat();</b>
+<b class="nc"><i>145</i>&nbsp;        List&lt;IMatOfPoint&gt; contours = new ArrayList&lt;IMatOfPoint&gt;();</b>
+<b class="nc"><i>146</i>&nbsp;        provider.findContours(frame, contours, unused, ContourHelper.IMGPROC_RETR_EXTERNAL, ContourHelper.IMGPROC_CHAIN_APPROX_TC89_KCOS);</b>
+<b class="nc"><i>147</i>&nbsp;        unused.release();</b>
+<i>148</i>&nbsp;
+<b class="nc"><i>149</i>&nbsp;        double largestContourArea = 0.0;</b>
+<b class="nc"><i>150</i>&nbsp;        IMatOfPoint largestContour = null;</b>
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;        double secondLargestContourArea = 0.0;</b>
+<b class="nc"><i>153</i>&nbsp;        IMatOfPoint secondLargestContour = null;</b>
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;        // find the two largest contours...
+<b class="nc"><i>156</i>&nbsp;        for (IMatOfPoint contour : contours)</b>
+<i>157</i>&nbsp;        {
+<b class="nc"><i>158</i>&nbsp;            boolean release = true;</b>
+<b class="nc"><i>159</i>&nbsp;            double area = provider.contourArea(contour);</b>
+<b class="nc"><i>160</i>&nbsp;            if (area &gt;= minContourArea)</b>
+<i>161</i>&nbsp;            {
+<b class="nc"><i>162</i>&nbsp;                IRect boundingRect = null;</b>
+<b class="nc"><i>163</i>&nbsp;                if (desiredContourHxWRatio &gt;= 0.0)</b>
+<i>164</i>&nbsp;                {
+<b class="nc"><i>165</i>&nbsp;                    boundingRect = provider.boundingRect(contour);</b>
+<i>166</i>&nbsp;                }
+<i>167</i>&nbsp;
+<b class="nc"><i>168</i>&nbsp;                if (boundingRect == null || Math.abs(((double)boundingRect.getHeight() / (double)boundingRect.getWidth()) - desiredContourHxWRatio) &lt; allowableContourHxWRatioRange)</b>
+<i>169</i>&nbsp;                {
+<b class="nc"><i>170</i>&nbsp;                    if (area &gt; largestContourArea)</b>
+<i>171</i>&nbsp;                    {
+<b class="nc"><i>172</i>&nbsp;                        if (largestContour != null)</b>
+<i>173</i>&nbsp;                        {
+<b class="nc"><i>174</i>&nbsp;                            if (secondLargestContour != null)</b>
+<i>175</i>&nbsp;                            {
+<b class="nc"><i>176</i>&nbsp;                                secondLargestContour.release();</b>
+<i>177</i>&nbsp;                            }
+<i>178</i>&nbsp;
+<b class="nc"><i>179</i>&nbsp;                            secondLargestContour = largestContour;</b>
+<b class="nc"><i>180</i>&nbsp;                            secondLargestContourArea = largestContourArea;</b>
+<i>181</i>&nbsp;                        }
+<i>182</i>&nbsp;
+<b class="nc"><i>183</i>&nbsp;                        largestContour = contour;</b>
+<b class="nc"><i>184</i>&nbsp;                        largestContourArea = area;</b>
+<b class="nc"><i>185</i>&nbsp;                        release = false;</b>
+<i>186</i>&nbsp;                    }
+<b class="nc"><i>187</i>&nbsp;                    else if (area &gt;= minContourArea &amp;&amp; area &gt; secondLargestContourArea)</b>
+<i>188</i>&nbsp;                    {
+<b class="nc"><i>189</i>&nbsp;                        if (secondLargestContour != null)</b>
+<i>190</i>&nbsp;                        {
+<b class="nc"><i>191</i>&nbsp;                            secondLargestContour.release();</b>
+<i>192</i>&nbsp;                        }
+<i>193</i>&nbsp;
+<b class="nc"><i>194</i>&nbsp;                        secondLargestContour = contour;</b>
+<b class="nc"><i>195</i>&nbsp;                        secondLargestContourArea = area;</b>
+<b class="nc"><i>196</i>&nbsp;                        release = false;</b>
+<i>197</i>&nbsp;                    }
+<i>198</i>&nbsp;                }
+<i>199</i>&nbsp;            }
+<i>200</i>&nbsp;
+<b class="nc"><i>201</i>&nbsp;            if (release)</b>
+<i>202</i>&nbsp;            {
+<b class="nc"><i>203</i>&nbsp;                contour.release();</b>
+<i>204</i>&nbsp;            }
+<b class="nc"><i>205</i>&nbsp;        }</b>
+<i>206</i>&nbsp;
+<b class="nc"><i>207</i>&nbsp;        if (allowableContourAreaRatio &gt;= 0.0 &amp;&amp;</b>
+<i>208</i>&nbsp;            largestContourArea &gt; 0.0 &amp;&amp;
+<i>209</i>&nbsp;            secondLargestContourArea &gt; 0.0 &amp;&amp;
+<i>210</i>&nbsp;            secondLargestContourArea / largestContourArea &lt; allowableContourAreaRatio)
+<i>211</i>&nbsp;        {
+<b class="nc"><i>212</i>&nbsp;            secondLargestContour = null;</b>
+<b class="nc"><i>213</i>&nbsp;            secondLargestContourArea = 0.0;</b>
+<i>214</i>&nbsp;        }
+<i>215</i>&nbsp;
+<b class="nc"><i>216</i>&nbsp;        return new IMatOfPoint[] { largestContour, secondLargestContour };</b>
+<i>217</i>&nbsp;    }
+<i>218</i>&nbsp;
+<i>219</i>&nbsp;    /**
+<i>220</i>&nbsp;     * Find the contours in the frame, sorted from smallest to largest
+<i>221</i>&nbsp;     * @param frame in which to look for contours
+<i>222</i>&nbsp;     * @return sorted largest contour
+<i>223</i>&nbsp;     */
+<i>224</i>&nbsp;    public static IMatOfPoint[] findSortedLargestContours(IOpenCVProvider provider, IMat frame)
+<i>225</i>&nbsp;    {
+<b class="nc"><i>226</i>&nbsp;        return ContourHelper.findSortedLargestContours(provider, frame, 0.0);</b>
+<i>227</i>&nbsp;    }
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;    /**
+<i>230</i>&nbsp;     * Find the contours in the frame, sorted from smallest to largest
+<i>231</i>&nbsp;     * @param frame in which to look for contours
+<i>232</i>&nbsp;     * @param minContourArea is the minimum contour area allowable
+<i>233</i>&nbsp;     * @return sorted largest contour
+<i>234</i>&nbsp;     */
+<i>235</i>&nbsp;    public static IMatOfPoint[] findSortedLargestContours(IOpenCVProvider provider, IMat frame, double minContourArea)
+<i>236</i>&nbsp;    {
+<i>237</i>&nbsp;        // find the contours using OpenCV API...
+<b class="nc"><i>238</i>&nbsp;        IMat unused = provider.newMat();</b>
+<b class="nc"><i>239</i>&nbsp;        List&lt;IMatOfPoint&gt; contours = new ArrayList&lt;IMatOfPoint&gt;();</b>
+<b class="nc"><i>240</i>&nbsp;        provider.findContours(frame, contours, unused, ContourHelper.IMGPROC_RETR_EXTERNAL, ContourHelper.IMGPROC_CHAIN_APPROX_TC89_KCOS);</b>
+<b class="nc"><i>241</i>&nbsp;        unused.release();</b>
+<i>242</i>&nbsp;
+<b class="nc"><i>243</i>&nbsp;        contours.sort(new Comparator&lt;IMatOfPoint&gt;()</b>
+<b class="nc"><i>244</i>&nbsp;        {</b>
+<i>245</i>&nbsp;            @Override
+<i>246</i>&nbsp;            public int compare(IMatOfPoint o1, IMatOfPoint o2)
+<i>247</i>&nbsp;            {
+<b class="nc"><i>248</i>&nbsp;                double area1 = provider.contourArea(o1);</b>
+<b class="nc"><i>249</i>&nbsp;                double area2 = provider.contourArea(o2);</b>
+<b class="nc"><i>250</i>&nbsp;                if (area1 &gt; area2)</b>
+<i>251</i>&nbsp;                {
+<b class="nc"><i>252</i>&nbsp;                    return 1;</b>
+<i>253</i>&nbsp;                }
+<b class="nc"><i>254</i>&nbsp;                else if (area1 &lt; area2)</b>
+<i>255</i>&nbsp;                {
+<b class="nc"><i>256</i>&nbsp;                    return -1;</b>
+<i>257</i>&nbsp;                }
+<i>258</i>&nbsp;                else
+<i>259</i>&nbsp;                {
+<b class="nc"><i>260</i>&nbsp;                    return 0;</b>
+<i>261</i>&nbsp;                }
+<i>262</i>&nbsp;            }
+<i>263</i>&nbsp;        });
+<i>264</i>&nbsp;
+<b class="nc"><i>265</i>&nbsp;        return (IMatOfPoint[])contours.toArray();</b>
+<i>266</i>&nbsp;    }
+<i>267</i>&nbsp;
+<i>268</i>&nbsp;    public static List&lt;IMatOfPoint&gt; getAllContours(IOpenCVProvider provider, IMat frame, double minContourArea){
+<b class="nc"><i>269</i>&nbsp;        IMat unused = provider.newMat();</b>
+<b class="nc"><i>270</i>&nbsp;        List&lt;IMatOfPoint&gt; contours = new ArrayList&lt;IMatOfPoint&gt;();</b>
+<b class="nc"><i>271</i>&nbsp;        provider.findContours(frame, contours, unused, ContourHelper.IMGPROC_RETR_EXTERNAL, ContourHelper.IMGPROC_CHAIN_APPROX_TC89_KCOS);</b>
+<b class="nc"><i>272</i>&nbsp;        unused.release();</b>
+<i>273</i>&nbsp;
+<b class="nc"><i>274</i>&nbsp;        List&lt;IMatOfPoint&gt; largeContours = new ArrayList&lt;IMatOfPoint&gt;();</b>
+<b class="nc"><i>275</i>&nbsp;        for(IMatOfPoint contour: contours){</b>
+<b class="nc"><i>276</i>&nbsp;            double area = provider.contourArea(contour);</b>
+<b class="nc"><i>277</i>&nbsp;            if(area &gt;= minContourArea)</b>
+<i>278</i>&nbsp;            {
+<b class="nc"><i>279</i>&nbsp;                largeContours.add(contour);</b>
+<i>280</i>&nbsp;            }
+<i>281</i>&nbsp;            else
+<i>282</i>&nbsp;            {
+<b class="nc"><i>283</i>&nbsp;                contour.release();</b>
+<i>284</i>&nbsp;            }
+<b class="nc"><i>285</i>&nbsp;        }</b>
+<b class="nc"><i>286</i>&nbsp;        return largeContours;</b>
+<i>287</i>&nbsp;
+<i>288</i>&nbsp;    }
+<i>289</i>&nbsp;
+<i>290</i>&nbsp;    /**
+<i>291</i>&nbsp;     * Find the center of mass for a contour using Moments.
+<i>292</i>&nbsp;     * http://docs.opencv.org/3.1.0/d8/d23/classcv_1_1Moments.html
+<i>293</i>&nbsp;     * @param contour to use
+<i>294</i>&nbsp;     * @return point representing the center of the contour
+<i>295</i>&nbsp;     */
+<i>296</i>&nbsp;    public static IPoint findCenterOfMass(IOpenCVProvider provider, IMatOfPoint contour)
+<i>297</i>&nbsp;    {
+<b class="nc"><i>298</i>&nbsp;        IMoments moments = provider.moments(contour);</b>
+<b class="nc"><i>299</i>&nbsp;        if (moments.get_m00() == 0.0)</b>
+<i>300</i>&nbsp;        {
+<b class="nc"><i>301</i>&nbsp;            return null;</b>
+<i>302</i>&nbsp;        }
+<i>303</i>&nbsp;
+<b class="nc"><i>304</i>&nbsp;        return provider.newPoint(moments.get_m10() / moments.get_m00(), moments.get_m01() / moments.get_m00());</b>
+<i>305</i>&nbsp;    }
+<i>306</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-02-18 20:24</div>
+</div>
+</body>
+</html>

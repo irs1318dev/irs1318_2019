@@ -1,0 +1,332 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: VisionCalculations</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">frc.robot.vision</a> ]
+</div>
+
+<h1>Coverage Summary for Class: VisionCalculations (frc.robot.vision)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VisionCalculations</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 131)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package frc.robot.vision;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import frc.robot.GamePiece;
+<i>4</i>&nbsp;import frc.robot.common.robotprovider.*;
+<i>5</i>&nbsp;import frc.robot.vision.common.VisionProcessingState;
+<i>6</i>&nbsp;import frc.robot.vision.common.VisionResult;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.*;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class VisionCalculations {
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;
+<b class="nc"><i>13</i>&nbsp;    public VisionCalculations() {</b>
+<i>14</i>&nbsp;    }
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public List&lt;Set&lt;IRotatedRect&gt;&gt; groupRotatedRect(List&lt;IRotatedRect&gt; rotatedRect) {
+<b class="nc"><i>17</i>&nbsp;        List&lt;Set&lt;IRotatedRect&gt;&gt; rows = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>18</i>&nbsp;        for (IRotatedRect rect : rotatedRect) {</b>
+<b class="nc"><i>19</i>&nbsp;            boolean added = false;</b>
+<i>20</i>&nbsp;            // skip malformed rectangles
+<i>21</i>&nbsp;            // reject rectangles that are malformed compared to the expected aspect ration of 5.5/2.0
+<b class="nc"><i>22</i>&nbsp;            if (rect.getAspectRatio() &gt; 5.0 || rect.getAspectRatio() &lt; 1.0) {</b>
+<b class="nc"><i>23</i>&nbsp;                continue;</b>
+<i>24</i>&nbsp;            }
+<i>25</i>&nbsp;            // put the rectangle in a row
+<b class="nc"><i>26</i>&nbsp;            for (Set&lt;IRotatedRect&gt; row : rows) {</b>
+<b class="nc"><i>27</i>&nbsp;                IRotatedRect compare = row.stream().findFirst().get();</b>
+<b class="nc"><i>28</i>&nbsp;                if (Math.abs(rect.getCenter().getY() - compare.getCenter().getY()) &lt; 30) {</b>
+<b class="nc"><i>29</i>&nbsp;                    row.add(rect);</b>
+<b class="nc"><i>30</i>&nbsp;                    added = true;</b>
+<b class="nc"><i>31</i>&nbsp;                    break;</b>
+<i>32</i>&nbsp;                }
+<b class="nc"><i>33</i>&nbsp;            }</b>
+<b class="nc"><i>34</i>&nbsp;            if (added) {</b>
+<b class="nc"><i>35</i>&nbsp;                continue;</b>
+<i>36</i>&nbsp;            }
+<i>37</i>&nbsp;            // no row exists, create a new row
+<b class="nc"><i>38</i>&nbsp;            Set&lt;IRotatedRect&gt; row = new HashSet&lt;&gt;();</b>
+<b class="nc"><i>39</i>&nbsp;            row.add(rect);</b>
+<b class="nc"><i>40</i>&nbsp;            rows.add(row);</b>
+<b class="nc"><i>41</i>&nbsp;        }</b>
+<b class="nc"><i>42</i>&nbsp;        return rows;</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public VisionResult determineVisionResult(GamePiece gamePiece, VisionProcessingState processingState) {
+<b class="nc"><i>46</i>&nbsp;        if (GamePiece.Cargo.equals(gamePiece)</b>
+<b class="nc"><i>47</i>&nbsp;                &amp;&amp; VisionProcessingState.ActiveRocket.equals(processingState)) {</b>
+<b class="nc"><i>48</i>&nbsp;            return VisionResult.HIGH_TARGET;</b>
+<i>49</i>&nbsp;        }
+<b class="nc"><i>50</i>&nbsp;        return VisionResult.LOW_TARGET;</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public Set&lt;IRotatedRect&gt; pickRow(List&lt;Set&lt;IRotatedRect&gt;&gt; rows, VisionResult visionResult) {
+<b class="nc"><i>54</i>&nbsp;        if (rows.size() == 1) {</b>
+<b class="nc"><i>55</i>&nbsp;            return rows.get(0);</b>
+<i>56</i>&nbsp;        }
+<b class="nc"><i>57</i>&nbsp;        if (VisionResult.HIGH_TARGET.equals(visionResult)) {</b>
+<b class="nc"><i>58</i>&nbsp;            double lowestY = 1000;</b>
+<b class="nc"><i>59</i>&nbsp;            Set&lt;IRotatedRect&gt; lowestRow = null;</b>
+<b class="nc"><i>60</i>&nbsp;            for (Set&lt;IRotatedRect&gt; row : rows) {</b>
+<b class="nc"><i>61</i>&nbsp;                IRotatedRect rect = row.stream().findFirst().get();</b>
+<b class="nc"><i>62</i>&nbsp;                if (rect.getCenter().getY() &lt; lowestY) {</b>
+<b class="nc"><i>63</i>&nbsp;                    lowestY = rect.getCenter().getY();</b>
+<b class="nc"><i>64</i>&nbsp;                    lowestRow = row;</b>
+<i>65</i>&nbsp;                }
+<b class="nc"><i>66</i>&nbsp;            }</b>
+<b class="nc"><i>67</i>&nbsp;            return lowestRow;</b>
+<i>68</i>&nbsp;        } else {
+<b class="nc"><i>69</i>&nbsp;            double highestY = 0;</b>
+<b class="nc"><i>70</i>&nbsp;            Set&lt;IRotatedRect&gt; highestRow = null;</b>
+<b class="nc"><i>71</i>&nbsp;            for (Set&lt;IRotatedRect&gt; row : rows) {</b>
+<b class="nc"><i>72</i>&nbsp;                IRotatedRect rect = row.stream().findFirst().get();</b>
+<b class="nc"><i>73</i>&nbsp;                if (rect.getCenter().getY() &gt; highestY) {</b>
+<b class="nc"><i>74</i>&nbsp;                    highestY = rect.getCenter().getY();</b>
+<b class="nc"><i>75</i>&nbsp;                    highestRow = row;</b>
+<i>76</i>&nbsp;                }
+<b class="nc"><i>77</i>&nbsp;            }</b>
+<b class="nc"><i>78</i>&nbsp;            return highestRow;</b>
+<i>79</i>&nbsp;        }
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    boolean isLeft(IRotatedRect rect) {
+<b class="nc"><i>83</i>&nbsp;        if (rect.getAngle() &lt; -45 &amp;&amp; rect.getAngle() &gt; -90) {</b>
+<b class="nc"><i>84</i>&nbsp;            return true;</b>
+<i>85</i>&nbsp;        }
+<b class="nc"><i>86</i>&nbsp;        return false;</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    boolean isRight(IRotatedRect rect) {
+<b class="nc"><i>90</i>&nbsp;        if (rect.getAngle() &lt; 0 &amp;&amp; rect.getAngle() &gt; -44) {</b>
+<b class="nc"><i>91</i>&nbsp;            return true;</b>
+<i>92</i>&nbsp;        }
+<b class="nc"><i>93</i>&nbsp;        return false;</b>
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    List&lt;IRotatedRect&gt; largestRect(List&lt;IRotatedRect&gt; rect) {
+<b class="nc"><i>97</i>&nbsp;        double area = 0;</b>
+<b class="nc"><i>98</i>&nbsp;        List&lt;IRotatedRect&gt; pair = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>99</i>&nbsp;        IRotatedRect left = null;</b>
+<b class="nc"><i>100</i>&nbsp;        IRotatedRect right = null;</b>
+<b class="nc"><i>101</i>&nbsp;        for (int i = 0; i &lt; rect.size(); i++) {</b>
+<b class="nc"><i>102</i>&nbsp;            if (isLeft(rect.get(i))) {</b>
+<b class="nc"><i>103</i>&nbsp;                if (area &lt; (rect.get(i).getSize().getHeight() * rect.get(i).getSize().getWidth())) {</b>
+<b class="nc"><i>104</i>&nbsp;                    area = (rect.get(i).getSize().getHeight() * rect.get(i).getSize().getWidth());</b>
+<b class="nc"><i>105</i>&nbsp;                    left = rect.get(i);</b>
+<b class="nc"><i>106</i>&nbsp;                    right = rect.get(i + 1);</b>
+<b class="nc"><i>107</i>&nbsp;                    if (pair.isEmpty()) {</b>
+<b class="nc"><i>108</i>&nbsp;                        pair.add(left);</b>
+<b class="nc"><i>109</i>&nbsp;                        pair.add(right);</b>
+<i>110</i>&nbsp;                     } else {
+<b class="nc"><i>111</i>&nbsp;                        pair.set(0, left);</b>
+<b class="nc"><i>112</i>&nbsp;                        pair.set(1, right);</b>
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;                    }
+<i>115</i>&nbsp;                }
+<i>116</i>&nbsp;            }
+<i>117</i>&nbsp;        }
+<b class="nc"><i>118</i>&nbsp;        return pair;</b>
+<i>119</i>&nbsp;    }
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;    public List&lt;IRotatedRect&gt; pickPairedRect(Set&lt;IRotatedRect&gt; rects) {
+<b class="nc"><i>122</i>&nbsp;        List&lt;IRotatedRect&gt; rectList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>123</i>&nbsp;        List&lt;IRotatedRect&gt; pairedRect = new ArrayList&lt;&gt;();</b>
+<i>124</i>&nbsp;
+<b class="nc"><i>125</i>&nbsp;        rectList.addAll(rects);</b>
+<b class="nc"><i>126</i>&nbsp;        Collections.sort(rectList,</b>
+<b class="nc"><i>127</i>&nbsp;                Comparator.comparingDouble(arg0 -&gt; arg0.getCenter().getX()));</b>
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        for (int i = 0; i &lt; rectList.size(); i++) {</b>
+<b class="nc"><i>130</i>&nbsp;            if (isLeft(rectList.get(i)) &amp;&amp; i + 1 &lt; rectList.size()) {</b>
+<b class="nc"><i>131</i>&nbsp;                pairedRect.add(rectList.get(i));</b>
+<b class="nc"><i>132</i>&nbsp;                pairedRect.add(rectList.get(i + 1));</b>
+<i>133</i>&nbsp;            }
+<i>134</i>&nbsp;        }
+<b class="nc"><i>135</i>&nbsp;        return largestRect(pairedRect);</b>
+<i>136</i>&nbsp;    }
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;    public int findInterval(double avgPixelValue, List&lt;PixelsToInches&gt; interpolateList) {
+<b class="nc"><i>139</i>&nbsp;        for (int i = 0; i &lt; interpolateList.size(); i++) {</b>
+<b class="nc"><i>140</i>&nbsp;            PixelsToInches pixelsToInches = VisionConstants.PIXELS_TO_INCHES.get(i);</b>
+<b class="nc"><i>141</i>&nbsp;            if (avgPixelValue &gt; pixelsToInches.getPixels()) {</b>
+<b class="nc"><i>142</i>&nbsp;                return i - 1;</b>
+<i>143</i>&nbsp;            }
+<i>144</i>&nbsp;        }
+<b class="nc"><i>145</i>&nbsp;        return 0;</b>
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;    /**
+<i>149</i>&nbsp;     * @param rects
+<i>150</i>&nbsp;     * @return the average of length of the target rectangles
+<i>151</i>&nbsp;     */
+<i>152</i>&nbsp;    public double computeAvgPixel(List&lt;IRotatedRect&gt; rects) {
+<b class="nc"><i>153</i>&nbsp;        if (rects.size() != 2) {</b>
+<b class="nc"><i>154</i>&nbsp;            return -1.0;</b>
+<i>155</i>&nbsp;        }
+<b class="nc"><i>156</i>&nbsp;        IRotatedRect left = rects.get(0);</b>
+<b class="nc"><i>157</i>&nbsp;        IRotatedRect right = rects.get(1);</b>
+<i>158</i>&nbsp;
+<b class="nc"><i>159</i>&nbsp;        return ((left.getSize().getWidth() + right.getSize().getHeight()) / 2.0);</b>
+<i>160</i>&nbsp;    }
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;    public double interpolateInchesFromPixels(double avgPixel, int interval, List&lt;PixelsToInches&gt; interpolateList) {
+<b class="nc"><i>163</i>&nbsp;        PixelsToInches low = interpolateList.get(interval);</b>
+<b class="nc"><i>164</i>&nbsp;        PixelsToInches high = interpolateList.get(interval + 1);</b>
+<b class="nc"><i>165</i>&nbsp;        double slope = (low.getInches() - high.getInches()) / (low.getPixels() - high.getPixels());</b>
+<b class="nc"><i>166</i>&nbsp;        double inches = slope * (avgPixel - low.getPixels()) + low.getInches();</b>
+<b class="nc"><i>167</i>&nbsp;        return inches;</b>
+<i>168</i>&nbsp;    }
+<i>169</i>&nbsp;
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    public double azimuth(double avgPixels, List&lt;IRotatedRect&gt; rects) {
+<b class="nc"><i>172</i>&nbsp;        if (rects.size() != 2) {</b>
+<b class="nc"><i>173</i>&nbsp;            return -1000.0;</b>
+<i>174</i>&nbsp;        }
+<b class="nc"><i>175</i>&nbsp;        IRotatedRect left = rects.get(0);</b>
+<b class="nc"><i>176</i>&nbsp;        IRotatedRect right = rects.get(1);</b>
+<i>177</i>&nbsp;        //TODO: check for divide by zero
+<b class="nc"><i>178</i>&nbsp;        double inchesPerPixels = VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_HEIGHT_STRAIGHT / avgPixels;</b>
+<b class="nc"><i>179</i>&nbsp;        double observedPixels = (right.getCenter().getX() - left.getCenter().getX());</b>
+<b class="nc"><i>180</i>&nbsp;        double distanceBetweenCenters = VisionConstants.DOCKING_DISTANCE_BETWEEN_TAPE_TARGETS / inchesPerPixels;</b>
+<b class="nc"><i>181</i>&nbsp;        System.out.println(String.format(&quot;o=%f, d=%f&quot;, observedPixels, distanceBetweenCenters));</b>
+<b class="nc"><i>182</i>&nbsp;        double azimuth = 0.0;</b>
+<i>183</i>&nbsp;        // only look up angle if it is not close to straight on
+<b class="nc"><i>184</i>&nbsp;        if ((Math.abs(observedPixels - distanceBetweenCenters)/distanceBetweenCenters) &gt; 0.01) {</b>
+<b class="nc"><i>185</i>&nbsp;            azimuth = Math.acos(observedPixels / distanceBetweenCenters);</b>
+<i>186</i>&nbsp;        }
+<b class="nc"><i>187</i>&nbsp;        System.out.println(String.format(&quot;a=%f, adeg=%f&quot;, azimuth, azimuth*180/Math.PI));</b>
+<b class="nc"><i>188</i>&nbsp;        return azimuth;</b>
+<i>189</i>&nbsp;    }
+<i>190</i>&nbsp;
+<i>191</i>&nbsp;    public double calculateIntitialApproachTurnAngle(double azimuth, double pixelsPerInch, List&lt;IRotatedRect&gt; rects, double distance) {
+<b class="nc"><i>192</i>&nbsp;        if (rects.size() != 2) {</b>
+<b class="nc"><i>193</i>&nbsp;            return -1000.0;</b>
+<i>194</i>&nbsp;        }
+<b class="nc"><i>195</i>&nbsp;        IRotatedRect left = rects.get(0);</b>
+<b class="nc"><i>196</i>&nbsp;        IRotatedRect right = rects.get(1);</b>
+<i>197</i>&nbsp;        //In radians
+<b class="nc"><i>198</i>&nbsp;        double targetCenter = VisionConstants.LIFECAM_CAMERA_RESOLUTION_X</b>
+<i>199</i>&nbsp;                + pixelsPerInch * VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET
+<b class="nc"><i>200</i>&nbsp;                * Math.cos(azimuth);</b>
+<i>201</i>&nbsp;
+<b class="nc"><i>202</i>&nbsp;        double observedTargetCenter = left.getCenter().getX()</b>
+<b class="nc"><i>203</i>&nbsp;                + (right.getCenter().getX() - left.getCenter().getX()) / 2.0;</b>
+<b class="nc"><i>204</i>&nbsp;        double initialTurnAngle = (Math.atan(targetCenter - observedTargetCenter)) / distance;</b>
+<b class="nc"><i>205</i>&nbsp;        return initialTurnAngle;</b>
+<i>206</i>&nbsp;    }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;    public double calculateTravelDistance(double azimuth, double distance) {
+<b class="nc"><i>209</i>&nbsp;        double travelDistance = Math.sqrt(</b>
+<b class="nc"><i>210</i>&nbsp;                Math.pow(</b>
+<b class="nc"><i>211</i>&nbsp;                        (distance * Math.sin(azimuth)</b>
+<i>212</i>&nbsp;                                - VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET), 2)
+<b class="nc"><i>213</i>&nbsp;                        + Math.pow((distance * Math.cos(azimuth)), 2));</b>
+<b class="nc"><i>214</i>&nbsp;        return travelDistance;</b>
+<i>215</i>&nbsp;    }
+<i>216</i>&nbsp;
+<i>217</i>&nbsp;    public double finalApproachTurn(double azimuth, double distance) {
+<i>218</i>&nbsp;        //24 is fill-in for docking offset
+<b class="nc"><i>219</i>&nbsp;        double approachAngle = Math.atan2(distance * Math.sin(azimuth) - 24, distance * Math.cos(azimuth));</b>
+<i>220</i>&nbsp;        //convert to radians!!!!!
+<b class="nc"><i>221</i>&nbsp;        return Math.PI / 2 - approachAngle;</b>
+<i>222</i>&nbsp;    }
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;    public double glideRadius(double azimuth, double distance) {
+<b class="nc"><i>225</i>&nbsp;        double radius = (Math.pow((distance *</b>
+<b class="nc"><i>226</i>&nbsp;                Math.cos(azimuth)</b>
+<i>227</i>&nbsp;                - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE), 2)
+<b class="nc"><i>228</i>&nbsp;                + Math.pow((distance * Math.sin(azimuth)</b>
+<i>229</i>&nbsp;                - VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET), 2))
+<b class="nc"><i>230</i>&nbsp;                / (2 * distance * Math.sin(azimuth)</b>
+<i>231</i>&nbsp;                + VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET);
+<i>232</i>&nbsp;
+<b class="nc"><i>233</i>&nbsp;        return radius;</b>
+<i>234</i>&nbsp;    }
+<i>235</i>&nbsp;
+<i>236</i>&nbsp;    public double findSweepAngle(double distance, double azimuth, double radius) {
+<b class="nc"><i>237</i>&nbsp;        double angle = (Math.atan(distance * Math.cos(azimuth)</b>
+<i>238</i>&nbsp;                - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE))
+<b class="nc"><i>239</i>&nbsp;                / (radius - (distance * Math.sin(azimuth)</b>
+<i>240</i>&nbsp;                + VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET));
+<i>241</i>&nbsp;
+<b class="nc"><i>242</i>&nbsp;        return angle;</b>
+<i>243</i>&nbsp;    }
+<i>244</i>&nbsp;
+<i>245</i>&nbsp;    public double findGlideDistance(double radius, double angle) {
+<b class="nc"><i>246</i>&nbsp;        return radius * angle;</b>
+<i>247</i>&nbsp;    }
+<i>248</i>&nbsp;
+<i>249</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-02-18 20:24</div>
+</div>
+</body>
+</html>

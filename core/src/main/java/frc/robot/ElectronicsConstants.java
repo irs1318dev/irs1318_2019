@@ -25,10 +25,10 @@ public class ElectronicsConstants
 
     //================================================== Auto ==============================================================
 
-    public static final int AUTO_DIP_SWITCH_A_DIGITAL_CHANNEL = 4;
-    public static final int AUTO_DIP_SWITCH_B_DIGITAL_CHANNEL = 5;
-    public static final int AUTO_DIP_SWITCH_C_DIGITAL_CHANNEL = 6;
-    public static final int AUTO_DIP_SWITCH_D_DIGITAL_CHANNEL = 7;
+    public static final int AUTO_DIP_SWITCH_A_DIGITAL_CHANNEL = 0;
+    public static final int AUTO_DIP_SWITCH_B_DIGITAL_CHANNEL = 1;
+    public static final int AUTO_DIP_SWITCH_C_DIGITAL_CHANNEL = 2;
+    public static final int AUTO_DIP_SWITCH_D_DIGITAL_CHANNEL = 3;
 
     //================================================== Vision ==============================================================
 
@@ -74,9 +74,9 @@ public class ElectronicsConstants
     public static final int GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL = 1;
 
     // Limit switches
-    public static final int GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL = 0;
-    public static final int GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL = 1;
-    public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 2;
+    public static final int GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL = 5;
+    public static final int GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL = 6;
+    public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 7;
 
     //================================================== Climber ==============================================================
 
@@ -86,6 +86,6 @@ public class ElectronicsConstants
     public static final int CLIMBER_CAM_MOTOR_MASTER_CAN_ID = 12;
     public static final int CLIMBER_CAM_MOTOR_FOLLOWER_CAN_ID = 13;
 
-    public static final int CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL = 3;
+    public static final int CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL = 4;
     public static final int CLIMBER_HEIGHT_SENSOR_ANALOG_CHANNEL = 0;
 }

@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ImageUndistorter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">frc.robot.vision.common</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ImageUndistorter (frc.robot.vision.common)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ImageUndistorter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package frc.robot.vision.common;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import frc.robot.common.robotprovider.*;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class ImageUndistorter
+<i>6</i>&nbsp;{
+<i>7</i>&nbsp;    private static final int IMGPROC_INTER_LINEAR = 1;
+<i>8</i>&nbsp;    private static final int IMGPROC_WARP_FILL_OUTLIERS = 8;
+<i>9</i>&nbsp;    private static final int CVTYPE_CV_32FC1 = 5;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private final IOpenCVProvider provider;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    private IMat mapX;
+<i>14</i>&nbsp;    private IMat mapY;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Initializes a new instance of the ImageUndistorter class.
+<i>18</i>&nbsp;     * For background, see http://docs.opencv.org/3.1.0/d4/d94/tutorial_camera_calibration.html
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    public ImageUndistorter(IOpenCVProvider provider)
+<b class="nc"><i>21</i>&nbsp;    {</b>
+<b class="nc"><i>22</i>&nbsp;        this.provider = provider;</b>
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;        ISize size;
+<i>25</i>&nbsp;        IMat intrinsicMatrix;
+<b class="nc"><i>26</i>&nbsp;        intrinsicMatrix = ImageUndistorter.build320x240Intrinsic(provider);</b>
+<b class="nc"><i>27</i>&nbsp;        size = provider.newSize(320, 240);</b>
+<i>28</i>&nbsp;
+<b class="nc"><i>29</i>&nbsp;        IMat distCoeffs = ImageUndistorter.buildDistortion(provider);</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;        // initialize mapX and mapY
+<b class="nc"><i>32</i>&nbsp;        IMat mapX = provider.newMat();</b>
+<b class="nc"><i>33</i>&nbsp;        IMat mapY = provider.newMat();</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;        // unused:
+<b class="nc"><i>36</i>&nbsp;        IMat R = provider.newMat();</b>
+<b class="nc"><i>37</i>&nbsp;        IMat newCameraMatrix = provider.newMat();</b>
+<i>38</i>&nbsp;
+<b class="nc"><i>39</i>&nbsp;        provider.initUndistortRectifyMap(intrinsicMatrix, distCoeffs, R, newCameraMatrix, size, ImageUndistorter.CVTYPE_CV_32FC1, mapX, mapY);</b>
+<i>40</i>&nbsp;
+<b class="nc"><i>41</i>&nbsp;        this.mapX = mapX;</b>
+<b class="nc"><i>42</i>&nbsp;        this.mapY = mapY;</b>
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;        intrinsicMatrix.release();</b>
+<b class="nc"><i>45</i>&nbsp;        distCoeffs.release();</b>
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;        R.release();</b>
+<b class="nc"><i>48</i>&nbsp;        newCameraMatrix.release();</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * Undistort the frame so that straight lines appear straight in the image
+<i>53</i>&nbsp;     * @param frame to undirsort
+<i>54</i>&nbsp;     * @return an non-distorted version of the provided frame
+<i>55</i>&nbsp;     */
+<i>56</i>&nbsp;    public IMat undistortFrame(IMat frame)
+<i>57</i>&nbsp;    {
+<b class="nc"><i>58</i>&nbsp;        IMat source = frame.clone();</b>
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        this.provider.remap(source, frame, this.mapX, this.mapY, ImageUndistorter.IMGPROC_INTER_LINEAR, ImageUndistorter.IMGPROC_WARP_FILL_OUTLIERS, provider.newScalar(0));</b>
+<b class="nc"><i>61</i>&nbsp;        source.release();</b>
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        return frame;</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    /**
+<i>67</i>&nbsp;     * Build an intrinsic matrix for the Axis M1011 camera at 320x240 resolution.
+<i>68</i>&nbsp;     * @return an intrinsic matrix
+<i>69</i>&nbsp;     */
+<i>70</i>&nbsp;    private static IMat build320x240Intrinsic(IOpenCVProvider provider)
+<i>71</i>&nbsp;    {
+<b class="nc"><i>72</i>&nbsp;        IMat intrinsicMatrix = provider.newMat(3, 3, ImageUndistorter.CVTYPE_CV_32FC1);</b>
+<i>73</i>&nbsp;
+<b class="nc"><i>74</i>&nbsp;        intrinsicMatrix.put(0, 0, 160); // focal length x</b>
+<b class="nc"><i>75</i>&nbsp;        intrinsicMatrix.put(0, 1, 0.0);</b>
+<b class="nc"><i>76</i>&nbsp;        intrinsicMatrix.put(0, 2, 160.0); // center x</b>
+<i>77</i>&nbsp;
+<b class="nc"><i>78</i>&nbsp;        intrinsicMatrix.put(1, 0, 0.0);</b>
+<b class="nc"><i>79</i>&nbsp;        intrinsicMatrix.put(1, 1, 120); // focal length y [= x * h / w]</b>
+<b class="nc"><i>80</i>&nbsp;        intrinsicMatrix.put(1, 2, 120.0); // center y</b>
+<i>81</i>&nbsp;
+<b class="nc"><i>82</i>&nbsp;        intrinsicMatrix.put(2, 0, 0.0);</b>
+<b class="nc"><i>83</i>&nbsp;        intrinsicMatrix.put(2, 1, 0.0);</b>
+<b class="nc"><i>84</i>&nbsp;        intrinsicMatrix.put(2, 2, 1.0); // flat z</b>
+<i>85</i>&nbsp;
+<b class="nc"><i>86</i>&nbsp;        return intrinsicMatrix;</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    /**
+<i>90</i>&nbsp;     * Build an intrinsic matrix for the Axis M1011 camera at 640x480 resolution.
+<i>91</i>&nbsp;     * @return an intrinsic matrix
+<i>92</i>&nbsp;     */
+<i>93</i>&nbsp;    @SuppressWarnings(&quot;unused&quot;)
+<i>94</i>&nbsp;    private static IMat build640x480Intrinsic(IOpenCVProvider provider)
+<i>95</i>&nbsp;    {
+<b class="nc"><i>96</i>&nbsp;        IMat intrinsicMatrix = provider.newMat(3, 3, ImageUndistorter.CVTYPE_CV_32FC1);</b>
+<i>97</i>&nbsp;
+<b class="nc"><i>98</i>&nbsp;        intrinsicMatrix.put(0, 0, 320); // focal length x</b>
+<b class="nc"><i>99</i>&nbsp;        intrinsicMatrix.put(0, 1, 0.0);</b>
+<b class="nc"><i>100</i>&nbsp;        intrinsicMatrix.put(0, 2, 320.0); // center x</b>
+<i>101</i>&nbsp;
+<b class="nc"><i>102</i>&nbsp;        intrinsicMatrix.put(1, 0, 0.0);</b>
+<b class="nc"><i>103</i>&nbsp;        intrinsicMatrix.put(1, 1, 240); // focal length y [= x * h / w]</b>
+<b class="nc"><i>104</i>&nbsp;        intrinsicMatrix.put(1, 2, 240.0); // center y</b>
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;        intrinsicMatrix.put(2, 0, 0.0);</b>
+<b class="nc"><i>107</i>&nbsp;        intrinsicMatrix.put(2, 1, 0.0);</b>
+<b class="nc"><i>108</i>&nbsp;        intrinsicMatrix.put(2, 2, 1.0); // flat z</b>
+<i>109</i>&nbsp;
+<b class="nc"><i>110</i>&nbsp;        return intrinsicMatrix;</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;    /**
+<i>114</i>&nbsp;     * Build an distortion coefficient matrix for the Axis M1011 camera.
+<i>115</i>&nbsp;     * @return an distortion matrix
+<i>116</i>&nbsp;     */
+<i>117</i>&nbsp;    private static IMat buildDistortion(IOpenCVProvider provider)
+<i>118</i>&nbsp;    {
+<b class="nc"><i>119</i>&nbsp;        IMat distortionCoeffs = provider.newMat(4, 1, ImageUndistorter.CVTYPE_CV_32FC1);</b>
+<i>120</i>&nbsp;
+<b class="nc"><i>121</i>&nbsp;        double p_factor = 0.00;</b>
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        distortionCoeffs.put(0, 0, -0.055); // k1 * r^2</b>
+<b class="nc"><i>124</i>&nbsp;        distortionCoeffs.put(1, 0, 0.0); // k2 * r^4</b>
+<b class="nc"><i>125</i>&nbsp;        distortionCoeffs.put(2, 0, -p_factor); // tangential p1</b>
+<b class="nc"><i>126</i>&nbsp;        distortionCoeffs.put(3, 0, p_factor); // tangential p2</b>
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;        return distortionCoeffs;</b>
+<i>129</i>&nbsp;    }
+<i>130</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-02-18 20:24</div>
+</div>
+</body>
+</html>
