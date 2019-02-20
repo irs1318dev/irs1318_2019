@@ -11,7 +11,7 @@ import com.google.inject.Injector;
 
 /**
  * Main class for the FRC 2019 "Destination: Deep Space" Competition
- * Robot for IRS1318 - [robot name]
+ * Robot for IRS1318 - Space Audity
  * 
  * General design comments:
  * We have the following primary types of objects dealt with here:
