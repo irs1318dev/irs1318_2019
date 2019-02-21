@@ -198,7 +198,7 @@ public class ClimberMechanism implements IMechanism
         this.camError = this.climberCamMotorMaster.getError();
         this.camPosition = this.climberCamMotorMaster.getPosition();
 
-        this.camLimitSwitchStatus = false; //this.climberCamLimitSwitch.get();
+        this.camLimitSwitchStatus = this.climberCamLimitSwitch.get();
 
         this.climbedHeight = this.climberHeightSensor.getVoltage();
 

@@ -43,7 +43,7 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
             return super.hasCompleted();
         }
 
-        if(super.hasCompleted())
+        if (super.hasCompleted())
         {
             return true;
         }

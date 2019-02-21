@@ -52,6 +52,7 @@ public class TuningConstants
     public static final double NAVX_TURN_COMPLETE_DESIRED_VELOCITY_DELTA = 0;
 
     // Navx Turn PID Constants
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double NAVX_TURN_PID_KP = 0.25;
     public static final double NAVX_TURN_PID_KI = 0.0;
     public static final double NAVX_TURN_PID_KD = 1.0;
@@ -71,6 +72,7 @@ public class TuningConstants
     public static final double MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE = 30.0;
 
     // PID settings for Centering the robot on a vision target from one stationary place
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double VISION_STATIONARY_CENTERING_PID_KP = 0.08;
     public static final double VISION_STATIONARY_CENTERING_PID_KI = 0.0;
     public static final double VISION_STATIONARY_CENTERING_PID_KD = 0.08;
@@ -80,6 +82,7 @@ public class TuningConstants
     public static final double VISION_STATIONARY_CENTERING_PID_MAX = 0.3;
 
     // PID settings for Centering the robot on a vision target
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double VISION_MOVING_CENTERING_PID_KP = 0.015;
     public static final double VISION_MOVING_CENTERING_PID_KI = 0.0;
     public static final double VISION_MOVING_CENTERING_PID_KD = 0.0;
@@ -89,6 +92,7 @@ public class TuningConstants
     public static final double VISION_MOVING_CENTERING_PID_MAX = 0.3;
 
     // PID settings for Advancing the robot towards a vision target
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double VISION_ADVANCING_PID_KP = 0.005;
     public static final double VISION_ADVANCING_PID_KI = 0.0;
     public static final double VISION_ADVANCING_PID_KD = 0.0;
@@ -108,17 +112,18 @@ public class TuningConstants
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.2; // .2 ==> ~ 1023 / 5000 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KF = 0.227; // .227 ==> ~ 1023 / 4500 (100% control authority)
     public static final double DRIVETRAIN_VELOCITY_PID_RIGHT_KS = 4500.0;
 
     // Velocity PID (left)
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KP = 0.3;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KD = 0.0;
-    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.2; // .2 ==> ~ 1023 / 5000 (100% control authority)
+    public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KF = 0.227; // .227 ==> ~ 1023 / 4500 (100% control authority)
     public static final double DRIVETRAIN_VELOCITY_PID_LEFT_KS = 4500.0;
 
     // Path PID (right)
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KP = 0.0002;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_PATH_PID_RIGHT_KD = 0.0;
@@ -129,6 +134,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_RIGHT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_RIGHT_KS * HardwareConstants.DRIVETRAIN_RIGHT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
 
     // Path PID (left)
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_PATH_PID_LEFT_KP = 0.0002;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_PATH_PID_LEFT_KD = 0.0;
@@ -139,6 +145,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_PATH_LEFT_MAX_VELOCITY_INCHES_PER_SECOND = 10.0 * TuningConstants.DRIVETRAIN_VELOCITY_PID_LEFT_KS * HardwareConstants.DRIVETRAIN_LEFT_PULSE_DISTANCE; // gets the max speed in inches per second (ticks per 100ms times inches per tick times 10)
 
     // Position PID (right)
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_POSITION_PID_RIGHT_KP = 0.0002;
     public static final double DRIVETRAIN_POSITION_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_POSITION_PID_RIGHT_KD = 0.0;
@@ -146,6 +153,7 @@ public class TuningConstants
     public static final double DRIVETRAIN_POSITION_PID_RIGHT_KCC = 0.0001;
 
     // Position PID (left)
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_POSITION_PID_LEFT_KP = 0.0002;
     public static final double DRIVETRAIN_POSITION_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_POSITION_PID_LEFT_KD = 0.0;
@@ -153,12 +161,14 @@ public class TuningConstants
     public static final double DRIVETRAIN_POSITION_PID_LEFT_KCC = 0.0001;
 
     // Brake PID (right)
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KP = 0.0004;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KF = 0.0;
 
     // Brake PID (left)
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KP = 0.0004;
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KD = 0.0;
@@ -202,6 +212,7 @@ public class TuningConstants
     public static final boolean ELEVATOR_USE_PID = true;
     public static final boolean ELEVATOR_USE_MOTION_MAGIC = true;
 
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double ELEVATOR_MM_POSITION_PID_KP = 0.15;
     public static final double ELEVATOR_MM_POSITION_PID_KI = 0.0;
     public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
@@ -230,9 +241,8 @@ public class TuningConstants
 
     //======================================================== Grabber =====================================
 
-    public static final double GRABBER_SET_WRIST_TIME_THRESHOLD = 10.0;
     public static final double GRABBER_SET_WRIST_TIME_DURATION = 0.75;
-    public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = 10.0;
+    public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = 5.0;
     public static final double GRABBER_KICK_PANEL_DURATION = 1.0;
     
     // Cargo intake/outtake motor power
@@ -243,8 +253,8 @@ public class TuningConstants
 
     public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = 3.0;
 
-    public static final boolean CLIMBER_ARMS_USE_PID = false; 
-    public static final boolean CLIMBER_CAM_USE_PID = false;
+    public static final boolean CLIMBER_ARMS_USE_PID = true; 
+    public static final boolean CLIMBER_CAM_USE_PID = true;
 
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
@@ -256,35 +266,38 @@ public class TuningConstants
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final double CLIMBER_ARMS_POSITION_MAX = 4900.0; // 3375.0 old, practice
+    public static final double CLIMBER_ARMS_POSITION_MAX = 4900.0; // in ticks (3375.0 for practice??)
     public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 1.0;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
 
-    public static final double CLIMBER_ARMS_MOVE_VELOCITY = 10.0;
+    public static final double CLIMBER_ARMS_MOVE_VELOCITY = 10.0; // ticks/sec
 
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double CLIMBER_ARMS_POSITION_PID_KP = 0.3;
     public static final double CLIMBER_ARMS_POSITION_PID_KI = 0.0;
     public static final double CLIMBER_ARMS_POSITION_PID_KD = 0.0;
     public static final double CLIMBER_ARMS_POSITION_PID_KF = 0.0;
 
-    public static final double CLIMBER_ARMS_MOVEMENT_TIME_THRESHOLD = 10.0;
-    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = 1.0;
+    public static final double CLIMBER_ARMS_MOVEMENT_TIME_THRESHOLD = 2.0;
+    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = 100.0;
 
     // Cam
+    public static final double CLIMBER_CAM_FULL_ROTATION = 4096.0; // in ticks
     public static final double CLIMBER_CAM_STORED_POSITION = 0.0;
-    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 10.0;
-    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 20.0;
+    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 1024.0; // NEEDS 2019 UPDATE
+    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 1200.0; // NEEDS 2019 UPDATE
 
     public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = 0.8;
     public static final double CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL = -0.8;
 
     public static final double CLIMBER_CAM_MOVE_VELOCITY = 10.0;
 
+    // --------- NEEDS 2019 UPDATE ---------
     public static final double CLIMBER_CAM_POSITION_PID_KP = 0.3;
     public static final double CLIMBER_CAM_POSITION_PID_KI = 0.0;
     public static final double CLIMBER_CAM_POSITION_PID_KD = 0.0;
     public static final double CLIMBER_CAM_POSITION_PID_KF = 0.0;
 
-    public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = 10.0;
-    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = 1.0;
+    public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = 2.0;
+    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = 100.0;
 }
