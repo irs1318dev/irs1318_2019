@@ -45,18 +45,18 @@ public class ButtonMap implements IButtonMap
         {
             // Operations for vision
             put(
-                Operation.VisionEnableRocket,
-                new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    0,
-                    Shift.Debug,
-                    ButtonType.Toggle));
-            put(
                 Operation.VisionEnableCargoShip,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    0,
-                    Shift.Debug,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
+                    Shift.None,
+                    ButtonType.Toggle));
+            put(
+                Operation.VisionEnableRocket,
+                new DigitalOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    Shift.None,
                     ButtonType.Toggle));
             put(
                 Operation.VisionEnableOffboardStream,
@@ -635,6 +635,24 @@ public class ButtonMap implements IButtonMap
                     Shift.Debug,
                     ButtonType.Toggle,
                     () -> new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                    new Operation[]
+                    {
+                        Operation.VisionEnableCargoShip,
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.VisionEnableRocket
+                    }));
+            put(
+                MacroOperation.VisionCenterCargoShip,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new VisionCenteringTask(Operation.VisionEnableCargoShip),
                     new Operation[]
                     {
                         Operation.VisionEnableCargoShip,

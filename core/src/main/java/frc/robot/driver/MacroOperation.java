@@ -10,6 +10,8 @@ public enum MacroOperation
     FollowSomePath,
 
     // Vision operations:
+    VisionCenterRocket,
+    VisionCenterCargoShip,
     VisionCenterAndAdvanceRocket,
     VisionCenterAndAdvanceCargoShip,
     DriveForwardTurnRight,

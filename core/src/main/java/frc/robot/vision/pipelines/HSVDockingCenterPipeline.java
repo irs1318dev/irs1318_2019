@@ -22,8 +22,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
     private final IVideoStream hsvOutput;
 
     // measured values
-    private IPoint largestCenter;
-    private IPoint secondLargestCenter;
+    private IPoint dockingMarkerCenter;
 
     // need to be calculated
     private Double measuredAngleX;
@@ -58,8 +57,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         IScalar highFilter = this.openCVProvider.newScalar(VisionConstants.LIFECAM_HSV_FILTER_HIGH_V0, VisionConstants.LIFECAM_HSV_FILTER_HIGH_V1, VisionConstants.LIFECAM_HSV_FILTER_HIGH_V2);
         this.hsvFilter = new HSVFilter(this.openCVProvider, lowFilter, highFilter);
 
-        this.largestCenter = null;
-        this.secondLargestCenter = null;
+        this.dockingMarkerCenter = null;
 
         this.measuredAngleX = null;
         this.desiredAngleX = null;
@@ -232,14 +230,10 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             }
         }
 
-        // finally, record the centers of mass
-        this.largestCenter = largestCenterOfMass;
-        this.secondLargestCenter = secondLargestCenterOfMass;
-
         undistortedImage.release();
 
         // Docking Calculations
-        if(this.largestCenter == null && this.secondLargestCenter == null)
+        if (largestCenterOfMass == null && secondLargestCenterOfMass == null)
         {
             this.desiredAngleX = null;
             this.measuredAngleX = null;
@@ -249,24 +243,20 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             return;
         }
 
-        IPoint dockingMarkerCenter;
-        IPoint otherMarkerCenter;
         IRotatedRect minAreaRect;
     
         // Finding which side is robot on by finding the center value
-        if (this.largestCenter != null && this.secondLargestCenter != null && this.largestCenter.getX() > this.secondLargestCenter.getX())
+        if (largestCenterOfMass != null && secondLargestCenterOfMass != null && largestCenterOfMass.getX() > secondLargestCenterOfMass.getX())
         {
             // largest is on right, second-largest is on left
-            dockingMarkerCenter = this.secondLargestCenter;
-            minAreaRect = secondLargestMinAreaRect; 
-            otherMarkerCenter = this.largestCenter;
+            this.dockingMarkerCenter = secondLargestCenterOfMass;
+            minAreaRect = secondLargestMinAreaRect;
         }
         else
         {
             // largest is on left, second-largest is on right
-            dockingMarkerCenter = this.largestCenter;
+            this.dockingMarkerCenter = largestCenterOfMass;
             minAreaRect = largestMinAreaRect;
-            otherMarkerCenter = this.secondLargestCenter;
         }
 
         if (minAreaRect.getSize().getHeight() == 0.0)
@@ -274,14 +264,14 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             return;
         }
 
-        double xOffsetMeasured = dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
-        double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - dockingMarkerCenter.getY();
+        double xOffsetMeasured = this.dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
+        double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - this.dockingMarkerCenter.getY();
         this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
         double measuredAngleY = Math.atan(yOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y) * VisionConstants.RADIANS_TO_ANGLE;
 
-        double distanceFromCam = -1.0 * (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE + measuredAngleY) * VisionConstants.ANGLE_TO_RADIANS));
+        double distanceFromCam = (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan((VisionConstants.DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE - measuredAngleY) * VisionConstants.ANGLE_TO_RADIANS));
         this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
-        this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET -VisionConstants.DOCKING_TAPE_OFFSET)/ distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
+        this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET - VisionConstants.DOCKING_TAPE_OFFSET) / distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
     }
 
     public void setMode(VisionProcessingState state)
@@ -306,7 +296,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 
     public IPoint getCenter()
     {
-        return this.largestCenter;
+        return this.dockingMarkerCenter;
     }
 
     public Double getDesiredAngleX()

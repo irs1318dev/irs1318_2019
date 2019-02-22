@@ -100,7 +100,7 @@ public class SmartDashboardLogger implements IDashboardLogger
         String valueString = "N/A";
         if (value != null)
         {
-            valueString = String.format("", value.getX(), value.getY());
+            valueString = String.format("(%f, %f)", value.getX(), value.getY());
         }
 
         this.logString(component, key, valueString);
