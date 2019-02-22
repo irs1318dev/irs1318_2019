@@ -75,7 +75,7 @@ public class VisionConstants
     public static final double DOCKING_RETROREFLECTIVE_TAPE_RATIO_RANGE = -10.0; // change? --> allowable height-to-width ratio range
     public static final double DOCKING_CONTOUR_ALLOWABLE_RATIO = -10.0; // change? --> the ratio of the second-largest contour to the largest
     public static final double DOCKING_CAMERA_MOUNTING_DISTANCE = 24.5; // change? --> (Y) distance from the front of the robot to the viewport of the camera (~21 inches plus 3.5 for bumpers)
-    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET = 5.25; // change? --> (X) distance from the center line of the robot to the viewport of the camera
+    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET = 4.75; // change? --> (X) distance from the center line of the robot to the viewport of the camera
     public static final double DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE = 20; // change? --> (Y) degrees camera is mounted from level/horizontal line parallel to floor
 
     public static final double ROCKET_TO_GROUND_TAPE_HEIGHT = 28.5875; // (Z) distance from floor to center of tape
