@@ -19,7 +19,7 @@ public class Vision2019ApproachAndDockPipelineTest
     String basePath = TestConstants.BASE_PATH;
     String repoPath = "fauxbot\\src\\test\\resources\\frc.robot.vision.pipelines\\";
 
-    //@Test
+    @Test
     public void testLoadImage()
     {
         nu.pattern.OpenCV.loadShared();
@@ -52,7 +52,7 @@ public class Vision2019ApproachAndDockPipelineTest
         MatWrapper wrapper = new MatWrapper(mat);
         Vision2019ApproachAndDockPipeline pipeline =
                 new Vision2019ApproachAndDockPipeline(new FauxbotTimer(), new FauxbotProvider(), true);
-        pipeline.setActivation(true);
+        pipeline.setMode(VisionProcessingState.ActiveCargoShip);
 
         pipeline.process(wrapper);
 //        assertNotNull(pipeline.getCenter());
@@ -66,7 +66,6 @@ public class Vision2019ApproachAndDockPipelineTest
         Vision2019ApproachAndDockPipeline pipeline =
                 new Vision2019ApproachAndDockPipeline(new FauxbotTimer(), new FauxbotProvider(), true);
 
-        pipeline.setActivation(true);
         pipeline.setGamePiece(GamePiece.Cargo);
         pipeline.setMode(VisionProcessingState.ActiveRocket);
         pipeline.process(wrapper);

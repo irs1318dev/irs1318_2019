@@ -21,20 +21,22 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     private final IVideoStream hsvOutput;
 
     // measured values
-    private IPoint largestCenter;
-    //private IPoint secondLargestCenter;
+    private IPoint dockingMarkerCenter;
 
     // need to be calculated
+    private VisionResult visionResult;
+
+    // docking values
     private Double measuredAngleX;
     private Double desiredAngleX;
     private Double distanceFromRobot;
 
-    //other calculated values
+    // other calculated values
     private Double initialTurnAngle;
     private Double finalApproachTurn;
     private Double travelDistance;
 
-    //glide calcs
+    // glide calcs
     private Double glideDistance;
     private Double sweepAngle;
     private Double glideRadius;
@@ -44,10 +46,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     private double lastMeasuredTime;
     private double lastFpsMeasurement;
 
-    private VisionResult visionResult;
-
     // active status
-    private volatile boolean isActive;
     private volatile GamePiece gamePiece;
     private volatile boolean streamEnabled;
     private volatile VisionProcessingState processingState;
@@ -62,10 +61,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         IRobotProvider provider,
         boolean shouldUndistort)
     {
-        this.visionResult = VisionResult.NONE;
-
         this.shouldUndistort = shouldUndistort;
-
 
         this.calc = provider.getVisionCalculations();
         this.openCVProvider = provider.getOpenCVProvider();
@@ -74,8 +70,9 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         IScalar highFilter = this.openCVProvider.newScalar(VisionConstants.LIFECAM_HSV_FILTER_HIGH_V0, VisionConstants.LIFECAM_HSV_FILTER_HIGH_V1, VisionConstants.LIFECAM_HSV_FILTER_HIGH_V2);
         this.hsvFilter = new HSVFilter(this.openCVProvider, lowFilter, highFilter);
 
-        this.largestCenter = null;
-        //this.secondLargestCenter = null;
+        this.dockingMarkerCenter = null;
+
+        this.visionResult = VisionResult.NONE;
 
         this.measuredAngleX = null;
         this.desiredAngleX = null;
@@ -93,10 +90,9 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         this.timer = timer;
         this.lastMeasuredTime = this.timer.get();
 
-        this.isActive = false;
+        this.processingState = VisionProcessingState.Disabled;
         this.streamEnabled = true;
         this.gamePiece = GamePiece.None;
-        this.processingState = VisionProcessingState.Disabled;
 
         this.frameInput = provider.getMJPEGStream("center.input", VisionConstants.LIFECAM_CAMERA_RESOLUTION_X, VisionConstants.LIFECAM_CAMERA_RESOLUTION_Y);
 
@@ -134,7 +130,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             this.frameInput.putFrame(image);
         }
 
-        if (!this.isActive)
+        if (this.processingState == VisionProcessingState.Disabled)
         {
             return;
         }
@@ -152,24 +148,13 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         }
 
         // first, undistort the image.
-        IMat undistortedImage;
         if (this.shouldUndistort)
         {
             image = this.undistorter.undistortFrame(image);
         }
 
-        // save the undistorted image for possible output later...
-        if (this.shouldUndistort)
-        {
-            undistortedImage = image.clone();
-        }
-        else
-        {
-            undistortedImage = image;
-        }
-
         // second, filter HSV
-        image = this.hsvFilter.filterHSV(undistortedImage);
+        image = this.hsvFilter.filterHSV(image);
         if (VisionConstants.DEBUG)
         {
             if (VisionConstants.DEBUG_SAVE_FRAMES &&
@@ -186,127 +171,97 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             }
         }
 
-        List<IRotatedRect> rectangles =  findRectangles(image);
-        for (int i = 0; i< rectangles.size(); i++) {
-            IRotatedRect rectangle = rectangles.get(i);
-            System.out.println("R_"+ i +" : "
-                    + Arrays.toString(rectangle.getRawValues()));
-        }
-        List<Set<IRotatedRect>> groupedRects = calc.groupRotatedRect(rectangles);
-        int setNum = 0;
-        for (Set<IRotatedRect> group : groupedRects) {
-            List<IRotatedRect> groupList = new ArrayList<>();
-                    groupList.addAll(group);
-            for (int i = 0; i< groupList.size(); i++) {
-                IRotatedRect rectangle = groupList.get(i);
-                System.out.println("S_" + setNum + "_R_"+ i +" : "
-                        + Arrays.toString(rectangle.getRawValues()));
+        // find all rotated rectangles from the image
+        List<IRotatedRect> rectangles = this.findRectangles(image);
+        image.release();
+        if (VisionConstants.DEBUG &&
+            VisionConstants.DEBUG_PRINT_OUTPUT &&
+            VisionConstants.DEBUG_PRINT_ANALYZER_DATA)
+        {
+            for (int i = 0; i< rectangles.size(); i++)
+            {
+                IRotatedRect rectangle = rectangles.get(i);
+                System.out.println("R_" + i + " : " + Arrays.toString(rectangle.getRawValues()));
             }
-            setNum++;
         }
-        this.visionResult = calc.determineVisionResult(gamePiece, processingState);
-        Set<IRotatedRect> row = calc.pickRow(groupedRects, this.visionResult);
-        List<IRotatedRect> pair = calc.pickPairedRect(row);
-        if (pair.size()==2) {
-            double avgPixel = calc.computeAvgPixel(pair);
-            int interval = calc.findInterval(avgPixel, VisionConstants.PIXELS_TO_INCHES);
-            double pixelsPerInch = calc.interpolateInchesFromPixels(avgPixel, interval, VisionConstants.PIXELS_TO_INCHES);
-            double azimuth = calc.azimuth(avgPixel, pair);
-            this.initialTurnAngle = calc.calculateIntitialApproachTurnAngle(azimuth, pixelsPerInch, pair, pixelsPerInch);
-            this.travelDistance = calc.calculateTravelDistance(azimuth, pixelsPerInch);
-            this.finalApproachTurn = calc.finalApproachTurn(azimuth, pixelsPerInch);
 
-            this.glideRadius = calc.glideRadius(azimuth, pixelsPerInch);
-            this.sweepAngle = calc.findSweepAngle(pixelsPerInch, azimuth, glideRadius);
-            this.glideDistance = calc.findGlideDistance(glideRadius, sweepAngle);
+        // find pairs of rectangles
+        List<Set<IRotatedRect>> groupedRects = this.calc.groupRotatedRect(rectangles);
+        if (VisionConstants.DEBUG &&
+            VisionConstants.DEBUG_PRINT_OUTPUT &&
+            VisionConstants.DEBUG_PRINT_ANALYZER_DATA)
+        {
+            int setNum = 0;
+            for (Set<IRotatedRect> group : groupedRects)
+            {
+                List<IRotatedRect> groupList = new ArrayList<IRotatedRect>(group.size());
+                groupList.addAll(group);
+
+                for (int i = 0; i < groupList.size(); i++)
+                {
+                    IRotatedRect rectangle = groupList.get(i);
+                    System.out.println("S_" + setNum + "_R_" + i + " : " + Arrays.toString(rectangle.getRawValues()));
+                }
+
+                setNum++;
+            }
         }
-        else {
+
+        this.visionResult = this.calc.determineVisionResult(gamePiece, processingState);
+        Set<IRotatedRect> row = this.calc.pickRow(groupedRects, this.visionResult);
+        List<IRotatedRect> pair = this.calc.pickPairedRect(row);
+        if (pair.size() == 2)
+        {
+            double avgPixel = this.calc.computeAvgPixel(pair);
+            int interval = this.calc.findInterval(avgPixel, VisionConstants.PIXELS_TO_INCHES);
+            double pixelsPerInch = this.calc.interpolateInchesFromPixels(avgPixel, interval, VisionConstants.PIXELS_TO_INCHES);
+            double azimuth = this.calc.azimuth(avgPixel, pair);
+            this.initialTurnAngle = this.calc.calculateIntitialApproachTurnAngle(azimuth, pixelsPerInch, pair, pixelsPerInch);
+            this.travelDistance = this.calc.calculateTravelDistance(azimuth, pixelsPerInch);
+            this.finalApproachTurn = this.calc.finalApproachTurn(azimuth, pixelsPerInch);
+
+            this.glideRadius = this.calc.glideRadius(azimuth, pixelsPerInch);
+            this.sweepAngle = this.calc.findSweepAngle(pixelsPerInch, azimuth, glideRadius);
+            this.glideDistance = this.calc.findGlideDistance(glideRadius, sweepAngle);
+        }
+        else
+        {
             this.visionResult = VisionResult.NONE;
         }
     }
 
-    public void prepareImage(IMat image) {
-        if (VisionConstants.DEBUG)
-        {
-            if (VisionConstants.DEBUG_SAVE_FRAMES &&
-                    this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
-            {
-                this.openCVProvider.imwrite(
-                        String.format("%simage%d-1.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
-                        image);
-            }
-        }
-
-        if (this.streamEnabled ||
-                (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
-        {
-            this.frameInput.putFrame(image);
-        }
-
-        if (!this.isActive)
-        {
-            return;
-        }
-
-        this.analyzedFrameCount++;
-        if (VisionConstants.DEBUG &&
-                VisionConstants.DEBUG_PRINT_OUTPUT &&
-                this.analyzedFrameCount % VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL == 0)
-        {
-            double now = this.timer.get();
-            double elapsedTime = now - this.lastMeasuredTime;
-
-            this.lastFpsMeasurement = ((double)VisionConstants.DEBUG_FPS_AVERAGING_INTERVAL) / elapsedTime;
-            this.lastMeasuredTime = this.timer.get();
-        }
-
-        // first, undistort the image.
-        IMat undistortedImage;
-        if (this.shouldUndistort)
-        {
-            image = this.undistorter.undistortFrame(image);
-        }
-
-        // save the undistorted image for possible output later...
-        if (this.shouldUndistort)
-        {
-            undistortedImage = image.clone();
-        }
-        else
-        {
-            undistortedImage = image;
-        }
-
-        // second, filter HSV
-        image = this.hsvFilter.filterHSV(undistortedImage);
-        if (VisionConstants.DEBUG)
-        {
-            if (VisionConstants.DEBUG_SAVE_FRAMES &&
-                    this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0)
-            {
-                this.openCVProvider.imwrite(
-                        String.format("%simage%d-2.hsvfiltered.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
-                        image);
-            }
-
-            if (VisionConstants.DEBUG_OUTPUT_FRAMES)
-            {
-                this.hsvOutput.putFrame(image);
-            }
-        }
-//        undistortedImage.release();
-    }
-
-    public List<IRotatedRect> findRectangles(IMat image){
+    public List<IRotatedRect> findRectangles(IMat image)
+    {
         List<IMatOfPoint> contours = ContourHelper.getAllContours(openCVProvider, image, VisionConstants.CONTOUR_MIN_AREA);
 
-        List<IRotatedRect> rotatedRect = new ArrayList<>();
-
-        for(IMatOfPoint contour: contours){
+        List<IRotatedRect> rotatedRect = new ArrayList<IRotatedRect>(contours.size());
+        for (IMatOfPoint contour : contours)
+        {
             rotatedRect.add(openCVProvider.minAreaRect(openCVProvider.convertToMatOfPoints2f(contour)));
             contour.release();
         }
+
         return rotatedRect;
+    }
+
+    public void setMode(VisionProcessingState processingState)
+    {
+        this.processingState = processingState;
+    }
+
+    public void setGamePiece(GamePiece gamePiece)
+    {
+        this.gamePiece = gamePiece;
+    }
+
+    public void setStreamMode(boolean isEnabled)
+    {
+        this.streamEnabled = isEnabled;
+    }
+
+    public boolean isActive()
+    {
+        return this.processingState != VisionProcessingState.Disabled;
     }
 
     public double getInitialTurnAngle()
@@ -339,24 +294,9 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
         return this.glideRadius;
     }
 
-    public void setActivation(boolean isActive)
-    {
-        this.isActive = isActive;
-    }
-
-    public void setStreamMode(boolean isEnabled)
-    {
-        this.streamEnabled = isEnabled;
-    }
-
-    public boolean isActive()
-    {
-        return this.isActive;
-    }
-
     public IPoint getCenter()
     {
-        return this.largestCenter;
+        return this.dockingMarkerCenter;
     }
 
     public Double getDesiredAngleX()
@@ -377,11 +317,5 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
     public double getFps()
     {
         return this.lastFpsMeasurement;
-    }
-    public void setGamePiece(GamePiece gamePiece){
-        this.gamePiece = gamePiece;
-    }
-    public void setMode(VisionProcessingState processingState){
-        this.processingState = processingState;
     }
 }

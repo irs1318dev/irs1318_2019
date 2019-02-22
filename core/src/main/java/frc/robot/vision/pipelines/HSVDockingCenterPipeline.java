@@ -124,20 +124,9 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         }
 
         // first, undistort the image.
-        IMat undistortedImage;
         if (this.shouldUndistort)
         {
             image = this.undistorter.undistortFrame(image);
-        }
-
-        // save the undistorted image for possible output later...
-        if (this.shouldUndistort)
-        {
-            undistortedImage = image.clone();
-        }
-        else
-        {
-            undistortedImage = image;
         }
 
         // second, filter HSV
@@ -190,9 +179,6 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         {
             largestMinAreaRect = this.openCVProvider.minAreaRect(this.openCVProvider.convertToMatOfPoints2f(largestContour));
             largestCenterOfMass = largestMinAreaRect.getCenter();
-            System.out.println("LargestRect: "
-                    + Arrays.toString(largestMinAreaRect.getRawValues()));
-
             largestContour.release();
         }
 
@@ -200,10 +186,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         {
             secondLargestMinAreaRect = this.openCVProvider.minAreaRect(this.openCVProvider.convertToMatOfPoints2f(secondLargestContour));
             secondLargestCenterOfMass = secondLargestMinAreaRect.getCenter();
-
             secondLargestContour.release();
-            System.out.println("SecondLargestRect: "
-                    +Arrays.toString(secondLargestMinAreaRect.getRawValues()));
         }
 
         if (VisionConstants.DEBUG)
@@ -219,6 +202,7 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
                 {
                     System.out.println(String.format("Center of mass: %f, %f", largestCenterOfMass.getX(), largestCenterOfMass.getY()));
                 }
+
                 if (secondLargestCenterOfMass == null)
                 {
                     System.out.println("couldn't find the center of mass!");
@@ -229,8 +213,6 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
                 }
             }
         }
-
-        undistortedImage.release();
 
         // Docking Calculations
         if (largestCenterOfMass == null && secondLargestCenterOfMass == null)
@@ -243,9 +225,8 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             return;
         }
 
-        IRotatedRect minAreaRect;
-    
         // Finding which side is robot on by finding the center value
+        IRotatedRect minAreaRect;
         if (largestCenterOfMass != null && secondLargestCenterOfMass != null && largestCenterOfMass.getX() > secondLargestCenterOfMass.getX())
         {
             // largest is on right, second-largest is on left
