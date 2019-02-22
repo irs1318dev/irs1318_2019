@@ -185,7 +185,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             }
         }
 
-        // find pairs of rectangles
+        // find groups of rectangles (by center height bands)
         List<Set<IRotatedRect>> groupedRects = this.calc.groupRotatedRect(rectangles);
         if (VisionConstants.DEBUG &&
             VisionConstants.DEBUG_PRINT_OUTPUT &&
