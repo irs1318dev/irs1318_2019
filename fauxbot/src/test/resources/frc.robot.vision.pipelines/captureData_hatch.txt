@@ -1,111 +1,56 @@
-"C:\Program Files\Java\jdk-11\bin\java.exe" -ea -Didea.test.cyclic.buffer.size=1048576 "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\lib\idea_rt.jar=64872:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\lib\idea_rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\plugins\junit\lib\junit-rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\plugins\junit\lib\junit5-rt.jar;C:\Users\DriverStationB\.m2\repository\org\junit\platform\junit-platform-launcher\1.1.0\junit-platform-launcher-1.1.0.jar;C:\Users\DriverStationB\.m2\repository\org\apiguardian\apiguardian-api\1.0.0\apiguardian-api-1.0.0.jar;C:\Users\DriverStationB\.m2\repository\org\junit\platform\junit-platform-engine\1.1.0\junit-platform-engine-1.1.0.jar;C:\Users\DriverStationB\.m2\repository\org\junit\platform\junit-platform-commons\1.1.0\junit-platform-commons-1.1.0.jar;C:\Users\DriverStationB\.m2\repository\org\opentest4j\opentest4j\1.0.0\opentest4j-1.0.0.jar;C:\Users\DriverStationB\git\irs1318_2019\fauxbot\out\test\classes;C:\Users\DriverStationB\git\irs1318_2019\fauxbot\out\test\resources;C:\Users\DriverStationB\git\irs1318_2019\fauxbot\out\production\classes;C:\Users\DriverStationB\git\irs1318_2019\fauxbot\out\production\resources;C:\Users\DriverStationB\git\irs1318_2019\core\out\production\classes;C:\Users\DriverStationB\git\irs1318_2019\core\out\production\resources;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\com.google.inject\guice\4.1.0\faf9ee8ac09eafd1128091426dd367a8c0085d55\guice-4.1.0-no_aop.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\javax.inject\javax.inject\1\6975da39a7040257bd51d21a231b76c915872d38\javax.inject-1.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\21.0\3a3d111be1be1b745edfa7d91678a12d7ed38709\guava-21.0.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-controls\11\af8d24de44e16a19ae959028eb23a48c145fb682\javafx-controls-11-win.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-graphics\11\9345c7ea43dbcc73a62eca5332717b4ce617e6c6\javafx-graphics-11-win.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-graphics\11\a736dd079047ec0b72b8c4970842a5c5e0c19f2f\javafx-graphics-11.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-base\11\ad3a4acfaa28b484d30c40c1f009445cc3f6e68b\javafx-base-11-win.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-base\11\9fcd3e8e3227ec97bf503f7991fad1f3b14d005\javafx-base-11.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.openpnp\opencv\3.4.2-1\fbd8f36fd1ce4e2bf0dcb12befd7d4cfc74d8d35\opencv-3.4.2-1.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.mockito\mockito-all\1.10.19\539df70269cc254a58cccc5d8e43286b4a73bf30\mockito-all-1.10.19.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.junit.jupiter\junit-jupiter-api\5.1.0\370218fbc7ce9cf0600c4b5db400bccdf0c01a48\junit-jupiter-api-5.1.0.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\aopalliance\aopalliance\1.0\235ba8b489512805ac13a8f9ea77a1ca5ebe3e8\aopalliance-1.0.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\de.siegmar\fastcsv\1.0.3\356512f93d0ef5e682ccfac3608864686b45c11b\fastcsv-1.0.3.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.junit.jupiter\junit-jupiter-engine\5.1.0\c54b96b465bb5b49c7708d734a4180dd95422754\junit-jupiter-engine-5.1.0.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.junit.platform\junit-platform-commons\1.1.0\d6aa21029f9cedfb4cc8a9e9efc0bd97987205b8\junit-platform-commons-1.1.0.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.apiguardian\apiguardian-api\1.0.0\3ef5276905e36f4d8055fe3cb0bdcc7503ffc85d\apiguardian-api-1.0.0.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.opentest4j\opentest4j\1.0.0\6f09c598e9ff64bf0ce2fa7e7de49a99ba83c0b4\opentest4j-1.0.0.jar;C:\Users\DriverStationB\.gradle\caches\modules-2\files-2.1\org.junit.platform\junit-platform-engine\1.1.0\2596bd4d909e7ea8d029272db4338075445d731b\junit-platform-engine-1.1.0.jar" com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 -junit5 frc.robot.vision.pipelines.Vision2019ApproachAndDockPipelineTest
-WARNING: An illegal reflective access operation has occurred
-WARNING: Illegal reflective access by nu.pattern.OpenCV$SharedLoader (file:/C:/Users/DriverStationB/.gradle/caches/modules-2/files-2.1/org.openpnp/opencv/3.4.2-1/fbd8f36fd1ce4e2bf0dcb12befd7d4cfc74d8d35/opencv-3.4.2-1.jar) to field java.lang.ClassLoader.usr_paths
-WARNING: Please consider reporting this to the maintainers of nu.pattern.OpenCV$SharedLoader
-WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
-WARNING: All illegal access operations will be denied in a future release
+"C:\Program Files\Java\jdk1.8.0_101\bin\java.exe" -ea -Didea.test.cyclic.buffer.size=1048576 "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\lib\idea_rt.jar=6604:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\lib\idea_rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\plugins\junit\lib\junit-rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2018.2.5\plugins\junit\lib\junit5-rt.jar;C:\Users\james\.m2\repository\org\junit\platform\junit-platform-launcher\1.1.0\junit-platform-launcher-1.1.0.jar;C:\Users\james\.m2\repository\org\apiguardian\apiguardian-api\1.0.0\apiguardian-api-1.0.0.jar;C:\Users\james\.m2\repository\org\junit\platform\junit-platform-engine\1.1.0\junit-platform-engine-1.1.0.jar;C:\Users\james\.m2\repository\org\junit\platform\junit-platform-commons\1.1.0\junit-platform-commons-1.1.0.jar;C:\Users\james\.m2\repository\org\opentest4j\opentest4j\1.0.0\opentest4j-1.0.0.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_101\jre\lib\rt.jar;C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\out\test\classes;C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\out\test\resources;C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\out\production\classes;C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\out\production\resources;C:\Users\james\IdeaProjects2018\irs1318_2019\core\out\production\classes;C:\Users\james\IdeaProjects2018\irs1318_2019\core\out\production\resources;C:\Users\james\.gradle\caches\modules-2\files-2.1\com.google.inject\guice\4.1.0\faf9ee8ac09eafd1128091426dd367a8c0085d55\guice-4.1.0-no_aop.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\javax.inject\javax.inject\1\6975da39a7040257bd51d21a231b76c915872d38\javax.inject-1.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\21.0\3a3d111be1be1b745edfa7d91678a12d7ed38709\guava-21.0.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-controls\11\af8d24de44e16a19ae959028eb23a48c145fb682\javafx-controls-11-win.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-graphics\11\9345c7ea43dbcc73a62eca5332717b4ce617e6c6\javafx-graphics-11-win.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-graphics\11\a736dd079047ec0b72b8c4970842a5c5e0c19f2f\javafx-graphics-11.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-base\11\ad3a4acfaa28b484d30c40c1f009445cc3f6e68b\javafx-base-11-win.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.openjfx\javafx-base\11\9fcd3e8e3227ec97bf503f7991fad1f3b14d005\javafx-base-11.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.openpnp\opencv\3.4.2-1\fbd8f36fd1ce4e2bf0dcb12befd7d4cfc74d8d35\opencv-3.4.2-1.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.mockito\mockito-all\1.10.19\539df70269cc254a58cccc5d8e43286b4a73bf30\mockito-all-1.10.19.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.junit.jupiter\junit-jupiter-api\5.1.0\370218fbc7ce9cf0600c4b5db400bccdf0c01a48\junit-jupiter-api-5.1.0.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\aopalliance\aopalliance\1.0\235ba8b489512805ac13a8f9ea77a1ca5ebe3e8\aopalliance-1.0.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\de.siegmar\fastcsv\1.0.3\356512f93d0ef5e682ccfac3608864686b45c11b\fastcsv-1.0.3.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.junit.jupiter\junit-jupiter-engine\5.1.0\c54b96b465bb5b49c7708d734a4180dd95422754\junit-jupiter-engine-5.1.0.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.junit.platform\junit-platform-commons\1.1.0\d6aa21029f9cedfb4cc8a9e9efc0bd97987205b8\junit-platform-commons-1.1.0.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.apiguardian\apiguardian-api\1.0.0\3ef5276905e36f4d8055fe3cb0bdcc7503ffc85d\apiguardian-api-1.0.0.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.opentest4j\opentest4j\1.0.0\6f09c598e9ff64bf0ce2fa7e7de49a99ba83c0b4\opentest4j-1.0.0.jar;C:\Users\james\.gradle\caches\modules-2\files-2.1\org.junit.platform\junit-platform-engine\1.1.0\2596bd4d909e7ea8d029272db4338075445d731b\junit-platform-engine-1.1.0.jar" com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 -junit5 frc.robot.vision.pipelines.Vision2019ApproachAndDockPipelineTest
 
 Low targets only
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture.PNG
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture1.PNG
 R_0 : [227.61538696289062, 67.0769271850586, 11.374734878540039, 28.240720748901367, -11.309932708740234]
 R_1 : [169.058837890625, 63.76471710205078, 27.649059295654297, 10.186494827270508, -75.96376037597656]
 S_0_R_0 : [227.61538696289062, 67.0769271850586, 11.374734878540039, 28.240720748901367, -11.309932708740234]
 S_0_R_1 : [169.058837890625, 63.76471710205078, 27.649059295654297, 10.186494827270508, -75.96376037597656]
 o=58.556549, d=58.430225
 a=0.000000, adeg=0.000000
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture2.PNG
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture2.PNG
 R_0 : [165.84146118164062, 67.07316589355469, 29.683290481567383, 9.358966827392578, -77.90524291992188]
 R_1 : [213.24998474121094, 62.74999237060547, 8.7681245803833, 26.728639602661133, -8.13010311126709]
-S_0_R_0 : [213.24998474121094, 62.74999237060547, 8.7681245803833, 26.728639602661133, -8.13010311126709]
-S_0_R_1 : [165.84146118164062, 67.07316589355469, 29.683290481567383, 9.358966827392578, -77.90524291992188]
+S_0_R_0 : [165.84146118164062, 67.07316589355469, 29.683290481567383, 9.358966827392578, -77.90524291992188]
+S_0_R_1 : [213.24998474121094, 62.74999237060547, 8.7681245803833, 26.728639602661133, -8.13010311126709]
 o=47.408524, d=58.976109
 a=0.637040, adeg=36.499716
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture3.PNG
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture3.PNG
 R_0 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
 R_1 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
 R_2 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
 R_3 : [250.0, 19.0, 8.0, 34.0, -0.0]
-S_0_R_0 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
-S_0_R_1 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
-S_1_R_0 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
-S_1_R_1 : [250.0, 19.0, 8.0, 34.0, -0.0]
-o=53.817696, d=62.148772
-a=0.523751, adeg=30.008701
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture4.PNG
-R_0 : [150.5, 68.0, 1.0, 6.0, -0.0]
-R_1 : [148.76470947265625, 56.558834075927734, 1.212678074836731, 11.156637191772461, -14.03624439239502]
-R_2 : [180.94119262695312, 18.73529815673828, 31.529630661010742, 10.429031372070312, -75.96376037597656]
-R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008]
-S_0_R_0 : [180.94119262695312, 18.73529815673828, 31.529630661010742, 10.429031372070312, -75.96376037597656]
-S_0_R_1 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008]
-o=58.964584, d=66.847856
-a=0.490555, adeg=28.106742
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture5.PNG
-R_0 : [219.82196044921875, 46.75457763671875, 62.32841873168945, 22.802085876464844, -78.2317123413086]
-S_0_R_0 : [219.82196044921875, 46.75457763671875, 62.32841873168945, 22.802085876464844, -78.2317123413086]
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture6.PNG
-R_0 : [256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797]
-R_1 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
-R_2 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
-S_0_R_0 : [256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797]
-S_1_R_0 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
-S_1_R_1 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture7.PNG
-R_0 : [117.43586730957031, 115.49164581298828, 44.837581634521484, 12.80457878112793, -82.56858825683594]
-R_1 : [176.59458923339844, 94.56757354736328, 9.86393928527832, 36.16777801513672, -9.462322235107422]
-R_2 : [34.18965530395508, 47.22413635253906, 19.12662124633789, 62.95071792602539, -21.801410675048828]
-S_0_R_0 : [117.43586730957031, 115.49164581298828, 44.837581634521484, 12.80457878112793, -82.56858825683594]
-S_0_R_1 : [176.59458923339844, 94.56757354736328, 9.86393928527832, 36.16777801513672, -9.462322235107422]
-S_1_R_0 : [34.18965530395508, 47.22413635253906, 19.12662124633789, 62.95071792602539, -21.801410675048828]
-o=59.158722, d=84.687421
-a=0.797422, adeg=45.688908
-
-High targets only
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture.PNG
-R_0 : [227.61538696289062, 67.0769271850586, 11.374734878540039, 28.240720748901367, -11.309932708740234]
-R_1 : [169.058837890625, 63.76471710205078, 27.649059295654297, 10.186494827270508, -75.96376037597656]
-S_0_R_0 : [169.058837890625, 63.76471710205078, 27.649059295654297, 10.186494827270508, -75.96376037597656]
-S_0_R_1 : [227.61538696289062, 67.0769271850586, 11.374734878540039, 28.240720748901367, -11.309932708740234]
-o=58.556549, d=58.430225
-a=0.000000, adeg=0.000000
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture2.PNG
-R_0 : [165.84146118164062, 67.07316589355469, 29.683290481567383, 9.358966827392578, -77.90524291992188]
-R_1 : [213.24998474121094, 62.74999237060547, 8.7681245803833, 26.728639602661133, -8.13010311126709]
-S_0_R_0 : [213.24998474121094, 62.74999237060547, 8.7681245803833, 26.728639602661133, -8.13010311126709]
-S_0_R_1 : [165.84146118164062, 67.07316589355469, 29.683290481567383, 9.358966827392578, -77.90524291992188]
-o=47.408524, d=58.976109
-a=0.637040, adeg=36.499716
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture3.PNG
-R_0 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
-R_1 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
-R_2 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
-R_3 : [250.0, 19.0, 8.0, 34.0, -0.0]
-S_0_R_0 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
-S_0_R_1 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
+S_0_R_0 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
+S_0_R_1 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
 S_1_R_0 : [250.0, 19.0, 8.0, 34.0, -0.0]
 S_1_R_1 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
 o=53.817696, d=62.148772
-a=0.523751, adeg=30.008701
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture4.PNG
+a=-0.523751, adeg=-30.008701
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture4.PNG
 R_0 : [150.5, 68.0, 1.0, 6.0, -0.0]
 R_1 : [148.76470947265625, 56.558834075927734, 1.212678074836731, 11.156637191772461, -14.03624439239502]
 R_2 : [180.94119262695312, 18.73529815673828, 31.529630661010742, 10.429031372070312, -75.96376037597656]
 R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008]
-S_0_R_0 : [180.94119262695312, 18.73529815673828, 31.529630661010742, 10.429031372070312, -75.96376037597656]
-S_0_R_1 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008]
+S_0_R_0 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008]
+S_0_R_1 : [180.94119262695312, 18.73529815673828, 31.529630661010742, 10.429031372070312, -75.96376037597656]
 o=58.964584, d=66.847856
 a=0.490555, adeg=28.106742
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture5.PNG
-R_0 : [219.82196044921875, 46.75457763671875, 62.32841873168945, 22.802085876464844, -78.2317123413086]
-S_0_R_0 : [219.82196044921875, 46.75457763671875, 62.32841873168945, 22.802085876464844, -78.2317123413086]
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture6.PNG
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture5.PNG
+R_0 : [188.0, 58.0, 0.0, 0.0, 0.0]
+R_1 : [157.4535675048828, 17.90451431274414, 10.712544441223145, 31.725614547729492, -11.888657569885254]
+R_2 : [99.95121765136719, 17.939022064208984, 31.47298812866211, 10.932722091674805, -83.6598129272461]
+S_0_R_0 : [99.95121765136719, 17.939022064208984, 31.47298812866211, 10.932722091674805, -83.6598129272461]
+S_0_R_1 : [157.4535675048828, 17.90451431274414, 10.712544441223145, 31.725614547729492, -11.888657569885254]
+o=57.502350, d=66.071266
+a=0.514969, adeg=29.505553
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture6.PNG
 R_0 : [256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797]
 R_1 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
 R_2 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
 S_0_R_0 : [256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797]
-S_1_R_0 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
-S_1_R_1 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
-C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture7.PNG
+S_1_R_0 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
+S_1_R_1 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture7.PNG
 R_0 : [117.43586730957031, 115.49164581298828, 44.837581634521484, 12.80457878112793, -82.56858825683594]
 R_1 : [176.59458923339844, 94.56757354736328, 9.86393928527832, 36.16777801513672, -9.462322235107422]
 R_2 : [34.18965530395508, 47.22413635253906, 19.12662124633789, 62.95071792602539, -21.801410675048828]
@@ -114,5 +59,65 @@ S_0_R_1 : [117.43586730957031, 115.49164581298828, 44.837581634521484, 12.804578
 S_1_R_0 : [34.18965530395508, 47.22413635253906, 19.12662124633789, 62.95071792602539, -21.801410675048828]
 o=59.158722, d=84.687421
 a=0.797422, adeg=45.688908
+
+High targets only
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture1.PNG
+R_0 : [227.61538696289062, 67.0769271850586, 11.374734878540039, 28.240720748901367, -11.309932708740234]
+R_1 : [169.058837890625, 63.76471710205078, 27.649059295654297, 10.186494827270508, -75.96376037597656]
+S_0_R_0 : [169.058837890625, 63.76471710205078, 27.649059295654297, 10.186494827270508, -75.96376037597656]
+S_0_R_1 : [227.61538696289062, 67.0769271850586, 11.374734878540039, 28.240720748901367, -11.309932708740234]
+o=58.556549, d=58.430225
+a=0.000000, adeg=0.000000
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture2.PNG
+R_0 : [165.84146118164062, 67.07316589355469, 29.683290481567383, 9.358966827392578, -77.90524291992188]
+R_1 : [213.24998474121094, 62.74999237060547, 8.7681245803833, 26.728639602661133, -8.13010311126709]
+S_0_R_0 : [213.24998474121094, 62.74999237060547, 8.7681245803833, 26.728639602661133, -8.13010311126709]
+S_0_R_1 : [165.84146118164062, 67.07316589355469, 29.683290481567383, 9.358966827392578, -77.90524291992188]
+o=47.408524, d=58.976109
+a=0.637040, adeg=36.499716
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture3.PNG
+R_0 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
+R_1 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
+R_2 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
+R_3 : [250.0, 19.0, 8.0, 34.0, -0.0]
+S_0_R_0 : [101.09406280517578, 69.05941009521484, 28.159555435180664, 9.950372695922852, -84.2894058227539]
+S_0_R_1 : [154.91175842285156, 78.6470718383789, 10.6715669631958, 31.28709602355957, -14.03624439239502]
+S_1_R_0 : [202.20559692382812, 25.14854621887207, 37.081886291503906, 9.630990982055664, -78.11134338378906]
+S_1_R_1 : [250.0, 19.0, 8.0, 34.0, -0.0]
+o=47.794403, d=74.312881
+a=0.872190, adeg=49.972816
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture4.PNG
+R_0 : [150.5, 68.0, 1.0, 6.0, -0.0]
+R_1 : [148.76470947265625, 56.558834075927734, 1.212678074836731, 11.156637191772461, -14.03624439239502]
+R_2 : [180.94119262695312, 18.73529815673828, 31.529630661010742, 10.429031372070312, -75.96376037597656]
+R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008]
+S_0_R_0 : [180.94119262695312, 18.73529815673828, 31.529630661010742, 10.429031372070312, -75.96376037597656]
+S_0_R_1 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008]
+o=58.964584, d=66.847856
+a=0.490555, adeg=28.106742
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture5.PNG
+R_0 : [188.0, 58.0, 0.0, 0.0, 0.0]
+R_1 : [157.4535675048828, 17.90451431274414, 10.712544441223145, 31.725614547729492, -11.888657569885254]
+R_2 : [99.95121765136719, 17.939022064208984, 31.47298812866211, 10.932722091674805, -83.6598129272461]
+S_0_R_0 : [157.4535675048828, 17.90451431274414, 10.712544441223145, 31.725614547729492, -11.888657569885254]
+S_0_R_1 : [99.95121765136719, 17.939022064208984, 31.47298812866211, 10.932722091674805, -83.6598129272461]
+o=57.502350, d=66.071266
+a=0.514969, adeg=29.505553
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture6.PNG
+R_0 : [256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797]
+R_1 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
+R_2 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
+S_0_R_0 : [256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797]
+S_1_R_0 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
+S_1_R_1 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
+o=59.151840, d=92.288447
+a=-0.875067, adeg=-50.137661
+C:\Users\james\IdeaProjects2018\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture7.PNG
+R_0 : [117.43586730957031, 115.49164581298828, 44.837581634521484, 12.80457878112793, -82.56858825683594]
+R_1 : [176.59458923339844, 94.56757354736328, 9.86393928527832, 36.16777801513672, -9.462322235107422]
+R_2 : [34.18965530395508, 47.22413635253906, 19.12662124633789, 62.95071792602539, -21.801410675048828]
+S_0_R_0 : [117.43586730957031, 115.49164581298828, 44.837581634521484, 12.80457878112793, -82.56858825683594]
+S_0_R_1 : [176.59458923339844, 94.56757354736328, 9.86393928527832, 36.16777801513672, -9.462322235107422]
+S_1_R_0 : [34.18965530395508, 47.22413635253906, 19.12662124633789, 62.95071792602539, -21.801410675048828]
 
 Process finished with exit code 0

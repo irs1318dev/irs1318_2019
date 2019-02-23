@@ -149,13 +149,41 @@ public static final List<IRotatedRect> CAPTURE6_RECT_PAIR_LIST =
     {
 
         //o=59.151840, d=92.288447
-        //a=0.875067, adeg=50.137661
+        //a=0.875067, adeg=-50.137661
 
         VisionCalculations calc = new VisionCalculations();
         double azimuth = calc.azimuth(
                 calc.computeAvgPixel(CAPTURE6_RECT_PAIR_LIST),
                 CAPTURE6_RECT_PAIR_LIST);
-        assertEquals(0.875 ,azimuth, EPS);
+        assertEquals(-0.875 ,azimuth, EPS);
     }
+    public static final List<IRotatedRect> UNSORTED_RECTANGLES =
+            new ArrayList() {{
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{310.0, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{195.0, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{220.0, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{136.0, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672})));
+            }};
+
+    @Test
+    public void testSortByCenterX() {
+        VisionCalculations calc = new VisionCalculations();
+
+        List<IRotatedRect> sortedList = calc.sortByCenterX(UNSORTED_RECTANGLES);
+        assertEquals(4, sortedList.size());
+        assertEquals(136.0, sortedList.get(0).getCenter().getX(), EPS);
+        assertEquals(195.0, sortedList.get(1).getCenter().getX(), EPS);
+        assertEquals(220.0, sortedList.get(2).getCenter().getX(), EPS);
+        assertEquals(310.0, sortedList.get(3).getCenter().getX(), EPS);
+    }
+
 
 }
