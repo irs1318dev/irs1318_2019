@@ -33,7 +33,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
 
     private final IUsbCamera camera;
     private final Thread visionThread;
-    private final HSVDockingCenterPipeline visionPipeline;
+    private final ICentroidVisionPipeline visionPipeline;
 
     private Driver driver;
     private VisionProcessingState currentState;
