@@ -1,14 +1,11 @@
 package frc.robot.vision.pipelines;
 
-import frc.robot.GamePiece;
+import frc.robot.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.vision.VisionConstants;
-import frc.robot.vision.common.ContourHelper;
-import frc.robot.vision.common.HSVFilter;
-import frc.robot.vision.common.ImageUndistorter;
-import frc.robot.vision.common.VisionProcessingState;
+import frc.robot.vision.*;
+import frc.robot.vision.common.*;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
 {

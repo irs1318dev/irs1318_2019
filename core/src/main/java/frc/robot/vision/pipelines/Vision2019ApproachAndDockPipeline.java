@@ -1,10 +1,9 @@
 package frc.robot.vision.pipelines;
 
-import frc.robot.GamePiece;
+import frc.robot.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.vision.VisionConstants;
+import frc.robot.vision.*;
 import frc.robot.vision.common.*;
-import frc.robot.vision.VisionCalculations;
 
 import java.util.*;
 
@@ -223,6 +222,18 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             this.glideRadius = this.calc.glideRadius(azimuth, pixelsPerInch);
             this.sweepAngle = this.calc.findSweepAngle(pixelsPerInch, azimuth, glideRadius);
             this.glideDistance = this.calc.findGlideDistance(glideRadius, sweepAngle);
+
+            /*
+            this.dockingMarkerCenter = pair.get(0).getCenter();
+            double xOffsetMeasured = this.dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
+            double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - this.dockingMarkerCenter.getY();
+            this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
+            double measuredAngleY = Math.atan(yOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y) * VisionConstants.RADIANS_TO_ANGLE;
+
+            double distanceFromCam = (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan((VisionConstants.DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE - measuredAngleY) * VisionConstants.ANGLE_TO_RADIANS));
+            this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
+            this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET - VisionConstants.DOCKING_TAPE_OFFSET) / distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
+            */
         }
         else
         {
