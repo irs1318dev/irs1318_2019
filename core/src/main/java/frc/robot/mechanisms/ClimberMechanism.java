@@ -66,12 +66,6 @@ public class ClimberMechanism implements IMechanism
         this.climberArmsMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_ARMS_MASTER_INVERT_OUTPUT);
         this.climberArmsMotorMaster.setInvertSensor(HardwareConstants.CLIMBER_ARMS_INVERT_SENSOR);
         this.climberArmsMotorMaster.setSensorType(TalonSRXFeedbackDevice.QuadEncoder);
-        this.climberArmsMotorMaster.setPIDF(
-            TuningConstants.CLIMBER_ARMS_POSITION_PID_KP,
-            TuningConstants.CLIMBER_ARMS_POSITION_PID_KI,
-            TuningConstants.CLIMBER_ARMS_POSITION_PID_KD,
-            TuningConstants.CLIMBER_ARMS_POSITION_PID_KF,
-            ClimberMechanism.pidSlotId);
         this.climberArmsMotorMaster.setPosition(
             (int)(TuningConstants.CLIMBER_ARMS_RETRACTED_POSITION / HardwareConstants.CLIMBER_ARMS_PULSE_DISTANCE));
         this.climberArmsMotorMaster.setForwardLimitSwitch(
@@ -80,9 +74,28 @@ public class ClimberMechanism implements IMechanism
         this.climberArmsMotorMaster.setReverseLimitSwitch(
             TuningConstants.CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED,
             TuningConstants.CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
-
         this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
-        this.climberArmsMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);    
+        this.climberArmsMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);
+        if (TuningConstants.CLIMBER_ARMS_USE_MOTION_MAGIC)
+        {
+            this.climberArmsMotorMaster.setMotionMagicPIDF(
+                TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_KP,
+                TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_KI,
+                TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_KD,
+                TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_KF,
+                TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_CRUISE_VELOC,
+                TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_ACCEL,
+                ClimberMechanism.pidSlotId);
+        }
+        else
+        {
+            this.climberArmsMotorMaster.setPIDF(
+                TuningConstants.CLIMBER_ARMS_POSITION_PID_KP,
+                TuningConstants.CLIMBER_ARMS_POSITION_PID_KI,
+                TuningConstants.CLIMBER_ARMS_POSITION_PID_KD,
+                TuningConstants.CLIMBER_ARMS_POSITION_PID_KF,
+                ClimberMechanism.pidSlotId);
+        }
 
         ITalonSRX climberArmsMotorFollower = provider.getTalonSRX(ElectronicsConstants.CLIMBER_ARMS_MOTOR_FOLLOWER_CAN_ID);
         climberArmsMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
@@ -280,8 +293,15 @@ public class ClimberMechanism implements IMechanism
             }
 
             this.logger.logNumber(ClimberMechanism.logName, "desiredArmsPosition", this.desiredArmsPosition);
-            
-            this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
+            if (TuningConstants.CLIMBER_ARMS_USE_MOTION_MAGIC)
+            {
+                this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.MotionMagicPosition);   
+            }
+            else
+            {
+                this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
+            }
+
             this.climberArmsMotorMaster.set(this.desiredArmsPosition / HardwareConstants.CLIMBER_ARMS_PULSE_DISTANCE);
         }
 

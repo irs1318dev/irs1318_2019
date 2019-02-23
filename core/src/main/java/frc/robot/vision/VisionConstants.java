@@ -79,7 +79,7 @@ public class VisionConstants
     public static final double DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE = 20; // change? --> (Y) degrees camera is mounted from level/horizontal line parallel to floor
 
     public static final double ROCKET_TO_GROUND_TAPE_HEIGHT = 28.5875; // (Z) distance from floor to center of tape
-    public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 42.5; // (Z) distance from floor to the viewport of the camera
+    public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 43; // (Z) distance from floor to the viewport of the camera
     public static final double DOCKING_TAPE_OFFSET = 5.7065; // horizontal offset from center of the two tape strips to the center of one of the pieces of tape
 
     public static final List<PixelsToInches> PIXELS_TO_INCHES =

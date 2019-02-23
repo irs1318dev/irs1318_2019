@@ -947,7 +947,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberArmsPositionTask(Operation.ClimberArmsRetractedPosition),
+                    () -> new ClimberArmsPositionTask(0.2, Operation.ClimberArmsRetractedPosition),
                     new Operation[]
                     {
                         Operation.ClimberArmsRetractedPosition,
@@ -962,7 +962,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberArmsPositionTask(Operation.ClimberArmsLowClimbPosition),
+                    () -> new ClimberArmsPositionTask(0.2, Operation.ClimberArmsLowClimbPosition),
                     new Operation[]
                     {
                         Operation.ClimberArmsRetractedPosition,
@@ -977,7 +977,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberArmsPositionTask(Operation.ClimberArmsHighClimbPosition),
+                    () -> new ClimberArmsPositionTask(0.2, Operation.ClimberArmsHighClimbPosition),
                     new Operation[]
                     {
                         Operation.ClimberArmsRetractedPosition,
@@ -992,7 +992,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberCamPositionTask(Operation.ClimberCamStoredPosition),
+                    () -> new ClimberCamPositionTask(0.2, Operation.ClimberCamStoredPosition),
                     new Operation[]
                     {
                         Operation.ClimberCamStoredPosition,
@@ -1007,7 +1007,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberCamPositionTask(Operation.ClimberCamLowClimbPosition),
+                    () -> new ClimberCamPositionTask(0.2, Operation.ClimberCamLowClimbPosition),
                     new Operation[]
                     {
                         Operation.ClimberCamStoredPosition,
@@ -1022,7 +1022,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberCamPositionTask(Operation.ClimberCamHighClimbPosition),
+                    () -> new ClimberCamPositionTask(0.2, Operation.ClimberCamHighClimbPosition),
                     new Operation[]
                     {
                         Operation.ClimberCamStoredPosition,

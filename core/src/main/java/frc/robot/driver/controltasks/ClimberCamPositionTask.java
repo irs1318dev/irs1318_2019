@@ -32,7 +32,7 @@ public class ClimberCamPositionTask extends CompositeOperationTask
     public void begin()
     {
         super.begin();
-        this.getInjector().getInstance(ClimberMechanism.class);
+        this.climber = this.getInjector().getInstance(ClimberMechanism.class);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ClimberCamPositionTask extends CompositeOperationTask
             return super.hasCompleted();
         }
 
-        if(super.hasCompleted())
+        if (super.hasCompleted())
         {
             return true;
         }
@@ -54,6 +54,5 @@ public class ClimberCamPositionTask extends CompositeOperationTask
         }
 
         return false;
-
     }
 }

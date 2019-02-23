@@ -12,7 +12,7 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
             Operation.ClimberArmsLowClimbPosition,
             Operation.ClimberArmsHighClimbPosition  
         };
-    
+
     private ClimberMechanism climber;
     private boolean completeWithTime;
 
@@ -32,7 +32,7 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
     public void begin()
     {
         super.begin();
-        this.getInjector().getInstance(ClimberMechanism.class);
+        this.climber = this.getInjector().getInstance(ClimberMechanism.class);
     }
 
     @Override
@@ -54,6 +54,5 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
         }
 
         return false;
-
     }
 }

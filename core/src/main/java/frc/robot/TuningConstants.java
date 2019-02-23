@@ -253,12 +253,13 @@ public class TuningConstants
     public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = 3.0;
 
     public static final boolean CLIMBER_ARMS_USE_PID = true; 
-    public static final boolean CLIMBER_CAM_USE_PID = true;
+    public static final boolean CLIMBER_ARMS_USE_MOTION_MAGIC = true;
+    public static final boolean CLIMBER_CAM_USE_PID = false;
 
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
-    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 10.0;
-    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 20.0;
+    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 1000.0;
+    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 2500.0;
 
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = true;
@@ -269,9 +270,15 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 1.0;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
 
-    public static final double CLIMBER_ARMS_MOVE_VELOCITY = 10.0; // ticks/sec
+    public static final double CLIMBER_ARMS_MOVE_VELOCITY = 200.0; // ticks/sec
 
-    // --------- NEEDS 2019 UPDATE ---------
+    public static final double CLIMBER_ARMS_MM_POSITION_PID_KP = 15.0;
+    public static final double CLIMBER_ARMS_MM_POSITION_PID_KI = 0.0;
+    public static final double CLIMBER_ARMS_MM_POSITION_PID_KD = 0.0;
+    public static final double CLIMBER_ARMS_MM_POSITION_PID_KF = 1.75; // 1023 over max speed (600 ticks per 100ms)
+    public static final int CLIMBER_ARMS_MM_POSITION_PID_CRUISE_VELOC = 600;
+    public static final int CLIMBER_ARMS_MM_POSITION_PID_ACCEL = 250;
+
     public static final double CLIMBER_ARMS_POSITION_PID_KP = 0.3;
     public static final double CLIMBER_ARMS_POSITION_PID_KI = 0.0;
     public static final double CLIMBER_ARMS_POSITION_PID_KD = 0.0;

@@ -47,12 +47,12 @@ public class ElevatorPositionTask extends CompositeOperationTask {
             return super.hasCompleted();
         }
 
-        if(super.hasCompleted())
+        if (super.hasCompleted())
         {
             return true;
         }
 
-        double heightError = Math.abs(elevator.getHeight()-elevator.getDesiredHeight());
+        double heightError = Math.abs(this.elevator.getHeight() - this.elevator.getDesiredHeight());
         if (heightError < TuningConstants.ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD)
         {
             return true;
