@@ -45,10 +45,16 @@ public class AutonomousRoutineSelector
      */
     public IControlTask selectRoutine()
     {
-        boolean switchA = !this.dipSwitchA.get();
-        boolean switchB = !this.dipSwitchB.get();
-        boolean switchC = !this.dipSwitchC.get();
-        boolean switchD = !this.dipSwitchD.get();
+        boolean switchA = this.dipSwitchA.get();
+        boolean switchB = this.dipSwitchB.get();
+        boolean switchC = this.dipSwitchC.get();
+        boolean switchD = this.dipSwitchD.get();
+
+        // print routine parameters to the smartdash
+        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchA", switchA);
+        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchB", switchB);
+        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchC", switchC);
+        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchD", switchD);
 
         boolean startCenter = !switchA && !switchB;
         boolean startLeft = switchA;
@@ -56,18 +62,12 @@ public class AutonomousRoutineSelector
         boolean startSlot = switchC; // if center -> left(t)/right(f), if side -> front(t)/side(f)
         boolean placeTwo = switchD;
 
-        // print routine parameters to the smartdash
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "startCenter", startCenter);
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "startLeft", startLeft);
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "startRight", startRight);
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "startSlot", startSlot);
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "placeTwo", placeTwo);
-
-        if(startCenter)
+        /*
+        if (startCenter)
         {
-            if(startSlot)
+            if (startSlot)
             {
-                if(placeTwo)
+                if (placeTwo)
                 {
                     return startCenterGoLeftPlace2();
                 }
@@ -78,7 +78,7 @@ public class AutonomousRoutineSelector
             }
             else
             {
-                if(placeTwo)
+                if (placeTwo)
                 {
                     return startCenterGoRightPlace2();
                 }
@@ -90,9 +90,9 @@ public class AutonomousRoutineSelector
         }
         else if (startLeft)
         {
-            if(startSlot)
+            if (startSlot)
             {
-                if(placeTwo)
+                if (placeTwo)
                 {
                     return startLeftGoFrontPlace2();
                 }
@@ -103,7 +103,7 @@ public class AutonomousRoutineSelector
             }
             else
             {
-                if(placeTwo)
+                if (placeTwo)
                 {
                     return startLeftGoSidePlace2();
                 }
@@ -115,9 +115,9 @@ public class AutonomousRoutineSelector
         }
         else if (startRight)
         {
-            if(startSlot)
+            if (startSlot)
             {
-                if(placeTwo)
+                if (placeTwo)
                 {
                     return startRightGoFrontPlace2();
                 }
@@ -128,7 +128,7 @@ public class AutonomousRoutineSelector
             }
             else
             {
-                if(placeTwo)
+                if (placeTwo)
                 {
                     return startRightGoSidePlace2();
                 }
@@ -137,7 +137,7 @@ public class AutonomousRoutineSelector
                     return startRightGoSidePlace1();
                 }
             }
-        }
+        }*/
 
         return AutonomousRoutineSelector.GetFillerRoutine();
     }
