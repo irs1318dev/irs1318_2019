@@ -200,7 +200,7 @@ public class TuningConstants
     //================================================== Elevator ==============================================================
 
     public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = 10.0;
-    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 100.0;
+    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 250.0;
 
     // Sensors
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = true;
