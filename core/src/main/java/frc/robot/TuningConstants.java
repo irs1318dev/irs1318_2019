@@ -266,7 +266,7 @@ public class TuningConstants
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final double CLIMBER_ARMS_POSITION_MAX = 4900.0; // in ticks (3375.0 for practice??)
+    public static final int CLIMBER_ARMS_POSITION_MAX = 4900; // in ticks (3375 for practice??)
     public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 1.0;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
 

@@ -258,16 +258,16 @@ public class ClimberMechanism implements IMechanism
             if (this.armsForwardLimitSwitchStatus || this.armsPosition > TuningConstants.CLIMBER_ARMS_POSITION_MAX)
             {
                 this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_POSITION_MAX;
-                this.climberArmsMotorMaster.reset();
+                this.climberArmsMotorMaster.setPosition(TuningConstants.CLIMBER_ARMS_POSITION_MAX);
             }
 
+            this.logger.logNumber(ClimberMechanism.logName, "desiredArmsPosition", this.desiredArmsPosition);
             this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
-
-            if (forceArmsForward)
+            if (forceArmsForward && !this.armsForwardLimitSwitchStatus)
             {
                 this.climberArmsMotorMaster.set(TuningConstants.CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL);
             }
-            else if (forceArmsBack)
+            else if (forceArmsBack && !this.armsReverseLimitSwitchStatus)
             {
                 this.climberArmsMotorMaster.set(TuningConstants.CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL);
             }
@@ -326,8 +326,8 @@ public class ClimberMechanism implements IMechanism
                 this.climberCamMotorMaster.reset();
             }
 
+            this.logger.logNumber(ClimberMechanism.logName, "desiredCamPosition", this.desiredCamPosition);
             this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
-
             if (forceCamForward)
             {
                 this.climberCamMotorMaster.set(TuningConstants.CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL);
@@ -342,7 +342,7 @@ public class ClimberMechanism implements IMechanism
             }
         }
         else
-        {   
+        {
             if (this.driver.getDigital(Operation.ClimberCamStoredPosition))
             {
                 this.desiredCamPosition = TuningConstants.CLIMBER_CAM_STORED_POSITION;
@@ -368,7 +368,6 @@ public class ClimberMechanism implements IMechanism
             }
 
             this.logger.logNumber(ClimberMechanism.logName, "desiredCamPosition", this.desiredCamPosition);
-                
             this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
             this.climberCamMotorMaster.set(this.desiredCamPosition / HardwareConstants.CLIMBER_CAM_PULSE_DISTANCE);
         }
