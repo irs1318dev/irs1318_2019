@@ -17,9 +17,11 @@ public class ElevatorPositionTask extends CompositeOperationTask {
             Operation.ElevatorCargoLoadPosition,
         };
 
+    private final boolean completeWithTime;
+
     private ElevatorMechanism elevator;
-    private boolean completeWithTime;
-    
+    private boolean firstLoop;
+
     public ElevatorPositionTask(Operation toPerform)
     {
         super(TuningConstants.ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD, toPerform, ElevatorPositionTask.possibleOperations);
@@ -36,7 +38,17 @@ public class ElevatorPositionTask extends CompositeOperationTask {
     public void begin()
     {
         super.begin();
+
         this.elevator = this.getInjector().getInstance(ElevatorMechanism.class);
+        this.firstLoop = true;
+    }
+
+    @Override
+    public void update()
+    {
+        super.update();
+
+        this.firstLoop = false;
     }
 
     @Override
@@ -53,7 +65,7 @@ public class ElevatorPositionTask extends CompositeOperationTask {
         }
 
         double heightError = Math.abs(this.elevator.getHeight() - this.elevator.getDesiredHeight());
-        if (heightError < TuningConstants.ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD)
+        if (!this.firstLoop && heightError < TuningConstants.ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD)
         {
             return true;
         }

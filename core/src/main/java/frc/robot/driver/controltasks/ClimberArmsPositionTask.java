@@ -13,8 +13,10 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
             Operation.ClimberArmsHighClimbPosition  
         };
 
+    private final boolean completeWithTime;
+
     private ClimberMechanism climber;
-    private boolean completeWithTime;
+    private boolean firstLoop;
 
     public ClimberArmsPositionTask(double duration, Operation toPerform)
     {
@@ -32,7 +34,17 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
     public void begin()
     {
         super.begin();
+
         this.climber = this.getInjector().getInstance(ClimberMechanism.class);
+        this.firstLoop = true;
+    }
+
+    @Override
+    public void update()
+    {
+        super.update();
+
+        this.firstLoop = false;
     }
 
     @Override
@@ -48,7 +60,8 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
             return true;
         }
 
-        if (this.climber.getArmsError() < TuningConstants.CLIMBER_ARMS_POSITION_ERROR_THRESHOLD)
+        double positionError = Math.abs(this.climber.getArmsDesiredPosition() - this.climber.getArmsPosition());
+        if (!this.firstLoop && positionError < TuningConstants.CLIMBER_ARMS_POSITION_ERROR_THRESHOLD)
         {
             return true;
         }

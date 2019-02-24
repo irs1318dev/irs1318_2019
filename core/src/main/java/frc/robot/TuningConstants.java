@@ -200,7 +200,7 @@ public class TuningConstants
     //================================================== Elevator ==============================================================
 
     public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = 10.0;
-    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 1.0;
+    public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 100.0;
 
     // Sensors
     public static final boolean ELEVATOR_FORWARD_LIMIT_SWITCH_ENABLED = true;
@@ -285,7 +285,7 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_POSITION_PID_KF = 0.0;
 
     public static final double CLIMBER_ARMS_MOVEMENT_TIME_THRESHOLD = 2.0;
-    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = 100.0;
+    public static final double CLIMBER_ARMS_POSITION_ERROR_THRESHOLD = 20.0;
 
     // Cam
     public static final double CLIMBER_CAM_FULL_ROTATION = 4096.0; // in ticks
@@ -305,5 +305,5 @@ public class TuningConstants
     public static final double CLIMBER_CAM_POSITION_PID_KF = 0.0;
 
     public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = 2.0;
-    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = 100.0;
+    public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = 20.0;
 }

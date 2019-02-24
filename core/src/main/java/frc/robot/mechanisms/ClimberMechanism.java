@@ -155,6 +155,11 @@ public class ClimberMechanism implements IMechanism
         return this.armsPosition;
     }
 
+    public double getArmsDesiredPosition()
+    {
+        return this.desiredArmsPosition;
+    }
+
     public boolean getArmsForwardLimitSwitchStatus()
     {
         return this.armsForwardLimitSwitchStatus;
@@ -178,6 +183,11 @@ public class ClimberMechanism implements IMechanism
     public int getCamPosition() 
     {
         return this.camPosition;
+    }
+
+    public double getCamDesiredPosition()
+    {
+        return this.desiredCamPosition;
     }
 
     public boolean getCamLimitSwitchStatus()
