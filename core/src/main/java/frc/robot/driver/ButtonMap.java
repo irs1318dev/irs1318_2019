@@ -274,7 +274,7 @@ public class ButtonMap implements IButtonMap
                     Shift.None,
                     ButtonType.Simple));
             put(
-                Operation.GrabberPointFinger,
+                Operation.GrabberPointBeak,
                 new DigitalOperationDescription(
                     UserInputDevice.Driver,
                     UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
