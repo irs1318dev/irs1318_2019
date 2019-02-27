@@ -7,9 +7,10 @@ import frc.robot.vision.common.*;
 
 import java.util.*;
 
-public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
+public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipeline
 {
     private final ITimer timer;
+    private final VisionCalculations calc;
     private final IOpenCVProvider openCVProvider;
     private final boolean shouldUndistort;
     private final ImageUndistorter undistorter;
@@ -37,17 +38,18 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
     private volatile boolean streamEnabled;
 
     /**
-     * Initializes a new instance of the HSVCenterPipeline class.
+     * Initializes a new instance of the HSVDockingCenterRectanglePipeline class.
      * @param timer to use for any timing purposes
      * @param shouldUndistort whether to undistort the image or not
      */
-    public HSVDockingCenterPipeline(
+    public HSVDockingCenterRectanglePipeline(
         ITimer timer,
         IRobotProvider provider,
         boolean shouldUndistort)
     {
         this.shouldUndistort = shouldUndistort;
 
+        this.calc = provider.getVisionCalculations();
         this.openCVProvider = provider.getOpenCVProvider();
         this.undistorter = new ImageUndistorter(this.openCVProvider);
         IScalar lowFilter = this.openCVProvider.newScalar(VisionConstants.LIFECAM_HSV_FILTER_LOW_V0, VisionConstants.LIFECAM_HSV_FILTER_LOW_V1, VisionConstants.LIFECAM_HSV_FILTER_LOW_V2);
@@ -144,76 +146,46 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
             }
         }
 
-        // third, find the largest contour.
-        IMatOfPoint[] largestContours = ContourHelper.findTwoLargestContours(
-            this.openCVProvider, 
-            image, 
-            VisionConstants.CONTOUR_MIN_AREA,
-            VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_HxW_RATIO,
-            VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_RATIO_RANGE,
-            VisionConstants.DOCKING_CONTOUR_ALLOWABLE_RATIO );
-        
-        IMatOfPoint largestContour = largestContours[0];
-        IMatOfPoint secondLargestContour = largestContours[1];
-
-        if (largestContour == null)
+        List<IRotatedRect> rectangles = findRectangles(image);
+        image.release();
+        if (VisionConstants.DEBUG &&
+            VisionConstants.DEBUG_PRINT_OUTPUT &&
+            VisionConstants.DEBUG_PRINT_ANALYZER_DATA)
         {
-            if (VisionConstants.DEBUG &&
-                VisionConstants.DEBUG_PRINT_OUTPUT &&
-                VisionConstants.DEBUG_PRINT_ANALYZER_DATA)
+            for (int i = 0; i < rectangles.size(); i++)
             {
-                System.out.println("could not find any contour");
+                IRotatedRect rectangle = rectangles.get(i);
+                System.out.println("R_" + i + " : " + Arrays.toString(rectangle.getRawValues()));
             }
         }
 
-        // fourth, find the center of mass for the largest two contours
-        IPoint largestCenterOfMass = null;
-        IPoint secondLargestCenterOfMass = null;
-        IRotatedRect largestMinAreaRect = null;
-        IRotatedRect secondLargestMinAreaRect = null;
-        
-        if (largestContour != null)
+        List<Set<IRotatedRect>> groupedRects = calc.groupRotatedRect(rectangles);
+        if (VisionConstants.DEBUG &&
+            VisionConstants.DEBUG_PRINT_OUTPUT &&
+            VisionConstants.DEBUG_PRINT_ANALYZER_DATA)
         {
-            largestMinAreaRect = this.openCVProvider.minAreaRect(this.openCVProvider.convertToMatOfPoints2f(largestContour));
-            largestCenterOfMass = largestMinAreaRect.getCenter();
-            largestContour.release();
-        }
-
-        if (secondLargestContour != null)
-        {
-            secondLargestMinAreaRect = this.openCVProvider.minAreaRect(this.openCVProvider.convertToMatOfPoints2f(secondLargestContour));
-            secondLargestCenterOfMass = secondLargestMinAreaRect.getCenter();
-            secondLargestContour.release();
-        }
-
-        if (VisionConstants.DEBUG)
-        {
-            if (VisionConstants.DEBUG_PRINT_OUTPUT &&
-                VisionConstants.DEBUG_PRINT_ANALYZER_DATA)
+            int setNum = 0;
+            for (Set<IRotatedRect> group : groupedRects)
             {
-                if (largestCenterOfMass == null)
+                List<IRotatedRect> groupList = new ArrayList<IRotatedRect>();
+                groupList.addAll(group);
+                for (int i = 0; i < groupList.size(); i++)
                 {
-                    System.out.println("couldn't find the center of mass!");
-                }
-                else
-                {
-                    System.out.println(String.format("Center of mass: %f, %f", largestCenterOfMass.getX(), largestCenterOfMass.getY()));
+                    IRotatedRect rectangle = groupList.get(i);
+                    System.out.println("S_" + setNum + "_R_" + i + " : " + Arrays.toString(rectangle.getRawValues()));
                 }
 
-                if (secondLargestCenterOfMass == null)
-                {
-                    System.out.println("couldn't find the center of mass!");
-                }
-                else
-                {
-                    System.out.println(String.format("Center of mass: %f, %f", secondLargestCenterOfMass.getX(), secondLargestCenterOfMass.getY()));
-                }
+                setNum++;
             }
         }
+
+        Set<IRotatedRect> row = this.calc.pickRow(groupedRects, VisionResult.LOW_TARGET);
+        List<IRotatedRect> pair = this.calc.pickPairedRect(row);
 
         // Docking Calculations
-        if (largestCenterOfMass == null && secondLargestCenterOfMass == null)
+        if (pair == null || pair.size() != 2)
         {
+            this.dockingMarkerCenter = null;
             this.desiredAngleX = null;
             this.measuredAngleX = null;
 
@@ -223,25 +195,13 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         }
 
         // Finding which side is robot on by finding the center value
-        IRotatedRect minAreaRect;
-        if (largestCenterOfMass != null && secondLargestCenterOfMass != null && largestCenterOfMass.getX() > secondLargestCenterOfMass.getX())
-        {
-            // largest is on right, second-largest is on left
-            this.dockingMarkerCenter = secondLargestCenterOfMass;
-            minAreaRect = secondLargestMinAreaRect;
-        }
-        else
-        {
-            // largest is on left, second-largest is on right
-            this.dockingMarkerCenter = largestCenterOfMass;
-            minAreaRect = largestMinAreaRect;
-        }
-
+        IRotatedRect minAreaRect = pair.get(0);
         if (minAreaRect.getSize().getHeight() == 0.0)
         {
             return;
         }
 
+        this.dockingMarkerCenter = minAreaRect.getCenter();
         double xOffsetMeasured = this.dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
         double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - this.dockingMarkerCenter.getY();
         this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE - VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE;
@@ -250,6 +210,20 @@ public class HSVDockingCenterPipeline implements ICentroidVisionPipeline
         double distanceFromCam = (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan((VisionConstants.DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE - measuredAngleY) * VisionConstants.ANGLE_TO_RADIANS));
         this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
         this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET - VisionConstants.DOCKING_TAPE_OFFSET) / distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
+    }
+
+    public List<IRotatedRect> findRectangles(IMat image)
+    {
+        List<IMatOfPoint> contours = ContourHelper.getAllContours(openCVProvider, image, VisionConstants.CONTOUR_MIN_AREA);
+
+        List<IRotatedRect> rotatedRect = new ArrayList<IRotatedRect>(contours.size());
+        for (IMatOfPoint contour : contours)
+        {
+            rotatedRect.add(this.openCVProvider.minAreaRect(this.openCVProvider.convertToMatOfPoints2f(contour)));
+            contour.release();
+        }
+
+        return rotatedRect;
     }
 
     public void setMode(VisionProcessingState state)

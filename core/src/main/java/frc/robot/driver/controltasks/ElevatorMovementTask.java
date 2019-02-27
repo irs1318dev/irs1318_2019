@@ -10,8 +10,9 @@ public class ElevatorMovementTask extends CompositeOperationTask
             Operation.ElevatorMoveUp,
             Operation.ElevatorMoveDown,
             Operation.ElevatorForceUp,
-            Operation.ElevatorMoveDown
+            Operation.ElevatorForceDown
         };
+
     public ElevatorMovementTask(Operation toPerform)
     {
         super(TuningConstants.ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD, toPerform, ElevatorMovementTask.possibleOperations);

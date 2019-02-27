@@ -1,15 +1,11 @@
 package frc.robot.vision.pipelines;
 
-import frc.robot.GamePiece;
+import frc.robot.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.vision.VisionCalculations;
-import frc.robot.vision.VisionConstants;
+import frc.robot.vision.*;
 import frc.robot.vision.common.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipeline {
     private final VisionCalculations calc;
@@ -145,25 +141,6 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             image = this.undistorter.undistortFrame(image);
         }
 
-        // save the undistorted image for possible output later...
-        IMat undistortedImage = null;
-        if (this.shouldUndistort) {
-            undistortedImage = image.clone();
-        } else {
-            undistortedImage = image;
-        }
-
-        if (VisionConstants.DEBUG) {
-            if (VisionConstants.DEBUG_SAVE_FRAMES &&
-                    this.analyzedFrameCount % VisionConstants.DEBUG_FRAME_OUTPUT_GAP == 0) {
-                this.openCVProvider.imwrite(
-                        String.format("%simage%d-1.undistorted.jpg", VisionConstants.DEBUG_OUTPUT_FOLDER, this.analyzedFrameCount),
-                        image);
-            }
-
-        }
-
-
         // second, filter HSV
         image = this.hsvFilter.filterHSV(image);
         if (VisionConstants.DEBUG) {
@@ -181,7 +158,6 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
 
         List<IRotatedRect> rectangles = findRectangles(image);
         image.release();
-        undistortedImage.release();
         if (VisionConstants.DEBUG &&
                 VisionConstants.DEBUG_PRINT_OUTPUT &&
                 VisionConstants.DEBUG_PRINT_ANALYZER_DATA) {
@@ -207,6 +183,7 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
                 setNum++;
             }
         }
+
         this.visionResult = calc.determineVisionResult(gamePiece, processingState);
         Set<IRotatedRect> row = calc.pickRow(groupedRects, this.visionResult);
         List<IRotatedRect> pair = calc.pickPairedRect(row);
@@ -222,6 +199,18 @@ public class Vision2019ApproachAndDockPipeline implements ICentroidVisionPipelin
             this.glideRadius = calc.glideRadius(azimuth, pixelsPerInch);
             this.sweepAngle = calc.findSweepAngle(pixelsPerInch, azimuth, glideRadius);
             this.glideDistance = calc.findGlideDistance(glideRadius, sweepAngle);
+
+            /*
+            this.dockingMarkerCenter = pair.get(0).getCenter();
+            double xOffsetMeasured = this.dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
+            double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - this.dockingMarkerCenter.getY();
+            this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE;
+            double measuredAngleY = Math.atan(yOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y) * VisionConstants.RADIANS_TO_ANGLE;
+
+            double distanceFromCam = (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan((VisionConstants.DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE - measuredAngleY) * VisionConstants.ANGLE_TO_RADIANS));
+            this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
+            this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET - VisionConstants.DOCKING_TAPE_OFFSET) / distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
+            */
         } else {
             this.visionResult = VisionResult.NONE;
         }

@@ -185,16 +185,15 @@ public class ElevatorMechanism implements IMechanism
                 this.elevatorMotorMaster.reset();
             }
 
+            this.logger.logNumber(ElevatorMechanism.logName, "desiredHeight", this.desiredHeight);
             this.elevatorMotorMaster.setControlMode(TalonSRXControlMode.PercentOutput);
-            if (forceUp)
+            if (forceUp && !this.elevatorForwardLimitSwitchStatus)
             {
-                this.elevatorMotorMaster.set(
-                    this.elevatorForwardLimitSwitchStatus ? 0.0 : TuningConstants.ELEVATOR_DEBUG_UP_POWER_LEVEL);
+                this.elevatorMotorMaster.set(TuningConstants.ELEVATOR_DEBUG_UP_POWER_LEVEL);
             }
-            else if (forceDown)
+            else if (forceDown && !this.elevatorReverseLimitSwitchStatus)
             {
-                this.elevatorMotorMaster.set(
-                    this.elevatorReverseLimitSwitchStatus ? 0.0 : TuningConstants.ELEVATOR_DEBUG_DOWN_POWER_LEVEL);
+                this.elevatorMotorMaster.set(TuningConstants.ELEVATOR_DEBUG_DOWN_POWER_LEVEL);
             }
             else
             {
@@ -266,7 +265,6 @@ public class ElevatorMechanism implements IMechanism
                                     HardwareConstants.ELEVATOR_MAX_HEIGHT);
 
             this.logger.logNumber(ElevatorMechanism.logName, "desiredHeight", this.desiredHeight);
-
             this.elevatorMotorMaster.setControlMode(this.pidControlMode);
             this.elevatorMotorMaster.set(this.desiredHeight / HardwareConstants.ELEVATOR_PULSE_DISTANCE);
         }
