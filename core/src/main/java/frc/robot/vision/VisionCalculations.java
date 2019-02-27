@@ -67,6 +67,11 @@ public class VisionCalculations {
 
     public Set<IRotatedRect> pickRow(List<Set<IRotatedRect>> rows, VisionResult visionResult)
     {
+        if (rows == null || rows.size() == 0)
+        {
+            return null;
+        }
+
         if (rows.size() == 1)
         {
             return rows.get(0);
