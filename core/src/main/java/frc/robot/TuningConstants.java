@@ -15,7 +15,7 @@ import frc.robot.mechanisms.*;
  */
 public class TuningConstants
 {
-    public static final boolean COMPETITION_ROBOT = false;
+    public static final boolean COMPETITION_ROBOT = true;
     public static final boolean THROW_EXCEPTIONS = !TuningConstants.COMPETITION_ROBOT;
 
     public static List<IMechanism> GetActiveMechanisms(Injector injector)
@@ -52,7 +52,6 @@ public class TuningConstants
     public static final double NAVX_TURN_COMPLETE_DESIRED_VELOCITY_DELTA = 0;
 
     // Navx Turn PID Constants
-    // --------- SLOW NEEDS 2019 UPDATE ---------
     public static final double NAVX_TURN_PID_KP = 0.25;
     public static final double NAVX_TURN_PID_KI = 0.0;
     public static final double NAVX_TURN_PID_KD = 1.0;
@@ -60,7 +59,7 @@ public class TuningConstants
     public static final double NAVX_TURN_PID_KS = 1.0;
     public static final double NAVX_TURN_PID_MIN = -0.8;
     public static final double NAVX_TURN_PID_MAX = 0.8;
-    public static final double NAVX_FAST_TURN_PID_KP = 0.012;
+    public static final double NAVX_FAST_TURN_PID_KP = 0.01;
     public static final double NAVX_FAST_TURN_PID_KI = 0.0;
     public static final double NAVX_FAST_TURN_PID_KD = 0.0;
     public static final double NAVX_FAST_TURN_PID_KF = 0.0;
@@ -73,7 +72,7 @@ public class TuningConstants
 
     // PID settings for Centering the robot on a vision target from one stationary place
     // --------- NEEDS 2019 UPDATE ---------
-    public static final double VISION_STATIONARY_CENTERING_PID_KP = 0.04;
+    public static final double VISION_STATIONARY_CENTERING_PID_KP = 0.02;
     public static final double VISION_STATIONARY_CENTERING_PID_KI = 0.0;
     public static final double VISION_STATIONARY_CENTERING_PID_KD = 0.02;
     public static final double VISION_STATIONARY_CENTERING_PID_KF = 0.0;
@@ -82,7 +81,6 @@ public class TuningConstants
     public static final double VISION_STATIONARY_CENTERING_PID_MAX = 0.3;
 
     // PID settings for Centering the robot on a vision target
-    // --------- NEEDS 2019 UPDATE ---------
     public static final double VISION_MOVING_CENTERING_PID_KP = 0.02;
     public static final double VISION_MOVING_CENTERING_PID_KI = 0.0;
     public static final double VISION_MOVING_CENTERING_PID_KD = 0.03;
@@ -92,7 +90,6 @@ public class TuningConstants
     public static final double VISION_MOVING_CENTERING_PID_MAX = 0.3;
 
     // PID settings for Advancing the robot towards a vision target
-    // --------- NEEDS 2019 UPDATE ---------
     public static final double VISION_ADVANCING_PID_KP = 0.01;
     public static final double VISION_ADVANCING_PID_KI = 0.0;
     public static final double VISION_ADVANCING_PID_KD = 0.0;
@@ -252,7 +249,7 @@ public class TuningConstants
 
     public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = 3.0;
 
-    public static final boolean CLIMBER_ARMS_USE_PID = true; 
+    public static final boolean CLIMBER_ARMS_USE_PID = false; 
     public static final boolean CLIMBER_ARMS_USE_MOTION_MAGIC = true;
     public static final boolean CLIMBER_CAM_USE_PID = false;
     public static final boolean CLIMBER_CAM_USE_MOTION_MAGIC = false;

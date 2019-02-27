@@ -278,7 +278,6 @@ public class ButtonMap implements IButtonMap
                 new DigitalOperationDescription(
                     UserInputDevice.Driver,
                     UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
-                    Shift.None,
                     ButtonType.Simple));
             put(
                 Operation.GrabberWristStartPosition,
@@ -731,7 +730,7 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.ElevatorForceUp,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
                     Shift.Debug,
                     ButtonType.Simple,
                     () -> new ElevatorMovementTask(Operation.ElevatorForceUp),
@@ -746,7 +745,7 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.ElevatorForceDown,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_16,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
                     Shift.Debug,
                     ButtonType.Simple,
                     () -> new ElevatorMovementTask(Operation.ElevatorForceDown),
