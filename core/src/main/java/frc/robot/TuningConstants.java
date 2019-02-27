@@ -255,6 +255,7 @@ public class TuningConstants
     public static final boolean CLIMBER_ARMS_USE_PID = true; 
     public static final boolean CLIMBER_ARMS_USE_MOTION_MAGIC = true;
     public static final boolean CLIMBER_CAM_USE_PID = false;
+    public static final boolean CLIMBER_CAM_USE_MOTION_MAGIC = false;
 
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
@@ -303,6 +304,13 @@ public class TuningConstants
     public static final double CLIMBER_CAM_POSITION_PID_KI = 0.0;
     public static final double CLIMBER_CAM_POSITION_PID_KD = 0.0;
     public static final double CLIMBER_CAM_POSITION_PID_KF = 0.0;
+
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KP = 15.0;
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KI = 0.0;
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KD = 0.0;
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KF = 1.75; // 1023 over max speed (600 ticks per 100ms)
+    public static final int CLIMBER_CAM_MM_POSITION_PID_CRUISE_VELOC = 600;
+    public static final int CLIMBER_CAM_MM_POSITION_PID_ACCEL = 250;
 
     public static final double CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD = 2.0;
     public static final double CLIMBER_CAM_POSITION_ERROR_THRESHOLD = 20.0;

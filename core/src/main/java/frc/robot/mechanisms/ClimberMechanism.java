@@ -74,10 +74,10 @@ public class ClimberMechanism implements IMechanism
         this.climberArmsMotorMaster.setReverseLimitSwitch(
             TuningConstants.CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED,
             TuningConstants.CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
-        this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
         this.climberArmsMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);
         if (TuningConstants.CLIMBER_ARMS_USE_MOTION_MAGIC)
         {
+            this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.MotionMagicPosition);
             this.climberArmsMotorMaster.setMotionMagicPIDF(
                 TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_KP,
                 TuningConstants.CLIMBER_ARMS_MM_POSITION_PID_KI,
@@ -89,6 +89,7 @@ public class ClimberMechanism implements IMechanism
         }
         else
         {
+            this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
             this.climberArmsMotorMaster.setPIDF(
                 TuningConstants.CLIMBER_ARMS_POSITION_PID_KP,
                 TuningConstants.CLIMBER_ARMS_POSITION_PID_KI,
@@ -113,17 +114,32 @@ public class ClimberMechanism implements IMechanism
         this.climberCamMotorMaster.setInvertOutput(HardwareConstants.CLIMBER_CAM_MASTER_INVERT_OUTPUT);
         this.climberCamMotorMaster.setInvertSensor(HardwareConstants.CLIMBER_CAM_INVERT_SENSOR);
         this.climberCamMotorMaster.setSensorType(TalonSRXFeedbackDevice.QuadEncoder);
-        this.climberCamMotorMaster.setPIDF(
-            TuningConstants.CLIMBER_CAM_POSITION_PID_KP,
-            TuningConstants.CLIMBER_CAM_POSITION_PID_KI,
-            TuningConstants.CLIMBER_CAM_POSITION_PID_KD,
-            TuningConstants.CLIMBER_CAM_POSITION_PID_KF,
-            ClimberMechanism.pidSlotId);
         this.climberCamMotorMaster.setPosition(
             (int)(TuningConstants.CLIMBER_CAM_STORED_POSITION / HardwareConstants.CLIMBER_CAM_PULSE_DISTANCE));
 
-        this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
         this.climberCamMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);
+        if (TuningConstants.CLIMBER_CAM_USE_MOTION_MAGIC)
+        {
+            this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.MotionMagicPosition);
+            this.climberCamMotorMaster.setMotionMagicPIDF(
+                TuningConstants.CLIMBER_CAM_MM_POSITION_PID_KP,
+                TuningConstants.CLIMBER_CAM_MM_POSITION_PID_KI,
+                TuningConstants.CLIMBER_CAM_MM_POSITION_PID_KD,
+                TuningConstants.CLIMBER_CAM_MM_POSITION_PID_KF,
+                TuningConstants.CLIMBER_CAM_MM_POSITION_PID_CRUISE_VELOC,
+                TuningConstants.CLIMBER_CAM_MM_POSITION_PID_ACCEL,
+                ClimberMechanism.pidSlotId);
+        }
+        else
+        {
+            this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
+            this.climberCamMotorMaster.setPIDF(
+                TuningConstants.CLIMBER_CAM_POSITION_PID_KP,
+                TuningConstants.CLIMBER_CAM_POSITION_PID_KI,
+                TuningConstants.CLIMBER_CAM_POSITION_PID_KD,
+                TuningConstants.CLIMBER_CAM_POSITION_PID_KF,
+                ClimberMechanism.pidSlotId);    
+        }
 
         IVictorSPX climberCamMotorFollower = provider.getVictorSPX(ElectronicsConstants.CLIMBER_CAM_MOTOR_FOLLOWER_CAN_ID);
         climberCamMotorFollower.setNeutralMode(TalonSRXNeutralMode.Brake);
@@ -369,7 +385,15 @@ public class ClimberMechanism implements IMechanism
             }
 
             this.logger.logNumber(ClimberMechanism.logName, "desiredCamPosition", this.desiredCamPosition);
-            this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
+            if (TuningConstants.CLIMBER_ARMS_USE_MOTION_MAGIC)
+            {
+                this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.MotionMagicPosition);   
+            }
+            else
+            {
+                this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
+            }
+
             this.climberCamMotorMaster.set(this.desiredCamPosition / HardwareConstants.CLIMBER_CAM_PULSE_DISTANCE);
         }
 
