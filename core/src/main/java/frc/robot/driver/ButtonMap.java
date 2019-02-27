@@ -508,7 +508,18 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_10,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new WaitTask(0.0),
+                    () -> SequentialTask.Sequence(
+                        new ElevatorPositionTask(Operation.ElevatorHatch2Position),
+                        ConcurrentTask.AllTasks(
+                            new ClimberArmsPositionTask(Operation.ClimberArmsLowClimbPosition),
+                            SequentialTask.Sequence(
+                                new DriveSimplePathTask(1.0, -0.2, -0.2),
+                                new ClimberCamPositionTask(Operation.ClimberCamLowClimbPosition),
+                                new DriveSimplePathTask(1.0, -0.2, -0.2))),
+                        ConcurrentTask.AllTasks(
+                            new ClimberArmsPositionTask(Operation.ClimberArmsRetractedPosition),
+                            new ClimberCamPositionTask(Operation.ClimberCamStoredPosition),
+                            new DriveSimplePathTask(1.0, -0.2, -0.2))),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,
@@ -559,7 +570,18 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new WaitTask(0.0),
+                    () -> SequentialTask.Sequence(
+                        new ElevatorPositionTask(Operation.ElevatorHatch2Position),
+                        ConcurrentTask.AllTasks(
+                            new ClimberArmsPositionTask(Operation.ClimberArmsHighClimbPosition),
+                            SequentialTask.Sequence(
+                                new DriveSimplePathTask(1.0, -0.2, -0.2),
+                                new ClimberCamPositionTask(Operation.ClimberCamHighClimbPosition),
+                                new DriveSimplePathTask(1.0, -0.2, -0.2))),
+                        ConcurrentTask.AllTasks(
+                            new ClimberArmsPositionTask(Operation.ClimberArmsRetractedPosition),
+                            new ClimberCamPositionTask(Operation.ClimberCamStoredPosition),
+                            new DriveSimplePathTask(1.0, -0.2, -0.2))),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,

@@ -343,17 +343,18 @@ public class ClimberMechanism implements IMechanism
         }
         else
         {
+            // note - we want the desired position to increase in the positive direction when going to a setpoint...
             if (this.driver.getDigital(Operation.ClimberCamStoredPosition))
             {
-                this.desiredCamPosition = TuningConstants.CLIMBER_CAM_STORED_POSITION;
+                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.desiredCamPosition, TuningConstants.CLIMBER_CAM_STORED_POSITION);
             }
             else if (this.driver.getDigital(Operation.ClimberCamLowClimbPosition))
             {
-                this.desiredCamPosition = TuningConstants.CLIMBER_CAM_LOW_CLIMB_POSITION;
+                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.desiredCamPosition, TuningConstants.CLIMBER_CAM_LOW_CLIMB_POSITION);
             }
             else if (this.driver.getDigital(Operation.ClimberCamHighClimbPosition))
             {
-                this.desiredCamPosition = TuningConstants.CLIMBER_CAM_HIGH_CLIMB_POSITION;
+                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.desiredCamPosition, TuningConstants.CLIMBER_CAM_HIGH_CLIMB_POSITION);
             }
 
             if (this.driver.getDigital(Operation.ClimberCamMoveForward))
@@ -392,5 +393,18 @@ public class ClimberMechanism implements IMechanism
         this.camLimitSwitchStatus = false;
         this.climbedHeight = 0.0;
 
+    }
+
+    private static double updateCamRotation(double currentPosition, double newPositionOffset)
+    {
+        double currentRotations = currentPosition / TuningConstants.CLIMBER_CAM_FULL_ROTATION;
+        double prevFullRotation = Math.floor(currentRotations) * TuningConstants.CLIMBER_CAM_FULL_ROTATION;
+        if (prevFullRotation + newPositionOffset >= currentPosition)
+        {
+            return prevFullRotation + newPositionOffset;
+        }
+
+        double nextFullRotation = prevFullRotation + TuningConstants.CLIMBER_CAM_FULL_ROTATION;
+        return nextFullRotation + newPositionOffset;
     }
 }
