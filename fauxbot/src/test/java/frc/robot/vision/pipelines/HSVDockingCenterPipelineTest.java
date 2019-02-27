@@ -23,7 +23,7 @@ public class HSVDockingCenterPipelineTest
     {
         nu.pattern.OpenCV.loadShared();
         List<String> images = new ArrayList<>();
-        images.add("Capture.PNG");
+        images.add("Capture1.PNG");
         images.add("Capture2.PNG");
         images.add("Capture3.PNG");
         images.add("Capture4.PNG");

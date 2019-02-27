@@ -7,10 +7,11 @@ import frc.robot.vision.common.VisionResult;
 
 import java.util.*;
 
-public class VisionCalculations
-{
-    public VisionCalculations()
-    {
+public class VisionCalculations {
+
+    private static double EPS = 0.01;
+
+    public VisionCalculations() {
     }
 
     public List<Set<IRotatedRect>> groupRotatedRect(List<IRotatedRect> rotatedRect)
@@ -159,15 +160,9 @@ public class VisionCalculations
         return pair;
     }
 
-    public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects)
-    {
-        List<IRotatedRect> rectList = new ArrayList<IRotatedRect>(rects.size());
-        List<IRotatedRect> pairedRect = new ArrayList<IRotatedRect>(1 + rects.size() / 2);
-
-        rectList.addAll(rects);
-        Collections.sort(
-            rectList,
-            Comparator.comparingDouble(arg0 -> arg0.getCenter().getX()));
+    public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects) {
+        List<IRotatedRect> pairedRect = new ArrayList<>();
+        List<IRotatedRect> rectList = sortByCenterX(rects);
 
         for (int i = 0; i < rectList.size(); i++)
         {
@@ -181,10 +176,18 @@ public class VisionCalculations
         return largestRect(pairedRect);
     }
 
-    public int findInterval(double avgPixelValue, List<PixelsToInches> interpolateList)
-    {
-        for (int i = 0; i < interpolateList.size(); i++)
-        {
+    public List<IRotatedRect> sortByCenterX(Collection<IRotatedRect> rects) {
+        List<IRotatedRect> rectList = new ArrayList<>();
+        rectList.addAll(rects);
+        Collections.sort(rectList,
+                Comparator.comparingDouble(arg0 -> arg0.getCenter().getX()));
+        return rectList;
+
+    }
+
+
+    public int findInterval(double avgPixelValue, List<PixelsToInches> interpolateList) {
+        for (int i = 0; i < interpolateList.size(); i++) {
             PixelsToInches pixelsToInches = VisionConstants.PIXELS_TO_INCHES.get(i);
             if (avgPixelValue > pixelsToInches.getPixels())
             {
@@ -226,10 +229,13 @@ public class VisionCalculations
         {
             return -1000.0;
         }
+        if (Math.abs(avgPixels) < EPS) {
+            return -2000.0;
+        }
 
         IRotatedRect left = rects.get(0);
         IRotatedRect right = rects.get(1);
-        //TODO: check for divide by zero
+
         double inchesPerPixels = VisionConstants.DOCKING_RETROREFLECTIVE_TAPE_HEIGHT_STRAIGHT / avgPixels;
         double observedPixels = (right.getCenter().getX() - left.getCenter().getX());
         double distanceBetweenCenters = VisionConstants.DOCKING_DISTANCE_BETWEEN_TAPE_TARGETS / inchesPerPixels;
@@ -243,25 +249,31 @@ public class VisionCalculations
 
         double azimuth = 0.0;
         // only look up angle if it is not close to straight on
-        if ((Math.abs(observedPixels - distanceBetweenCenters)/distanceBetweenCenters) > 0.01)
-        {
-            azimuth = Math.acos(observedPixels / distanceBetweenCenters);
+        if ((Math.abs(observedPixels - distanceBetweenCenters)/distanceBetweenCenters) > EPS) {
+            azimuth =
+                    calculateAzimuthSign(left, right) *
+                    Math.acos(observedPixels / distanceBetweenCenters);
         }
 
-        if (VisionConstants.DEBUG &&
-            VisionConstants.DEBUG_PRINT_OUTPUT &&
-            VisionConstants.DEBUG_PRINT_ANALYZER_DATA)
-        {
-            System.out.println(String.format("a=%f, adeg=%f", azimuth, azimuth*180/Math.PI));
-        }
-
+            if (VisionConstants.DEBUG &&
+                    VisionConstants.DEBUG_PRINT_OUTPUT &&
+                    VisionConstants.DEBUG_PRINT_ANALYZER_DATA) {
+                System.out.println(String.format("a=%f, adeg=%f", azimuth, azimuth * 180 / Math.PI));
+            }
         return azimuth;
     }
 
-    public double calculateIntitialApproachTurnAngle(double azimuth, double pixelsPerInch, List<IRotatedRect> rects, double distance)
-    {
-        if (rects.size() != 2)
-        {
+    public double calculateAzimuthSign(IRotatedRect left, IRotatedRect right) {
+        // when looking at te targets, the further target is higher in the frame, (lower y)
+        // we can use this to determine the direction, because the further tape will be higher in frame
+        if (left.getCenter().getY() - right.getCenter().getY() < -EPS) {
+            return -1.0;
+        }
+        return 1.0;
+    }
+
+    public double calculateIntitialApproachTurnAngle(double azimuth, double pixelsPerInch, List<IRotatedRect> rects, double distance) {
+        if (rects.size() != 2) {
             return -1000.0;
         }
 

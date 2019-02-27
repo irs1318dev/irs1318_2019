@@ -154,5 +154,44 @@ S_1_R_1 : [250.0, 19.0, 8.0, 34.0, -0.0]
 
     }
 
+    /*
+    C:\Users\DriverStationB\git\\irs1318_2019\fauxbot\src\test\resources\frc.robot.vision.pipelines\Capture6.PNG
+    R_0 : [256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797]
+    R_1 : [195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588]
+    R_2 : [136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672]
+
+    */
+    public static final List<IRotatedRect> CAPTURE6_RECT_PAIR_LIST =
+            new ArrayList() {{
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{256.54998779296875, 106.85000610351562, 45.53679656982422, 14.862703323364258, -71.56505584716797})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{195.69793701171875, 38.526268005371094, 13.081071853637695, 48.64252853393555, -4.969740390777588})));
+                add(new RotatedRectWrapper(
+                        new RotatedRect(
+                                new double[]{136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672})));
+            }};
+    @Test
+    public void testPickRow_capture6() {
+        VisionCalculations calc = new VisionCalculations();
+        List<Set<IRotatedRect>> grouped = calc.groupRotatedRect(CAPTURE6_RECT_PAIR_LIST);
+        assertEquals(2, grouped.size());
+
+        Set<IRotatedRect> pickRowRectsLow = calc.pickRow(grouped, VisionResult.LOW_TARGET);
+        assertEquals(1, pickRowRectsLow.size());
+
+        List<IRotatedRect> pairedLowRects = calc.pickPairedRect(pickRowRectsLow);
+        assertEquals(0, pairedLowRects.size());
+
+        Set<IRotatedRect> pickRowRectsHigh = calc.pickRow(grouped, VisionResult.HIGH_TARGET);
+        assertEquals(2, pickRowRectsHigh.size());
+
+        List<IRotatedRect> pairedHighRects = calc.pickPairedRect(pickRowRectsHigh);
+        assertEquals(2, pairedHighRects.size());
+
+
+    }
 
 }

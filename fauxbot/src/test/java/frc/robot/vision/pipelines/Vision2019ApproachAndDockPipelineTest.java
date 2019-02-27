@@ -26,7 +26,7 @@ public class Vision2019ApproachAndDockPipelineTest
 
         nu.pattern.OpenCV.loadShared();
         List<String> images = new ArrayList<>();
-        images.add("Capture.PNG");
+        images.add("Capture1.PNG");
         images.add("Capture2.PNG");
         images.add("Capture3.PNG");
         images.add("Capture4.PNG");
@@ -37,25 +37,28 @@ public class Vision2019ApproachAndDockPipelineTest
         System.out.println("\nLow targets only");
         for (String imageStr : images) {
             String imagePath = basePath + repoPath + imageStr;
-            testImagePath(imagePath);
+            testImagePath(imagePath, GamePiece.HatchPanel, VisionProcessingState.ActiveCargoShip);
         }
         System.out.println("\nHigh targets only");
         for (String imageStr : images) {
             String imagePath = basePath + repoPath + imageStr;
-            testImagePath(imagePath);
+            testImagePath(imagePath, GamePiece.Cargo, VisionProcessingState.ActiveRocket);
         }
     }
 
-    private void testImagePath(String imagePath) {
+    private void testImagePath(String imagePath, GamePiece gamePiece, VisionProcessingState mode) {
         System.out.println(imagePath);
         Mat mat = Imgcodecs.imread(imagePath);
         MatWrapper wrapper = new MatWrapper(mat);
         Vision2019ApproachAndDockPipeline pipeline =
-                new Vision2019ApproachAndDockPipeline(new FauxbotTimer(), new FauxbotProvider(), true);
-        pipeline.setMode(VisionProcessingState.ActiveCargoShip);
+                new Vision2019ApproachAndDockPipeline(
+                        new FauxbotTimer(),
+                        new FauxbotProvider(),
+                        true);
+        pipeline.setGamePiece(gamePiece);
+        pipeline.setMode(mode);
 
         pipeline.process(wrapper);
-//        assertNotNull(pipeline.getCenter());
 
     }
 
