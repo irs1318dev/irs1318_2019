@@ -70,7 +70,7 @@ public class VisionConstants
     public static final double DOCKING_CAMERA_MOUNTING_DISTANCE = 24.5; // change? --> (Y) distance from the front of the robot to the viewport of the camera (~21 inches plus 3.5 for bumpers)
     public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET = 4.75; // change? --> (X) distance from the center line of the robot to the viewport of the camera
     public static final double DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE = 24; // change? --> (Y) degrees camera is mounted from level/horizontal line parallel to floor
-    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE = -2; // change? --> (X) degrees camera is mounted from straight forwards
+    public static final double DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE = -0.5; // change? --> (X) degrees camera is mounted from straight forwards
 
     public static final double ROCKET_TO_GROUND_TAPE_HEIGHT = 28.5875; // (Z) distance from floor to center of tape
     public static final double DOCKING_CAMERA_MOUNTING_HEIGHT = 43; // (Z) distance from floor to the viewport of the camera

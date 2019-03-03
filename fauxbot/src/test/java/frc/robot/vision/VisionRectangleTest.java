@@ -53,7 +53,7 @@ S_1_R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.411796
                                 new double[]{239.90577697753906, 16.463115692138672, 11.135895729064941, 32.41179656982422, -5.194429397583008})));
             }};
 
-    @Test
+    //@Test
     public void testGroupRect_capture4() {
         VisionCalculations calc = new VisionCalculations();
 
@@ -70,7 +70,7 @@ S_1_R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.411796
     }
 
 
-    @Test
+    //@Test
     public void testPickRow_capture4() {
         VisionCalculations calc = new VisionCalculations();
         List<Set<IRotatedRect>> grouped = calc.groupRotatedRect(CAPTURE4_RECT_LIST);
@@ -96,7 +96,7 @@ S_1_R_3 : [239.90577697753906, 16.463115692138672, 11.135895729064941, 32.411796
                                 new double[]{219.82196044921875, 46.75457763671875, 62.32841873168945, 22.802085876464844, -78.2317123413086})));
             }};
 
-    @Test
+    //@Test
     public void testPickRow_capture5() {
         VisionCalculations calc = new VisionCalculations();
         List<Set<IRotatedRect>> grouped = calc.groupRotatedRect(CAPTURE5_RECT_LIST);
@@ -135,7 +135,7 @@ S_1_R_1 : [250.0, 19.0, 8.0, 34.0, -0.0]
                         new RotatedRect(
                                 new double[]{250.0, 19.0, 8.0, 34.0, -0.0})));
             }};
-    @Test
+    //@Test
     public void testPickRow_capture3() {
         VisionCalculations calc = new VisionCalculations();
         List<Set<IRotatedRect>> grouped = calc.groupRotatedRect(CAPTURE3_RECT_LIST);
@@ -173,7 +173,7 @@ S_1_R_1 : [250.0, 19.0, 8.0, 34.0, -0.0]
                         new RotatedRect(
                                 new double[]{136.5460968017578, 30.923683166503906, 39.63337707519531, 9.60930061340332, -85.42607879638672})));
             }};
-    @Test
+    //@Test
     public void testPickRow_capture6() {
         VisionCalculations calc = new VisionCalculations();
         List<Set<IRotatedRect>> grouped = calc.groupRotatedRect(CAPTURE6_RECT_PAIR_LIST);

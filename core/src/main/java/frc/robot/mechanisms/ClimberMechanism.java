@@ -74,6 +74,7 @@ public class ClimberMechanism implements IMechanism
         this.climberArmsMotorMaster.setReverseLimitSwitch(
             TuningConstants.CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED,
             TuningConstants.CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN);
+        this.climberArmsMotorMaster.configureAllowableClosedloopError(ClimberMechanism.pidSlotId, TuningConstants.CLIMBER_ARMS_ALLOWABLE_CLOSED_LOOP_ERROR);
         this.climberArmsMotorMaster.setSelectedSlot(ClimberMechanism.pidSlotId);
         if (TuningConstants.CLIMBER_ARMS_USE_MOTION_MAGIC)
         {
@@ -262,7 +263,8 @@ public class ClimberMechanism implements IMechanism
 
         boolean forceArmsForward = this.driver.getDigital(Operation.ClimberArmsForceForward);
         boolean forceArmsBack = this.driver.getDigital(Operation.ClimberArmsForceBackward);
-        if (forceArmsForward || forceArmsBack || !TuningConstants.CLIMBER_ARMS_USE_PID) 
+        boolean forceArmsZero = this.driver.getDigital(Operation.ClimberArmsForceZero);
+        if (forceArmsForward || forceArmsBack || forceArmsZero || !TuningConstants.CLIMBER_ARMS_USE_PID) 
         {
             this.desiredArmsPosition = this.armsPosition;
             if (this.armsReverseLimitSwitchStatus || this.armsPosition < 0.0)
@@ -362,15 +364,19 @@ public class ClimberMechanism implements IMechanism
             // note - we want the desired position to increase in the positive direction when going to a setpoint...
             if (this.driver.getDigital(Operation.ClimberCamStoredPosition))
             {
-                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.desiredCamPosition, TuningConstants.CLIMBER_CAM_STORED_POSITION);
+                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_STORED_POSITION);
             }
             else if (this.driver.getDigital(Operation.ClimberCamLowClimbPosition))
             {
-                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.desiredCamPosition, TuningConstants.CLIMBER_CAM_LOW_CLIMB_POSITION);
+                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_LOW_CLIMB_POSITION);
             }
             else if (this.driver.getDigital(Operation.ClimberCamHighClimbPosition))
             {
-                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.desiredCamPosition, TuningConstants.CLIMBER_CAM_HIGH_CLIMB_POSITION);
+                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_HIGH_CLIMB_POSITION);
+            }
+            else if (this.driver.getDigital(Operation.ClimberCamOutOfWayPosition))
+            {
+                this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_OUT_OF_WAY_POSITION);
             }
 
             if (this.driver.getDigital(Operation.ClimberCamMoveForward))
@@ -385,13 +391,13 @@ public class ClimberMechanism implements IMechanism
             }
 
             this.logger.logNumber(ClimberMechanism.logName, "desiredCamPosition", this.desiredCamPosition);
-            if (TuningConstants.CLIMBER_ARMS_USE_MOTION_MAGIC)
+            if (TuningConstants.CLIMBER_CAM_USE_MOTION_MAGIC)
             {
-                this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.MotionMagicPosition);   
+                this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.MotionMagicPosition);   
             }
             else
             {
-                this.climberArmsMotorMaster.setControlMode(TalonSRXControlMode.Position);
+                this.climberCamMotorMaster.setControlMode(TalonSRXControlMode.Position);
             }
 
             this.climberCamMotorMaster.set(this.desiredCamPosition / HardwareConstants.CLIMBER_CAM_PULSE_DISTANCE);
@@ -423,7 +429,9 @@ public class ClimberMechanism implements IMechanism
     {
         double currentRotations = currentPosition / TuningConstants.CLIMBER_CAM_FULL_ROTATION;
         double prevFullRotation = Math.floor(currentRotations) * TuningConstants.CLIMBER_CAM_FULL_ROTATION;
-        if (prevFullRotation + newPositionOffset >= currentPosition)
+
+        double absDiff = Math.abs((prevFullRotation + newPositionOffset) - currentPosition);
+        if ((prevFullRotation + newPositionOffset) >= currentPosition || absDiff < 200.0)
         {
             return prevFullRotation + newPositionOffset;
         }

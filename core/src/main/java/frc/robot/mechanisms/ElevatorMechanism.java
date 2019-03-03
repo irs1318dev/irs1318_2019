@@ -231,6 +231,10 @@ public class ElevatorMechanism implements IMechanism
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CARGO_LOAD_POSITION;
             }
+            else if (this.driver.getDigital(Operation.ElevatorCamReturnPosition))
+            {
+                newDesiredHeight = TuningConstants.ELEVATOR_CAM_RETURN_POSITION;
+            }
 
             if (this.driver.getDigital(Operation.ElevatorMoveUp))
             {
