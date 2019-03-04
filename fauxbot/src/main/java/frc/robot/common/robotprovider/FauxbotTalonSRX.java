@@ -54,6 +54,10 @@ public class FauxbotTalonSRX extends FauxbotAdvancedMotorBase implements ITalonS
     {
     }
 
+    public void configureAllowableClosedloopError(int slotId, int error)
+    {
+    }
+
     public void setSelectedSlot(int slotId)
     {
     }

@@ -10,7 +10,8 @@ public class ClimberArmsMovementTask extends CompositeOperationTask
             Operation.ClimberArmsMoveForward,
             Operation.ClimberArmsMoveBackward,
             Operation.ClimberArmsForceForward,
-            Operation.ClimberArmsForceBackward                
+            Operation.ClimberArmsForceBackward,
+            Operation.ClimberArmsForceZero
         };
 
     public ClimberArmsMovementTask(Operation toPerform)

@@ -16,10 +16,6 @@ public enum MacroOperation
     VisionCenterAndAdvanceCargoShip,
     DriveForwardTurnRight,
 
-    // Climb operations:
-    ClimbHab2,
-    ClimbHab3,
-
     // Grabber operation:
     GrabberKickPanelRepeatedlyTask,
 
@@ -36,9 +32,15 @@ public enum MacroOperation
     ClimberCamMoveBackward,
     ClimberArmsForceForward,
     ClimberArmsForceBackward,
+    ClimberArmsForceZero,
     ClimberCamForceForward,
     ClimberCamForceBackward,
-
+    ClimbPiecewiseA,
+    ClimbPiecewiseB,
+    ClimbPiecewiseC,
+    ClimbPiecewiseD,
+    ClimbHab2,
+    ClimbHab3,
 
     // Elevator operations:
     ElevatorBottomPosition,

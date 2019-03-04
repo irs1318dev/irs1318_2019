@@ -139,7 +139,7 @@ public class AutonomousRoutineSelector
             }
         }*/
 
-        return AutonomousRoutineSelector.GetFillerRoutine();
+        return new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition);
     }
 
     /**

@@ -11,6 +11,7 @@ public class ClimberCamPositionTask extends CompositeOperationTask
         Operation.ClimberCamStoredPosition,
         Operation.ClimberCamLowClimbPosition,
         Operation.ClimberCamHighClimbPosition,
+        Operation.ClimberCamOutOfWayPosition,
     };
 
     private boolean completeWithTime;

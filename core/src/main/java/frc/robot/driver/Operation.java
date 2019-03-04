@@ -37,6 +37,7 @@ public enum Operation
     ElevatorCargo2Position,
     ElevatorCargo3Position,
     ElevatorCargoLoadPosition,
+    ElevatorCamReturnPosition,
 
     // Grabber operations:
     GrabberKickPanel,
@@ -55,12 +56,14 @@ public enum Operation
     ClimberCamStoredPosition,
     ClimberCamLowClimbPosition,
     ClimberCamHighClimbPosition,
+    ClimberCamOutOfWayPosition,
     ClimberArmsMoveForward,
     ClimberArmsMoveBackward,
     ClimberCamMoveForward,
     ClimberCamMoveBackward,
     ClimberArmsForceForward,
     ClimberArmsForceBackward,
+    ClimberArmsForceZero,
     ClimberCamForceForward,
     ClimberCamForceBackward,
 }

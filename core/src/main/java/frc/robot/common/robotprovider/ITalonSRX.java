@@ -9,6 +9,7 @@ public interface ITalonSRX extends IMotor
     void setFeedbackFramePeriod(int periodMS);
     void setPIDFFramePeriod(int periodMS);
     void configureVelocityMeasurements();
+    void configureAllowableClosedloopError(int slotId, int error);
     void setSelectedSlot(int slotId);
     void setPIDF(double p, double i, double d, double f, int slotId);
     void setMotionMagicPIDF(double p, double i, double d, double f, int velocity, int acceleration, int slotId);

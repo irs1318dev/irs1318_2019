@@ -15,6 +15,7 @@ public class ElevatorPositionTask extends CompositeOperationTask {
             Operation.ElevatorCargo2Position,
             Operation.ElevatorCargo3Position,
             Operation.ElevatorCargoLoadPosition,
+            Operation.ElevatorCamReturnPosition,
         };
 
     private final boolean completeWithTime;

@@ -196,7 +196,7 @@ public class TuningConstants
 
     //================================================== Elevator ==============================================================
 
-    public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = 10.0;
+    public static final double ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD = 2.0;
     public static final double ELEVATOR_CLIMBING_HEIGHT_ERROR_THRESHOLD = 250.0;
 
     // Sensors
@@ -234,6 +234,7 @@ public class TuningConstants
     public static final double ELEVATOR_CARGO_2_POSITION = 39.5;
     public static final double ELEVATOR_CARGO_3_POSITION = 67.5;
     public static final double ELEVATOR_CARGO_LOAD_POSITION = 29.0;
+    public static final double ELEVATOR_CAM_RETURN_POSITION = 16.5;
 
     //======================================================== Grabber =====================================
 
@@ -249,26 +250,27 @@ public class TuningConstants
 
     public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = 3.0;
 
-    public static final boolean CLIMBER_ARMS_USE_PID = false; 
+    public static final boolean CLIMBER_ARMS_USE_PID = true; 
     public static final boolean CLIMBER_ARMS_USE_MOTION_MAGIC = true;
-    public static final boolean CLIMBER_CAM_USE_PID = false;
-    public static final boolean CLIMBER_CAM_USE_MOTION_MAGIC = false;
+    public static final boolean CLIMBER_CAM_USE_PID = true;
+    public static final boolean CLIMBER_CAM_USE_MOTION_MAGIC = true;
 
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
-    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 1000.0;
-    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 2500.0;
+    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 1500.0;
+    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 2750.0;
 
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final int CLIMBER_ARMS_POSITION_MAX = 4900; // in ticks (3375 for practice??)
+    public static final int CLIMBER_ARMS_POSITION_MAX = 3000; // in ticks (3375 for practice??)
     public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 1.0;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
+    public static final int CLIMBER_ARMS_ALLOWABLE_CLOSED_LOOP_ERROR = 40;
 
-    public static final double CLIMBER_ARMS_MOVE_VELOCITY = 200.0; // ticks/sec
+    public static final double CLIMBER_ARMS_MOVE_VELOCITY = 1600.0; // ticks/sec
 
     public static final double CLIMBER_ARMS_MM_POSITION_PID_KP = 15.0;
     public static final double CLIMBER_ARMS_MM_POSITION_PID_KI = 0.0;
@@ -288,13 +290,14 @@ public class TuningConstants
     // Cam
     public static final double CLIMBER_CAM_FULL_ROTATION = 4096.0; // in ticks
     public static final double CLIMBER_CAM_STORED_POSITION = 0.0;
-    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 1024.0; // NEEDS 2019 UPDATE
-    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 1200.0; // NEEDS 2019 UPDATE
+    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 1024.0;
+    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 1200.0;
+    public static final double CLIMBER_CAM_OUT_OF_WAY_POSITION = 2400.0;
 
     public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = 0.8;
     public static final double CLIMBER_CAM_DEBUG_BACKWARDS_POWER_LEVEL = -0.8;
 
-    public static final double CLIMBER_CAM_MOVE_VELOCITY = 10.0;
+    public static final double CLIMBER_CAM_MOVE_VELOCITY = 800.0;
 
     // --------- NEEDS 2019 UPDATE ---------
     public static final double CLIMBER_CAM_POSITION_PID_KP = 0.3;
@@ -302,10 +305,10 @@ public class TuningConstants
     public static final double CLIMBER_CAM_POSITION_PID_KD = 0.0;
     public static final double CLIMBER_CAM_POSITION_PID_KF = 0.0;
 
-    public static final double CLIMBER_CAM_MM_POSITION_PID_KP = 15.0;
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KP = 3.5;
     public static final double CLIMBER_CAM_MM_POSITION_PID_KI = 0.0;
     public static final double CLIMBER_CAM_MM_POSITION_PID_KD = 0.0;
-    public static final double CLIMBER_CAM_MM_POSITION_PID_KF = 1.75; // 1023 over max speed (600 ticks per 100ms)
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KF = 2.0; // 1023 over max speed (500 ticks per 100ms)
     public static final int CLIMBER_CAM_MM_POSITION_PID_CRUISE_VELOC = 600;
     public static final int CLIMBER_CAM_MM_POSITION_PID_ACCEL = 250;
 

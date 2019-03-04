@@ -249,7 +249,14 @@ public class ButtonMap implements IButtonMap
                     UserInputDevice.Driver,
                     UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_RIGHT_BUTTON,
                     Shift.Debug,
-                    ButtonType.Click)); 
+                    ButtonType.Click));  
+            put(
+                Operation.ElevatorCamReturnPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.JOYSTICK_BASE_MIDDLE_LEFT_BUTTON,
+                    Shift.None,
+                    ButtonType.Click));
 
             // Operations for grabber mechanism
             put(
@@ -370,6 +377,12 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.NONE,
                     ButtonType.Simple));
             put(
+                Operation.ClimberCamOutOfWayPosition,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
                 Operation.ClimberArmsForceForward,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
@@ -377,6 +390,12 @@ public class ButtonMap implements IButtonMap
                     ButtonType.Simple));
             put(
                 Operation.ClimberArmsForceBackward,
+                new DigitalOperationDescription(
+                    UserInputDevice.None,
+                    UserInputDeviceButton.NONE,
+                    ButtonType.Simple));
+            put(
+                Operation.ClimberArmsForceZero,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
@@ -532,12 +551,14 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
                         Operation.DriveTrainSimpleMode,
+                        Operation.DriveTrainUseSimplePathMode,
                         Operation.ClimberArmsRetractedPosition,
                         Operation.ClimberArmsLowClimbPosition,
                         Operation.ClimberArmsHighClimbPosition,
                         Operation.ClimberCamStoredPosition,
                         Operation.ClimberCamLowClimbPosition,
                         Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberCamOutOfWayPosition,
                         Operation.ClimberArmsMoveBackward,
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberCamMoveBackward,
@@ -594,12 +615,14 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward,
                         Operation.DriveTrainSimpleMode,
+                        Operation.DriveTrainUseSimplePathMode,
                         Operation.ClimberArmsRetractedPosition,
                         Operation.ClimberArmsLowClimbPosition,
                         Operation.ClimberArmsHighClimbPosition,
                         Operation.ClimberCamStoredPosition,
                         Operation.ClimberCamLowClimbPosition,
                         Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberCamOutOfWayPosition,
                         Operation.ClimberArmsMoveBackward,
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberCamMoveBackward,
@@ -624,7 +647,298 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberCamForceBackward,
                         Operation.ClimberCamForceForward,
                     }));
-
+            put(
+                MacroOperation.ClimbPiecewiseA,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> SequentialTask.Sequence(
+                        new ElevatorPositionTask(Operation.ElevatorBottomPosition),
+                        new ClimberArmsPositionTask(Operation.ClimberArmsHighClimbPosition)),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainHeadingCorrection,
+                        Operation.DriveTrainUsePathMode,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                        Operation.DriveTrainUseSimplePathMode,
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition,
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberCamOutOfWayPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    },
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    }));
+            put(
+                MacroOperation.ClimbPiecewiseB,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> ConcurrentTask.AllTasks(
+                        SequentialTask.Sequence(
+                            new ClimberCamPositionTask(0.25, Operation.ClimberCamHighClimbPosition),
+                            new ClimberArmsPositionTask(Operation.ClimberArmsLowClimbPosition)),
+                        new DriveSimplePathTask(4.0, -0.2, -0.2)),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainHeadingCorrection,
+                        Operation.DriveTrainUsePathMode,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                        Operation.DriveTrainUseSimplePathMode,
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition,
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberCamOutOfWayPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    },
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    }));
+            put(
+                MacroOperation.ClimbPiecewiseC,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> SequentialTask.Sequence(
+                        new ClimberCamPositionTask(1.25, Operation.ClimberCamOutOfWayPosition),
+                        new DriveDistanceTimedTask(12.0, 1.25)),
+                    new Operation[]
+                    {
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainUseBrakeMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainLeftVelocity,
+                        Operation.DriveTrainRightVelocity,
+                        Operation.DriveTrainHeadingCorrection,
+                        Operation.DriveTrainUsePathMode,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward,
+                        Operation.DriveTrainSimpleMode,
+                        Operation.DriveTrainUseSimplePathMode,
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition,
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberCamOutOfWayPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    },
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    }));
+            put(
+                MacroOperation.ClimbPiecewiseD,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Toggle,
+                    () -> SequentialTask.Sequence(
+                        new ElevatorPositionTask(1.0, Operation.ElevatorCamReturnPosition),
+                        new ClimberCamPositionTask(1.0, Operation.ClimberCamStoredPosition),
+                        new ElevatorPositionTask(Operation.ElevatorBottomPosition)),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsRetractedPosition,
+                        Operation.ClimberArmsLowClimbPosition,
+                        Operation.ClimberArmsHighClimbPosition,
+                        Operation.ClimberCamStoredPosition,
+                        Operation.ClimberCamLowClimbPosition,
+                        Operation.ClimberCamHighClimbPosition,
+                        Operation.ClimberCamOutOfWayPosition,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    },
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberCamMoveBackward,
+                        Operation.ClimberCamMoveForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberCamForceBackward,
+                        Operation.ClimberCamForceForward,
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.ElevatorMoveUp,
+                        Operation.ElevatorMoveDown,
+                        Operation.ElevatorForceUp,
+                        Operation.ElevatorForceDown
+                    }));
+        
             // Vision Macros
             put(
                 MacroOperation.VisionCenterAndAdvanceRocket,
@@ -772,7 +1086,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition, 
+                        Operation.ElevatorCamReturnPosition                  
                     }));
             put(
                 MacroOperation.ElevatorHatch2Position,
@@ -790,7 +1105,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition                    
                     }));
             put(
                 MacroOperation.ElevatorHatch3Position,
@@ -808,7 +1124,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition, 
+                        Operation.ElevatorCamReturnPosition,                  
                     }));
             put(
                 MacroOperation.ElevatorCargo1Position,
@@ -826,7 +1143,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,                   
                     }));
             put(
                 MacroOperation.ElevatorCargo2Position,
@@ -844,7 +1162,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargo3Position,
@@ -862,7 +1181,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargoLoadPosition,
@@ -880,7 +1200,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargo1PositionShifted,
@@ -898,7 +1219,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargo2PositionShifted,
@@ -916,7 +1238,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargo3PositionShifted,
@@ -934,7 +1257,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargoLoadPositionShifted,
@@ -952,14 +1276,15 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo1Position,
                         Operation.ElevatorCargo2Position,
                         Operation.ElevatorCargo3Position,
-                        Operation.ElevatorCargoLoadPosition,                    
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
                     }));
 
             // Climber Macros
             put(
                 MacroOperation.ClimberArmsRetractedPosition,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
@@ -987,7 +1312,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ClimberArmsHighClimbPosition,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
@@ -1001,11 +1326,11 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ClimberCamStoredPosition,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberCamPositionTask(Operation.ClimberCamStoredPosition),
+                    () -> new ClimberCamPositionTask(0.1, Operation.ClimberCamStoredPosition),
                     new Operation[]
                     {
                         Operation.ClimberCamStoredPosition,
@@ -1019,7 +1344,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberCamPositionTask(Operation.ClimberCamLowClimbPosition),
+                    () -> new ClimberCamPositionTask(0.1, Operation.ClimberCamLowClimbPosition),
                     new Operation[]
                     {
                         Operation.ClimberCamStoredPosition,
@@ -1029,11 +1354,11 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ClimberCamHighClimbPosition,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> new ClimberCamPositionTask(Operation.ClimberCamHighClimbPosition),
+                    () -> new ClimberCamPositionTask(0.1, Operation.ClimberCamHighClimbPosition),
                     new Operation[]
                     {
                         Operation.ClimberCamStoredPosition,
@@ -1053,7 +1378,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberArmsMoveBackward,
                         Operation.ClimberArmsForceForward,
-                        Operation.ClimberArmsForceBackward                
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceZero
                     }));
             put(
                 MacroOperation.ClimberArmsMoveBackward,
@@ -1068,7 +1394,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberArmsMoveBackward,
                         Operation.ClimberArmsForceForward,
-                        Operation.ClimberArmsForceBackward                            
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceZero
                     }));
             put(
                 MacroOperation.ClimberArmsForceForward,
@@ -1083,7 +1410,8 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberArmsMoveBackward,
                         Operation.ClimberArmsForceForward,
-                        Operation.ClimberArmsForceBackward                            
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceZero
                     }));
             put(
                 MacroOperation.ClimberArmsForceBackward,
@@ -1098,7 +1426,24 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberArmsMoveForward,
                         Operation.ClimberArmsMoveBackward,
                         Operation.ClimberArmsForceForward,
-                        Operation.ClimberArmsForceBackward                            
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceZero
+                    }));
+            put(
+                MacroOperation.ClimberArmsForceZero,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
+                    Shift.ButtonPadDebug,
+                    ButtonType.Simple,
+                    () -> new ClimberArmsMovementTask(Operation.ClimberArmsForceZero),
+                    new Operation[]
+                    {
+                        Operation.ClimberArmsMoveForward,
+                        Operation.ClimberArmsMoveBackward,
+                        Operation.ClimberArmsForceForward,
+                        Operation.ClimberArmsForceBackward,
+                        Operation.ClimberArmsForceZero
                     }));
             put(
                 MacroOperation.ClimberCamMoveForward,

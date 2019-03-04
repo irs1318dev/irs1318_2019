@@ -93,6 +93,11 @@ public class TalonSRXWrapper implements ITalonSRX
         this.wrappedObject.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_10Ms, TalonSRXWrapper.timeoutMS);
         this.wrappedObject.configVelocityMeasurementWindow(32, TalonSRXWrapper.timeoutMS);
     }
+    
+    public void configureAllowableClosedloopError(int slotId, int error)
+    {
+        this.wrappedObject.configAllowableClosedloopError(slotId, error, TalonSRXWrapper.timeoutMS);
+    }
 
     public void setSelectedSlot(int slotId)
     {
