@@ -63,7 +63,10 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     public void update()
     {
         this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
-        this.setDigitalOperationState(this.toPerform, true);
+        if (!TuningConstants.VISION_ENABLE_AFTER_AUTO)
+        {
+            this.setDigitalOperationState(this.toPerform, true);
+        }
 
         Double currentMeasuredAngle = this.visionManager.getMeasuredAngle();
         Double currentDesiredAngle = this.visionManager.getDesiredAngle();
@@ -84,7 +87,11 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
         this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
         this.setAnalogOperationState(Operation.DriveTrainTurn, 0.0);
 
-        this.setDigitalOperationState(Operation.VisionEnableCargoShip, false);
+        if (!TuningConstants.VISION_ENABLE_AFTER_AUTO)
+        {
+            this.setDigitalOperationState(this.toPerform, false);
+            this.setDigitalOperationState(Operation.VisionDisable, true);
+        }
     }
 
     /**

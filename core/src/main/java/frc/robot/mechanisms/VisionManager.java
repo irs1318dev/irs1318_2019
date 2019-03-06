@@ -209,6 +209,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     public void setDriver(Driver driver)
     {
         this.driver = driver;
+
         if (TuningConstants.VISION_ENABLE_AFTER_AUTO &&
             !driver.isAutonomous() &&
             this.currentState != VisionProcessingState.ActiveCargoShip)
