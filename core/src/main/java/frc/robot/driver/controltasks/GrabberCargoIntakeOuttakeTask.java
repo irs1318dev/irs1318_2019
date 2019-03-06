@@ -13,19 +13,18 @@ public class GrabberCargoIntakeOuttakeTask extends CompositeOperationTask
         };
 
     private GrabberMechanism grabber;
-    // True when intaking
-    private boolean completeWithThroughBeam;
+    private boolean completeWithSensor;
 
-    public GrabberCargoIntakeOuttakeTask (Operation toPerform, boolean completeWithThroughBeam)
+    public GrabberCargoIntakeOuttakeTask(Operation toPerform, boolean completeWithSensor)
     {
         super(TuningConstants.GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME, toPerform, GrabberCargoIntakeOuttakeTask.possibleOperations);
-        this.completeWithThroughBeam = completeWithThroughBeam;
+        this.completeWithSensor = completeWithSensor;
     }
 
-    public GrabberCargoIntakeOuttakeTask (double duration, Operation toPerform, boolean completeWithThroughBeam)
+    public GrabberCargoIntakeOuttakeTask(double duration, Operation toPerform, boolean completeWithSensor)
     {
         super(duration, toPerform, GrabberCargoIntakeOuttakeTask.possibleOperations);
-        this.completeWithThroughBeam = completeWithThroughBeam;
+        this.completeWithSensor = completeWithSensor;
     }
 
     @Override
@@ -38,7 +37,7 @@ public class GrabberCargoIntakeOuttakeTask extends CompositeOperationTask
     @Override 
     public boolean hasCompleted()
     {
-        if (this.completeWithThroughBeam)
+        if (this.completeWithSensor)
         {
             return this.grabber.hasCargo();
         }

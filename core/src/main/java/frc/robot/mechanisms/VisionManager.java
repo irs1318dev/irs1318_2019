@@ -2,6 +2,7 @@ package frc.robot.mechanisms;
 
 import frc.robot.ElectronicsConstants;
 import frc.robot.GamePiece;
+import frc.robot.TuningConstants;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.Operation;
@@ -150,7 +151,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     @Override
     public void update()
     {
-        VisionProcessingState desiredState = VisionProcessingState.Disabled;
+        VisionProcessingState desiredState = this.currentState;
         if (this.driver.getDigital(Operation.VisionEnableCargoShip))
         {
             desiredState = VisionProcessingState.ActiveCargoShip;
@@ -159,29 +160,14 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
         {
             desiredState = VisionProcessingState.ActiveRocket;
         }
+        else if (this.driver.getDigital(Operation.VisionDisable))
+        {
+            desiredState = VisionProcessingState.Disabled;
+        }
 
         if (this.currentState != desiredState)
         {
-            boolean hsvMode = desiredState == VisionProcessingState.ActiveCargoShip ||
-                desiredState == VisionProcessingState.ActiveRocket;
-
-            if (hsvMode)
-            {
-                this.camera.setExposureManual(VisionConstants.LIFECAM_CAMERA_VISION_EXPOSURE);
-                this.camera.setBrightness(VisionConstants.LIFECAM_CAMERA_VISION_BRIGHTNESS);
-                this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
-            }
-            else
-            {
-                this.camera.setExposureAuto();
-                this.camera.setBrightness(VisionConstants.LIFECAM_CAMERA_OPERATOR_BRIGHTNESS);
-                this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
-            }
-
-            this.ringLight.set(hsvMode ? VisionConstants.RING_LIGHT_ON : VisionConstants.RING_LIGHT_OFF);
-            this.visionPipeline.setMode(desiredState);
-
-            this.currentState = desiredState;
+            this.changeState(desiredState);
         }
 
         // vision pipeline should only write frames to the stream when we are not having the offboard
@@ -191,11 +177,11 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
 
         // vision pipeline cares about whether we are currently holding a hatch panel or cargo:
         GamePiece gamePiece = GamePiece.None;
-        if (this.grabberMechanism.hasHatch())
+        if (this.grabberMechanism.isHatchMode())
         {
             gamePiece = GamePiece.HatchPanel;
         }
-        else if (this.grabberMechanism.hasCargo())
+        else if (this.grabberMechanism.isCargoMode())
         {
             gamePiece = GamePiece.Cargo;
         }
@@ -223,6 +209,12 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     public void setDriver(Driver driver)
     {
         this.driver = driver;
+        if (TuningConstants.VISION_ENABLE_AFTER_AUTO &&
+            !driver.isAutonomous() &&
+            this.currentState != VisionProcessingState.ActiveCargoShip)
+        {
+            this.changeState(VisionProcessingState.ActiveCargoShip);
+        }
     }
 
     @Override
@@ -249,5 +241,29 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
                 this.lastMeasuredFps = 0.0;
             }
         }
+    }
+
+    private void changeState(VisionProcessingState desiredState)
+    {
+        boolean hsvMode = desiredState == VisionProcessingState.ActiveCargoShip ||
+            desiredState == VisionProcessingState.ActiveRocket;
+
+        if (hsvMode)
+        {
+            this.camera.setExposureManual(VisionConstants.LIFECAM_CAMERA_VISION_EXPOSURE);
+            this.camera.setBrightness(VisionConstants.LIFECAM_CAMERA_VISION_BRIGHTNESS);
+            this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
+        }
+        else
+        {
+            this.camera.setExposureAuto();
+            this.camera.setBrightness(VisionConstants.LIFECAM_CAMERA_OPERATOR_BRIGHTNESS);
+            this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
+        }
+
+        this.ringLight.set(hsvMode ? VisionConstants.RING_LIGHT_ON : VisionConstants.RING_LIGHT_OFF);
+        this.visionPipeline.setMode(desiredState);
+
+        this.currentState = desiredState;
     }
 }

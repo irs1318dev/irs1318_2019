@@ -45,19 +45,26 @@ public class ButtonMap implements IButtonMap
         {
             // Operations for vision
             put(
+                Operation.VisionDisable,
+                new DigitalOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    Shift.None,
+                    ButtonType.Click));
+            put(
                 Operation.VisionEnableCargoShip,
                 new DigitalOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
                     Shift.None,
-                    ButtonType.Toggle));
+                    ButtonType.Click));
             put(
                 Operation.VisionEnableRocket,
                 new DigitalOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
                     Shift.None,
-                    ButtonType.Toggle));
+                    ButtonType.Click));
             put(
                 Operation.VisionEnableOffboardStream,
                 new DigitalOperationDescription(
@@ -976,25 +983,6 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainMoveForward,
                         Operation.VisionEnableRocket
                     }));
-            put(
-                MacroOperation.VisionCenterCargoShip,
-                new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
-                    Shift.None,
-                    ButtonType.Toggle,
-                    () -> new VisionCenteringTask(Operation.VisionEnableCargoShip),
-                    new Operation[]
-                    {
-                        Operation.VisionEnableCargoShip,
-                        Operation.DriveTrainUsePositionalMode,
-                        Operation.DriveTrainLeftPosition,
-                        Operation.DriveTrainRightPosition,
-                        Operation.DriveTrainTurn,
-                        Operation.DriveTrainMoveForward,
-                        Operation.VisionEnableRocket
-                    }));
-
             // Grabber Macro
             put(
                 MacroOperation.GrabberKickPanelRepeatedlyTask,

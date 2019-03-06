@@ -98,6 +98,14 @@ public class TuningConstants
     public static final double VISION_ADVANCING_PID_MIN = -0.3;
     public static final double VISION_ADVANCING_PID_MAX = 0.3;
 
+	public static final boolean VISION_ENABLE_AFTER_AUTO = true;
+
+    //================================================== Indicator Lights ==============================================================
+
+    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = 36.0;
+    public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_DISTANCE_RANGE = 4.0;
+    public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
+
     //================================================== DriveTrain ==============================================================
 
     // Drivetrain PID keys/default values:

@@ -79,11 +79,17 @@ public class IndicatorLightManager implements IMechanism
     @Override
     public void update()
     {
-        if (this.grabberMechanism.hasHatch())
+        if (this.grabberMechanism.isHatchMode() &&
+            this.visionManager != null &&
+            (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
+            this.visionManager.getCenter() != null)
         {
-            if (this.visionManager != null &&
-                (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
-                this.visionManager.getCenter() == null)
+            if (this.visionManager.getMeasuredDistance() > TuningConstants.INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE)
+            {
+                this.hatchMode = LightMode.Off;
+            }
+            else if (this.visionManager.getMeasuredDistance() <= TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_DISTANCE_RANGE &&
+                Math.abs(this.visionManager.getMeasuredAngle() - this.visionManager.getDesiredAngle()) < TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE)
             {
                 this.hatchMode = LightMode.Flashing;
             }
@@ -97,7 +103,7 @@ public class IndicatorLightManager implements IMechanism
             this.hatchMode = LightMode.Off;
         }
 
-        if (this.grabberMechanism.hasCargo())
+        /*if (this.grabberMechanism.isCargoMode())
         {
             if (this.visionManager != null &&
                 (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
@@ -113,7 +119,7 @@ public class IndicatorLightManager implements IMechanism
         else
         {
             this.cargoMode = LightMode.Off;
-        }
+        }*/
 
         this.controlLight(this.hatchIndicator, this.hatchMode);
         this.controlLight(this.cargoIndicator, this.cargoMode);
