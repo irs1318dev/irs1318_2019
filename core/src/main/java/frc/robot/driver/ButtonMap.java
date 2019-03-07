@@ -821,8 +821,9 @@ public class ButtonMap implements IButtonMap
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
                     () -> SequentialTask.Sequence(
-                        new ClimberCamPositionTask(1.25, Operation.ClimberCamOutOfWayPosition),
-                        new DriveDistanceTimedTask(12.0, 1.25)),
+                        new ClimberCamPositionTask(1.0, Operation.ClimberCamOutOfWayPosition),
+                        new ClimberArmsPositionTask(0.25, Operation.ClimberArmsRetractedPosition),
+                        new DriveDistanceTimedTask(-12.0, 1.25)),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,
