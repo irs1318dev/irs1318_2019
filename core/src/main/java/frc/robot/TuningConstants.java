@@ -258,10 +258,10 @@ public class TuningConstants
 
     public static final double CLIMBER_CLIMB_COMPLETED_VOLTAGE = 3.0;
 
-    public static final boolean CLIMBER_ARMS_USE_PID = true; 
-    public static final boolean CLIMBER_ARMS_USE_MOTION_MAGIC = true;
-    public static final boolean CLIMBER_CAM_USE_PID = true;
-    public static final boolean CLIMBER_CAM_USE_MOTION_MAGIC = true;
+    public static final boolean CLIMBER_ARMS_USE_PID = false; 
+    public static final boolean CLIMBER_ARMS_USE_MOTION_MAGIC = false;
+    public static final boolean CLIMBER_CAM_USE_PID = false;
+    public static final boolean CLIMBER_CAM_USE_MOTION_MAGIC = false;
 
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
