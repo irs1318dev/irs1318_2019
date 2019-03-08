@@ -1127,7 +1127,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ElevatorCargo1Position,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_10,
                     Shift.None,
                     ButtonType.Toggle,
@@ -1146,7 +1146,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ElevatorCargo2Position,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_9,
                     Shift.None,
                     ButtonType.Toggle,
@@ -1165,7 +1165,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ElevatorCargo3Position,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_8,
                     Shift.None,
                     ButtonType.Toggle,
@@ -1184,7 +1184,7 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.ElevatorCargoLoadPosition,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
                     Shift.None,
                     ButtonType.Toggle,
@@ -1502,6 +1502,129 @@ public class ButtonMap implements IButtonMap
                         Operation.ClimberCamForceForward,
                         Operation.ClimberCamForceBackward                            
                     }));
+            // Elevator and Arm Macros
+            put(
+                MacroOperation.ConfigCargoLoading,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_8,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> ConcurrentTask.AllTasks(
+                        new ElevatorPositionTask(Operation.ElevatorCargoLoadPosition),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristCargoPosition)),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                    },
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                    }));
+            put(
+                MacroOperation.ConfigCargoGround,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_9,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> ConcurrentTask.AllTasks(
+                        new ElevatorPositionTask(Operation.ElevatorBottomPosition),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristFloorPosition)),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                    },
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                    }));
+            put(
+                MacroOperation.ConfigHatchLoading,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_10,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> ConcurrentTask.AllTasks(
+                        new ElevatorPositionTask(Operation.ElevatorBottomPosition),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition)),
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                    },
+                    new Operation[]
+                    {
+                        Operation.ElevatorBottomPosition,
+                        Operation.ElevatorHatch2Position,
+                        Operation.ElevatorHatch3Position,
+                        Operation.ElevatorCargo1Position,
+                        Operation.ElevatorCargo2Position,
+                        Operation.ElevatorCargo3Position,
+                        Operation.ElevatorCargoLoadPosition,
+                        Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                    }));
+
+
         }
     };
 

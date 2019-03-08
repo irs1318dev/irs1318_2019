@@ -56,4 +56,9 @@ public enum MacroOperation
     ElevatorMoveDown,
     ElevatorForceUp,
     ElevatorForceDown,
+
+    // Elevator and Arm Macros
+    ConfigCargoLoading,
+    ConfigCargoGround,
+    ConfigHatchLoading,
 }
