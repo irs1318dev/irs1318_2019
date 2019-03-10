@@ -669,7 +669,9 @@ public class ButtonMap implements IButtonMap
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
                     () -> SequentialTask.Sequence(
-                        new ElevatorPositionTask(Operation.ElevatorBottomPosition),
+                        ConcurrentTask.AllTasks(
+                            new ElevatorPositionTask(Operation.ElevatorBottomPosition),
+                            new GrabberSetWristPositionTask(Operation.GrabberWristStartPosition)),
                         new ClimberArmsPositionTask(Operation.ClimberArmsHighClimbPosition)),
                     new Operation[]
                     {
