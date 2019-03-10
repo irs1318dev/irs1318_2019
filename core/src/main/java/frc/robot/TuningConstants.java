@@ -313,10 +313,10 @@ public class TuningConstants
     public static final double CLIMBER_CAM_POSITION_PID_KD = 0.0;
     public static final double CLIMBER_CAM_POSITION_PID_KF = 0.0;
 
-    public static final double CLIMBER_CAM_MM_POSITION_PID_KP = 3.5; // old Comp 3.5
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KP = 3.5;
     public static final double CLIMBER_CAM_MM_POSITION_PID_KI = 0.0;
     public static final double CLIMBER_CAM_MM_POSITION_PID_KD = 0.0;
-    public static final double CLIMBER_CAM_MM_POSITION_PID_KF = 2.0; // old Comp 2.0 // 1023 over max speed (500 ticks per 100ms)
+    public static final double CLIMBER_CAM_MM_POSITION_PID_KF = 2.0; // 1023 over max speed (500 ticks per 100ms)
     public static final int CLIMBER_CAM_MM_POSITION_PID_CRUISE_VELOC = 600;
     public static final int CLIMBER_CAM_MM_POSITION_PID_ACCEL = 250;
 
