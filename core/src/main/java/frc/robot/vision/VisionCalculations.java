@@ -165,7 +165,8 @@ public class VisionCalculations {
         return pair;
     }
 
-    public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects) {
+    public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects)
+    {
         List<IRotatedRect> pairedRect = new ArrayList<>();
         List<IRotatedRect> rectList = sortByCenterX(rects);
 
@@ -181,13 +182,17 @@ public class VisionCalculations {
         return largestRect(pairedRect);
     }
 
-    public List<IRotatedRect> sortByCenterX(Collection<IRotatedRect> rects) {
+    public List<IRotatedRect> sortByCenterX(Collection<IRotatedRect> rects)
+    {
         List<IRotatedRect> rectList = new ArrayList<>();
-        rectList.addAll(rects);
+        if (rects != null)
+        {
+            rectList.addAll(rects);
+        }
+
         Collections.sort(rectList,
                 Comparator.comparingDouble(arg0 -> arg0.getCenter().getX()));
         return rectList;
-
     }
 
 

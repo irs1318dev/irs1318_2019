@@ -74,7 +74,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
         this.camera.setBrightness(VisionConstants.LIFECAM_CAMERA_OPERATOR_BRIGHTNESS);
         this.camera.setFPS(VisionConstants.LIFECAM_CAMERA_FPS);
 
-        this.visionPipeline = new HSVDockingCenterPipeline(this.timer, provider, VisionConstants.SHOULD_UNDISTORT);
+        this.visionPipeline = new HSVDockingCenterRectanglePipeline(this.timer, provider, VisionConstants.SHOULD_UNDISTORT);
         this.visionThread = this.camera.createVisionThread(this, this.visionPipeline);
         this.visionThread.start();
 
