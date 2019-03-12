@@ -30,4 +30,5 @@ public interface IRobotProvider
     public IOpenCVProvider getOpenCVProvider();
     public INetworkTableProvider getNetworkTableProvider();
     public VisionCalculations getVisionCalculations();
+    public <V> ISendableChooser<V> getSendableChooser();
 }

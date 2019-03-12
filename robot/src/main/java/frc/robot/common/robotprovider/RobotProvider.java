@@ -162,4 +162,9 @@ public class RobotProvider implements IRobotProvider
     {
         return new VisionCalculations();
     }
+    
+    public <V> ISendableChooser<V> getSendableChooser()
+    {
+        return new SendableChooserWrapper<V>();
+    }
 }

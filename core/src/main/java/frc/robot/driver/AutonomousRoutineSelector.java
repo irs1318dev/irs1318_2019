@@ -3,8 +3,6 @@ package frc.robot.driver;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.driver.controltasks.*;
-import frc.robot.ElectronicsConstants;
-import frc.robot.TuningConstants;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -16,10 +14,22 @@ public class AutonomousRoutineSelector
     private final IDashboardLogger logger;
     private final IDriverStation driverStation;
 
-    private final IDigitalInput dipSwitchA;
-    private final IDigitalInput dipSwitchB;
-    private final IDigitalInput dipSwitchC;
-    private final IDigitalInput dipSwitchD;
+    private final ISendableChooser<StartPosition> positionChooser;
+    private final ISendableChooser<AutoRoutine> routineChooser;
+
+    public enum StartPosition
+    {
+        Left,
+        Right,
+        Center
+    }
+
+    public enum AutoRoutine
+    {
+        None,
+        DeliverTwoRight,
+        DeliverTwoLeft,
+    }
 
     /**
      * Initializes a new AutonomousRoutineSelector
@@ -31,10 +41,18 @@ public class AutonomousRoutineSelector
     {
         // initialize robot parts that are used to select autonomous routine (e.g. dipswitches) here...
         this.logger = logger;
-        this.dipSwitchA = provider.getDigitalInput(ElectronicsConstants.AUTO_DIP_SWITCH_A_DIGITAL_CHANNEL);
-        this.dipSwitchB = provider.getDigitalInput(ElectronicsConstants.AUTO_DIP_SWITCH_B_DIGITAL_CHANNEL);
-        this.dipSwitchC = provider.getDigitalInput(ElectronicsConstants.AUTO_DIP_SWITCH_C_DIGITAL_CHANNEL);
-        this.dipSwitchD = provider.getDigitalInput(ElectronicsConstants.AUTO_DIP_SWITCH_D_DIGITAL_CHANNEL);
+
+        this.routineChooser = provider.getSendableChooser();
+        this.routineChooser.addDefault("None", AutoRoutine.None);
+        this.routineChooser.addObject("DeliverTwoRight", AutoRoutine.DeliverTwoRight);
+        this.routineChooser.addObject("DeliverTwoLeft", AutoRoutine.DeliverTwoLeft);
+        this.logger.addChooser("Auto Routine", this.routineChooser);
+
+        this.positionChooser = provider.getSendableChooser();
+        this.positionChooser.addDefault("center", StartPosition.Center);
+        this.positionChooser.addObject("left", StartPosition.Left);
+        this.positionChooser.addObject("right", StartPosition.Right);
+        this.logger.addChooser("Start Position", this.positionChooser);
 
         this.driverStation = provider.getDriverStation();
     }
@@ -45,23 +63,8 @@ public class AutonomousRoutineSelector
      */
     public IControlTask selectRoutine()
     {
-        boolean switchA = this.dipSwitchA.get();
-        boolean switchB = this.dipSwitchB.get();
-        boolean switchC = this.dipSwitchC.get();
-        boolean switchD = this.dipSwitchD.get();
-
-        // print routine parameters to the smartdash
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchA", switchA);
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchB", switchB);
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchC", switchC);
-        this.logger.logBoolean(AutonomousRoutineSelector.LogName, "switchD", switchD);
-
-        boolean startCenter = !switchA && !switchB;
-        boolean startLeft = switchA;
-        boolean startRight = switchB;
-        boolean startSlot = switchC; // if center -> left(t)/right(f), if side -> front(t)/side(f)
-        boolean placeTwo = switchD;
-
+        StartPosition startPosition = this.positionChooser.getSelected();
+        AutoRoutine routine = this.routineChooser.getSelected();
         /*
         if (startCenter)
         {
