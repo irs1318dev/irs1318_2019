@@ -747,9 +747,10 @@ public class ButtonMap implements IButtonMap
                     ButtonType.Toggle,
                     () -> ConcurrentTask.AllTasks(
                         SequentialTask.Sequence(
+                            new WaitTask(0.25),
                             new ClimberCamPositionTask(0.25, Operation.ClimberCamHighClimbPosition),
                             new ClimberArmsPositionTask(Operation.ClimberArmsLowClimbPosition)),
-                        new DriveSimplePathTask(4.0, -0.2, -0.2)),
+                        new DriveDistancePositionTimedTask(-0.2, -24.0, 4.0)),
                     new Operation[]
                     {
                         Operation.DriveTrainUsePositionalMode,

@@ -266,14 +266,14 @@ public class TuningConstants
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
     public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 1500.0;
-    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 2750.0;
+    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 3300.0;
 
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final int CLIMBER_ARMS_POSITION_MAX = 3000; // in ticks (3375 for practice??)
+    public static final int CLIMBER_ARMS_POSITION_MAX = 3400; // in ticks (3375 for practice??)
     public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 1.0;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
     public static final int CLIMBER_ARMS_ALLOWABLE_CLOSED_LOOP_ERROR = 40;
