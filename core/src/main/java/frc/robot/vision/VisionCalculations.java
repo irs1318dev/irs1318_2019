@@ -139,7 +139,8 @@ public class VisionCalculations {
         List<IRotatedRect> pair = new ArrayList<IRotatedRect>();
         IRotatedRect left = null;
         IRotatedRect right = null;
-        for (int i = 0; i < rect.size(); i++)
+        int count = rect.size();
+        for (int i = 0; i < count; i++)
         {
             if (isLeft(rect.get(i)))
             {
@@ -147,7 +148,15 @@ public class VisionCalculations {
                 {
                     area = (rect.get(i).getSize().getHeight() * rect.get(i).getSize().getWidth());
                     left = rect.get(i);
-                    right = rect.get(i + 1);
+                    if (i < count - 1)
+                    {
+                        right = rect.get(i + 1);
+                    }
+                    else
+                    {
+                        right = null;
+                    }
+
                     if (pair.isEmpty())
                     {
                         pair.add(left);
