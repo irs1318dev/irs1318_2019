@@ -37,7 +37,6 @@ public enum MacroOperation
     ClimbPiecewiseB,
     ClimbPiecewiseC,
     ClimbPiecewiseD,
-    ClimbHab2,
     ClimbHab3,
 
     // Elevator operations:
