@@ -53,7 +53,7 @@ public enum Operation
 
     // Climber operations:
     ClimberArmsRetractedPosition,
-    ClimberArmsLowClimbPosition,
+    ClimberArmsPrepClimbPosition,
     ClimberArmsHighClimbPosition,
     ClimberCamStoredPosition,
     ClimberCamLowClimbPosition,

@@ -75,7 +75,7 @@ public class ElectronicsConstants
 
     // Limit switches
     public static final int GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL = 5;
-    public static final int GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL = 6;
+    // public static final int GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL = 6;
     // public static final int GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL = 7;
 
     //================================================== Climber ==============================================================
@@ -88,5 +88,5 @@ public class ElectronicsConstants
 
     public static final int CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL = 4;
     // public static final int CLIMBER_HEIGHT_SENSOR_ANALOG_CHANNEL = 0;
-    public static final int CLIMBER_HEIGHT_SENSOR_DIGITAL_CHANNEL = 7; // low = false --> normally false
+    public static final int CLIMBER_HEIGHT_SENSOR_DIGITAL_CHANNEL = 6; // low = false --> normally false
 }

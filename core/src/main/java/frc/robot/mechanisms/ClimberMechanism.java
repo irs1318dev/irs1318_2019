@@ -215,7 +215,7 @@ public class ClimberMechanism implements IMechanism
     // new logic? - changes from false to true when climb completed, true when driving normally
     public boolean isClimbed()
     {
-        return climbedHeightStatus;
+        return this.climbedHeightStatus;
     }
 
     @Override
@@ -301,9 +301,9 @@ public class ClimberMechanism implements IMechanism
             {
                 this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_RETRACTED_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ClimberArmsLowClimbPosition))
+            else if (this.driver.getDigital(Operation.ClimberArmsPrepClimbPosition))
             {
-                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_LOW_CLIMB_POSITION;
+                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_PREP_CLIMB_POSITION;
             }
             else if (this.driver.getDigital(Operation.ClimberArmsHighClimbPosition))
             {

@@ -33,12 +33,12 @@ public class GrabberMechanism implements IMechanism
     private final IDoubleSolenoid wristOuter; // for controlling the piston farthest from the elevator
 
     private final IDigitalInput cargoLimitSwitch1;
-    private final IDigitalInput cargoLimitSwitch2;
+    //private final IDigitalInput cargoLimitSwitch2;
 
     private Driver driver;
 
     private boolean cargoLimitSwitch1Status;
-    private boolean cargoLimitSwitch2Status;
+    //private boolean cargoLimitSwitch2Status;
 
     private GrabberPosition currentPosition;
 
@@ -55,14 +55,14 @@ public class GrabberMechanism implements IMechanism
         this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL);
 
         this.cargoLimitSwitch1 = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL);
-        this.cargoLimitSwitch2 = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL);
+        // this.cargoLimitSwitch2 = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL);
 
         this.currentPosition = GrabberPosition.Retracted;
     }
 
     public boolean hasCargo()
     {
-        return this.cargoLimitSwitch1Status || this.cargoLimitSwitch2Status;
+        return this.cargoLimitSwitch1Status;// || this.cargoLimitSwitch2Status;
     }
 
     public boolean isCargoMode()
@@ -79,10 +79,10 @@ public class GrabberMechanism implements IMechanism
     public void readSensors()
     {
         this.cargoLimitSwitch1Status = this.cargoLimitSwitch1.get();
-        this.cargoLimitSwitch2Status = this.cargoLimitSwitch2.get();
+        //this.cargoLimitSwitch2Status = this.cargoLimitSwitch2.get();
 
         this.logger.logBoolean(GrabberMechanism.logName, "cargo1", this.cargoLimitSwitch1Status);
-        this.logger.logBoolean(GrabberMechanism.logName, "cargo2", this.cargoLimitSwitch2Status);
+        //this.logger.logBoolean(GrabberMechanism.logName, "cargo2", this.cargoLimitSwitch2Status);
     }
 
     @Override

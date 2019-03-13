@@ -9,7 +9,7 @@ public class ClimberArmsPositionTask extends CompositeOperationTask
     private static final Operation[] possibleOperations =
         {
             Operation.ClimberArmsRetractedPosition,
-            Operation.ClimberArmsLowClimbPosition,
+            Operation.ClimberArmsPrepClimbPosition,
             Operation.ClimberArmsHighClimbPosition  
         };
 
