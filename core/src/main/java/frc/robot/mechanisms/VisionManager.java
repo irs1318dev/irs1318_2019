@@ -165,7 +165,11 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
             desiredState = VisionProcessingState.Disabled;
         }
 
-        if (TuningConstants.VISION_ENABLE_DURING_TELEOP &&
+        if (this.driver.getDigital(Operation.VisionForceDisable))
+        {
+            desiredState = VisionProcessingState.Disabled;
+        }
+        else if (TuningConstants.VISION_ENABLE_DURING_TELEOP &&
             !this.driver.isAutonomous() &&
             desiredState == VisionProcessingState.Disabled)
         {

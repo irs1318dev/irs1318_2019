@@ -17,6 +17,10 @@ public enum MacroOperation
 
     // Grabber operation:
     GrabberKickPanelRepeatedlyTask,
+    GrabberKickPanel,
+    GrabberPointBeak,
+    GrabberIntakeCargo,
+    GrabberOuttakeCargo,
 
     // Climber operations:
     ClimberArmsRetractedPosition,
