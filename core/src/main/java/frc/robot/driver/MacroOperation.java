@@ -12,6 +12,7 @@ public enum MacroOperation
     // Vision operations:
     VisionCenterAndAdvanceRocket,
     VisionCenterAndAdvanceCargoShip,
+    VisionCenterAndAdvanceCargoShip2,
     DriveForwardTurnRight,
 
     // Grabber operation:

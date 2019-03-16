@@ -165,6 +165,13 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
             desiredState = VisionProcessingState.Disabled;
         }
 
+        if (TuningConstants.VISION_ENABLE_DURING_TELEOP &&
+            !this.driver.isAutonomous() &&
+            desiredState == VisionProcessingState.Disabled)
+        {
+            desiredState = VisionProcessingState.ActiveCargoShip;
+        }
+
         if (this.currentState != desiredState)
         {
             this.changeState(desiredState);
@@ -195,6 +202,7 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
         this.ringLight.set(0.0);
         this.visionPipeline.setMode(VisionProcessingState.Disabled);
         this.visionPipeline.setStreamMode(true);
+        this.currentState = VisionProcessingState.Disabled;
 
         this.center = null;
 
@@ -210,8 +218,8 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
     {
         this.driver = driver;
 
-        if (TuningConstants.VISION_ENABLE_AFTER_AUTO &&
-            !driver.isAutonomous() &&
+        if (TuningConstants.VISION_ENABLE_DURING_TELEOP &&
+            !this.driver.isAutonomous() &&
             this.currentState != VisionProcessingState.ActiveCargoShip)
         {
             this.changeState(VisionProcessingState.ActiveCargoShip);

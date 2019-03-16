@@ -945,6 +945,25 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward
                     }));
+            put(
+                MacroOperation.VisionCenterAndAdvanceCargoShip,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                    new Operation[]
+                    {
+                        Operation.VisionDisable,
+                        Operation.VisionEnableCargoShip,
+                        Operation.VisionEnableRocket,
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward
+                    }));
             // Grabber Macro
             put(
                 MacroOperation.GrabberKickPanelRepeatedlyTask,
@@ -1160,7 +1179,9 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_5,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo1Position),
+                    () -> ConcurrentTask.AllTasks(
+                        new ElevatorPositionTask(Operation.ElevatorCargo1Position),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristCargoPosition)),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -1171,6 +1192,11 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo3Position,
                         Operation.ElevatorCargoLoadPosition,
                         Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                    
                     }));
             put(
                 MacroOperation.ElevatorCargo2PositionShifted,
@@ -1179,7 +1205,9 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_4,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo2Position),
+                    () -> ConcurrentTask.AllTasks(
+                        new ElevatorPositionTask(Operation.ElevatorCargo2Position),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristCargoPosition)),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -1190,6 +1218,10 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo3Position,
                         Operation.ElevatorCargoLoadPosition,
                         Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargo3PositionShifted,
@@ -1198,7 +1230,9 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_3,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargo3Position),
+                    () -> ConcurrentTask.AllTasks(
+                        new ElevatorPositionTask(Operation.ElevatorCargo3Position),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristCargoPosition)),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
@@ -1209,6 +1243,10 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorCargo3Position,
                         Operation.ElevatorCargoLoadPosition,
                         Operation.ElevatorCamReturnPosition,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
                     }));
             put(
                 MacroOperation.ElevatorCargoLoadPositionShifted,

@@ -142,7 +142,10 @@ public class AutonomousRoutineSelector
             }
         }*/
 
-        return new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition);
+        return SequentialTask.Sequence(
+            new GrabberSetWristPositionTask(0.5, Operation.GrabberWristHatchPosition),
+            new GrabberSetWristPositionTask(0.5, Operation.GrabberWristHatchPosition),
+            new GrabberSetWristPositionTask(0.5, Operation.GrabberWristHatchPosition));
     }
 
     /**

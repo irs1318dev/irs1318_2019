@@ -29,8 +29,8 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(GrabberMechanism.class));
         mechanismList.add(injector.getInstance(ClimberMechanism.class));
         mechanismList.add(injector.getInstance(VisionManager.class));
-        //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
-        //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
+        mechanismList.add(injector.getInstance(OffboardVisionManager.class));
+        mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
     }
 
@@ -98,7 +98,7 @@ public class TuningConstants
     public static final double VISION_ADVANCING_PID_MIN = -0.3;
     public static final double VISION_ADVANCING_PID_MAX = 0.3;
 
-	public static final boolean VISION_ENABLE_AFTER_AUTO = true;
+	public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 
     //================================================== Indicator Lights ==============================================================
 
