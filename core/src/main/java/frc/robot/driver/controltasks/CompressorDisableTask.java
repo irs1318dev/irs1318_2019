@@ -9,7 +9,7 @@ public class CompressorDisableTask extends CompositeOperationTask
             Operation.CompressorForceDisable,
         };
  
-    public CompressorDisableTask(Operation toPerform)
+    public CompressorDisableTask()
     {
         super(1.0, Operation.CompressorForceDisable, CompressorDisableTask.possibleOperations);
     }   

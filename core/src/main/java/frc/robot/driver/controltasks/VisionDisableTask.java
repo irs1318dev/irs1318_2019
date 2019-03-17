@@ -9,7 +9,7 @@ public class VisionDisableTask extends CompositeOperationTask
             Operation.VisionForceDisable,
         };
  
-    public VisionDisableTask(Operation toPerform)
+    public VisionDisableTask()
     {
         super(1.0, Operation.VisionForceDisable, VisionDisableTask.possibleOperations);
     }   
