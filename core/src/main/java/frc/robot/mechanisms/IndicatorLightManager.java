@@ -24,6 +24,7 @@ public class IndicatorLightManager implements IMechanism
     private final GrabberMechanism grabberMechanism;
     private final VisionManager visionManager;
     private final ITimer timer;
+    private final IDashboardLogger logger;
 
     private final IRelay hatchIndicator;
     private final IRelay cargoIndicator;
@@ -43,6 +44,7 @@ public class IndicatorLightManager implements IMechanism
     @Inject
     public IndicatorLightManager(
         IRobotProvider provider,
+        IDashboardLogger logger,
         ITimer timer,
         GrabberMechanism grabberMechanism,
         VisionManager visionManager)
@@ -50,6 +52,7 @@ public class IndicatorLightManager implements IMechanism
         this.grabberMechanism = grabberMechanism;
         this.visionManager = visionManager;
         this.timer = timer;
+        this.logger = logger;
 
         this.hatchIndicator = provider.getRelay(ElectronicsConstants.INDICATOR_HATCH_RELAY_CHANNEL);
         this.cargoIndicator = provider.getRelay(ElectronicsConstants.INDICATOR_CARGO_RELAY_CHANNEL);
@@ -79,11 +82,18 @@ public class IndicatorLightManager implements IMechanism
     @Override
     public void update()
     {
-        if (this.grabberMechanism.hasHatch())
+        if (this.grabberMechanism.isHatchMode() &&
+
+            this.visionManager != null &&
+            (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
+            this.visionManager.getCenter() != null)
         {
-            if (this.visionManager != null &&
-                (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
-                this.visionManager.getCenter() == null)
+            if (this.visionManager.getMeasuredDistance() > TuningConstants.INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE)
+            {
+                this.hatchMode = LightMode.Off;
+            }
+            else if (this.visionManager.getMeasuredDistance() <= TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_DISTANCE_RANGE &&
+                Math.abs(this.visionManager.getMeasuredAngle() - this.visionManager.getDesiredAngle()) < TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE)
             {
                 this.hatchMode = LightMode.Flashing;
             }
@@ -99,22 +109,15 @@ public class IndicatorLightManager implements IMechanism
 
         if (this.grabberMechanism.hasCargo())
         {
-            if (this.visionManager != null &&
-                (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
-                this.visionManager.getCenter() == null)
-            {
-                this.hatchMode = LightMode.Flashing;
-            }
-            else
-            {
-                this.hatchMode = LightMode.On;
-            }
+            this.cargoMode = LightMode.On;
         }
         else
         {
             this.cargoMode = LightMode.Off;
         }
 
+        this.logger.logBoolean("ind", "hatch", this.hatchMode != LightMode.Off);
+        this.logger.logBoolean("ind", "cargo", this.cargoMode != LightMode.Off);
         this.controlLight(this.hatchIndicator, this.hatchMode);
         this.controlLight(this.cargoIndicator, this.cargoMode);
     }

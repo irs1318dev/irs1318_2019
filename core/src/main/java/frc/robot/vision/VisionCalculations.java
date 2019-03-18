@@ -139,7 +139,8 @@ public class VisionCalculations {
         List<IRotatedRect> pair = new ArrayList<IRotatedRect>();
         IRotatedRect left = null;
         IRotatedRect right = null;
-        for (int i = 0; i < rect.size(); i++)
+        int count = rect.size();
+        for (int i = 0; i < count; i++)
         {
             if (isLeft(rect.get(i)))
             {
@@ -147,7 +148,15 @@ public class VisionCalculations {
                 {
                     area = (rect.get(i).getSize().getHeight() * rect.get(i).getSize().getWidth());
                     left = rect.get(i);
-                    right = rect.get(i + 1);
+                    if (i < count - 1)
+                    {
+                        right = rect.get(i + 1);
+                    }
+                    else
+                    {
+                        right = null;
+                    }
+
                     if (pair.isEmpty())
                     {
                         pair.add(left);
@@ -165,7 +174,8 @@ public class VisionCalculations {
         return pair;
     }
 
-    public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects) {
+    public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects)
+    {
         List<IRotatedRect> pairedRect = new ArrayList<>();
         List<IRotatedRect> rectList = sortByCenterX(rects);
 
@@ -181,13 +191,17 @@ public class VisionCalculations {
         return largestRect(pairedRect);
     }
 
-    public List<IRotatedRect> sortByCenterX(Collection<IRotatedRect> rects) {
+    public List<IRotatedRect> sortByCenterX(Collection<IRotatedRect> rects)
+    {
         List<IRotatedRect> rectList = new ArrayList<>();
-        rectList.addAll(rects);
+        if (rects != null)
+        {
+            rectList.addAll(rects);
+        }
+
         Collections.sort(rectList,
                 Comparator.comparingDouble(arg0 -> arg0.getCenter().getX()));
         return rectList;
-
     }
 
 

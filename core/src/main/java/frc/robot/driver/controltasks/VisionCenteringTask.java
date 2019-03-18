@@ -12,7 +12,7 @@ import frc.robot.mechanisms.VisionManager;
  */
 public class VisionCenteringTask extends ControlTaskBase implements IControlTask
 {
-    private static final int NO_CENTER_THRESHOLD = 20;
+    private static final int NO_CENTER_THRESHOLD = 40;
 
     private final boolean useTime;
     private final Operation toPerform;
@@ -84,7 +84,8 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
         this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
         this.setAnalogOperationState(Operation.DriveTrainTurn, 0.0);
 
-        this.setDigitalOperationState(Operation.VisionEnableCargoShip, false);
+        this.setDigitalOperationState(this.toPerform, false);
+        this.setDigitalOperationState(Operation.VisionDisable, true);
     }
 
     /**

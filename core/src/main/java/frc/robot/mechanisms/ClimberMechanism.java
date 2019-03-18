@@ -14,7 +14,6 @@ import frc.robot.common.robotprovider.TalonSRXFeedbackDevice;
 import frc.robot.common.robotprovider.TalonSRXLimitSwitchStatus;
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.common.robotprovider.IVictorSPX;
-import frc.robot.common.robotprovider.IAnalogInput;
 import frc.robot.common.robotprovider.IDashboardLogger;
 import frc.robot.common.robotprovider.IDigitalInput;
 import frc.robot.driver.common.Driver;
@@ -34,7 +33,7 @@ public class ClimberMechanism implements IMechanism
     private final ITalonSRX climberArmsMotorMaster;
     private final ITalonSRX climberCamMotorMaster;
     private final IDigitalInput climberCamLimitSwitch;
-    private final IAnalogInput climberHeightSensor;
+    private final IDigitalInput climberHeightSensor;
 
     private Driver driver;
 
@@ -48,8 +47,9 @@ public class ClimberMechanism implements IMechanism
     private double camError;
     private int camPosition;
     private boolean camLimitSwitchStatus;
+    private boolean climbedHeightStatus;
 
-    private double climbedHeight;
+    // private double climbedHeight;
 
     private double desiredArmsPosition;
     private double desiredCamPosition;
@@ -148,9 +148,9 @@ public class ClimberMechanism implements IMechanism
         climberCamMotorFollower.follow(this.climberCamMotorMaster);
 
         this.climberCamLimitSwitch = provider.getDigitalInput(ElectronicsConstants.CLIMBER_CAM_LIMIT_SWITCH_DIGITAL_CHANNEL);
-        this.climberHeightSensor = provider.getAnalogInput(ElectronicsConstants.CLIMBER_HEIGHT_SENSOR_ANALOG_CHANNEL);
+        this.climberHeightSensor = provider.getDigitalInput(ElectronicsConstants.CLIMBER_HEIGHT_SENSOR_DIGITAL_CHANNEL);
 
-        this.climbedHeight = 0.0;
+        this.climbedHeightStatus = true;
         this.camVelocity = 0.0;
         this.camError = 0.0;
         this.camPosition = 0;
@@ -212,9 +212,10 @@ public class ClimberMechanism implements IMechanism
         return this.camLimitSwitchStatus;
     }
 
+    // new logic? - changes from false to true when climb completed, true when driving normally
     public boolean isClimbed()
     {
-        return this.climbedHeight > TuningConstants.CLIMBER_CLIMB_COMPLETED_VOLTAGE;
+        return this.climbedHeightStatus;
     }
 
     @Override
@@ -240,7 +241,7 @@ public class ClimberMechanism implements IMechanism
 
         this.camLimitSwitchStatus = !this.climberCamLimitSwitch.get();
 
-        this.climbedHeight = this.climberHeightSensor.getVoltage();
+        this.climbedHeightStatus = !this.climberHeightSensor.get();
 
         this.logger.logNumber(ClimberMechanism.logName, "armsVelocity", this.armsVelocity);
         this.logger.logNumber(ClimberMechanism.logName, "armsError", this.armsError);
@@ -252,7 +253,7 @@ public class ClimberMechanism implements IMechanism
         this.logger.logNumber(ClimberMechanism.logName, "camError", this.camError);
         this.logger.logNumber(ClimberMechanism.logName, "camPosition", this.camPosition);
         this.logger.logBoolean(ClimberMechanism.logName, "camLimitSwitchStatus", this.camLimitSwitchStatus);
-        this.logger.logNumber(ClimberMechanism.logName, "climbedHeight", this.climbedHeight);
+        this.logger.logBoolean(ClimberMechanism.logName, "climbedHeightStatus", this.climbedHeightStatus);
     }
 
     @Override
@@ -300,9 +301,9 @@ public class ClimberMechanism implements IMechanism
             {
                 this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_RETRACTED_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ClimberArmsLowClimbPosition))
+            else if (this.driver.getDigital(Operation.ClimberArmsPrepClimbPosition))
             {
-                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_LOW_CLIMB_POSITION;
+                this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_PREP_CLIMB_POSITION;
             }
             else if (this.driver.getDigital(Operation.ClimberArmsHighClimbPosition))
             {
@@ -421,7 +422,7 @@ public class ClimberMechanism implements IMechanism
         this.camError = 0.0;
         this.camPosition = 0;
         this.camLimitSwitchStatus = false;
-        this.climbedHeight = 0.0;
+        this.climbedHeightStatus = true;
 
     }
 

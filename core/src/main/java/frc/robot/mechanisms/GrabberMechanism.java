@@ -12,12 +12,18 @@ import frc.robot.driver.common.Driver;
 import frc.robot.common.robotprovider.*;
 
 @Singleton
-public class GrabberMechanism implements IMechanism {
+public class GrabberMechanism implements IMechanism
+{
+    private enum GrabberPosition
+    {
+        Floor, // "180"
+        Cargo, // "45"
+        Hatch, // "90"
+        Retracted;
+    }
 
     private static final String logName = "gr";
-    private IDashboardLogger logger;
-
-    private Driver driver;
+    private final IDashboardLogger logger;
 
     // actuators
     private final IDoubleSolenoid kicker; // for ejecting hatches
@@ -26,17 +32,18 @@ public class GrabberMechanism implements IMechanism {
     private final IDoubleSolenoid wristInner; // for controlling the piston closest to the elevator
     private final IDoubleSolenoid wristOuter; // for controlling the piston farthest from the elevator
 
-    private final IDigitalInput cargoLimitSwitch1;
-    private final IDigitalInput cargoLimitSwitch2;
-    private final IDigitalInput hatchLimitSwtich;
+    private final IDigitalInput cargoLimitSwitch;
 
-    private boolean cargoLimitSwitch1Status;
-    private boolean cargoLimitSwitch2Status;
-    private boolean hatchLimitSwitchStatus;
+    private Driver driver;
+
+    private boolean cargoLimitSwitchStatus;
+
+    private GrabberPosition currentPosition;
 
     @Inject
-    public GrabberMechanism(IRobotProvider provider, IDashboardLogger logger) {
-
+    public GrabberMechanism(IRobotProvider provider, IDashboardLogger logger)
+    {
+        this.logger = logger;
         this.kicker = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_KICKER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_KICKER_REVERSE_PCM_CHANNEL);
         this.beak = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_BEAK_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_BEAK_REVERSE_PCM_CHANNEL);
         this.cargoMotor = provider.getTalonSRX(ElectronicsConstants.GRABBER_CARGO_MOTOR_CAN_ID);
@@ -45,33 +52,31 @@ public class GrabberMechanism implements IMechanism {
         this.wristInner = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_INNER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_INNER_REVERSE_PCM_CHANNEL);
         this.wristOuter = provider.getDoubleSolenoid(ElectronicsConstants.GRABBER_WRIST_OUTER_FORWARD_PCM_CHANNEL, ElectronicsConstants.GRABBER_WRIST_OUTER_REVERSE_PCM_CHANNEL);
 
-        this.cargoLimitSwitch1 = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_1_DIGITAL_CHANNEL);
-        this.cargoLimitSwitch2 = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_2_DIGITAL_CHANNEL);
-        this.hatchLimitSwtich = provider.getDigitalInput(ElectronicsConstants.GRABBER_HATCH_LIMIT_SWITCH_DIGITAL_CHANNEL);
+        this.cargoLimitSwitch = provider.getDigitalInput(ElectronicsConstants.GRABBER_CARGO_LIMIT_SWITCH_DIGITAL_CHANNEL);
 
-        this.logger = logger;
+        this.currentPosition = GrabberPosition.Retracted;
     }
 
     public boolean hasCargo()
     {
-        return this.cargoLimitSwitch1Status && this.cargoLimitSwitch2Status;
+        return this.cargoLimitSwitchStatus;
     }
 
-    public boolean hasHatch()
+    public boolean isCargoMode()
     {
-        return this.hatchLimitSwitchStatus;
+        return this.currentPosition == GrabberPosition.Cargo;
+    }
+
+    public boolean isHatchMode()
+    {
+        return this.currentPosition == GrabberPosition.Hatch;
     }
 
     @Override
     public void readSensors()
     {
-        this.cargoLimitSwitch1Status = this.cargoLimitSwitch1.get();
-        this.cargoLimitSwitch2Status = this.cargoLimitSwitch2.get();
-        this.hatchLimitSwitchStatus = this.hatchLimitSwtich.get();
-
-        this.logger.logBoolean(GrabberMechanism.logName, "cargo1", this.cargoLimitSwitch1Status);
-        this.logger.logBoolean(GrabberMechanism.logName, "cargo2", this.cargoLimitSwitch2Status);
-        this.logger.logBoolean(GrabberMechanism.logName, "hatch", this.hatchLimitSwitchStatus);
+        this.cargoLimitSwitchStatus = !this.cargoLimitSwitch.get();
+        this.logger.logBoolean(GrabberMechanism.logName, "hasCargo", this.cargoLimitSwitchStatus);
     }
 
     @Override
@@ -101,28 +106,34 @@ public class GrabberMechanism implements IMechanism {
         // wrist postions: Inner = piston closest to elevetor, Outer = piston farthest from elevator
         if (this.driver.getDigital(Operation.GrabberWristStartPosition))
         {
+            this.currentPosition = GrabberPosition.Retracted;
+
             this.wristInner.set(DoubleSolenoidValue.Reverse);
             this.wristOuter.set(DoubleSolenoidValue.Reverse);
-            this.logger.logString(GrabberMechanism.logName, "wrist", "start");
         }
         else if (this.driver.getDigital(Operation.GrabberWristHatchPosition))
         {
+            this.currentPosition = GrabberPosition.Hatch;
+
             this.wristInner.set(DoubleSolenoidValue.Reverse);
             this.wristOuter.set(DoubleSolenoidValue.Forward);
-            this.logger.logString(GrabberMechanism.logName, "wrist", "hatch");
         }
         else if (this.driver.getDigital(Operation.GrabberWristCargoPosition))
         {
+            this.currentPosition = GrabberPosition.Cargo;
+
             this.wristInner.set(DoubleSolenoidValue.Forward);
             this.wristOuter.set(DoubleSolenoidValue.Reverse);
-            this.logger.logString(GrabberMechanism.logName, "wrist", "cargo");
         }
         else if (this.driver.getDigital(Operation.GrabberWristFloorPosition))
         {
+            this.currentPosition = GrabberPosition.Floor;
+
             this.wristInner.set(DoubleSolenoidValue.Forward);
             this.wristOuter.set(DoubleSolenoidValue.Forward);
-            this.logger.logString(GrabberMechanism.logName, "wrist", "floor");
         }
+
+        this.logger.logString(GrabberMechanism.logName, "wrist", this.currentPosition.toString());
     }
 
     @Override

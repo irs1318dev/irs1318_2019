@@ -168,4 +168,9 @@ public class FauxbotProvider implements IRobotProvider
     public VisionCalculations getVisionCalculations() {
         return new VisionCalculations();
     }
+    
+    public <V> ISendableChooser<V> getSendableChooser()
+    {
+        return new FauxbotSendableChooser<V>();
+    }
 }

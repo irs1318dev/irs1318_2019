@@ -10,14 +10,17 @@ public enum MacroOperation
     FollowSomePath,
 
     // Vision operations:
-    VisionCenterRocket,
-    VisionCenterCargoShip,
     VisionCenterAndAdvanceRocket,
     VisionCenterAndAdvanceCargoShip,
+    VisionCenterAndAdvanceCargoShip2,
     DriveForwardTurnRight,
 
     // Grabber operation:
     GrabberKickPanelRepeatedlyTask,
+    GrabberKickPanel,
+    GrabberPointBeak,
+    GrabberIntakeCargo,
+    GrabberOuttakeCargo,
 
     // Climber operations:
     ClimberArmsRetractedPosition,
@@ -39,7 +42,6 @@ public enum MacroOperation
     ClimbPiecewiseB,
     ClimbPiecewiseC,
     ClimbPiecewiseD,
-    ClimbHab2,
     ClimbHab3,
 
     // Elevator operations:
@@ -58,4 +60,9 @@ public enum MacroOperation
     ElevatorMoveDown,
     ElevatorForceUp,
     ElevatorForceDown,
+
+    // Elevator and Arm Macros
+    ConfigCargoLoading,
+    ConfigCargoGround,
+    ConfigHatchLoading,
 }

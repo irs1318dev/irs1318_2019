@@ -29,8 +29,8 @@ public class TuningConstants
         mechanismList.add(injector.getInstance(GrabberMechanism.class));
         mechanismList.add(injector.getInstance(ClimberMechanism.class));
         mechanismList.add(injector.getInstance(VisionManager.class));
-        //mechanismList.add(injector.getInstance(OffboardVisionManager.class));
-        //mechanismList.add(injector.getInstance(IndicatorLightManager.class));
+        mechanismList.add(injector.getInstance(OffboardVisionManager.class));
+        mechanismList.add(injector.getInstance(IndicatorLightManager.class));
         return mechanismList;
     }
 
@@ -97,6 +97,14 @@ public class TuningConstants
     public static final double VISION_ADVANCING_PID_KS = 1.0;
     public static final double VISION_ADVANCING_PID_MIN = -0.3;
     public static final double VISION_ADVANCING_PID_MAX = 0.3;
+
+	public static final boolean VISION_ENABLE_DURING_TELEOP = true;
+
+    //================================================== Indicator Lights ==============================================================
+
+    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = 36.0;
+    public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_DISTANCE_RANGE = 4.0;
+    public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
 
     //================================================== DriveTrain ==============================================================
 
@@ -234,16 +242,17 @@ public class TuningConstants
     public static final double ELEVATOR_CARGO_2_POSITION = 39.5;
     public static final double ELEVATOR_CARGO_3_POSITION = 67.5;
     public static final double ELEVATOR_CARGO_LOAD_POSITION = 29.0;
-    public static final double ELEVATOR_CAM_RETURN_POSITION = 16.5;
+    public static final double ELEVATOR_CAM_RETURN_POSITION = 15.0;
 
     //======================================================== Grabber =====================================
 
     public static final double GRABBER_SET_WRIST_TIME_DURATION = 0.75;
     public static final double GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME = 5.0;
     public static final double GRABBER_KICK_PANEL_DURATION = 1.0;
+    public static final double GRABBER_POINT_BEAK_DURATION = 1.0;
     
     // Cargo intake/outtake motor power
-    public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.6;
+    public static final double GRABBER_CARGO_INTAKE_MOTOR_POWER = -0.8;
     public static final double GRABBER_CARGO_OUTTAKE_MOTOR_POWER = 0.9;
 
     //================================================== Climber ==============================================================
@@ -257,15 +266,15 @@ public class TuningConstants
 
     // Arms
     public static final double CLIMBER_ARMS_RETRACTED_POSITION = 0.0;
-    public static final double CLIMBER_ARMS_LOW_CLIMB_POSITION = 1500.0;
-    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 2750.0;
+    public static final double CLIMBER_ARMS_PREP_CLIMB_POSITION = 1500.0;
+    public static final double CLIMBER_ARMS_HIGH_CLIMB_POSITION = 3600.0;
 
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_FORWARD_LIMIT_SWITCH_NORMALLY_OPEN = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_ENABLED = true;
     public static final boolean CLIMBER_ARMS_REVERSE_LIMIT_SWITCH_NORMALLY_OPEN = true;
 
-    public static final int CLIMBER_ARMS_POSITION_MAX = 3000; // in ticks (3375 for practice??)
+    public static final int CLIMBER_ARMS_POSITION_MAX = 3700; // in ticks (3375 for practice??)
     public static final double CLIMBER_ARMS_DEBUG_FORWARD_POWER_LEVEL = 1.0;
     public static final double CLIMBER_ARMS_DEBUG_BACKWARDS_POWER_LEVEL = -0.6;
     public static final int CLIMBER_ARMS_ALLOWABLE_CLOSED_LOOP_ERROR = 40;
@@ -277,7 +286,7 @@ public class TuningConstants
     public static final double CLIMBER_ARMS_MM_POSITION_PID_KD = 0.0;
     public static final double CLIMBER_ARMS_MM_POSITION_PID_KF = 1.75; // 1023 over max speed (600 ticks per 100ms)
     public static final int CLIMBER_ARMS_MM_POSITION_PID_CRUISE_VELOC = 600;
-    public static final int CLIMBER_ARMS_MM_POSITION_PID_ACCEL = 250;
+    public static final int CLIMBER_ARMS_MM_POSITION_PID_ACCEL = 450;
 
     public static final double CLIMBER_ARMS_POSITION_PID_KP = 0.3;
     public static final double CLIMBER_ARMS_POSITION_PID_KI = 0.0;
@@ -290,8 +299,8 @@ public class TuningConstants
     // Cam
     public static final double CLIMBER_CAM_FULL_ROTATION = 4096.0; // in ticks
     public static final double CLIMBER_CAM_STORED_POSITION = 0.0;
-    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 1024.0;
-    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 1200.0;
+    public static final double CLIMBER_CAM_LOW_CLIMB_POSITION = 1200.0;
+    public static final double CLIMBER_CAM_HIGH_CLIMB_POSITION = 1400.0;
     public static final double CLIMBER_CAM_OUT_OF_WAY_POSITION = 2400.0;
 
     public static final double CLIMBER_CAM_DEBUG_FORWARD_POWER_LEVEL = 0.8;
