@@ -556,7 +556,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
                     Shift.ButtonPadDebug,
                     ButtonType.Toggle,
-                    () -> ConcurrentTask.AllTasks(
+                    () -> ConcurrentTask.AnyTasks(
                         SequentialTask.Sequence(
                             ConcurrentTask.AllTasks(
                                 new ElevatorPositionTask(Operation.ElevatorBottomPosition),
@@ -569,9 +569,12 @@ public class ButtonMap implements IButtonMap
                                 new ClimberCamPositionTask(1.0, Operation.ClimberCamOutOfWayPosition),
                                 new ClimberArmsPositionTask(0.25, Operation.ClimberArmsRetractedPosition),
                                 new DriveUntilSensorTask(-0.15, 1.0)),
-                            new ElevatorPositionTask(1.0, Operation.ElevatorCamReturnPosition),
-                            new ClimberCamPositionTask(1.0, Operation.ClimberCamStoredPosition),
-                            new ElevatorPositionTask(Operation.ElevatorBottomPosition)),
+                            ConcurrentTask.AllTasks(
+                                SequentialTask.Sequence(
+                                    new ElevatorPositionTask(1.0, Operation.ElevatorCamReturnPosition),
+                                    new ClimberCamPositionTask(1.0, Operation.ClimberCamStoredPosition),
+                                    new ElevatorPositionTask(Operation.ElevatorBottomPosition)),
+                                new DriveDistanceTimedTask(12.0, 1.5))),
                         new VisionDisableTask(),
                         new CompressorDisableTask()),
                     new Operation[]
