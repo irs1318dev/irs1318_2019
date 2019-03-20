@@ -194,13 +194,6 @@ public class ButtonMap implements IButtonMap
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Toggle));
-            put(
-                Operation.DriveTrainMaxVelocityRatio,
-                new AnalogOperationDescription(
-                    UserInputDevice.Driver,
-                    AnalogAxis.Throttle,
-                    ElectronicsConstants.INVERT_THROTTLE_AXIS,
-                    0.0));
 
             // Operations for the elevator
             put(

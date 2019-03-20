@@ -23,7 +23,6 @@ public enum Operation
     DriveTrainUsePositionalMode,
     DriveTrainUseSimplePathMode,
     DriveTrainUsePathMode,
-    DriveTrainMaxVelocityRatio,
     DriveTrainLeftPosition,
     DriveTrainRightPosition,
     DriveTrainLeftVelocity,
