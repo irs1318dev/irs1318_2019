@@ -61,7 +61,7 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.VisionEnableCargoShip,
                 new DigitalOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
                     Shift.None,
                     ButtonType.Click));
