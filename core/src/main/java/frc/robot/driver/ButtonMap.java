@@ -567,7 +567,7 @@ public class ButtonMap implements IButtonMap
                                     new ElevatorPositionTask(1.0, Operation.ElevatorCamReturnPosition),
                                     new ClimberCamPositionTask(1.0, Operation.ClimberCamStoredPosition),
                                     new ElevatorPositionTask(Operation.ElevatorBottomPosition)),
-                                new DriveDistanceTimedTask(12.0, 1.5))),
+                                new DriveDistanceTimedTask(-6.0, 1.5))),
                         new VisionDisableTask(),
                         new CompressorDisableTask()),
                     new Operation[]
