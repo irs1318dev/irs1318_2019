@@ -166,14 +166,12 @@ public class TuningConstants
     public static final double DRIVETRAIN_POSITION_PID_LEFT_KCC = 0.0001;
 
     // Brake PID (right)
-    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KP = 0.0004;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KF = 0.0;
 
     // Brake PID (left)
-    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KP = 0.0004;
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KD = 0.0;

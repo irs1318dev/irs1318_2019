@@ -75,9 +75,9 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.VisionEnableOffboardStream,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    0,
-                    Shift.Debug,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_11,
+                    Shift.None,
                     ButtonType.Toggle));
             put(
                 Operation.VisionEnableOffboardProcessing,
