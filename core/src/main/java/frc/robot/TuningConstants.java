@@ -220,7 +220,7 @@ public class TuningConstants
     public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
     public static final double ELEVATOR_MM_POSITION_PID_KF = 0.34; // 1023 over max speed (3000 ticks per 100ms)
     public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 2000;
-    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 1000;
+    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 2000;
 
     // PID
     public static final double ELEVATOR_POSITION_PID_KP = 0.05;
