@@ -144,9 +144,9 @@ public class VisionCalculations {
         {
             if (isLeft(rect.get(i)))
             {
-                if (area < (rect.get(i).getSize().getHeight() * rect.get(i).getSize().getWidth()))
+                if (area < (rect.get(i).getSize().area()))
                 {
-                    area = (rect.get(i).getSize().getHeight() * rect.get(i).getSize().getWidth());
+                    area = (rect.get(i).getSize().area());
                     left = rect.get(i);
                     if (i < count - 1)
                     {
