@@ -1326,7 +1326,9 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_2,
                     Shift.Debug,
                     ButtonType.Toggle,
-                    () -> new ElevatorPositionTask(Operation.ElevatorCargoLoadPosition),
+                    () -> ConcurrentTask.AllTasks(
+                        new ElevatorPositionTask(Operation.ElevatorCargoLoadPosition),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristCargoPosition)),
                     new Operation[]
                     {
                         Operation.ElevatorBottomPosition,
