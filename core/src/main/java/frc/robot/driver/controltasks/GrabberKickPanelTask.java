@@ -10,6 +10,11 @@ public class GrabberKickPanelTask extends TimedTask
         super(TuningConstants.GRABBER_KICK_PANEL_DURATION);
     }
 
+    public GrabberKickPanelTask(double duration)
+    {
+        super(duration);
+    }
+
     @Override
     public void begin()
     {
