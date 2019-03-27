@@ -42,7 +42,8 @@ public enum MacroOperation
     ClimbPiecewiseB,
     ClimbPiecewiseC,
     ClimbPiecewiseD,
-    ClimbHab3,
+    ClimbHabAndReset,
+    ClimbHabLeaveTailDown,
 
     // Elevator operations:
     ElevatorBottomPosition,
