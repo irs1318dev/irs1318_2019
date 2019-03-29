@@ -7,11 +7,12 @@ import frc.robot.vision.common.VisionResult;
 
 import java.util.*;
 
-public class VisionCalculations {
-
+public class VisionCalculations
+{
     private static double EPS = 0.01;
 
-    public VisionCalculations() {
+    public VisionCalculations()
+    {
     }
 
     public List<Set<IRotatedRect>> groupRotatedRect(List<IRotatedRect> rotatedRect)
@@ -172,6 +173,70 @@ public class VisionCalculations {
         }
 
         return pair;
+    }
+
+    public List<RectanglePair> pairRectangles(Set<IRotatedRect> rects)
+    {
+        List<RectanglePair> rectanglePairs = new ArrayList<RectanglePair>();
+        List<IRotatedRect> sortedRectangles = this.sortByCenterX(rects);
+
+        int i = 0;
+        int rectCount = sortedRectangles.size();
+        IRotatedRect left = null;
+        while (i < rectCount)
+        {
+            IRotatedRect current = sortedRectangles.get(i);
+
+            if (this.isLeft(current))
+            {
+                if (left != null)
+                {
+                    // multiple lefts in a row?  right may be obscured...
+                    rectanglePairs.add(new RectanglePair(left, null));
+                }
+
+                left = current;
+            }
+            else //if (this.isRight(current))
+            {
+                rectanglePairs.add(new RectanglePair(left, current));
+                left = null;
+            }
+
+            i++;
+        }
+
+        if (left != null)
+        {
+            // unpaired rectangle?  may be near the edge of the viewport...
+            rectanglePairs.add(new RectanglePair(left, null));
+        }
+
+        return rectanglePairs;
+    }
+
+    public RectanglePair pickPreferredPair(List<RectanglePair> rectanglePairs, double centerX)
+    {
+        if (rectanglePairs == null)
+        {
+            return null;
+        }
+
+        RectanglePair bestPair = null;
+        double minDistanceFromCenter = Double.MAX_VALUE;
+        for (int i = 0; i < rectanglePairs.size(); i++)
+        {
+            RectanglePair current = rectanglePairs.get(i);
+            IPoint center = current.getPreferredRect().getCenter();
+            double distanceFromCenter = Math.abs(centerX - center.getX());
+            if (distanceFromCenter < minDistanceFromCenter)
+            {
+                minDistanceFromCenter = distanceFromCenter;
+                bestPair = current;
+            }
+        }
+
+        return bestPair;
     }
 
     public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects)

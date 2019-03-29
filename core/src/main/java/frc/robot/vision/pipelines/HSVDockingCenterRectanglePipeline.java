@@ -180,10 +180,11 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
         }
 
         Set<IRotatedRect> row = this.calc.pickRow(groupedRects, VisionResult.LOW_TARGET);
-        List<IRotatedRect> pair = this.calc.pickPairedRect(row);
+        List<RectanglePair> pairs = this.calc.pairRectangles(row);
+        RectanglePair pair = this.calc.pickPreferredPair(pairs, VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH);
 
         // Docking Calculations
-        if (pair == null || pair.size() != 2)
+        if (pair == null)
         {
             this.dockingMarkerCenter = null;
             this.desiredAngleX = null;
@@ -195,11 +196,7 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
         }
 
         // Finding which side is robot on by finding the center value
-        IRotatedRect minAreaRect = pair.get(0);
-        if (minAreaRect.getSize().getHeight() == 0.0)
-        {
-            return;
-        }
+        IRotatedRect minAreaRect = pair.getPreferredRect();
 
         this.dockingMarkerCenter = minAreaRect.getCenter();
         double xOffsetMeasured = this.dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
