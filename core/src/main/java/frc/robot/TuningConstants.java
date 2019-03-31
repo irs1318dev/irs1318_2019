@@ -44,7 +44,7 @@ public class TuningConstants
     public static final double MAX_VISION_CENTERING_RANGE_DEGREES = 5.0;
 
     // Navx Turn Constants
-    public static final double MAX_NAVX_TURN_RANGE_DEGREES = 4.0;
+    public static final double MAX_NAVX_TURN_RANGE_DEGREES = 5.0;
     public static final double MAX_NAVX_FAST_TURN_RANGE_DEGREES = 5.0;
     public static final double NAVX_FAST_TURN_TIMEOUT = 1.25;
     public static final double NAVX_TURN_COMPLETE_TIME = 0.4;
@@ -52,9 +52,9 @@ public class TuningConstants
     public static final double NAVX_TURN_COMPLETE_DESIRED_VELOCITY_DELTA = 0;
 
     // Navx Turn PID Constants
-    public static final double NAVX_TURN_PID_KP = 0.25;
+    public static final double NAVX_TURN_PID_KP = 0.04;
     public static final double NAVX_TURN_PID_KI = 0.0;
-    public static final double NAVX_TURN_PID_KD = 1.0;
+    public static final double NAVX_TURN_PID_KD = 0.0;
     public static final double NAVX_TURN_PID_KF = 0.0;
     public static final double NAVX_TURN_PID_KS = 1.0;
     public static final double NAVX_TURN_PID_MIN = -0.8;
@@ -68,7 +68,7 @@ public class TuningConstants
     public static final double NAVX_FAST_TURN_PID_MAX = 0.8;
 
     // Acceptable vision distance from tape in inches
-    public static final double MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE = 1.0;
+    public static final double MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE = 2.0;
 
     // PID settings for Centering the robot on a vision target from one stationary place
     // --------- NEEDS 2019 UPDATE ---------
@@ -166,14 +166,12 @@ public class TuningConstants
     public static final double DRIVETRAIN_POSITION_PID_LEFT_KCC = 0.0001;
 
     // Brake PID (right)
-    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KP = 0.0004;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KI = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KD = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_RIGHT_KF = 0.0;
 
     // Brake PID (left)
-    // --------- NEEDS 2019 UPDATE ---------
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KP = 0.0004;
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KI = 0.0;
     public static final double DRIVETRAIN_BRAKE_PID_LEFT_KD = 0.0;
@@ -222,7 +220,7 @@ public class TuningConstants
     public static final double ELEVATOR_MM_POSITION_PID_KD = 0.0;
     public static final double ELEVATOR_MM_POSITION_PID_KF = 0.34; // 1023 over max speed (3000 ticks per 100ms)
     public static final int ELEVATOR_MM_POSITION_PID_CRUISE_VELOC = 2000;
-    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 1000;
+    public static final int ELEVATOR_MM_POSITION_PID_ACCEL = 2000;
 
     // PID
     public static final double ELEVATOR_POSITION_PID_KP = 0.05;

@@ -22,7 +22,20 @@ public class PathManager
     private static final String[] NAMES =
         new String[]
         {
+            "/Paths/CenterL1 to FrontR.csv",
             "/Paths/Circle 40 inch radius.csv",
+            "/Paths/FrontL to LLoading.csv",
+            "/Paths/FrontR to RLoading.csv",
+            "/Paths/L1 to LLoading.csv",
+            "/Paths/LeftL1 to FrontL.csv",
+            "/Paths/LeftL1 to L1.csv",
+            "/Paths/LLoading to L1.csv",
+            "/Paths/LLoading to L2.csv",
+            "/Paths/R1 to RLoading.csv",
+            "/Paths/RightL1 to FrontR.csv",
+            "/Paths/RightL1 to R1.csv",
+            "/Paths/RLoading to R1.csv",
+            "/Paths/RLoading to R2.csv",
             "/Paths/S path.csv",
             "/Paths/Straight 4 feet.csv",
             "/Paths/Turn left 4 feet.csv",

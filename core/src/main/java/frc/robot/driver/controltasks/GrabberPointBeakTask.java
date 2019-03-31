@@ -10,6 +10,11 @@ public class GrabberPointBeakTask extends TimedTask
         super(TuningConstants.GRABBER_POINT_BEAK_DURATION);
     }
 
+    public GrabberPointBeakTask(double duration)
+    {
+        super(duration);
+    }
+
     @Override
     public void begin()
     {

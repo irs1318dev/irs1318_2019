@@ -497,11 +497,9 @@ public class DriveTrainMechanism implements IMechanism
             rightVelocityGoal = (TuningConstants.DRIVETRAIN_K1 * forwardVelocity) + (-TuningConstants.DRIVETRAIN_K2 * turnAmount);
         }
 
-        double maxVelocityRatio = (1.0 + this.driver.getAnalog(Operation.DriveTrainMaxVelocityRatio)) / 2.0;
-
         // decrease the desired velocity based on the configured max power level
-        leftVelocityGoal = leftVelocityGoal * maxVelocityRatio * TuningConstants.DRIVETRAIN_MAX_POWER_LEVEL;
-        rightVelocityGoal = rightVelocityGoal * maxVelocityRatio * TuningConstants.DRIVETRAIN_MAX_POWER_LEVEL;
+        leftVelocityGoal = leftVelocityGoal * TuningConstants.DRIVETRAIN_MAX_POWER_LEVEL;
+        rightVelocityGoal = rightVelocityGoal * TuningConstants.DRIVETRAIN_MAX_POWER_LEVEL;
 
         // ensure that we don't give values outside the appropriate range
         double left = this.applyPowerLevelRange(leftVelocityGoal);
