@@ -612,7 +612,11 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorMoveUp,
                         Operation.ElevatorMoveDown,
                         Operation.ElevatorForceUp,
-                        Operation.ElevatorForceDown
+                        Operation.ElevatorForceDown,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition
                     },
                     new Operation[]
                     {
@@ -693,7 +697,11 @@ public class ButtonMap implements IButtonMap
                         Operation.ElevatorMoveUp,
                         Operation.ElevatorMoveDown,
                         Operation.ElevatorForceUp,
-                        Operation.ElevatorForceDown
+                        Operation.ElevatorForceDown,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition
                     },
                     new Operation[]
                     {
