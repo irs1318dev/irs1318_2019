@@ -19,8 +19,7 @@ public class AutonomousRoutineSelector
 
     public enum StartPosition
     {
-        Left,
-        Right,
+        Side,
         Center
     }
 
@@ -50,8 +49,7 @@ public class AutonomousRoutineSelector
 
         this.positionChooser = provider.getSendableChooser();
         this.positionChooser.addDefault("center", StartPosition.Center);
-        this.positionChooser.addObject("left", StartPosition.Left);
-        this.positionChooser.addObject("right", StartPosition.Right);
+        this.positionChooser.addObject("side", StartPosition.Side);
         this.logger.addChooser("Start Position", this.positionChooser);
 
         this.driverStation = provider.getDriverStation();
@@ -71,13 +69,10 @@ public class AutonomousRoutineSelector
             switch (startPosition)
             {
                 case Center:
-                    return startCenterGoLeftPlace2();
+                    return centerPlace2Piecewise(true);
 
-                case Left:
-                    return startLeftGoSidePlace2();
-
-                case Right:
-                    return startLeftGoFrontPlace2();
+                case Side:
+                    return goRocketPlace2Piecewise(true);
             }
         }
         else if (routine == AutoRoutine.DeliverTwoRight)
@@ -85,13 +80,10 @@ public class AutonomousRoutineSelector
             switch (startPosition)
             {
                 case Center:
-                    return startCenterGoRightPlace2();
+                    return centerPlace2Piecewise(false);
 
-                case Left:
-                    return startLeftGoFrontPlace2();
-
-                case Right:
-                    return startLeftGoSidePlace2();
+                case Side:
+                    return goRocketPlace2Piecewise(false);
             }
         }
 
@@ -109,6 +101,68 @@ public class AutonomousRoutineSelector
     private static IControlTask GetFillerRoutine()
     {
         return new WaitTask(0);
+    }
+
+    private static IControlTask centerPlace2Piecewise(boolean goLeft)
+    {
+        return SequentialTask.Sequence(
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new DriveDistanceTimedTask(52.0, 1.75)),
+            new NavxTurnTask(goLeft ? -8.0 : 8.0),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+            ConcurrentTask.AllTasks(
+                new GrabberKickPanelTask(2.5),
+                SequentialTask.Sequence(
+                    new WaitTask(0.5),
+                    new DriveDistanceTimedTask(-36.0, 2.0))),
+            new NavxTurnTask(goLeft ? -90.0 : 90.0),
+            new DriveDistanceTimedTask(100.0, 4.0),
+            new NavxTurnTask(goLeft ? -180.0 : 180.0),
+            ConcurrentTask.AnyTasks(
+                new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                new GrabberPointBeakTask(6.0)),
+            new DriveDistanceTimedTask(-36, 2.0),
+            new NavxTurnTask(goLeft ? -345.0 : 345.0),
+            new DriveDistanceTimedTask(250.0, 8.0),
+            new NavxTurnTask(goLeft ? -330.0 : 330.0),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+            ConcurrentTask.AllTasks(
+                new GrabberKickPanelTask(2.5),
+                SequentialTask.Sequence(
+                    new WaitTask(0.5),
+                    new DriveDistanceTimedTask(-36.0, 2.0)))
+        );
+    }
+
+    private static IControlTask goRocketPlace2Piecewise(boolean onLeft)
+    {
+        return SequentialTask.Sequence(
+            ConcurrentTask.AllTasks(
+                new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
+                new DriveDistanceTimedTask(52.0, 1.75)),
+            new NavxTurnTask(onLeft ? -40.0 : 40.0),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+            ConcurrentTask.AllTasks(
+                new GrabberKickPanelTask(2.0),
+                SequentialTask.Sequence(
+                    new WaitTask(0.5),
+                    new DriveDistanceTimedTask(-26.0, 1.75))),
+            new NavxTurnTask(onLeft ? -180.0 : 180.0),
+            ConcurrentTask.AnyTasks(
+                new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                new GrabberPointBeakTask(6.0)),
+            new DriveDistanceTimedTask(-36, 2.0),
+            new NavxTurnTask(onLeft ? -345.0 : 345.0),
+            new DriveDistanceTimedTask(250.0, 8.0),
+            new NavxTurnTask(onLeft ? -330.0 : 330.0),
+            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+            ConcurrentTask.AllTasks(
+                new GrabberKickPanelTask(2.5),
+                SequentialTask.Sequence(
+                    new WaitTask(0.5),
+                    new DriveDistanceTimedTask(-36.0, 2.0)))
+        );
     }
 
     private static IControlTask startCenterGoLeftPlace2()
@@ -153,6 +207,7 @@ public class AutonomousRoutineSelector
             new DriveDistanceTimedTask(-25, 1.5)
         );
     }
+
     private static IControlTask startCenterGoRightPlace2()
     {
         return SequentialTask.Sequence(
