@@ -108,30 +108,28 @@ public class AutonomousRoutineSelector
         return SequentialTask.Sequence(
             ConcurrentTask.AllTasks(
                 new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
-                new DriveDistanceTimedTask(52.0, 1.75)),
-            new NavxTurnTask(goLeft ? -8.0 : 8.0),
-            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip)),
             ConcurrentTask.AllTasks(
-                new GrabberKickPanelTask(2.5),
+                new GrabberKickPanelTask(2.0),
                 SequentialTask.Sequence(
                     new WaitTask(0.5),
-                    new DriveDistanceTimedTask(-36.0, 2.0))),
-            new NavxTurnTask(goLeft ? -90.0 : 90.0),
-            new DriveDistanceTimedTask(100.0, 4.0),
+                    new DriveDistanceTimedTask(-36.0, 1.5))),
+            new NavxTurnTask(goLeft ? -120.0 : 120.0),
+            new DriveDistanceTimedTask(90.0, 2.75),
             new NavxTurnTask(goLeft ? -180.0 : 180.0),
             ConcurrentTask.AnyTasks(
                 new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                 new GrabberPointBeakTask(6.0)),
             new DriveDistanceTimedTask(-36, 2.0),
-            new NavxTurnTask(goLeft ? -345.0 : 345.0),
-            new DriveDistanceTimedTask(250.0, 8.0),
-            new NavxTurnTask(goLeft ? -330.0 : 330.0),
+            new NavxTurnTask(goLeft ? -165.0 : 165.0),
+            new DriveDistanceTimedTask(-250.0, 6.0),
+            new NavxTurnTask(goLeft ? -150.0 : 150.0),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AllTasks(
-                new GrabberKickPanelTask(2.5),
+                new GrabberKickPanelTask(2.0),
                 SequentialTask.Sequence(
                     new WaitTask(0.5),
-                    new DriveDistanceTimedTask(-36.0, 2.0)))
+                    new DriveDistanceTimedTask(-36.0, 1.5)))
         );
     }
 
@@ -153,15 +151,15 @@ public class AutonomousRoutineSelector
                 new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                 new GrabberPointBeakTask(6.0)),
             new DriveDistanceTimedTask(-36, 2.0),
-            new NavxTurnTask(onLeft ? -345.0 : 345.0),
-            new DriveDistanceTimedTask(250.0, 8.0),
-            new NavxTurnTask(onLeft ? -330.0 : 330.0),
+            new NavxTurnTask(onLeft ? -170.0 : 170.0),
+            new DriveDistanceTimedTask(-250.0, 6.0),
+            new NavxTurnTask(onLeft ? -150.0 : 150.0),
             new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AllTasks(
-                new GrabberKickPanelTask(2.5),
+                new GrabberKickPanelTask(2.0),
                 SequentialTask.Sequence(
                     new WaitTask(0.5),
-                    new DriveDistanceTimedTask(-36.0, 2.0)))
+                    new DriveDistanceTimedTask(-36.0, 1.5)))
         );
     }
 

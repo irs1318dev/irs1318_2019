@@ -52,9 +52,9 @@ public class TuningConstants
     public static final double NAVX_TURN_COMPLETE_DESIRED_VELOCITY_DELTA = 0;
 
     // Navx Turn PID Constants
-    public static final double NAVX_TURN_PID_KP = 0.005;
+    public static final double NAVX_TURN_PID_KP = 0.025; // 0.04
     public static final double NAVX_TURN_PID_KI = 0.0;
-    public static final double NAVX_TURN_PID_KD = 0.0;
+    public static final double NAVX_TURN_PID_KD = 0.02;
     public static final double NAVX_TURN_PID_KF = 0.0;
     public static final double NAVX_TURN_PID_KS = 1.0;
     public static final double NAVX_TURN_PID_MIN = -0.8;
@@ -107,8 +107,7 @@ public class TuningConstants
     public static final double VISION_FAST_ADVANCING_PID_MIN = -0.45;
     public static final double VISION_FAST_ADVANCING_PID_MAX = 0.45;
 
-
-	public static final boolean VISION_ENABLE_DURING_TELEOP = true;
+    public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 
     //================================================== Indicator Lights ==============================================================
 
