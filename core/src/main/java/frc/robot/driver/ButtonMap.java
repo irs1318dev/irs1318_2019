@@ -1070,6 +1070,26 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward
                     }));
+            put(
+                MacroOperation.VisionFastCenterAndAdvanceCargoShip,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
+                    Shift.Debug,
+                    ButtonType.Toggle,
+                    () -> new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                    new Operation[]
+                    {
+                        Operation.VisionDisable,
+                        Operation.VisionEnableCargoShip,
+                        Operation.VisionEnableRocket,
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward
+                    }));
+
             // Grabber Macro
             put(
                 MacroOperation.GrabberKickPanelRepeatedlyTask,
