@@ -1056,7 +1056,7 @@ public class ButtonMap implements IButtonMap
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
-                    Shift.None,
+                    Shift.Debug,
                     ButtonType.Toggle,
                     () -> new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                     new Operation[]
@@ -1075,7 +1075,7 @@ public class ButtonMap implements IButtonMap
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
-                    Shift.Debug,
+                    Shift.None,
                     ButtonType.Toggle,
                     () -> new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                     new Operation[]
@@ -1111,8 +1111,8 @@ public class ButtonMap implements IButtonMap
                     Shift.None,
                     ButtonType.Simple,
                     () -> ConcurrentTask.AllTasks(
-                        new GrabberKickPanelTask(),
-                        new GrabberPointBeakTask()),
+                        new GrabberKickPanelTask(true),
+                        new GrabberPointBeakTask(true)),
                     new Operation[]
                     {
                         Operation.GrabberKickPanel,
@@ -1125,7 +1125,7 @@ public class ButtonMap implements IButtonMap
                     UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
                     Shift.None,
                     ButtonType.Simple,
-                    () -> new GrabberPointBeakTask(),
+                    () -> new GrabberPointBeakTask(true),
                     new Operation[]
                     {
                         Operation.GrabberPointBeak,
