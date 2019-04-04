@@ -299,15 +299,15 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.GrabberKickPanel,
                 new DigitalOperationDescription(
-                    UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
                     Shift.None,
                     ButtonType.Simple));
             put(
                 Operation.GrabberPointBeak,
                 new DigitalOperationDescription(
-                    UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
                     ButtonType.Simple));
             put(
                 Operation.GrabberWristStartPosition,
@@ -1086,8 +1086,8 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.GrabberKickPanel,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
                     Shift.None,
                     ButtonType.Simple,
                     () -> ConcurrentTask.AllTasks(
@@ -1101,8 +1101,8 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.GrabberPointBeak,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
                     Shift.None,
                     ButtonType.Simple,
                     () -> new GrabberPointBeakTask(),
