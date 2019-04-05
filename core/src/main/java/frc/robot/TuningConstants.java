@@ -111,8 +111,7 @@ public class TuningConstants
 
     //================================================== Indicator Lights ==============================================================
 
-    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = 36.0;
-    public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_DISTANCE_RANGE = 4.0;
+    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = 180.0;
     public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
 
     //================================================== DriveTrain ==============================================================

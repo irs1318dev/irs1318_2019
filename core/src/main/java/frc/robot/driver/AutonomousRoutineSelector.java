@@ -108,28 +108,28 @@ public class AutonomousRoutineSelector
         return SequentialTask.Sequence(
             ConcurrentTask.AllTasks(
                 new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
-                new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip)),
+                new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip)),
             ConcurrentTask.AllTasks(
-                new GrabberKickPanelTask(2.0),
+                new GrabberKickPanelTask(1.0),
                 SequentialTask.Sequence(
-                    new WaitTask(0.5),
-                    new DriveDistanceTimedTask(-36.0, 1.5))),
+                    new WaitTask(0.15),
+                    new DriveDistanceTimedTask(-26.0, 0.85))),
             new NavxTurnTask(goLeft ? -120.0 : 120.0),
             new DriveDistanceTimedTask(90.0, 2.75),
             new NavxTurnTask(goLeft ? -180.0 : 180.0),
             ConcurrentTask.AnyTasks(
-                new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                 new GrabberPointBeakTask(6.0)),
-            new DriveDistanceTimedTask(-36, 2.0),
+            new DriveDistanceTimedTask(-36, 1.25),
             new NavxTurnTask(goLeft ? -165.0 : 165.0),
             new DriveDistanceTimedTask(-250.0, 6.0),
             new NavxTurnTask(goLeft ? -150.0 : 150.0),
-            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+            new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AllTasks(
-                new GrabberKickPanelTask(2.0),
+                new GrabberKickPanelTask(1.0),
                 SequentialTask.Sequence(
-                    new WaitTask(0.5),
-                    new DriveDistanceTimedTask(-36.0, 1.5)))
+                    new WaitTask(0.15),
+                    new DriveDistanceTimedTask(-26.0, 0.85)))
         );
     }
 
@@ -138,28 +138,26 @@ public class AutonomousRoutineSelector
         return SequentialTask.Sequence(
             ConcurrentTask.AllTasks(
                 new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
-                new DriveDistanceTimedTask(52.0, 1.75)),
-            new NavxTurnTask(onLeft ? -40.0 : 40.0),
-            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip)),
             ConcurrentTask.AllTasks(
-                new GrabberKickPanelTask(2.0),
+                new GrabberKickPanelTask(1.0),
                 SequentialTask.Sequence(
-                    new WaitTask(0.5),
-                    new DriveDistanceTimedTask(-26.0, 1.75))),
-            new NavxTurnTask(onLeft ? -180.0 : 180.0),
+                    new WaitTask(0.15),
+                    new DriveDistanceTimedTask(-26.0, 0.85))),
+            new NavxTurnTask(onLeft ? -160.0 : 160.0),
             ConcurrentTask.AnyTasks(
-                new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                 new GrabberPointBeakTask(6.0)),
-            new DriveDistanceTimedTask(-36, 2.0),
-            new NavxTurnTask(onLeft ? -170.0 : 170.0),
-            new DriveDistanceTimedTask(-250.0, 6.0),
-            new NavxTurnTask(onLeft ? -150.0 : 150.0),
-            new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+            new DriveDistanceTimedTask(-36, 1.25),
+            new NavxTurnTask(onLeft ? -152.5 : 152.5),
+            new DriveDistanceTimedTask(-250.0, 4.5),
+            new NavxTurnTask(onLeft ? -130.0 : 130.0),
+            new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AllTasks(
-                new GrabberKickPanelTask(2.0),
+                new GrabberKickPanelTask(1.0),
                 SequentialTask.Sequence(
-                    new WaitTask(0.5),
-                    new DriveDistanceTimedTask(-36.0, 1.5)))
+                    new WaitTask(0.15),
+                    new DriveDistanceTimedTask(-26.0, 0.85)))
         );
     }
 

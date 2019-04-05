@@ -36,8 +36,8 @@ public class ElectronicsConstants
 
     //================================================== Indicator Lights ==============================================================
 
-    public static final int INDICATOR_HATCH_RELAY_CHANNEL = 1;
-    public static final int INDICATOR_CARGO_RELAY_CHANNEL = 0;
+    public static final int INDICATOR_VISION_RELAY_CHANNEL = 0;
+    public static final int INDICATOR_CARGO_RELAY_CHANNEL = 1;
 
     //================================================== DriveTrain ==============================================================
 

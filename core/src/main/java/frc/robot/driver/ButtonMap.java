@@ -47,14 +47,14 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.VisionDisable,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_6,
                     Shift.None,
                     ButtonType.Click));
             put(
                 Operation.VisionForceDisable,
                 new DigitalOperationDescription(
-                    UserInputDevice.CoDriver,
+                    UserInputDevice.None,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_6,
                     Shift.None,
                     ButtonType.Click));
