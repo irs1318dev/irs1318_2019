@@ -107,6 +107,7 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AllTasks(
+                new PositionStartingTask(goLeft ? -8.0 : 8.0),
                 new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
                 new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip)),
             ConcurrentTask.AllTasks(
@@ -121,7 +122,7 @@ public class AutonomousRoutineSelector
                 new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                 new GrabberPointBeakTask(6.0)),
             new DriveDistanceTimedTask(-36, 1.25),
-            new NavxTurnTask(goLeft ? -165.0 : 165.0),
+            new NavxTurnTask(goLeft ? -172.5 : 172.5),
             new DriveDistanceTimedTask(-250.0, 6.0),
             new NavxTurnTask(goLeft ? -150.0 : 150.0),
             new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
@@ -137,6 +138,7 @@ public class AutonomousRoutineSelector
     {
         return SequentialTask.Sequence(
             ConcurrentTask.AllTasks(
+                new PositionStartingTask(onLeft ? -20.0 : 20.0),
                 new GrabberSetWristPositionTask(Operation.GrabberWristHatchPosition),
                 new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip)),
             ConcurrentTask.AllTasks(
@@ -144,14 +146,14 @@ public class AutonomousRoutineSelector
                 SequentialTask.Sequence(
                     new WaitTask(0.15),
                     new DriveDistanceTimedTask(-26.0, 0.85))),
-            new NavxTurnTask(onLeft ? -160.0 : 160.0),
+            new NavxTurnTask(onLeft ? -180.0 : 180.0),
             ConcurrentTask.AnyTasks(
                 new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                 new GrabberPointBeakTask(6.0)),
             new DriveDistanceTimedTask(-36, 1.25),
-            new NavxTurnTask(onLeft ? -152.5 : 152.5),
+            new NavxTurnTask(onLeft ? -172.5 : 172.5),
             new DriveDistanceTimedTask(-250.0, 4.5),
-            new NavxTurnTask(onLeft ? -130.0 : 130.0),
+            new NavxTurnTask(onLeft ? -150.0 : 150.0),
             new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
             ConcurrentTask.AllTasks(
                 new GrabberKickPanelTask(1.0),

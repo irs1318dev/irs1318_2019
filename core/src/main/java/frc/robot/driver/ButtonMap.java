@@ -187,13 +187,20 @@ public class ButtonMap implements IButtonMap
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
-                    ButtonType.Toggle)); 
+                    ButtonType.Toggle));
             put(
                 Operation.DriveTrainUsePathMode,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Toggle));
+            put(
+                Operation.PositionStartingAngle,
+                new AnalogOperationDescription(
+                    UserInputDevice.None,
+                    AnalogAxis.None,
+                    false,
+                    0.0));
 
             // Operations for the elevator
             put(
