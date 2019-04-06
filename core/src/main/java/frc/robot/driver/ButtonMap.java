@@ -315,6 +315,7 @@ public class ButtonMap implements IButtonMap
                 new DigitalOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    Shift.None,
                     ButtonType.Simple));
             put(
                 Operation.GrabberWristStartPosition,
@@ -1141,8 +1142,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.GrabberIntakeCargo,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
-                    Shift.Debug,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
+                    Shift.None,
                     ButtonType.Simple,
                     () -> new GrabberCargoIntakeOuttakeTask(Operation.GrabberIntakeCargo, false),
                     new Operation[]
@@ -1154,8 +1155,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.GrabberOuttakeCargo,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
-                    Shift.Debug,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
+                    Shift.None,
                     ButtonType.Simple,
                     () -> new GrabberCargoIntakeOuttakeTask(Operation.GrabberOuttakeCargo, false),
                     new Operation[]
@@ -1170,8 +1171,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.ElevatorMoveUp,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
-                    Shift.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    Shift.Debug,
                     ButtonType.Simple,
                     () -> new ElevatorMovementTask(Operation.ElevatorMoveUp),
                     new Operation[]
@@ -1185,8 +1186,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.ElevatorMoveDown,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
-                    Shift.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    Shift.Debug,
                     ButtonType.Simple,
                     () -> new ElevatorMovementTask(Operation.ElevatorMoveDown),
                     new Operation[]
