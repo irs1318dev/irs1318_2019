@@ -5,14 +5,28 @@ import frc.robot.TuningConstants;
 
 public class GrabberKickPanelTask extends TimedTask
 {
+    private final boolean neverEnds;
+
     public GrabberKickPanelTask()
     {
-        super(TuningConstants.GRABBER_KICK_PANEL_DURATION);
+        this(false);
     }
 
     public GrabberKickPanelTask(double duration)
     {
+        this(duration, false);
+    }
+
+    public GrabberKickPanelTask(boolean neverEnds)
+    {
+        this(TuningConstants.GRABBER_KICK_PANEL_DURATION, neverEnds);
+    }
+
+    private GrabberKickPanelTask(double duration, boolean neverEnds)
+    {
         super(duration);
+
+        this.neverEnds = neverEnds;
     }
 
     @Override
@@ -32,5 +46,16 @@ public class GrabberKickPanelTask extends TimedTask
     public void end()
     {
         this.setDigitalOperationState(Operation.GrabberKickPanel,false);
+    }
+
+    @Override
+    public boolean hasCompleted()
+    {
+        if (this.neverEnds)
+        {
+            return false;
+        }
+
+        return super.hasCompleted();
     }
 }

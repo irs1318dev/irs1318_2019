@@ -52,9 +52,9 @@ public class TuningConstants
     public static final double NAVX_TURN_COMPLETE_DESIRED_VELOCITY_DELTA = 0;
 
     // Navx Turn PID Constants
-    public static final double NAVX_TURN_PID_KP = 0.04;
+    public static final double NAVX_TURN_PID_KP = 0.025; // 0.04
     public static final double NAVX_TURN_PID_KI = 0.0;
-    public static final double NAVX_TURN_PID_KD = 0.0;
+    public static final double NAVX_TURN_PID_KD = 0.02;
     public static final double NAVX_TURN_PID_KF = 0.0;
     public static final double NAVX_TURN_PID_KS = 1.0;
     public static final double NAVX_TURN_PID_MIN = -0.8;
@@ -68,7 +68,7 @@ public class TuningConstants
     public static final double NAVX_FAST_TURN_PID_MAX = 0.8;
 
     // Acceptable vision distance from tape in inches
-    public static final double MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE = 2.0;
+    public static final double MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE = 3.25;
 
     // PID settings for Centering the robot on a vision target from one stationary place
     // --------- NEEDS 2019 UPDATE ---------
@@ -98,12 +98,20 @@ public class TuningConstants
     public static final double VISION_ADVANCING_PID_MIN = -0.3;
     public static final double VISION_ADVANCING_PID_MAX = 0.3;
 
-	public static final boolean VISION_ENABLE_DURING_TELEOP = true;
+    // PID settings for Advancing the robot quickly towards a vision target
+    public static final double VISION_FAST_ADVANCING_PID_KP = 0.01;
+    public static final double VISION_FAST_ADVANCING_PID_KI = 0.0;
+    public static final double VISION_FAST_ADVANCING_PID_KD = 0.0;
+    public static final double VISION_FAST_ADVANCING_PID_KF = 0.0;
+    public static final double VISION_FAST_ADVANCING_PID_KS = 1.0;
+    public static final double VISION_FAST_ADVANCING_PID_MIN = -0.45;
+    public static final double VISION_FAST_ADVANCING_PID_MAX = 0.45;
+
+    public static final boolean VISION_ENABLE_DURING_TELEOP = true;
 
     //================================================== Indicator Lights ==============================================================
 
-    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = 36.0;
-    public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_DISTANCE_RANGE = 4.0;
+    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = 180.0;
     public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
 
     //================================================== DriveTrain ==============================================================

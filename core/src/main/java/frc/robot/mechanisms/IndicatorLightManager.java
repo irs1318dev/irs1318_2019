@@ -5,6 +5,7 @@ import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
 import frc.robot.driver.Operation;
 import frc.robot.driver.common.Driver;
+import frc.robot.vision.common.VisionProcessingState;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -26,12 +27,12 @@ public class IndicatorLightManager implements IMechanism
     private final ITimer timer;
     private final IDashboardLogger logger;
 
-    private final IRelay hatchIndicator;
+    private final IRelay visionIndicator;
     private final IRelay cargoIndicator;
 
     private Driver driver;
 
-    private LightMode hatchMode;
+    private LightMode visionMode;
     private LightMode cargoMode;
 
     /**
@@ -54,10 +55,10 @@ public class IndicatorLightManager implements IMechanism
         this.timer = timer;
         this.logger = logger;
 
-        this.hatchIndicator = provider.getRelay(ElectronicsConstants.INDICATOR_HATCH_RELAY_CHANNEL);
+        this.visionIndicator = provider.getRelay(ElectronicsConstants.INDICATOR_VISION_RELAY_CHANNEL);
         this.cargoIndicator = provider.getRelay(ElectronicsConstants.INDICATOR_CARGO_RELAY_CHANNEL);
 
-        this.hatchMode = LightMode.Off;
+        this.visionMode = LightMode.Off;
         this.cargoMode = LightMode.Off;
     }
 
@@ -83,28 +84,26 @@ public class IndicatorLightManager implements IMechanism
     public void update()
     {
         if (this.grabberMechanism.isHatchMode() &&
-
             this.visionManager != null &&
-            (this.driver.getDigital(Operation.VisionEnableCargoShip) || this.driver.getDigital(Operation.VisionEnableRocket)) &&
+            this.visionManager.getState() != VisionProcessingState.Disabled &&
             this.visionManager.getCenter() != null)
         {
             if (this.visionManager.getMeasuredDistance() > TuningConstants.INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE)
             {
-                this.hatchMode = LightMode.Off;
+                this.visionMode = LightMode.Off;
             }
-            else if (this.visionManager.getMeasuredDistance() <= TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_DISTANCE_RANGE &&
-                Math.abs(this.visionManager.getMeasuredAngle() - this.visionManager.getDesiredAngle()) < TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE)
+            else if (Math.abs(this.visionManager.getMeasuredAngle() - this.visionManager.getDesiredAngle()) < TuningConstants.INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE)
             {
-                this.hatchMode = LightMode.Flashing;
+                this.visionMode = LightMode.On;
             }
             else
             {
-                this.hatchMode = LightMode.On;
+                this.visionMode = LightMode.Flashing;
             }
         }
         else
         {
-            this.hatchMode = LightMode.Off;
+            this.visionMode = LightMode.Off;
         }
 
         if (this.grabberMechanism.hasCargo())
@@ -116,9 +115,9 @@ public class IndicatorLightManager implements IMechanism
             this.cargoMode = LightMode.Off;
         }
 
-        this.logger.logBoolean("ind", "hatch", this.hatchMode != LightMode.Off);
+        this.logger.logBoolean("ind", "vision", this.visionMode != LightMode.Off);
         this.logger.logBoolean("ind", "cargo", this.cargoMode != LightMode.Off);
-        this.controlLight(this.hatchIndicator, this.hatchMode);
+        this.controlLight(this.visionIndicator, this.visionMode);
         this.controlLight(this.cargoIndicator, this.cargoMode);
     }
 
@@ -128,7 +127,7 @@ public class IndicatorLightManager implements IMechanism
     @Override
     public void stop()
     {
-        this.hatchIndicator.set(RelayValue.Off);
+        this.visionIndicator.set(RelayValue.Off);
         this.cargoIndicator.set(RelayValue.Off);
     }
 

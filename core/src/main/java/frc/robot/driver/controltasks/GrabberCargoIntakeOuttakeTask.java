@@ -14,17 +14,20 @@ public class GrabberCargoIntakeOuttakeTask extends CompositeOperationTask
 
     private GrabberMechanism grabber;
     private boolean completeWithSensor;
+    private boolean useTime;
 
     public GrabberCargoIntakeOuttakeTask(Operation toPerform, boolean completeWithSensor)
     {
         super(TuningConstants.GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME, toPerform, GrabberCargoIntakeOuttakeTask.possibleOperations);
         this.completeWithSensor = completeWithSensor;
+        this.useTime = false;
     }
 
     public GrabberCargoIntakeOuttakeTask(double duration, Operation toPerform, boolean completeWithSensor)
     {
         super(duration, toPerform, GrabberCargoIntakeOuttakeTask.possibleOperations);
         this.completeWithSensor = completeWithSensor;
+        this.useTime = true;
     }
 
     @Override
@@ -40,6 +43,11 @@ public class GrabberCargoIntakeOuttakeTask extends CompositeOperationTask
         if (this.completeWithSensor)
         {
             return this.grabber.hasCargo();
+        }
+
+        if (!this.useTime)
+        {
+            return false;
         }
 
         return super.hasCompleted();

@@ -99,13 +99,13 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
             }
         }
 
-        if (this.streamEnabled ||
+        if (this.getStreamMode() ||
             (VisionConstants.DEBUG && VisionConstants.DEBUG_OUTPUT_FRAMES))
         {
             this.frameInput.putFrame(image);
         }
 
-        if (this.processingState == VisionProcessingState.Disabled)
+        if (this.getMode() == VisionProcessingState.Disabled)
         {
             return;
         }
@@ -223,24 +223,9 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
         return rotatedRect;
     }
 
-    public void setMode(VisionProcessingState state)
-    {
-        this.processingState = state;
-    }
-
-    public void setGamePiece(GamePiece gamePiece)
-    {
-        this.gamePiece = gamePiece;
-	}
-
-    public void setStreamMode(boolean isEnabled)
-    {
-        this.streamEnabled = isEnabled;
-    }
-
     public boolean isActive()
     {
-        return this.processingState != VisionProcessingState.Disabled;
+        return this.getMode() != VisionProcessingState.Disabled;
     }
 
     public IPoint getCenter()
@@ -267,4 +252,52 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
     {
         return this.lastFpsMeasurement;
     }
+
+    public void setMode(VisionProcessingState state)
+    {
+        synchronized (this)
+        {
+            this.processingState = state;
+        }
+    }
+
+    public void setGamePiece(GamePiece gamePiece)
+    {
+        synchronized (this)
+        {
+            this.gamePiece = gamePiece;
+        }
+	}
+
+    public void setStreamMode(boolean isEnabled)
+    {
+        synchronized (this)
+        {
+            this.streamEnabled = isEnabled;
+        }
+    }
+
+    protected boolean getStreamMode()
+    {
+        synchronized (this)
+        {
+            return this.streamEnabled;
+        }
+    }
+
+    protected VisionProcessingState getMode()
+    {
+        synchronized (this)
+        {
+            return this.processingState;
+        }
+    }
+
+    protected GamePiece setGamePiece()
+    {
+        synchronized (this)
+        {
+            return this.gamePiece;
+        }
+	}
 }

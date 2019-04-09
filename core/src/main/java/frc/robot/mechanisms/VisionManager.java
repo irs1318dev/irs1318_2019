@@ -97,6 +97,14 @@ public class VisionManager implements IMechanism, IVisionListener<ICentroidVisio
         }
     }
 
+    public VisionProcessingState getState()
+    {
+        synchronized (this.visionLock)
+        {
+            return this.currentState;
+        }
+    }
+
     public Double getMeasuredAngle()
     {
         synchronized (this.visionLock)

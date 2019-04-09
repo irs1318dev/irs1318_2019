@@ -47,15 +47,15 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.VisionDisable,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_6,
                     Shift.None,
                     ButtonType.Click));
             put(
                 Operation.VisionForceDisable,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_6,
                     Shift.None,
                     ButtonType.Click));
             put(
@@ -187,13 +187,20 @@ public class ButtonMap implements IButtonMap
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
-                    ButtonType.Toggle)); 
+                    ButtonType.Toggle));
             put(
                 Operation.DriveTrainUsePathMode,
                 new DigitalOperationDescription(
                     UserInputDevice.None,
                     UserInputDeviceButton.NONE,
                     ButtonType.Toggle));
+            put(
+                Operation.PositionStartingAngle,
+                new AnalogOperationDescription(
+                    UserInputDevice.None,
+                    AnalogAxis.None,
+                    false,
+                    0.0));
 
             // Operations for the elevator
             put(
@@ -299,15 +306,16 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.GrabberKickPanel,
                 new DigitalOperationDescription(
-                    UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
                     Shift.None,
                     ButtonType.Simple));
             put(
                 Operation.GrabberPointBeak,
                 new DigitalOperationDescription(
-                    UserInputDevice.Driver,
-                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    Shift.None,
                     ButtonType.Simple));
             put(
                 Operation.GrabberWristStartPosition,
@@ -1056,7 +1064,7 @@ public class ButtonMap implements IButtonMap
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
                     UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
-                    Shift.None,
+                    Shift.Debug,
                     ButtonType.Toggle,
                     () -> new VisionAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
                     new Operation[]
@@ -1070,6 +1078,26 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward
                     }));
+            put(
+                MacroOperation.VisionFastCenterAndAdvanceCargoShip,
+                new MacroOperationDescription(
+                    UserInputDevice.CoDriver,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_7,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new VisionFastAdvanceAndCenterTask(Operation.VisionEnableCargoShip),
+                    new Operation[]
+                    {
+                        Operation.VisionDisable,
+                        Operation.VisionEnableCargoShip,
+                        Operation.VisionEnableRocket,
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainTurn,
+                        Operation.DriveTrainMoveForward
+                    }));
+
             // Grabber Macro
             put(
                 MacroOperation.GrabberKickPanelRepeatedlyTask,
@@ -1086,13 +1114,13 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.GrabberKickPanel,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_TOP_RIGHT_BUTTON,
                     Shift.None,
                     ButtonType.Simple,
                     () -> ConcurrentTask.AllTasks(
-                        new GrabberKickPanelTask(),
-                        new GrabberPointBeakTask()),
+                        new GrabberKickPanelTask(true),
+                        new GrabberPointBeakTask(true)),
                     new Operation[]
                     {
                         Operation.GrabberKickPanel,
@@ -1101,11 +1129,11 @@ public class ButtonMap implements IButtonMap
             put(
                 MacroOperation.GrabberPointBeak,
                 new MacroOperationDescription(
-                    UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_STICK_BOTTOM_RIGHT_BUTTON,
                     Shift.None,
                     ButtonType.Simple,
-                    () -> new GrabberPointBeakTask(),
+                    () -> new GrabberPointBeakTask(true),
                     new Operation[]
                     {
                         Operation.GrabberPointBeak,
@@ -1114,8 +1142,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.GrabberIntakeCargo,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
-                    Shift.Debug,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
+                    Shift.None,
                     ButtonType.Simple,
                     () -> new GrabberCargoIntakeOuttakeTask(Operation.GrabberIntakeCargo, false),
                     new Operation[]
@@ -1127,8 +1155,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.GrabberOuttakeCargo,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
-                    Shift.Debug,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
+                    Shift.None,
                     ButtonType.Simple,
                     () -> new GrabberCargoIntakeOuttakeTask(Operation.GrabberOuttakeCargo, false),
                     new Operation[]
@@ -1143,8 +1171,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.ElevatorMoveUp,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_14,
-                    Shift.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_12,
+                    Shift.Debug,
                     ButtonType.Simple,
                     () -> new ElevatorMovementTask(Operation.ElevatorMoveUp),
                     new Operation[]
@@ -1158,8 +1186,8 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.ElevatorMoveDown,
                 new MacroOperationDescription(
                     UserInputDevice.CoDriver,
-                    UserInputDeviceButton.BUTTON_PAD_BUTTON_15,
-                    Shift.None,
+                    UserInputDeviceButton.BUTTON_PAD_BUTTON_13,
+                    Shift.Debug,
                     ButtonType.Simple,
                     () -> new ElevatorMovementTask(Operation.ElevatorMoveDown),
                     new Operation[]
