@@ -215,7 +215,7 @@ public class VisionCalculations
         return rectanglePairs;
     }
 
-    public RectanglePair pickPreferredPair(List<RectanglePair> rectanglePairs, double centerX)
+    public RectanglePair pickPreferredPair(List<RectanglePair> rectanglePairs, double centerWidth)
     {
         if (rectanglePairs == null)
         {
@@ -227,8 +227,8 @@ public class VisionCalculations
         for (int i = 0; i < rectanglePairs.size(); i++)
         {
             RectanglePair current = rectanglePairs.get(i);
-            IPoint center = current.getPreferredRect().getCenter();
-            double distanceFromCenter = Math.abs(centerX - center.getX());
+            IPoint center = current.getCenter();
+            double distanceFromCenter = Math.abs(centerWidth - center.getX());
             if (distanceFromCenter < minDistanceFromCenter)
             {
                 minDistanceFromCenter = distanceFromCenter;
@@ -237,6 +237,47 @@ public class VisionCalculations
         }
 
         return bestPair;
+    }
+
+    public RectanglePair pickPreferredPair(List<RectanglePair> rectanglePairs, double centerWidth, double maxDistance)
+    {
+        if (rectanglePairs == null)
+        {
+            return null;
+        }
+
+        RectanglePair bestPair = null;
+        double minAngleFromCenter = Double.MAX_VALUE;
+        for (int i = 0; i < rectanglePairs.size(); i++)
+        {
+            RectanglePair current = rectanglePairs.get(i);
+            IPoint center = current.getCenter();
+            double angleFromCenter = Math.abs(centerWidth - center.getX());
+
+            if (this.getDistanceFromRobot(current) <= maxDistance &&
+                angleFromCenter < minAngleFromCenter)
+            {
+                minAngleFromCenter = angleFromCenter;
+                bestPair = current;
+            }
+        }
+
+        return bestPair;
+    }
+
+    public double getDistanceFromCamera(RectanglePair pair)
+    {
+        return (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan((VisionConstants.DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE - pair.getMeasuredAngleY()) * VisionConstants.ANGLE_TO_RADIANS));
+    }
+
+    public double getDistanceFromRobot(RectanglePair pair)
+    {
+        return this.getDistanceFromCamera(pair) * Math.cos(pair.getMeasuredAngleX() * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;    
+    }
+
+    public double getDesiredAngleX(RectanglePair pair)
+    {
+        return Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET - VisionConstants.DOCKING_TAPE_OFFSET) / this.getDistanceFromCamera(pair)) * VisionConstants.RADIANS_TO_ANGLE;
     }
 
     public List<IRotatedRect> pickPairedRect(Set<IRotatedRect> rects)

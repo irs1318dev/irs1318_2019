@@ -7,7 +7,7 @@ import frc.robot.vision.common.*;
 
 import java.util.*;
 
-public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipeline
+public class HSVDockingCenterRectanglePipelineV2 implements ICentroidVisionPipeline
 {
     private final ITimer timer;
     private final VisionCalculations calc;
@@ -42,7 +42,7 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
      * @param timer to use for any timing purposes
      * @param shouldUndistort whether to undistort the image or not
      */
-    public HSVDockingCenterRectanglePipeline(
+    public HSVDockingCenterRectanglePipelineV2(
         ITimer timer,
         IRobotProvider provider,
         boolean shouldUndistort)
@@ -181,7 +181,7 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
 
         Set<IRotatedRect> row = this.calc.pickRow(groupedRects, VisionResult.LOW_TARGET);
         List<RectanglePair> pairs = this.calc.pairRectangles(row);
-        RectanglePair pair = this.calc.pickPreferredPair(pairs, VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH);
+        RectanglePair pair = this.calc.pickPreferredPair(pairs, VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH, VisionConstants.VISION_CONSIDERATION_DISTANCE_RANGE);
 
         // Docking Calculations
         if (pair == null)
@@ -195,16 +195,10 @@ public class HSVDockingCenterRectanglePipeline implements ICentroidVisionPipelin
             return;
         }
 
-        // Finding which side is robot on by finding the center value
         this.dockingMarkerCenter = pair.getCenter();
-        double xOffsetMeasured = this.dockingMarkerCenter.getX() - VisionConstants.LIFECAM_CAMERA_CENTER_WIDTH;
-        double yOffsetMeasured = VisionConstants.LIFECAM_CAMERA_CENTER_HEIGHT - this.dockingMarkerCenter.getY();
-        this.measuredAngleX = Math.atan(xOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_X) * VisionConstants.RADIANS_TO_ANGLE - VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_ANGLE;
-        double measuredAngleY = Math.atan(yOffsetMeasured / VisionConstants.LIFECAM_CAMERA_FOCAL_LENGTH_Y) * VisionConstants.RADIANS_TO_ANGLE;
-
-        double distanceFromCam = (VisionConstants.DOCKING_CAMERA_MOUNTING_HEIGHT - VisionConstants.ROCKET_TO_GROUND_TAPE_HEIGHT)/(Math.tan((VisionConstants.DOCKING_CAMERA_VERTICAL_MOUNTING_ANGLE - measuredAngleY) * VisionConstants.ANGLE_TO_RADIANS));
-        this.distanceFromRobot = distanceFromCam * Math.cos(this.measuredAngleX * VisionConstants.ANGLE_TO_RADIANS) - VisionConstants.DOCKING_CAMERA_MOUNTING_DISTANCE;
-        this.desiredAngleX = Math.asin((VisionConstants.DOCKING_CAMERA_HORIZONTAL_MOUNTING_OFFSET - VisionConstants.DOCKING_TAPE_OFFSET) / distanceFromCam) * VisionConstants.RADIANS_TO_ANGLE;
+        this.measuredAngleX = pair.getMeasuredAngleX();
+        this.distanceFromRobot = this.calc.getDistanceFromRobot(pair);
+        this.desiredAngleX = this.calc.getDesiredAngleX(pair);
     }
 
     public List<IRotatedRect> findRectangles(IMat image)

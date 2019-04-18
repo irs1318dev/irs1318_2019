@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.inject.Injector;
 import frc.robot.common.IMechanism;
 import frc.robot.mechanisms.*;
+import frc.robot.vision.VisionConstants;
 
 /**
  * All constants related to tuning the operation of the robot.
@@ -111,7 +112,7 @@ public class TuningConstants
 
     //================================================== Indicator Lights ==============================================================
 
-    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = 180.0;
+    public static final double INDICATOR_LIGHT_VISION_CONSIDERATION_DISTANCE_RANGE = VisionConstants.VISION_CONSIDERATION_DISTANCE_RANGE;
     public static final double INDICATOR_LIGHT_VISION_ACCEPTABLE_ANGLE_RANGE = 3.0;
 
     //================================================== DriveTrain ==============================================================
