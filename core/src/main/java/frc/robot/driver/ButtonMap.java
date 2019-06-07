@@ -1097,6 +1097,20 @@ public class ButtonMap implements IButtonMap
                         Operation.DriveTrainTurn,
                         Operation.DriveTrainMoveForward
                     }));
+            put(
+                MacroOperation.VisionScanning,
+                new MacroOperationDescription(
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_RIGHT_BUTTON,
+                    Shift.None,
+                    ButtonType.Toggle,
+                    () -> new VisionScanningTask(),
+                    new Operation[]
+                    {
+                        Operation.VisionEnableOffboardProcessing,
+                        Operation.DriveTrainTurn,
+                        Operation.VisionDisable
+                    }));
 
             // Grabber Macro
             put(

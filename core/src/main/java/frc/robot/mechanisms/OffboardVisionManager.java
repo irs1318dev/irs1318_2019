@@ -28,6 +28,7 @@ public class OffboardVisionManager implements IMechanism
     private double ballCenterY;
     private double ballDistance;
     private String ballDirection;
+    private Boolean ballSeen;
 
     /**
      * Initializes a new OffboardVisionManager
@@ -44,6 +45,7 @@ public class OffboardVisionManager implements IMechanism
         this.ballCenterY = 0.0;
         this.ballDistance = 0.0;
         this.ballDirection = "";
+        this.ballSeen = false;
     }
 
     public double getBallCenterX()
@@ -66,6 +68,11 @@ public class OffboardVisionManager implements IMechanism
         return this.ballDirection;
     }
 
+    public Boolean getBallSeen()
+    {
+        return this.ballSeen;
+    }
+
     /**
      * read all of the sensors for the mechanism that we will use in macros/autonomous mode and record their values
      */
@@ -76,6 +83,7 @@ public class OffboardVisionManager implements IMechanism
         this.ballCenterY = this.networkTable.getSmartDashboardNumber("rpi.BallcenterY");
         this.ballDistance = this.networkTable.getSmartDashboardNumber("rpi.BallDistance");
         this.ballDirection = this.networkTable.getSmartDashboardString("rpi.BallDirection");
+        this.ballSeen = this.networkTable.getSmartDashboardBoolean("rpi.ballSeen");
     }
 
     @Override
@@ -83,8 +91,8 @@ public class OffboardVisionManager implements IMechanism
     {
         boolean enableVideoStream = this.driver.getDigital(Operation.VisionEnableOffboardStream);
         boolean enableVideoProcessing = this.driver.getDigital(Operation.VisionEnableOffboardProcessing);
-        this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", enableVideoStream);
-        this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", enableVideoProcessing);
+        this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", true);
+        this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", true);
     }
 
     @Override

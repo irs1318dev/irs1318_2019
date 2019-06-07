@@ -15,6 +15,7 @@ public enum MacroOperation
     VisionCenterAndAdvanceCargoShip2,
     VisionFastCenterAndAdvanceCargoShip,
     DriveForwardTurnRight,
+    VisionScanning,
 
     // Grabber operation:
     GrabberKickPanelRepeatedlyTask,
