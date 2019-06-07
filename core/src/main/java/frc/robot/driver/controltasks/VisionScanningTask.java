@@ -14,14 +14,10 @@ import frc.robot.mechanisms.VisionManager;
  */
 public class VisionScanningTask extends ControlTaskBase implements IControlTask
 {
-    private static final int NO_CENTER_THRESHOLD = 40;
-
     private PIDHandler turnPidHandler;
-    private Double centeredTime;
     protected OffboardVisionManager offboardVisionManager;
     private PositionManager positionManager;
 
-    private int noCenterCount;
     private double startingAngle;
     private boolean shouldLookLeft;
 
@@ -34,9 +30,6 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
     public VisionScanningTask()
     {
         this.turnPidHandler = null;
-        this.centeredTime = null;
-
-        this.noCenterCount = 0;
     }
 
     /**
@@ -54,7 +47,7 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
         this.timer = this.getInjector().getInstance(ITimer.class);
 
         this.startTime = this.timer.get();
-
+        this.shouldLookLeft = false;
     }
 
     /**
@@ -68,20 +61,23 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
         double currentMeasuredAngle = this.positionManager.getNavxAngle();
 
         double currentDesiredAngle;
-        if(shouldLookLeft) {
-            currentDesiredAngle = this.startingAngle - 30;
+        if (this.shouldLookLeft)
+        {
+            currentDesiredAngle = this.startingAngle - 60.0;
         }
-        else {
-            currentDesiredAngle = this.startingAngle + 30;
+        else
+        {
+            currentDesiredAngle = this.startingAngle + 60.0;
         }
 
         this.setAnalogOperationState(
             Operation.DriveTrainTurn,
-            -this.turnPidHandler.calculatePosition(currentDesiredAngle, currentMeasuredAngle));
+            this.turnPidHandler.calculatePosition(currentDesiredAngle, currentMeasuredAngle));
 
         if (Math.abs(currentMeasuredAngle - currentDesiredAngle) < 1.0)
-            shouldLookLeft = !shouldLookLeft;
-
+        {
+            this.shouldLookLeft = !this.shouldLookLeft;
+        }
     }
 
     /**
@@ -103,18 +99,12 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
     @Override
     public boolean hasCompleted()
     {
-        Double currentMeasuredAngle = this.positionManager.getNavxAngle();
-        Double currentDesiredAngle = this.positionManager.getNavxAngle();
-        if (currentMeasuredAngle == null || currentDesiredAngle == null)
+        if (this.offboardVisionManager.getBallSeen())
         {
-            return false;
-        }
-
-        if (this.offboardVisionManager.getBallSeen()) {
             return true;
         }
 
-        return this.timer.get() >= this.startTime + 30.0;
+        return this.timer.get() >= this.startTime + 5.0;
 
 
         /*
