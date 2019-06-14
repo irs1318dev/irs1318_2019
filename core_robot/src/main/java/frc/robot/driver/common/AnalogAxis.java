@@ -35,18 +35,18 @@ public enum AnalogAxis
     JOYSTICK_Y(1),
     JOYSTICK_TWIST(2),
     JOYSTICK_THROTTLE(3),
-    XBONE_LSX(0),
-    XBONE_LSY(1),
-    XBONE_LT(2),
-    XBONE_RT(3),
-    XBONE_RSX(4),
-    XBONE_RSY(5),
-    PS4_LSX(0),
-    PS4_LSY(1),
-    PS4_LT(3),
-    PS4_RT(4),
-    PS4_RSX(2),
-    PS4_RSY(5);
+    XBONE_LEFT_STICK_X(0),
+    XBONE_LEFT_STICK_Y(1),
+    XBONE_LEFT_TRIGGER(2),
+    XBONE_RIGHT_TRIGGER(3),
+    XBONE_RIGHT_STICK_X(4),
+    XBONE_RIGHT_STICK_Y(5),
+    PS4_LEFT_STICK_X(0),
+    PS4_LEFT_STICK_Y(1),
+    PS4_LEFT_TRIGGER(3),
+    PS4_RIGHT_TRIGGER(4),
+    PS4_RIGHT_STICK_X(2),
+    PS4_RIGHT_STICK_Y(5);
 
     public final int Value;
     private AnalogAxis(int value)
