@@ -316,7 +316,7 @@ public class ButtonMap implements IButtonMap
                 Operation.GrabberKickPanel,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    AnalogAxis.XBONE_LEFT_TRIGGER,
+                    AnalogAxis.XBONE_RIGHT_TRIGGER,
                     0.5,
                     1.0,
                     Shift.None,
