@@ -80,12 +80,12 @@ public class DigitalOperationState extends OperationState
     /**
      * Checks whether the operation state should change based on the driver and co-driver joysticks and component sensors. 
      * @param driver joystick to update from
-     * @param coDriver joystick to update from
+     * @param operator joystick to update from
      * @param activeShifts to update from
      * @return true if there was any active user input that triggered a state change
      */
     @Override
-    public boolean checkInput(IJoystick driver, IJoystick coDriver, Set<Shift> activeShifts)
+    public boolean checkInput(IJoystick driver, IJoystick operator, Set<Shift> activeShifts)
     {
         DigitalOperationDescription description = (DigitalOperationDescription)this.getDescription();
 
@@ -107,8 +107,8 @@ public class DigitalOperationState extends OperationState
                 relevantJoystick = driver;
                 break;
 
-            case CoDriver:
-                relevantJoystick = coDriver;
+            case Operator:
+                relevantJoystick = operator;
                 break;
 
             case Sensor:

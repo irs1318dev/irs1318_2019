@@ -28,7 +28,7 @@ public class Driver
     protected final Map<Operation, OperationState> operationStateMap;
     
     private final IJoystick joystickDriver;
-    private final IJoystick joystickCoDriver;
+    private final IJoystick joystickoperator;
 
     private final Set<Shift> activeShifts;
 
@@ -64,7 +64,7 @@ public class Driver
         this.routineSelector = injector.getInstance(AutonomousRoutineSelector.class);
 
         this.joystickDriver = provider.getJoystick(ElectronicsConstants.JOYSTICK_DRIVER_PORT);
-        this.joystickCoDriver = provider.getJoystick(ElectronicsConstants.JOYSTICK_CO_DRIVER_PORT);
+        this.joystickoperator = provider.getJoystick(ElectronicsConstants.JOYSTICK_CO_DRIVER_PORT);
 
         this.activeShifts = new HashSet<Shift>();
         this.shiftMap = buttonMap.getShiftMap();
@@ -118,7 +118,7 @@ public class Driver
         for (Shift shift : this.shiftMap.keySet())
         {
             ShiftDescription shiftDescription = this.shiftMap.get(shift);
-            if (shiftDescription.checkInput(this.joystickDriver, this.joystickCoDriver))
+            if (shiftDescription.checkInput(this.joystickDriver, this.joystickoperator))
             {
                 this.activeShifts.add(shift);
             }
@@ -140,7 +140,7 @@ public class Driver
         for (Operation operation : this.operationStateMap.keySet())
         {
             OperationState opState = this.operationStateMap.get(operation);
-            boolean receivedInput = opState.checkInput(this.joystickDriver, this.joystickCoDriver, this.activeShifts);
+            boolean receivedInput = opState.checkInput(this.joystickDriver, this.joystickoperator, this.activeShifts);
             if (receivedInput)
             {
                 modifiedOperations.add(operation);
@@ -159,7 +159,7 @@ public class Driver
         for (MacroOperation macroOperation : this.macroStateMap.keySet())
         {
             IMacroOperationState macroState = this.macroStateMap.get(macroOperation);
-            macroState.checkInput(this.joystickDriver, this.joystickCoDriver, this.activeShifts);
+            macroState.checkInput(this.joystickDriver, this.joystickoperator, this.activeShifts);
 
             if (macroState.getIsActive())
             {

@@ -4,6 +4,6 @@ public enum Shift
 {
     None,
     Any,
-    Debug,
-    ButtonPadDebug,
+    DriverDebug,
+    OperatorDebug,
 }

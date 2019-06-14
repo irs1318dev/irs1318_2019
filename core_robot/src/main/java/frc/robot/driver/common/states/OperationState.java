@@ -42,11 +42,11 @@ public abstract class OperationState implements IOperationState
     /**
      * Checks whether the operation state should change based on the driver and co-driver joysticks and component sensors. 
      * @param driver joystick to update from
-     * @param coDriver joystick to update from
+     * @param operator joystick to update from
      * @param activeShifts to update from
      * @return true if there was any active user input that triggered a state change
      */
-    public abstract boolean checkInput(IJoystick driver, IJoystick coDriver, Set<Shift> activeShifts);
+    public abstract boolean checkInput(IJoystick driver, IJoystick operator, Set<Shift> activeShifts);
 
     /**
      * Create the state corresponding to the description

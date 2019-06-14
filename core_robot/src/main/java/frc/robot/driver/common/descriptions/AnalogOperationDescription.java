@@ -17,7 +17,7 @@ public class AnalogOperationDescription extends OperationDescription
 
     /**
      * Initializes a new AnalogOperationDescription based on a user interaction
-     * @param userInputDevice which device will indicate the operation (driver or codriver joystick) 
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick) 
      * @param userInputDeviceAxis the axis on the device that will indicate the operation
      * @param shouldInvert whether we should invert the axis so that -1 and 1 are on the opposite ends as where they are designed to be in hardware
      * @param deadZone the amount in the center of the axis (around 0) that should be ignored to account for joystick sensors imprecision
@@ -33,7 +33,7 @@ public class AnalogOperationDescription extends OperationDescription
 
     /**
      * Initializes a new AnalogOperationDescription based on a user interaction
-     * @param userInputDevice which device will indicate the operation (driver or codriver joystick) 
+     * @param userInputDevice which device will indicate the operation (driver or operator joystick) 
      * @param userInputDeviceAxis the axis on the device that will indicate the operation
      * @param requiredShift the shift button that must be applied to perform macro
      * @param shouldInvert whether we should invert the axis so that -1 and 1 are on the opposite ends as where they are designed to be in hardware

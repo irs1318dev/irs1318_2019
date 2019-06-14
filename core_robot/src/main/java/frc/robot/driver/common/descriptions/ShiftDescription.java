@@ -25,7 +25,7 @@ public class ShiftDescription
         return this.userInputDeviceButton;
     }
 
-    public boolean checkInput(IJoystick driver, IJoystick coDriver)
+    public boolean checkInput(IJoystick driver, IJoystick operator)
     {
         IJoystick relevantJoystick;
         UserInputDeviceButton relevantButton;
@@ -38,8 +38,8 @@ public class ShiftDescription
                 relevantJoystick = driver;
                 break;
 
-            case CoDriver:
-                relevantJoystick = coDriver;
+            case Operator:
+                relevantJoystick = operator;
                 break;
 
             case Sensor:
