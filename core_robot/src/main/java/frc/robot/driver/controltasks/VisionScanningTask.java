@@ -77,6 +77,7 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
         if (Math.abs(currentMeasuredAngle - currentDesiredAngle) < 1.0)
         {
             this.shouldLookLeft = !this.shouldLookLeft;
+            
         }
     }
 

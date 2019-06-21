@@ -5,12 +5,13 @@ import frc.robot.common.PIDHandler;
 import frc.robot.common.robotprovider.ITimer;
 import frc.robot.driver.Operation;
 import frc.robot.driver.common.IControlTask;
+import frc.robot.mechanisms.OffboardVisionManager;
 import frc.robot.mechanisms.VisionManager;
 
 /**
  * Task that turns the robot a certain amount clockwise or counterclockwise in-place based on vision center
  */
-public class VisionCenteringTask extends ControlTaskBase implements IControlTask
+public class OffboardVisionCenteringTask extends ControlTaskBase implements IControlTask
 {
     private static final int NO_CENTER_THRESHOLD = 40;
 
@@ -19,14 +20,14 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
 
     private PIDHandler turnPidHandler;
     private Double centeredTime;
-    protected VisionManager visionManager;
+    protected OffboardVisionManager offboardVisionManager;
 
     private int noCenterCount;
 
     /**
     * Initializes a new VisionCenteringTask
     */
-    public VisionCenteringTask(Operation toPerform)
+    public OffboardVisionCenteringTask(Operation toPerform)
     {
         this(true, toPerform);
     }
@@ -62,7 +63,8 @@ public class VisionCenteringTask extends ControlTaskBase implements IControlTask
     @Override
     public void update()
     {
-        this.setDigitalOperationState(Operation.VisionEnableOffboardProcessing, true);
+        this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
+        this.setDigitalOperationState(this.toPerform, true);
 
         Double currentMeasuredAngle = this.visionManager.getMeasuredAngle();
         Double currentDesiredAngle = this.visionManager.getDesiredAngle();
