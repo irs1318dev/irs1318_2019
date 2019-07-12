@@ -83,7 +83,7 @@ public class OffboardVisionManager implements IMechanism
         this.ballCenterY = this.networkTable.getSmartDashboardNumber("rpi.BallcenterY");
         this.ballDistance = this.networkTable.getSmartDashboardNumber("rpi.BallDistance");
         this.ballDirection = this.networkTable.getSmartDashboardString("rpi.BallDirection");
-        this.ballSeen = this.networkTable.getSmartDashboardBoolean("rpi.ballSeen");
+        this.ballSeen = this.networkTable.getSmartDashboardBoolean("rpi.BallSeen");
     }
 
     @Override
