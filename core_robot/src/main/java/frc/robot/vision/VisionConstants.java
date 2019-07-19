@@ -39,8 +39,8 @@ public class VisionConstants
         * VisionConstants.ANGLE_TO_RADIANS;
     public static final double LIFECAM_CAMERA_CENTER_VIEW_ANGLE = VisionConstants.LIFECAM_CAMERA_FIELD_OF_VIEW_X / 2.0;
     public static final double LIFECAM_CAMERA_FOCAL_LENGTH_X = 356.016; // focal_length = res_* / (2.0 * tan (FOV_* / 2.0)
-    public static final double LIFECAM_CAMERA_FOCAL_LENGTH_Y = 366.058; // focal_length = res_* / (2.0 * tan (FOV_* / 2.0)
     public static final int LIFECAM_CAMERA_VISION_EXPOSURE = 1;
+    public static final double LIFECAM_CAMERA_FOCAL_LENGTH_Y = 366.058; // focal_length = res_* / (2.0 * tan (FOV_* / 2.0)
     public static final int LIFECAM_CAMERA_VISION_BRIGHTNESS = 1;
     public static final int LIFECAM_CAMERA_OPERATOR_BRIGHTNESS = 35;
     public static final int LIFECAM_CAMERA_FPS = 20; // Max supported value is 30

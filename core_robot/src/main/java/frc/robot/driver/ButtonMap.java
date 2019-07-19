@@ -1102,16 +1102,32 @@ public class ButtonMap implements IButtonMap
                 new MacroOperationDescription(
                     UserInputDevice.Driver,
                     UserInputDeviceButton.JOYSTICK_BASE_BOTTOM_RIGHT_BUTTON,
-                    Shift.None,
+                    Shift.Any,
                     ButtonType.Toggle,
-                    () -> new VisionScanningTask(),
+                    () -> SequentialTask.Sequence(
+                        new VisionScanningTask(),
+                        new OffboardVisionCenteringTask(),
+                        new GrabberSetWristPositionTask(Operation.GrabberWristFloorPosition),
+                        ConcurrentTask.AnyTasks(
+                            new GrabberCargoIntakeOuttakeTask(6.0, Operation.GrabberIntakeCargo, false),
+                            new OffboardVisionAdvanceAndCenterTask())),
                     new Operation[]
                     {
                         Operation.VisionEnableOffboardProcessing,
+                        Operation.VisionDisable,
                         Operation.DriveTrainTurn,
-                        Operation.VisionDisable
+                        Operation.DriveTrainUsePositionalMode,
+                        Operation.DriveTrainLeftPosition,
+                        Operation.DriveTrainRightPosition,
+                        Operation.DriveTrainMoveForward,
+                        Operation.GrabberWristStartPosition,
+                        Operation.GrabberWristHatchPosition,
+                        Operation.GrabberWristCargoPosition,
+                        Operation.GrabberWristFloorPosition,
+                        Operation.GrabberIntakeCargo,
+                        Operation.GrabberOuttakeCargo
                     }));
-
+        
             // Grabber Macro
             put(
                 MacroOperation.GrabberKickPanelRepeatedlyTask,

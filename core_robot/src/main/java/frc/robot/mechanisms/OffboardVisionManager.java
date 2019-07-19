@@ -29,6 +29,7 @@ public class OffboardVisionManager implements IMechanism
     private double ballDistance;
     private String ballDirection;
     private Boolean ballSeen;
+    private Double ballAngle;
 
     /**
      * Initializes a new OffboardVisionManager
@@ -46,6 +47,7 @@ public class OffboardVisionManager implements IMechanism
         this.ballDistance = 0.0;
         this.ballDirection = "";
         this.ballSeen = false;
+        this.ballAngle = 0.0;
     }
 
     public double getBallCenterX()
@@ -72,6 +74,11 @@ public class OffboardVisionManager implements IMechanism
     {
         return this.ballSeen;
     }
+    
+    public Double getBallAngle()
+    {
+        return this.ballAngle;
+    }
 
     /**
      * read all of the sensors for the mechanism that we will use in macros/autonomous mode and record their values
@@ -84,6 +91,7 @@ public class OffboardVisionManager implements IMechanism
         this.ballDistance = this.networkTable.getSmartDashboardNumber("rpi.BallDistance");
         this.ballDirection = this.networkTable.getSmartDashboardString("rpi.BallDirection");
         this.ballSeen = this.networkTable.getSmartDashboardBoolean("rpi.BallSeen");
+        this.ballAngle = this.networkTable.getSmartDashboardNumber("rpi.BallAngle");
     }
 
     @Override

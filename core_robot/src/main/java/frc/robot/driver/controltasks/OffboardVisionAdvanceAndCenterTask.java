@@ -13,9 +13,9 @@ public class OffboardVisionAdvanceAndCenterTask extends OffboardVisionCenteringT
     /**
     * Initializes a new VisionForwardAndCenterTask
     */
-    public OffboardVisionAdvanceAndCenterTask(Operation toPerform)
+    public OffboardVisionAdvanceAndCenterTask()
     {
-        super(false, toPerform);
+        super(false);
 
         this.forwardPIDHandler = null;
     }
@@ -42,11 +42,9 @@ public class OffboardVisionAdvanceAndCenterTask extends OffboardVisionCenteringT
     public void update()
     {
         super.update();
-        Double currentDistance = this.visionManager.getMeasuredDistance();
-        if (currentDistance != null)
-        {
-            this.setAnalogOperationState(Operation.DriveTrainMoveForward, this.forwardPIDHandler.calculatePosition(0.0, -currentDistance));
-        }
+        double currentDistance = this.offboardVisionManager.getBallDistance();
+       
+        this.setAnalogOperationState(Operation.DriveTrainMoveForward, this.forwardPIDHandler.calculatePosition(0.0, -currentDistance));
     }
 
     @Override
@@ -59,12 +57,7 @@ public class OffboardVisionAdvanceAndCenterTask extends OffboardVisionCenteringT
     @Override
     public boolean hasCompleted()
     {
-        Double currentDistance = this.visionManager.getMeasuredDistance();
-        if (currentDistance == null)
-        {
-            return false;
-        }
-
+        double currentDistance = this.offboardVisionManager.getBallDistance();
         return currentDistance <= TuningConstants.MAX_VISION_ACCEPTABLE_FORWARD_DISTANCE;
     }
 
