@@ -1109,7 +1109,7 @@ public class ButtonMap implements IButtonMap
                         new OffboardVisionCenteringTask(),
                         new GrabberSetWristPositionTask(Operation.GrabberWristFloorPosition),
                         ConcurrentTask.AnyTasks(
-                            new GrabberCargoIntakeOuttakeTask(6.0, Operation.GrabberIntakeCargo, false),
+                            new GrabberCargoIntakeOuttakeTask(6.0, Operation.GrabberIntakeCargo, true),
                             new OffboardVisionAdvanceAndCenterTask())),
                     new Operation[]
                     {
