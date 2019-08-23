@@ -66,7 +66,7 @@ public class OffboardVisionCenteringTask extends ControlTaskBase implements ICon
         double currentMeasuredAngle = this.offboardVisionManager.getBallAngle();        
         this.setAnalogOperationState(
             Operation.DriveTrainTurn,
-            -this.turnPidHandler.calculatePosition(-10.0, currentMeasuredAngle));
+            -this.turnPidHandler.calculatePosition(-5.0, currentMeasuredAngle));
         
     }
 
