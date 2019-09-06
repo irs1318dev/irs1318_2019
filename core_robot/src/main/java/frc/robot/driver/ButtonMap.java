@@ -35,7 +35,7 @@ public class ButtonMap implements IButtonMap
                 Shift.OperatorDebug,
                 new ShiftDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_START_BUTTON));
+                    UserInputDeviceButton.PS4_OPTIONS_BUTTON));
         }
     };
 
@@ -214,7 +214,7 @@ public class ButtonMap implements IButtonMap
                 Operation.ElevatorForceDown,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_SELECT_BUTTON,
+                    UserInputDeviceButton.PS4_SHARE_BUTTON,
                     Shift.Any,
                     ButtonType.Simple));
             put(
@@ -293,14 +293,14 @@ public class ButtonMap implements IButtonMap
                 Operation.GrabberIntakeCargo,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_LEFT_BUTTON,
+                    UserInputDeviceButton.PS4_LEFT_BUTTON,
                     Shift.Any,
                     ButtonType.Simple)); 
             put(
                 Operation.GrabberOuttakeCargo,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    AnalogAxis.XBONE_LEFT_TRIGGER,
+                    AnalogAxis.PS4_LEFT_TRIGGER,
                     0.5,
                     1.0,
                     Shift.Any,
@@ -309,14 +309,14 @@ public class ButtonMap implements IButtonMap
                 Operation.GrabberPointBeak,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_RIGHT_BUTTON,
+                    UserInputDeviceButton.PS4_RIGHT_BUTTON,
                     Shift.Any,
                     ButtonType.Simple));
             put(
                 Operation.GrabberKickPanel,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    AnalogAxis.XBONE_RIGHT_TRIGGER,
+                    AnalogAxis.PS4_RIGHT_TRIGGER,
                     0.5,
                     1.0,
                     Shift.None,
@@ -325,28 +325,28 @@ public class ButtonMap implements IButtonMap
                 Operation.GrabberWristStartPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_A_BUTTON,
+                    UserInputDeviceButton.PS4_X_BUTTON,
                     Shift.Any,
                     ButtonType.Click));
             put(
                 Operation.GrabberWristHatchPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_B_BUTTON,
+                    UserInputDeviceButton.PS4_CIRCLE_BUTTON,
                     Shift.Any,
                     ButtonType.Click));
             put(
                 Operation.GrabberWristCargoPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_X_BUTTON,
+                    UserInputDeviceButton.PS4_SQUARE_BUTTON,
                     Shift.Any,
                     ButtonType.Click));
             put(
                 Operation.GrabberWristFloorPosition,
                 new DigitalOperationDescription(
                     UserInputDevice.Operator,
-                    UserInputDeviceButton.XBONE_Y_BUTTON,
+                    UserInputDeviceButton.PS4_TRIANGLE_BUTTON,
                     Shift.Any,
                     ButtonType.Click));
 
@@ -814,7 +814,7 @@ public class ButtonMap implements IButtonMap
                 MacroOperation.GrabberKickPanelRepeatedlyTask,
                 new MacroOperationDescription(
                     UserInputDevice.Operator,
-                    AnalogAxis.XBONE_RIGHT_TRIGGER,
+                    AnalogAxis.PS4_RIGHT_TRIGGER,
                     0.5,
                     1.0,
                     Shift.OperatorDebug,
