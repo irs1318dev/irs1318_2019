@@ -8,11 +8,20 @@ public class ShiftDescription
 {
     private final UserInputDevice userInputDevice;
     private final UserInputDeviceButton userInputDeviceButton;
+    private final int userInputDevicePovValue;
 
     public ShiftDescription(UserInputDevice userInputDevice, UserInputDeviceButton userInputDeviceButton)
     {
         this.userInputDevice = userInputDevice;
         this.userInputDeviceButton = userInputDeviceButton;
+        this.userInputDevicePovValue = -1;
+    }
+
+    public ShiftDescription(UserInputDevice userInputDevice, int povValue)
+    {
+        this.userInputDevice = userInputDevice;
+        this.userInputDeviceButton = UserInputDeviceButton.POV;
+        this.userInputDevicePovValue = povValue;
     }
 
     public UserInputDevice getUserInputDevice()
@@ -23,6 +32,11 @@ public class ShiftDescription
     public UserInputDeviceButton getUserInputDeviceButton()
     {
         return this.userInputDeviceButton;
+    }
+
+    public int getUserInputDevicePovValue()
+    {
+        return this.userInputDevicePovValue;
     }
 
     public boolean checkInput(IJoystick driver, IJoystick operator)
@@ -61,12 +75,7 @@ public class ShiftDescription
 
             if (relevantButton == UserInputDeviceButton.POV)
             {
-                if (TuningConstants.THROW_EXCEPTIONS)
-                {
-                    throw new RuntimeException("unexpected user input device button " + this.getUserInputDeviceButton().toString());
-                }
-
-                return false;
+                return relevantJoystick.getPOV() == this.getUserInputDevicePovValue();
             }
             else if (relevantButton != UserInputDeviceButton.NONE)
             {
