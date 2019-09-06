@@ -32,6 +32,11 @@ public class ButtonMap implements IButtonMap
                     UserInputDevice.Driver,
                     UserInputDeviceButton.XBONE_LEFT_BUTTON));
             put(
+                Shift.DriverTestingDebug,
+                new ShiftDescription(
+                    UserInputDevice.Driver,
+                    0)); // POV forward/up
+            put(
                 Shift.OperatorDebug,
                 new ShiftDescription(
                     UserInputDevice.Operator,
@@ -420,14 +425,18 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.ClimberArmsForceForward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.XBONE_LEFT_BUTTON,
+                    Shift.DriverTestingDebug,
                     ButtonType.Simple));
             put(
                 Operation.ClimberArmsForceBackward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    AnalogAxis.XBONE_LEFT_TRIGGER,
+                    0.5,
+                    1.0,
+                    Shift.DriverTestingDebug,
                     ButtonType.Simple));
             put(
                 Operation.ClimberArmsForceZero,
@@ -438,14 +447,18 @@ public class ButtonMap implements IButtonMap
             put(
                 Operation.ClimberCamForceForward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    UserInputDeviceButton.XBONE_RIGHT_BUTTON,
+                    Shift.DriverTestingDebug,
                     ButtonType.Simple));
             put(
                 Operation.ClimberCamForceBackward,
                 new DigitalOperationDescription(
-                    UserInputDevice.None,
-                    UserInputDeviceButton.NONE,
+                    UserInputDevice.Driver,
+                    AnalogAxis.XBONE_RIGHT_TRIGGER,
+                    0.5,
+                    1.0,
+                    Shift.DriverTestingDebug,
                     ButtonType.Simple));
         }
     };
