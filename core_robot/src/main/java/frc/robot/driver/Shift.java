@@ -5,5 +5,6 @@ public enum Shift
     None,
     Any,
     DriverDebug,
+    DriverTestingDebug,
     OperatorDebug,
 }
