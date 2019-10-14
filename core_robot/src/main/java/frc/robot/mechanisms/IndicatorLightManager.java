@@ -3,7 +3,6 @@ package frc.robot.mechanisms;
 import frc.robot.*;
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.driver.Operation;
 import frc.robot.driver.common.Driver;
 import frc.robot.vision.common.VisionProcessingState;
 

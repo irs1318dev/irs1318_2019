@@ -1,21 +1,21 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.TuningConstants;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.mechanisms.ElevatorMechanism;
 
 public class ElevatorPositionTask extends CompositeOperationTask {
 
-    private static final Operation[] possibleOperations = 
+    private static final DigitalOperation[] possibleOperations = 
         {
-            Operation.ElevatorBottomPosition,
-            Operation.ElevatorHatch2Position,
-            Operation.ElevatorHatch3Position,
-            Operation.ElevatorCargo1Position,
-            Operation.ElevatorCargo2Position,
-            Operation.ElevatorCargo3Position,
-            Operation.ElevatorCargoLoadPosition,
-            Operation.ElevatorCamReturnPosition,
+            DigitalOperation.ElevatorBottomPosition,
+            DigitalOperation.ElevatorHatch2Position,
+            DigitalOperation.ElevatorHatch3Position,
+            DigitalOperation.ElevatorCargo1Position,
+            DigitalOperation.ElevatorCargo2Position,
+            DigitalOperation.ElevatorCargo3Position,
+            DigitalOperation.ElevatorCargoLoadPosition,
+            DigitalOperation.ElevatorCamReturnPosition,
         };
 
     private final boolean completeWithTime;
@@ -23,13 +23,13 @@ public class ElevatorPositionTask extends CompositeOperationTask {
     private ElevatorMechanism elevator;
     private boolean firstLoop;
 
-    public ElevatorPositionTask(Operation toPerform)
+    public ElevatorPositionTask(DigitalOperation toPerform)
     {
         super(TuningConstants.ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD, toPerform, ElevatorPositionTask.possibleOperations);
         this.completeWithTime = false;
     }
 
-    public ElevatorPositionTask(double duration, Operation toPerform)
+    public ElevatorPositionTask(double duration, DigitalOperation toPerform)
     {
         super(duration, toPerform, ElevatorPositionTask.possibleOperations);
         this.completeWithTime = true;

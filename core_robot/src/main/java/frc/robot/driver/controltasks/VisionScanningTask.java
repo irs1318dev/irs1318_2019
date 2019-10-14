@@ -3,11 +3,11 @@ package frc.robot.driver.controltasks;
 import frc.robot.TuningConstants;
 import frc.robot.common.PIDHandler;
 import frc.robot.common.robotprovider.ITimer;
-import frc.robot.driver.Operation;
+import frc.robot.driver.AnalogOperation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.mechanisms.OffboardVisionManager;
 import frc.robot.mechanisms.PositionManager;
-import frc.robot.mechanisms.VisionManager;
 
 /**
  * Task that turns the robot a certain amount clockwise or counterclockwise in-place based on vision center
@@ -56,7 +56,7 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
     @Override
     public void update()
     {
-        this.setDigitalOperationState(Operation.VisionEnableOffboardProcessing, true);
+        this.setDigitalOperationState(DigitalOperation.VisionEnableOffboardProcessing, true);
 
         double currentMeasuredAngle = this.positionManager.getNavxAngle();
 
@@ -71,7 +71,7 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
         }
 
         this.setAnalogOperationState(
-            Operation.DriveTrainTurn,
+            AnalogOperation.DriveTrainTurn,
             this.turnPidHandler.calculatePosition(currentDesiredAngle, currentMeasuredAngle));
 
         if (Math.abs(currentMeasuredAngle - currentDesiredAngle) < 1.0)
@@ -86,10 +86,10 @@ public class VisionScanningTask extends ControlTaskBase implements IControlTask
     @Override
     public void end()
     {
-        this.setAnalogOperationState(Operation.DriveTrainTurn, 0.0);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainTurn, 0.0);
 
-        this.setDigitalOperationState(Operation.VisionEnableOffboardProcessing, false);
-        this.setDigitalOperationState(Operation.VisionDisable, true);
+        this.setDigitalOperationState(DigitalOperation.VisionEnableOffboardProcessing, false);
+        this.setDigitalOperationState(DigitalOperation.VisionDisable, true);
     }
 
     /**

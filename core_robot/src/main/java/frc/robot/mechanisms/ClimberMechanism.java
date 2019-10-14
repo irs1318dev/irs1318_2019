@@ -6,7 +6,7 @@ import com.google.inject.Singleton;
 import frc.robot.ElectronicsConstants;
 import frc.robot.HardwareConstants;
 import frc.robot.TuningConstants;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.common.IMechanism;
 import frc.robot.common.robotprovider.ITalonSRX;
 import frc.robot.common.robotprovider.TalonSRXControlMode;
@@ -262,9 +262,9 @@ public class ClimberMechanism implements IMechanism
         double currentTime = this.timer.get();
         double deltaTime = currentTime - this.lastUpdateTime;
 
-        boolean forceArmsForward = this.driver.getDigital(Operation.ClimberArmsForceForward);
-        boolean forceArmsBack = this.driver.getDigital(Operation.ClimberArmsForceBackward);
-        boolean forceArmsZero = this.driver.getDigital(Operation.ClimberArmsForceZero);
+        boolean forceArmsForward = this.driver.getDigital(DigitalOperation.ClimberArmsForceForward);
+        boolean forceArmsBack = this.driver.getDigital(DigitalOperation.ClimberArmsForceBackward);
+        boolean forceArmsZero = this.driver.getDigital(DigitalOperation.ClimberArmsForceZero);
         if (forceArmsForward || forceArmsBack || forceArmsZero || !TuningConstants.CLIMBER_ARMS_USE_PID) 
         {
             this.desiredArmsPosition = this.armsPosition;
@@ -297,25 +297,25 @@ public class ClimberMechanism implements IMechanism
         }
         else
         {
-            if (this.driver.getDigital(Operation.ClimberArmsRetractedPosition))
+            if (this.driver.getDigital(DigitalOperation.ClimberArmsRetractedPosition))
             {
                 this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_RETRACTED_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ClimberArmsPrepClimbPosition))
+            else if (this.driver.getDigital(DigitalOperation.ClimberArmsPrepClimbPosition))
             {
                 this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_PREP_CLIMB_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ClimberArmsHighClimbPosition))
+            else if (this.driver.getDigital(DigitalOperation.ClimberArmsHighClimbPosition))
             {
                 this.desiredArmsPosition = TuningConstants.CLIMBER_ARMS_HIGH_CLIMB_POSITION;
             }
 
-            if (this.driver.getDigital(Operation.ClimberArmsMoveForward))
+            if (this.driver.getDigital(DigitalOperation.ClimberArmsMoveForward))
             {
                 double deltaPosition = deltaTime * TuningConstants.CLIMBER_ARMS_MOVE_VELOCITY;
                 this.desiredArmsPosition += deltaPosition;
             }
-            else if (this.driver.getDigital(Operation.ClimberArmsMoveBackward))
+            else if (this.driver.getDigital(DigitalOperation.ClimberArmsMoveBackward))
             {
                 double deltaPosition = deltaTime * TuningConstants.CLIMBER_ARMS_MOVE_VELOCITY;
                 this.desiredArmsPosition -= deltaPosition;
@@ -334,8 +334,8 @@ public class ClimberMechanism implements IMechanism
             this.climberArmsMotorMaster.set(this.desiredArmsPosition / HardwareConstants.CLIMBER_ARMS_PULSE_DISTANCE);
         }
 
-        boolean forceCamForward = this.driver.getDigital(Operation.ClimberCamForceForward);
-        boolean forceCamBack = this.driver.getDigital(Operation.ClimberCamForceBackward);
+        boolean forceCamForward = this.driver.getDigital(DigitalOperation.ClimberCamForceForward);
+        boolean forceCamBack = this.driver.getDigital(DigitalOperation.ClimberCamForceBackward);
         if (forceCamForward || forceCamBack || !TuningConstants.CLIMBER_CAM_USE_PID) 
         {
             this.desiredCamPosition = this.camPosition;
@@ -363,29 +363,29 @@ public class ClimberMechanism implements IMechanism
         else
         {
             // note - we want the desired position to increase in the positive direction when going to a setpoint...
-            if (this.driver.getDigital(Operation.ClimberCamStoredPosition))
+            if (this.driver.getDigital(DigitalOperation.ClimberCamStoredPosition))
             {
                 this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_STORED_POSITION);
             }
-            else if (this.driver.getDigital(Operation.ClimberCamLowClimbPosition))
+            else if (this.driver.getDigital(DigitalOperation.ClimberCamLowClimbPosition))
             {
                 this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_LOW_CLIMB_POSITION);
             }
-            else if (this.driver.getDigital(Operation.ClimberCamHighClimbPosition))
+            else if (this.driver.getDigital(DigitalOperation.ClimberCamHighClimbPosition))
             {
                 this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_HIGH_CLIMB_POSITION);
             }
-            else if (this.driver.getDigital(Operation.ClimberCamOutOfWayPosition))
+            else if (this.driver.getDigital(DigitalOperation.ClimberCamOutOfWayPosition))
             {
                 this.desiredCamPosition = ClimberMechanism.updateCamRotation(this.camPosition, TuningConstants.CLIMBER_CAM_OUT_OF_WAY_POSITION);
             }
 
-            if (this.driver.getDigital(Operation.ClimberCamMoveForward))
+            if (this.driver.getDigital(DigitalOperation.ClimberCamMoveForward))
             {
                 double deltaPosition = deltaTime * TuningConstants.CLIMBER_CAM_MOVE_VELOCITY;
                 this.desiredCamPosition += deltaPosition;
             }
-            else if (this.driver.getDigital(Operation.ClimberCamMoveBackward))
+            else if (this.driver.getDigital(DigitalOperation.ClimberCamMoveBackward))
             {
                 double deltaPosition = deltaTime * TuningConstants.CLIMBER_CAM_MOVE_VELOCITY;
                 this.desiredCamPosition -= deltaPosition;

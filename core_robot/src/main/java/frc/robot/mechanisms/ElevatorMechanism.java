@@ -6,7 +6,7 @@ import com.google.inject.Singleton;
 import frc.robot.ElectronicsConstants;
 import frc.robot.HardwareConstants;
 import frc.robot.TuningConstants;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.common.Helpers;
 import frc.robot.common.IMechanism;
 import frc.robot.common.robotprovider.ITalonSRX;
@@ -174,8 +174,8 @@ public class ElevatorMechanism implements IMechanism
         double currentTime = this.timer.get();
         double deltaTime = currentTime - this.lastUpdateTime;
 
-        boolean forceUp = this.driver.getDigital(Operation.ElevatorForceUp);
-        boolean forceDown = this.driver.getDigital(Operation.ElevatorForceDown);
+        boolean forceUp = this.driver.getDigital(DigitalOperation.ElevatorForceUp);
+        boolean forceDown = this.driver.getDigital(DigitalOperation.ElevatorForceDown);
         if (forceUp || forceDown || ! TuningConstants.ELEVATOR_USE_PID)
         {
             this.desiredHeight = this.elevatorHeight;
@@ -203,40 +203,40 @@ public class ElevatorMechanism implements IMechanism
         else
         {
             double newDesiredHeight = this.desiredHeight;
-            if (this.driver.getDigital(Operation.ElevatorBottomPosition))
+            if (this.driver.getDigital(DigitalOperation.ElevatorBottomPosition))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_BOTTOM_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ElevatorHatch2Position))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorHatch2Position))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_HATCH_2_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ElevatorHatch3Position))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorHatch3Position))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_HATCH_3_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ElevatorCargo1Position))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorCargo1Position))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CARGO_1_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ElevatorCargo2Position))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorCargo2Position))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CARGO_2_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ElevatorCargo3Position))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorCargo3Position))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CARGO_3_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ElevatorCargoLoadPosition))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorCargoLoadPosition))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CARGO_LOAD_POSITION;
             }
-            else if (this.driver.getDigital(Operation.ElevatorCamReturnPosition))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorCamReturnPosition))
             {
                 newDesiredHeight = TuningConstants.ELEVATOR_CAM_RETURN_POSITION;
             }
 
-            if (this.driver.getDigital(Operation.ElevatorMoveUp))
+            if (this.driver.getDigital(DigitalOperation.ElevatorMoveUp))
             {
                 double deltaPosition = deltaTime * TuningConstants.ELEVATOR_MOVE_VELOCITY;
                 double remainingHeight = HardwareConstants.ELEVATOR_MAX_HEIGHT - newDesiredHeight;
@@ -249,7 +249,7 @@ public class ElevatorMechanism implements IMechanism
                     newDesiredHeight += deltaPosition;
                 }
             }
-            else if (this.driver.getDigital(Operation.ElevatorMoveDown))
+            else if (this.driver.getDigital(DigitalOperation.ElevatorMoveDown))
             {
                 double deltaPosition = deltaTime * TuningConstants.ELEVATOR_MOVE_VELOCITY;
                 double remainingHeight = newDesiredHeight;

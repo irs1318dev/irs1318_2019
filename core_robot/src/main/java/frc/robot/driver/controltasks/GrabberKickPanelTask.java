@@ -1,6 +1,6 @@
 package frc.robot.driver.controltasks;
 
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.TuningConstants;
 
 public class GrabberKickPanelTask extends TimedTask
@@ -33,19 +33,19 @@ public class GrabberKickPanelTask extends TimedTask
     public void begin()
     {
         super.begin();
-        this.setDigitalOperationState(Operation.GrabberKickPanel, true);
+        this.setDigitalOperationState(DigitalOperation.GrabberKickPanel, true);
     }
 
     @Override
     public void update() 
     {
-        this.setDigitalOperationState(Operation.GrabberKickPanel, true);
+        this.setDigitalOperationState(DigitalOperation.GrabberKickPanel, true);
     }
 
     @Override
     public void end()
     {
-        this.setDigitalOperationState(Operation.GrabberKickPanel,false);
+        this.setDigitalOperationState(DigitalOperation.GrabberKickPanel,false);
     }
 
     @Override

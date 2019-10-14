@@ -6,10 +6,7 @@ import frc.robot.ElectronicsConstants;
 import frc.robot.FauxbotModule;
 import frc.robot.RobotMode;
 import frc.robot.common.robotprovider.*;
-import frc.robot.driver.MacroOperation;
-import frc.robot.driver.Operation;
-import frc.robot.driver.common.IButtonMap;
-import frc.robot.driver.common.UserInputDeviceButton;
+import frc.robot.driver.common.*;
 import frc.robot.driver.common.buttons.ButtonType;
 import frc.robot.driver.common.descriptions.*;
 import frc.robot.simulation.*;
@@ -39,6 +36,8 @@ public class FauxbotApplication extends Application
     private Simulation desiredSimulation;
 
     private Canvas canvas;
+
+    private boolean firstOperation;
 
     @Override
     public void start(Stage primaryStage) throws Exception
@@ -112,7 +111,7 @@ public class FauxbotApplication extends Application
         switch (this.desiredSimulation)
         {
             case Robot:
-                simulationName = "Elevator Simulation";
+                simulationName = "Robot Simulation";
                 desiredModule = new SimulationFauxbotModule();
                 break;
         }
@@ -180,106 +179,29 @@ public class FauxbotApplication extends Application
 
         rowCount++;
 
-        boolean firstOperation = true;
-        for (Operation op : Operation.values())
+        this.firstOperation = true;
+        for (DigitalOperationDescription description : buttonMap.getDigitalOperationSchema())
         {
-            OperationDescription description = buttonMap.getOperationSchema().getOrDefault(op, null);
-            if (description != null)
-            {
-                if (firstOperation)
-                {
-                    Text buttonsTitle = new Text("Buttons");
-                    buttonsTitle.setFont(Font.font(fontDefault, FontWeight.NORMAL, 20));
-                    grid.add(buttonsTitle, 0, rowCount++, 2, 1);
-                    firstOperation = false;
-                }
-
-                int joystickPort = -1;
-                if (description.getUserInputDevice() == UserInputDevice.Driver)
-                {
-                    joystickPort = ElectronicsConstants.JOYSTICK_DRIVER_PORT;
-                }
-                else if (description.getUserInputDevice() == UserInputDevice.CoDriver)
-                {
-                    joystickPort = ElectronicsConstants.JOYSTICK_CO_DRIVER_PORT;
-                }
-
-                if (joystickPort != -1)
-                {
-                    final FauxbotJoystick joystick = FauxbotJoystickManager.get(joystickPort);
-                    if (joystick != null)
-                    {
-                        int thisRowIndex = rowCount;
-                        rowCount++;
-
-                        Label operationNameLabel = new Label(op.toString());
-                        grid.add(operationNameLabel, 0, thisRowIndex);
-
-                        if (description.getType() == OperationType.Digital)
-                        {
-                            DigitalOperationDescription digitalDescription = (DigitalOperationDescription)description;
-                            UserInputDeviceButton button = digitalDescription.getUserInputDeviceButton();
-                            if (digitalDescription.getButtonType() == ButtonType.Click)
-                            {
-                                Button operationButton = new Button("Click");
-                                operationButton.setOnMouseClicked(
-                                    (MouseEvent event) ->
-                                    {
-                                        joystick.getButtonProperty(button.Value).set(true);
-                                    });
-
-                                grid.add(operationButton, 1, thisRowIndex);
-                            }
-                            else if (digitalDescription.getButtonType() == ButtonType.Toggle)
-                            {
-                                CheckBox operationCheckBox = new CheckBox();
-                                grid.add(operationCheckBox, 1, thisRowIndex);
-                                if (button != UserInputDeviceButton.POV)
-                                {
-                                    Bindings.bindBidirectional(joystick.getButtonProperty(button.Value), operationCheckBox.selectedProperty());
-                                }
-                                else
-                                {
-                                    operationCheckBox.selectedProperty();
-                                }
-                            }
-                            else if (digitalDescription.getButtonType() == ButtonType.Simple)
-                            {
-                                CheckBox operationCheckBox = new CheckBox();
-                                grid.add(operationCheckBox, 1, thisRowIndex);
-                                Bindings.bindBidirectional(joystick.getButtonProperty(button.Value), operationCheckBox.selectedProperty());
-                            }
-                        }
-                        else if (description.getType() == OperationType.Analog)
-                        {
-                            AnalogOperationDescription analogDescription = (AnalogOperationDescription)description;
-
-                            Slider analogSlider = new Slider();
-                            analogSlider.setMin(-1.0);
-                            analogSlider.setMax(1.0);
-                            analogSlider.setBlockIncrement(0.1);
-                            analogSlider.setShowTickMarks(true);
-
-                            grid.add(analogSlider, 1, thisRowIndex);
-                            Bindings.bindBidirectional(joystick.getAxisProperty(analogDescription.getUserInputDeviceAxis().Value), analogSlider.valueProperty());
-                        }
-                    }
-                }
-            }
+            rowCount = this.addDescriptionMarkup(description, grid, fontDefault, rowCount);
         }
 
-        if (!firstOperation)
+        for (AnalogOperationDescription description : buttonMap.getAnalogOperationSchema())
+        {
+            rowCount = this.addDescriptionMarkup(description, grid, fontDefault, rowCount);
+        }
+
+        if (!this.firstOperation)
         {
             // if there were any buttons in the list, add a spacer:
             rowCount++;
         }
 
         boolean firstMacro = true;
-        if (MacroOperation.values().length > 0)
+        MacroOperationDescription[] macroDescriptions = buttonMap.getMacroOperationSchema();
+        if (macroDescriptions != null && macroDescriptions.length > 0)
         {
-            for (MacroOperation op : MacroOperation.values())
+            for (MacroOperationDescription description : macroDescriptions)
             {
-                MacroOperationDescription description = buttonMap.getMacroOperationSchema().getOrDefault(op, null);
                 if (description != null)
                 {
                     if (firstMacro)
@@ -308,7 +230,7 @@ public class FauxbotApplication extends Application
                             int thisRowIndex = rowCount;
                             rowCount++;
 
-                            Label operationNameLabel = new Label(op.toString());
+                            Label operationNameLabel = new Label(description.getOperation().toString());
                             grid.add(operationNameLabel, 0, thisRowIndex);
 
                             int buttonNumber = description.getUserInputDeviceButton().Value;
@@ -507,6 +429,100 @@ public class FauxbotApplication extends Application
         this.runnerThread.start();
 
         return scene;
+    }
+
+    private int addDescriptionMarkup(
+        OperationDescription description,
+        GridPane grid,
+        String fontDefault,
+        int rowCount)
+    {
+        if (description == null)
+        {
+            return rowCount;
+        }
+
+        if (this.firstOperation)
+        {
+            Text buttonsTitle = new Text("Buttons");
+            buttonsTitle.setFont(Font.font(fontDefault, FontWeight.NORMAL, 20));
+            grid.add(buttonsTitle, 0, rowCount++, 2, 1);
+            this.firstOperation = false;
+        }
+
+        int joystickPort = -1;
+        if (description.getUserInputDevice() == UserInputDevice.Driver)
+        {
+            joystickPort = ElectronicsConstants.JOYSTICK_DRIVER_PORT;
+        }
+        else if (description.getUserInputDevice() == UserInputDevice.CoDriver)
+        {
+            joystickPort = ElectronicsConstants.JOYSTICK_CO_DRIVER_PORT;
+        }
+
+        if (joystickPort != -1)
+        {
+            final FauxbotJoystick joystick = FauxbotJoystickManager.get(joystickPort);
+            if (joystick != null)
+            {
+                int thisRowIndex = rowCount;
+                rowCount++;
+
+                Label operationNameLabel = new Label(description.getOperation().toString());
+                grid.add(operationNameLabel, 0, thisRowIndex);
+
+                if (description.getType() == OperationType.Digital)
+                {
+                    DigitalOperationDescription digitalDescription = (DigitalOperationDescription)description;
+                    UserInputDeviceButton button = digitalDescription.getUserInputDeviceButton();
+                    if (digitalDescription.getButtonType() == ButtonType.Click)
+                    {
+                        Button operationButton = new Button("Click");
+                        operationButton.setOnMouseClicked(
+                            (MouseEvent event) ->
+                            {
+                                joystick.getButtonProperty(button.Value).set(true);
+                            });
+
+                        grid.add(operationButton, 1, thisRowIndex);
+                    }
+                    else if (digitalDescription.getButtonType() == ButtonType.Toggle)
+                    {
+                        CheckBox operationCheckBox = new CheckBox();
+                        grid.add(operationCheckBox, 1, thisRowIndex);
+                        if (button != UserInputDeviceButton.POV)
+                        {
+                            Bindings.bindBidirectional(joystick.getButtonProperty(button.Value), operationCheckBox.selectedProperty());
+                        }
+                        else
+                        {
+                            operationCheckBox.selectedProperty();
+                        }
+                    }
+                    else if (digitalDescription.getButtonType() == ButtonType.Simple)
+                    {
+                        CheckBox operationCheckBox = new CheckBox();
+                        grid.add(operationCheckBox, 1, thisRowIndex);
+                        Bindings.bindBidirectional(joystick.getButtonProperty(button.Value), operationCheckBox.selectedProperty());
+                    }
+                }
+                else if (description.getType() == OperationType.Analog)
+                {
+                    AnalogOperationDescription analogDescription = (AnalogOperationDescription)description;
+
+                    Slider analogSlider = new Slider();
+                    analogSlider.setMin(-1.0);
+                    analogSlider.setMax(1.0);
+                    analogSlider.setBlockIncrement(0.1);
+                    analogSlider.setShowTickMarks(true);
+
+                    grid.add(analogSlider, 1, thisRowIndex);
+                    Bindings.bindBidirectional(joystick.getAxisProperty(analogDescription.getUserInputDeviceAxis().Value), analogSlider.valueProperty());
+                }
+            }
+        }
+
+        return rowCount;
     }
 
     public void refresh()

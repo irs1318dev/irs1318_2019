@@ -1,6 +1,6 @@
 package frc.robot.driver.controltasks;
 
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.TuningConstants;
 
 public class GrabberPointBeakTask extends TimedTask
@@ -33,19 +33,19 @@ public class GrabberPointBeakTask extends TimedTask
     public void begin()
     {
         super.begin();
-        this.setDigitalOperationState(Operation.GrabberPointBeak, true);
+        this.setDigitalOperationState(DigitalOperation.GrabberPointBeak, true);
     }
 
     @Override
     public void update() 
     {
-        this.setDigitalOperationState(Operation.GrabberPointBeak, true);
+        this.setDigitalOperationState(DigitalOperation.GrabberPointBeak, true);
     }
 
     @Override
     public void end()
     {
-        this.setDigitalOperationState(Operation.GrabberPointBeak,false);
+        this.setDigitalOperationState(DigitalOperation.GrabberPointBeak,false);
     }
 
     @Override

@@ -16,8 +16,8 @@ import frc.robot.vision.VisionConstants;
  */
 public class TuningConstants
 {
-    public static final boolean COMPETITION_ROBOT = true;
-    public static final boolean THROW_EXCEPTIONS = !TuningConstants.COMPETITION_ROBOT;
+    public static final boolean COMPETITION_ROBOT = false;
+    public static boolean THROW_EXCEPTIONS = !TuningConstants.COMPETITION_ROBOT;
 
     public static List<IMechanism> GetActiveMechanisms(Injector injector)
     {

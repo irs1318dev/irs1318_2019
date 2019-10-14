@@ -1,19 +1,19 @@
 package frc.robot.driver.controltasks;
 
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.TuningConstants;
 
 public class ElevatorMovementTask extends CompositeOperationTask
 {
-    private static final Operation[] possibleOperations =
+    private static final DigitalOperation[] possibleOperations =
         {
-            Operation.ElevatorMoveUp,
-            Operation.ElevatorMoveDown,
-            Operation.ElevatorForceUp,
-            Operation.ElevatorForceDown
+            DigitalOperation.ElevatorMoveUp,
+            DigitalOperation.ElevatorMoveDown,
+            DigitalOperation.ElevatorForceUp,
+            DigitalOperation.ElevatorForceDown
         };
 
-    public ElevatorMovementTask(Operation toPerform)
+    public ElevatorMovementTask(DigitalOperation toPerform)
     {
         super(TuningConstants.ELEVATOR_CLIMBING_MOVEMENT_TIME_THRESHOLD, toPerform, ElevatorMovementTask.possibleOperations);
     }

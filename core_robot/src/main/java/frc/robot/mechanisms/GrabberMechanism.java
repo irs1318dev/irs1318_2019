@@ -6,7 +6,7 @@ import com.google.inject.Singleton;
 import frc.robot.ElectronicsConstants;
 import frc.robot.HardwareConstants;
 import frc.robot.TuningConstants;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.common.IMechanism;
 import frc.robot.driver.common.Driver;
 import frc.robot.common.robotprovider.*;
@@ -82,20 +82,20 @@ public class GrabberMechanism implements IMechanism
     @Override
     public void update()
     {
-        boolean kickPanel = this.driver.getDigital(Operation.GrabberKickPanel);
+        boolean kickPanel = this.driver.getDigital(DigitalOperation.GrabberKickPanel);
         this.kicker.set(kickPanel ? DoubleSolenoidValue.Forward : DoubleSolenoidValue.Reverse);
         this.logger.logBoolean(GrabberMechanism.logName, "kicker", kickPanel);
 
-        boolean pointBeak = kickPanel || this.driver.getDigital(Operation.GrabberPointBeak);
+        boolean pointBeak = kickPanel || this.driver.getDigital(DigitalOperation.GrabberPointBeak);
         this.beak.set(pointBeak ? DoubleSolenoidValue.Reverse : DoubleSolenoidValue.Forward);
         this.logger.logBoolean(GrabberMechanism.logName, "beak", pointBeak);
 
         double cargoMotorPower = 0.0;
-        if (this.driver.getDigital(Operation.GrabberIntakeCargo))
+        if (this.driver.getDigital(DigitalOperation.GrabberIntakeCargo))
         {
             cargoMotorPower = TuningConstants.GRABBER_CARGO_INTAKE_MOTOR_POWER;
         }
-        else if (this.driver.getDigital(Operation.GrabberOuttakeCargo))
+        else if (this.driver.getDigital(DigitalOperation.GrabberOuttakeCargo))
         {
             cargoMotorPower = TuningConstants.GRABBER_CARGO_OUTTAKE_MOTOR_POWER;
         }
@@ -104,28 +104,28 @@ public class GrabberMechanism implements IMechanism
         this.cargoMotor.set(cargoMotorPower);
 
         // wrist postions: Inner = piston closest to elevetor, Outer = piston farthest from elevator
-        if (this.driver.getDigital(Operation.GrabberWristStartPosition))
+        if (this.driver.getDigital(DigitalOperation.GrabberWristStartPosition))
         {
             this.currentPosition = GrabberPosition.Retracted;
 
             this.wristInner.set(DoubleSolenoidValue.Reverse);
             this.wristOuter.set(DoubleSolenoidValue.Reverse);
         }
-        else if (this.driver.getDigital(Operation.GrabberWristHatchPosition))
+        else if (this.driver.getDigital(DigitalOperation.GrabberWristHatchPosition))
         {
             this.currentPosition = GrabberPosition.Hatch;
 
             this.wristInner.set(DoubleSolenoidValue.Reverse);
             this.wristOuter.set(DoubleSolenoidValue.Forward);
         }
-        else if (this.driver.getDigital(Operation.GrabberWristCargoPosition))
+        else if (this.driver.getDigital(DigitalOperation.GrabberWristCargoPosition))
         {
             this.currentPosition = GrabberPosition.Cargo;
 
             this.wristInner.set(DoubleSolenoidValue.Forward);
             this.wristOuter.set(DoubleSolenoidValue.Reverse);
         }
-        else if (this.driver.getDigital(Operation.GrabberWristFloorPosition))
+        else if (this.driver.getDigital(DigitalOperation.GrabberWristFloorPosition))
         {
             this.currentPosition = GrabberPosition.Floor;
 

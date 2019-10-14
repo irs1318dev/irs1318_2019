@@ -1,7 +1,5 @@
 package frc.robot.driver.common.states;
 
-import java.util.Set;
-
 import frc.robot.TuningConstants;
 import frc.robot.common.robotprovider.IJoystick;
 import frc.robot.driver.Shift;
@@ -11,6 +9,7 @@ import frc.robot.driver.common.buttons.IButton;
 import frc.robot.driver.common.buttons.SimpleButton;
 import frc.robot.driver.common.buttons.ToggleButton;
 import frc.robot.driver.common.descriptions.DigitalOperationDescription;
+import frc.robot.driver.common.descriptions.UserInputDevice;
 
 /**
  * The state of the current digital operation.
@@ -85,24 +84,32 @@ public class DigitalOperationState extends OperationState
      * @return true if there was any active user input that triggered a state change
      */
     @Override
-    public boolean checkInput(IJoystick driver, IJoystick coDriver, Set<Shift> activeShifts)
+    public boolean checkInput(IJoystick driver, IJoystick coDriver, Shift activeShifts)
     {
         DigitalOperationDescription description = (DigitalOperationDescription)this.getDescription();
 
-        Shift requiredShift = description.getRequiredShift();
-        if (!activeShifts.contains(requiredShift))
+        UserInputDevice userInputDevice = description.getUserInputDevice();
+        if (userInputDevice == UserInputDevice.None)
         {
-            this.button.updateState(false);
             return false;
+        }
+
+        Shift relevantShifts = description.getRelevantShifts();
+        Shift requiredShifts = description.getRequiredShifts();
+        if (relevantShifts != null && requiredShifts != null)
+        {
+            Shift relevantActiveShifts = Shift.Intersect(relevantShifts, activeShifts);
+            if (relevantActiveShifts.hasFlag(requiredShifts))
+            {
+                this.button.updateState(false);
+                return false;
+            }
         }
 
         IJoystick relevantJoystick;
         UserInputDeviceButton relevantButton;
-        switch (description.getUserInputDevice())
+        switch (userInputDevice)
         {
-            case None:
-                return false;
-
             case Driver:
                 relevantJoystick = driver;
                 break;

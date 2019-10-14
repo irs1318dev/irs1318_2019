@@ -1,17 +1,17 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.TuningConstants;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.mechanisms.ClimberMechanism;
 
 public class ClimberCamPositionTask extends CompositeOperationTask
 {
-    private static final Operation[] possibleOperations =
+    private static final DigitalOperation[] possibleOperations =
     {
-        Operation.ClimberCamStoredPosition,
-        Operation.ClimberCamLowClimbPosition,
-        Operation.ClimberCamHighClimbPosition,
-        Operation.ClimberCamOutOfWayPosition,
+        DigitalOperation.ClimberCamStoredPosition,
+        DigitalOperation.ClimberCamLowClimbPosition,
+        DigitalOperation.ClimberCamHighClimbPosition,
+        DigitalOperation.ClimberCamOutOfWayPosition,
     };
 
     private boolean completeWithTime;
@@ -19,13 +19,13 @@ public class ClimberCamPositionTask extends CompositeOperationTask
     private ClimberMechanism climber;
     private boolean firstLoop;
 
-    public ClimberCamPositionTask(double duration, Operation toPerform)
+    public ClimberCamPositionTask(double duration, DigitalOperation toPerform)
     {
         super(duration, toPerform, ClimberCamPositionTask.possibleOperations);
         this.completeWithTime = true;
     }
 
-    public ClimberCamPositionTask(Operation toPerform)
+    public ClimberCamPositionTask(DigitalOperation toPerform)
     {
         super(TuningConstants.CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD, toPerform, ClimberCamPositionTask.possibleOperations);
         this.completeWithTime = false;

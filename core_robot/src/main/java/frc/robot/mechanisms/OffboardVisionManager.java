@@ -2,7 +2,7 @@ package frc.robot.mechanisms;
 
 import frc.robot.common.*;
 import frc.robot.common.robotprovider.*;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.*;
 
 import com.google.inject.Inject;
@@ -89,8 +89,8 @@ public class OffboardVisionManager implements IMechanism
     @Override
     public void update()
     {
-        boolean enableVideoStream = this.driver.getDigital(Operation.VisionEnableOffboardStream);
-        boolean enableVideoProcessing = this.driver.getDigital(Operation.VisionEnableOffboardProcessing);
+        boolean enableVideoStream = this.driver.getDigital(DigitalOperation.VisionEnableOffboardStream);
+        boolean enableVideoProcessing = this.driver.getDigital(DigitalOperation.VisionEnableOffboardProcessing);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableStream", true);
         this.logger.logBoolean(OffboardVisionManager.logName, "enableProcessing", true);
     }

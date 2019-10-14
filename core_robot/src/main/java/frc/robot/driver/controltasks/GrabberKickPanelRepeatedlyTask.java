@@ -1,7 +1,7 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.common.robotprovider.ITimer;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 
 public class GrabberKickPanelRepeatedlyTask extends ControlTaskBase
 {
@@ -26,10 +26,10 @@ public class GrabberKickPanelRepeatedlyTask extends ControlTaskBase
     {
         if((timer.get() % GrabberKickPanelRepeatedlyTask.cycleTime) > (GrabberKickPanelRepeatedlyTask.kickTime))
         {
-            this.setDigitalOperationState(Operation.GrabberKickPanel, true);
+            this.setDigitalOperationState(DigitalOperation.GrabberKickPanel, true);
         }
         else{
-            this.setDigitalOperationState(Operation.GrabberKickPanel, false);
+            this.setDigitalOperationState(DigitalOperation.GrabberKickPanel, false);
         }
     }
 
@@ -42,6 +42,6 @@ public class GrabberKickPanelRepeatedlyTask extends ControlTaskBase
     @Override
     public void end()
     {
-        this.setDigitalOperationState(Operation.GrabberKickPanel, false);
+        this.setDigitalOperationState(DigitalOperation.GrabberKickPanel, false);
     }
 }

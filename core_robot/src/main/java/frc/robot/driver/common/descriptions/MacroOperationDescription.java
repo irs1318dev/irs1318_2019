@@ -2,14 +2,15 @@ package frc.robot.driver.common.descriptions;
 
 import java.util.function.Supplier;
 
-import frc.robot.driver.common.AnalogAxis;
-import frc.robot.driver.Operation;
+import frc.robot.driver.IOperation;
+import frc.robot.driver.MacroOperation;
 import frc.robot.driver.Shift;
+import frc.robot.driver.common.AnalogAxis;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.driver.common.UserInputDeviceButton;
 import frc.robot.driver.common.buttons.ButtonType;
 
-public class MacroOperationDescription extends OperationDescription
+public class MacroOperationDescription extends OperationDescription<MacroOperation>
 {
     private final boolean clearInterrupt;
     private final UserInputDeviceButton userInputDeviceButton;
@@ -20,11 +21,12 @@ public class MacroOperationDescription extends OperationDescription
     private final DigitalSensor sensor;
     private final ButtonType buttonType;
     private final Supplier<IControlTask> taskSupplier;
-    private final Operation[] affectedOperations;
-    private final Operation[] macroCancelOperations;
+    private final IOperation[] affectedOperations;
+    private final IOperation[] macroCancelOperations;
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction
+     * @param operation the macro operation being described
      * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
      * @param buttonType the behavior type to use for the macro operation
@@ -32,14 +34,16 @@ public class MacroOperationDescription extends OperationDescription
      * @param affectedOperations the list of operations that will be utilized by this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         UserInputDeviceButton userInputDeviceButton,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations)
+        IOperation[] affectedOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             userInputDeviceButton,
             -1,
@@ -47,40 +51,8 @@ public class MacroOperationDescription extends OperationDescription
             0.0,
             0.0,
             DigitalSensor.None,
-            Shift.Any,
-            buttonType,
-            taskSupplier,
-            affectedOperations,
-            null);
-    }
-
-    /**
-     * Initializes a new MacroOperationDescription based on a user interaction
-     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
-     * @param userInputDeviceButton the button on the device that performs the macro operation
-     * @param requiredShift the shift button that must be applied to perform macro
-     * @param buttonType the behavior type to use for the macro operation
-     * @param taskSupplier the function that creates the tasks that should be performed by the macro
-     * @param affectedOperations the list of operations that will be utilized by this macro
-     */
-    public MacroOperationDescription(
-        UserInputDevice userInputDevice,
-        UserInputDeviceButton userInputDeviceButton,
-        Shift requiredShift,
-        ButtonType buttonType,
-        Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations)
-    {
-        this(
-            true,
-            userInputDevice,
-            userInputDeviceButton,
-            -1,
-            AnalogAxis.NONE,
-            0.0,
-            0.0,
-            DigitalSensor.None,
-            requiredShift,
+            null,
+            null,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -89,25 +61,28 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction
+     * @param operation the macro operation being described
      * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
-     * @param requiredShift the shift button that must be applied to perform macro
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
+     * @param requiredShifts the shift button(s) that must be applied to perform macro
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
-     * @param macroCancelOperations the list of operations that can be used to cancel this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         UserInputDeviceButton userInputDeviceButton,
-        Shift requiredShift,
+        Shift relevantShifts,
+        Shift requiredShifts,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations,
-        Operation[] macroCancelOperations)
+        IOperation[] affectedOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             userInputDeviceButton,
             -1,
@@ -115,7 +90,86 @@ public class MacroOperationDescription extends OperationDescription
             0.0,
             0.0,
             DigitalSensor.None,
-            requiredShift,
+            relevantShifts,
+            requiredShifts,
+            buttonType,
+            taskSupplier,
+            affectedOperations,
+            null);
+    }
+
+    /**
+     * Initializes a new MacroOperationDescription based on a user interaction
+     * @param operation the macro operation being described
+     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDeviceButton the button on the device that performs the macro operation
+     * @param buttonType the behavior type to use for the macro operation
+     * @param taskSupplier the function that creates the tasks that should be performed by the macro
+     * @param affectedOperations the list of operations that will be utilized by this macro
+     * @param macroCancelOperations the list of operations that can be used to cancel this macro
+     */
+    public MacroOperationDescription(
+        MacroOperation operation,
+        UserInputDevice userInputDevice,
+        UserInputDeviceButton userInputDeviceButton,
+        ButtonType buttonType,
+        Supplier<IControlTask> taskSupplier,
+        IOperation[] affectedOperations,
+        IOperation[] macroCancelOperations)
+    {
+        this(
+            true,
+            operation,
+            userInputDevice,
+            userInputDeviceButton,
+            -1,
+            AnalogAxis.NONE,
+            0.0,
+            0.0,
+            DigitalSensor.None,
+            null,
+            null,
+            buttonType,
+            taskSupplier,
+            affectedOperations,
+            macroCancelOperations);
+    }
+
+    /**
+     * Initializes a new MacroOperationDescription based on a user interaction
+     * @param operation the macro operation being described
+     * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
+     * @param userInputDeviceButton the button on the device that performs the macro operation
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
+     * @param requiredShifts the shift button(s) that must be applied to perform macro
+     * @param buttonType the behavior type to use for the macro operation
+     * @param taskSupplier the function that creates the tasks that should be performed by the macro
+     * @param affectedOperations the list of operations that will be utilized by this macro
+     * @param macroCancelOperations the list of operations that can be used to cancel this macro
+     */
+    public MacroOperationDescription(
+        MacroOperation operation,
+        UserInputDevice userInputDevice,
+        UserInputDeviceButton userInputDeviceButton,
+        Shift relevantShifts,
+        Shift requiredShifts,
+        ButtonType buttonType,
+        Supplier<IControlTask> taskSupplier,
+        IOperation[] affectedOperations,
+        IOperation[] macroCancelOperations)
+    {
+        this(
+            true,
+            operation,
+            userInputDevice,
+            userInputDeviceButton,
+            -1,
+            AnalogAxis.NONE,
+            0.0,
+            0.0,
+            DigitalSensor.None,
+            relevantShifts,
+            requiredShifts,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -124,6 +178,7 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
+     * @param operation the macro operation being described
      * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
      * @param povValue the value of the POV (hat) used to perform the macro operation
      * @param buttonType the behavior type to use for the macro operation
@@ -131,14 +186,16 @@ public class MacroOperationDescription extends OperationDescription
      * @param affectedOperations the list of operations that will be utilized by this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         int povValue,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations)
+        IOperation[] affectedOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             UserInputDeviceButton.POV,
             povValue,
@@ -146,7 +203,8 @@ public class MacroOperationDescription extends OperationDescription
             0.0,
             0.0,
             DigitalSensor.None,
-            Shift.Any,
+            null,
+            null,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -155,23 +213,28 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
+     * @param operation the macro operation being described
      * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
      * @param povValue the value of the POV (hat) used to perform the macro operation
-     * @param requiredShift the shift button that must be applied to perform macro
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
+     * @param requiredShifts the shift button(s) that must be applied to perform macro
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         int povValue,
-        Shift requiredShift,
+        Shift relevantShifts,
+        Shift requiredShifts,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations)
+        IOperation[] affectedOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             UserInputDeviceButton.POV,
             povValue,
@@ -179,7 +242,8 @@ public class MacroOperationDescription extends OperationDescription
             0.0,
             0.0,
             DigitalSensor.None,
-            requiredShift,
+            relevantShifts,
+            requiredShifts,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -188,25 +252,30 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
+     * @param operation the macro operation being described
      * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
      * @param povValue the value of the POV (hat) used to perform the macro operation
-     * @param requiredShift the shift button that must be applied to perform macro
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
+     * @param requiredShifts the shift button(s) that must be applied to perform macro
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
      * @param macroCancelOperations the list of operations that can be used to cancel this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         int povValue,
-        Shift requiredShift,
+        Shift relevantShifts,
+        Shift requiredShifts,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations,
-        Operation[] macroCancelOperations)
+        IOperation[] affectedOperations,
+        IOperation[] macroCancelOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             UserInputDeviceButton.POV,
             povValue,
@@ -214,7 +283,8 @@ public class MacroOperationDescription extends OperationDescription
             0.0,
             0.0,
             DigitalSensor.None,
-            requiredShift,
+            relevantShifts,
+            requiredShifts,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -223,6 +293,7 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
+     * @param operation the macro operation being described
      * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
@@ -232,16 +303,18 @@ public class MacroOperationDescription extends OperationDescription
      * @param affectedOperations the list of operations that will be utilized by this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         AnalogAxis analogAxis,
         double axisRangeMinValue,
         double axisRangeMaxValue,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations)
+        IOperation[] affectedOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             UserInputDeviceButton.ANALOG_AXIS_RANGE,
             -1,
@@ -249,7 +322,8 @@ public class MacroOperationDescription extends OperationDescription
             axisRangeMinValue,
             axisRangeMaxValue,
             DigitalSensor.None,
-            Shift.Any,
+            null,
+            null,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -258,6 +332,7 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
+     * @param operation the macro operation being described
      * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
@@ -268,17 +343,19 @@ public class MacroOperationDescription extends OperationDescription
      * @param macroCancelOperations the list of operations that can be used to cancel this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         AnalogAxis analogAxis,
         double axisRangeMinValue,
         double axisRangeMaxValue,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations,
-        Operation[] macroCancelOperations)
+        IOperation[] affectedOperations,
+        IOperation[] macroCancelOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             UserInputDeviceButton.ANALOG_AXIS_RANGE,
             -1,
@@ -286,7 +363,8 @@ public class MacroOperationDescription extends OperationDescription
             axisRangeMinValue,
             axisRangeMaxValue,
             DigitalSensor.None,
-            Shift.Any,
+            null,
+            null,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -295,26 +373,32 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
+     * @param operation the macro operation being described
      * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
      * @param axisRangeMaxValue the max value of the range that triggers the operation
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
+     * @param requiredShifts the shift button(s) that must be applied to perform macro
      * @param buttonType the behavior type to use for the operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         AnalogAxis analogAxis,
         double axisRangeMinValue,
         double axisRangeMaxValue,
-        Shift requiredShift,
+        Shift relevantShifts,
+        Shift requiredShifts,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations)
+        IOperation[] affectedOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             UserInputDeviceButton.ANALOG_AXIS_RANGE,
             -1,
@@ -322,7 +406,8 @@ public class MacroOperationDescription extends OperationDescription
             axisRangeMinValue,
             axisRangeMaxValue,
             DigitalSensor.None,
-            requiredShift,
+            relevantShifts,
+            requiredShifts,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -331,28 +416,34 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on an axis
+     * @param operation the macro operation being described
      * @param userInputDevice which device will indicate the operation (driver or codriver joystick)
      * @param analogAxis the analog axis used to perform the operation
      * @param axisRangeMinValue the min value of the range that triggers the operation
      * @param axisRangeMaxValue the max value of the range that triggers the operation
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
+     * @param requiredShifts the shift button(s) that must be applied to perform macro
      * @param buttonType the behavior type to use for the operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
      * @param macroCancelOperations the list of operations that can be used to cancel this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         AnalogAxis analogAxis,
         double axisRangeMinValue,
         double axisRangeMaxValue,
-        Shift requiredShift,
+        Shift relevantShifts,
+        Shift requiredShifts,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations,
-        Operation[] macroCancelOperations)
+        IOperation[] affectedOperations,
+        IOperation[] macroCancelOperations)
     {
         this(
             true,
+            operation,
             userInputDevice,
             UserInputDeviceButton.ANALOG_AXIS_RANGE,
             -1,
@@ -360,7 +451,8 @@ public class MacroOperationDescription extends OperationDescription
             axisRangeMinValue,
             axisRangeMaxValue,
             DigitalSensor.None,
-            requiredShift,
+            relevantShifts,
+            requiredShifts,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -369,19 +461,22 @@ public class MacroOperationDescription extends OperationDescription
 
     /**
      * Initializes a new MacroOperationDescription based on a sensor
+     * @param operation the macro operation being described
      * @param sensor the sensor that triggers the macro operation
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
      */
     public MacroOperationDescription(
+        MacroOperation operation,
         DigitalSensor sensor,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations)
+        IOperation[] affectedOperations)
     {
         this(
             true,
+            operation,
             UserInputDevice.Sensor,
             UserInputDeviceButton.NONE,
             0,
@@ -389,7 +484,8 @@ public class MacroOperationDescription extends OperationDescription
             0.0,
             0.0,
             sensor,
-            Shift.Any,
+            null,
+            null,
             buttonType,
             taskSupplier,
             affectedOperations,
@@ -399,11 +495,13 @@ public class MacroOperationDescription extends OperationDescription
     /**
      * Initializes a new MacroOperationDescription based on a user interaction on the POV
      * @param clearInterrupt whether to clear the interruption of the operations when the macro completes
+     * @param operation the macro operation being described
      * @param userInputDevice which device will perform the macro operation (driver or codriver joystick)
      * @param userInputDeviceButton the button on the device that performs the macro operation
      * @param povValue the value of the POV (hat) used to perform the macro operation
      * @param sensor the sensor that triggers the macro operation
-     * @param requiredShift the shift button that must be applied to perform macro
+     * @param relevantShifts the shifts that should be considered when checking if we should perform the macro
+     * @param requiredShifts the shift button(s) that must be applied to perform macro
      * @param buttonType the behavior type to use for the macro operation
      * @param taskSupplier the function that creates the tasks that should be performed by the macro
      * @param affectedOperations the list of operations that will be utilized by this macro
@@ -411,6 +509,7 @@ public class MacroOperationDescription extends OperationDescription
      */
     private MacroOperationDescription(
         boolean clearInterrupt,
+        MacroOperation operation,
         UserInputDevice userInputDevice,
         UserInputDeviceButton userInputDeviceButton,
         int povValue,
@@ -418,13 +517,14 @@ public class MacroOperationDescription extends OperationDescription
         double axisRangeMinValue,
         double axisRangeMaxValue,
         DigitalSensor sensor,
-        Shift requiredShift,
+        Shift relevantShifts,
+        Shift requiredShifts,
         ButtonType buttonType,
         Supplier<IControlTask> taskSupplier,
-        Operation[] affectedOperations,
-        Operation[] macroCancelOperations)
+        IOperation[] affectedOperations,
+        IOperation[] macroCancelOperations)
     {
-        super(OperationType.None, userInputDevice, requiredShift);
+        super(operation, OperationType.None, userInputDevice, relevantShifts, requiredShifts);
 
         this.clearInterrupt = clearInterrupt;
         this.userInputDeviceButton = userInputDeviceButton;
@@ -484,7 +584,7 @@ public class MacroOperationDescription extends OperationDescription
         return this.taskSupplier.get();
     }
 
-    public Operation[] getMacroCancelOperations()
+    public IOperation[] getMacroCancelOperations()
     {
         if (this.macroCancelOperations != null)
         {
@@ -494,7 +594,7 @@ public class MacroOperationDescription extends OperationDescription
         return this.affectedOperations;
     }
 
-    public Operation[] getAffectedOperations()
+    public IOperation[] getAffectedOperations()
     {
         return this.affectedOperations;
     }

@@ -17,7 +17,8 @@ import frc.robot.common.robotprovider.ITimer;
 import frc.robot.common.robotprovider.TalonSRXControlMode;
 import frc.robot.common.robotprovider.TalonSRXFeedbackDevice;
 import frc.robot.common.robotprovider.MotorNeutralMode;
-import frc.robot.driver.Operation;
+import frc.robot.driver.AnalogOperation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.Driver;
 import frc.robot.mechanisms.DriveTrainMechanism;
 
@@ -38,15 +39,15 @@ public class DriveTrainMechanismTest
 
         Driver driver = mock(Driver.class);
 
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainDisablePID);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainEnablePID);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainLeftPosition);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainRightPosition);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainUsePositionalMode);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainSwapFrontOrientation);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainSimpleMode);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainMoveForward);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainTurn);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainDisablePID);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainEnablePID);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainLeftPosition);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainRightPosition);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainUsePositionalMode);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainSwapFrontOrientation);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainSimpleMode);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainMoveForward);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainTurn);
         doReturn(0.0).when(leftMotor).getError();
         doReturn(0.0).when(leftMotor).getVelocity();
         doReturn(0).when(leftMotor).getPosition();
@@ -144,15 +145,15 @@ public class DriveTrainMechanismTest
 
         Driver driver = mock(Driver.class);
 
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainDisablePID);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainEnablePID);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainLeftPosition);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainRightPosition);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainUsePositionalMode);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainSwapFrontOrientation);
-        doReturn(false).when(driver).getDigital(Operation.DriveTrainSimpleMode);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainMoveForward);
-        doReturn(0.0).when(driver).getAnalog(Operation.DriveTrainTurn);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainDisablePID);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainEnablePID);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainLeftPosition);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainRightPosition);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainUsePositionalMode);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainSwapFrontOrientation);
+        doReturn(false).when(driver).getDigital(DigitalOperation.DriveTrainSimpleMode);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainMoveForward);
+        doReturn(0.0).when(driver).getAnalog(AnalogOperation.DriveTrainTurn);
         doReturn(0.0).when(leftMotor).getError();
         doReturn(0.0).when(leftMotor).getVelocity();
         doReturn(0).when(leftMotor).getPosition();

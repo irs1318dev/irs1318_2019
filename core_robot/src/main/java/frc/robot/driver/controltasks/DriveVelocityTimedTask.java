@@ -1,6 +1,7 @@
 package frc.robot.driver.controltasks;
+import frc.robot.driver.AnalogOperation;
+import frc.robot.driver.DigitalOperation;
 
-import frc.robot.driver.Operation;
 
 /**
  * Task that drives at a certain velocity for a certain duration.
@@ -31,9 +32,9 @@ public class DriveVelocityTimedTask extends TimedTask
     @Override
     public void update()
     {
-        this.setDigitalOperationState(Operation.DriveTrainUsePositionalMode, false);
-        this.setAnalogOperationState(Operation.DriveTrainMoveForward, this.yVelocity);
-        this.setAnalogOperationState(Operation.DriveTrainTurn, this.xVelocity);
+        this.setDigitalOperationState(DigitalOperation.DriveTrainUsePositionalMode, false);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainMoveForward, this.yVelocity);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainTurn, this.xVelocity);
     }
 
     /**
@@ -44,7 +45,7 @@ public class DriveVelocityTimedTask extends TimedTask
     {
         super.end();
 
-        this.setAnalogOperationState(Operation.DriveTrainMoveForward, 0.0);
-        this.setAnalogOperationState(Operation.DriveTrainTurn, 0.0);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainMoveForward, 0.0);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainTurn, 0.0);
     }
 }

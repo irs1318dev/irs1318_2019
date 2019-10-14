@@ -1,6 +1,7 @@
 package frc.robot.driver.controltasks;
 
-import frc.robot.driver.Operation;
+import frc.robot.driver.AnalogOperation;
+import frc.robot.driver.DigitalOperation;
 
 public class DriveSimplePathTask extends TimedTask
 {
@@ -18,8 +19,8 @@ public class DriveSimplePathTask extends TimedTask
     @Override
     public void update()
     {
-        this.setDigitalOperationState(Operation.DriveTrainUseSimplePathMode, true);
-        this.setAnalogOperationState(Operation.DriveTrainLeftVelocity, this.velocityL);
-        this.setAnalogOperationState(Operation.DriveTrainRightVelocity, this.velocityR);
+        this.setDigitalOperationState(DigitalOperation.DriveTrainUseSimplePathMode, true);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainLeftVelocity, this.velocityL);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainRightVelocity, this.velocityR);
     }
 }

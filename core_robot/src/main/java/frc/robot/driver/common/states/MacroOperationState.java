@@ -1,11 +1,10 @@
 package frc.robot.driver.common.states;
 
 import java.util.Map;
-import java.util.Set;
 
 import frc.robot.TuningConstants;
 import frc.robot.common.robotprovider.IJoystick;
-import frc.robot.driver.Operation;
+import frc.robot.driver.IOperation;
 import frc.robot.driver.Shift;
 import frc.robot.driver.common.IControlTask;
 import frc.robot.driver.common.UserInputDeviceButton;
@@ -14,6 +13,7 @@ import frc.robot.driver.common.buttons.IButton;
 import frc.robot.driver.common.buttons.SimpleButton;
 import frc.robot.driver.common.buttons.ToggleButton;
 import frc.robot.driver.common.descriptions.MacroOperationDescription;
+import frc.robot.driver.common.descriptions.UserInputDevice;
 
 import com.google.inject.Injector;
 
@@ -24,14 +24,14 @@ import com.google.inject.Injector;
 public class MacroOperationState extends OperationState implements IMacroOperationState
 {
     private final IButton button;
-    private final Map<Operation, OperationState> operationStateMap;
+    private final Map<IOperation, OperationState> operationStateMap;
     private final Injector injector;
 
     private IControlTask task;
 
     public MacroOperationState(
         MacroOperationDescription description,
-        Map<Operation, OperationState> operationStateMap,
+        Map<IOperation, OperationState> operationStateMap,
         Injector injector)
     {
         super(description);
@@ -98,24 +98,32 @@ public class MacroOperationState extends OperationState implements IMacroOperati
      * @return true if there was any active user input that triggered a state change
      */
     @Override
-    public boolean checkInput(IJoystick driver, IJoystick coDriver, Set<Shift> activeShifts)
+    public boolean checkInput(IJoystick driver, IJoystick coDriver, Shift activeShifts)
     {
         MacroOperationDescription description = (MacroOperationDescription)this.getDescription();
 
-        Shift requiredShift = description.getRequiredShift();
-        if (!activeShifts.contains(requiredShift))
+        UserInputDevice userInputDevice = description.getUserInputDevice();
+        if (userInputDevice == UserInputDevice.None)
         {
-            this.button.updateState(false);
             return false;
+        }
+
+        Shift relevantShifts = description.getRelevantShifts();
+        Shift requiredShifts = description.getRequiredShifts();
+        if (relevantShifts != null && requiredShifts != null)
+        {
+            Shift relevantActiveShifts = Shift.Intersect(relevantShifts, activeShifts);
+            if (relevantActiveShifts.hasFlag(requiredShifts))
+            {
+                this.button.updateState(false);
+                return false;
+            }
         }
 
         IJoystick relevantJoystick;
         UserInputDeviceButton relevantButton;
-        switch (description.getUserInputDevice())
+        switch (userInputDevice)
         {
-            case None:
-                return false;
-
             case Driver:
                 relevantJoystick = driver;
                 break;
@@ -173,12 +181,12 @@ public class MacroOperationState extends OperationState implements IMacroOperati
         return buttonPressed;
     }
 
-    public Operation[] getMacroCancelOperations()
+    public IOperation[] getMacroCancelOperations()
     {
         return ((MacroOperationDescription)this.getDescription()).getMacroCancelOperations();
     }
 
-    public Operation[] getAffectedOperations()
+    public IOperation[] getAffectedOperations()
     {
         return ((MacroOperationDescription)this.getDescription()).getAffectedOperations();
     }
@@ -194,7 +202,7 @@ public class MacroOperationState extends OperationState implements IMacroOperati
         {
             if (this.task == null)
             {
-                for (Operation operation : this.getAffectedOperations())
+                for (IOperation operation : this.getAffectedOperations())
                 {
                     this.operationStateMap.get(operation).setIsInterrupted(true);
                 }
@@ -224,7 +232,7 @@ public class MacroOperationState extends OperationState implements IMacroOperati
                 MacroOperationDescription description = (MacroOperationDescription)this.getDescription();
                 if (description.shouldClearInterrupt())
                 {
-                    for (Operation operation : this.getAffectedOperations())
+                    for (IOperation operation : this.getAffectedOperations())
                     {
                         this.operationStateMap.get(operation).setIsInterrupted(false);
                     }
@@ -241,7 +249,7 @@ public class MacroOperationState extends OperationState implements IMacroOperati
             this.task.stop();
             this.task = null;
 
-            for (Operation operation : this.getAffectedOperations())
+            for (IOperation operation : this.getAffectedOperations())
             {
                 this.operationStateMap.get(operation).setIsInterrupted(false);
             }

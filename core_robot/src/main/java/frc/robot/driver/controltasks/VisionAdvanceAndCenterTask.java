@@ -3,7 +3,8 @@ package frc.robot.driver.controltasks;
 import frc.robot.TuningConstants;
 import frc.robot.common.PIDHandler;
 import frc.robot.common.robotprovider.ITimer;
-import frc.robot.driver.Operation;
+import frc.robot.driver.AnalogOperation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.driver.common.IControlTask;
 
 public class VisionAdvanceAndCenterTask extends VisionCenteringTask implements IControlTask
@@ -13,7 +14,7 @@ public class VisionAdvanceAndCenterTask extends VisionCenteringTask implements I
     /**
     * Initializes a new VisionForwardAndCenterTask
     */
-    public VisionAdvanceAndCenterTask(Operation toPerform)
+    public VisionAdvanceAndCenterTask(DigitalOperation toPerform)
     {
         super(false, toPerform);
 
@@ -45,7 +46,7 @@ public class VisionAdvanceAndCenterTask extends VisionCenteringTask implements I
         Double currentDistance = this.visionManager.getMeasuredDistance();
         if (currentDistance != null)
         {
-            this.setAnalogOperationState(Operation.DriveTrainMoveForward, this.forwardPIDHandler.calculatePosition(0.0, -currentDistance));
+            this.setAnalogOperationState(AnalogOperation.DriveTrainMoveForward, this.forwardPIDHandler.calculatePosition(0.0, -currentDistance));
         }
     }
 
@@ -53,7 +54,7 @@ public class VisionAdvanceAndCenterTask extends VisionCenteringTask implements I
     public void end()
     {
         super.end();
-        this.setAnalogOperationState(Operation.DriveTrainMoveForward, 0.0);
+        this.setAnalogOperationState(AnalogOperation.DriveTrainMoveForward, 0.0);
     }
 
     @Override

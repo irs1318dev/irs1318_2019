@@ -1,19 +1,19 @@
 package frc.robot.driver.controltasks;
 
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.TuningConstants;
 
 public class ClimberCamMovementTask extends CompositeOperationTask
 {
-    private static final Operation[] possibleOperations =
+    private static final DigitalOperation[] possibleOperations =
         {
-            Operation.ClimberCamMoveForward,
-            Operation.ClimberCamMoveBackward,
-            Operation.ClimberCamForceForward,
-            Operation.ClimberCamForceBackward                
+            DigitalOperation.ClimberCamMoveForward,
+            DigitalOperation.ClimberCamMoveBackward,
+            DigitalOperation.ClimberCamForceForward,
+            DigitalOperation.ClimberCamForceBackward                
         };
  
-    public ClimberCamMovementTask(Operation toPerform)
+    public ClimberCamMovementTask(DigitalOperation toPerform)
     {
         super(TuningConstants.CLIMBER_CAM_MOVEMENT_TIME_THRESHOLD, toPerform, ClimberCamMovementTask.possibleOperations);
     }   

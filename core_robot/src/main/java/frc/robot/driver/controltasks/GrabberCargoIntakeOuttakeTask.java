@@ -1,29 +1,29 @@
 package frc.robot.driver.controltasks;
 
 import frc.robot.TuningConstants;
-import frc.robot.driver.Operation;
+import frc.robot.driver.DigitalOperation;
 import frc.robot.mechanisms.GrabberMechanism;
 
 public class GrabberCargoIntakeOuttakeTask extends CompositeOperationTask 
 {
-    private static final Operation[] possibleOperations =
+    private static final DigitalOperation[] possibleOperations =
         {
-            Operation.GrabberIntakeCargo,
-            Operation.GrabberOuttakeCargo
+            DigitalOperation.GrabberIntakeCargo,
+            DigitalOperation.GrabberOuttakeCargo
         };
 
     private GrabberMechanism grabber;
     private boolean completeWithSensor;
     private boolean useTime;
 
-    public GrabberCargoIntakeOuttakeTask(Operation toPerform, boolean completeWithSensor)
+    public GrabberCargoIntakeOuttakeTask(DigitalOperation toPerform, boolean completeWithSensor)
     {
         super(TuningConstants.GRABBER_CARGO_INTAKE_OUTTAKE_OVERRIDE_TIME, toPerform, GrabberCargoIntakeOuttakeTask.possibleOperations);
         this.completeWithSensor = completeWithSensor;
         this.useTime = false;
     }
 
-    public GrabberCargoIntakeOuttakeTask(double duration, Operation toPerform, boolean completeWithSensor)
+    public GrabberCargoIntakeOuttakeTask(double duration, DigitalOperation toPerform, boolean completeWithSensor)
     {
         super(duration, toPerform, GrabberCargoIntakeOuttakeTask.possibleOperations);
         this.completeWithSensor = completeWithSensor;
