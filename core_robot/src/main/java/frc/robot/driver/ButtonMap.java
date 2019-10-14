@@ -529,7 +529,11 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.ElevatorMoveUp,
                 DigitalOperation.ElevatorMoveDown,
                 DigitalOperation.ElevatorForceUp,
-                DigitalOperation.ElevatorForceDown
+                DigitalOperation.ElevatorForceDown,
+                DigitalOperation.GrabberWristStartPosition,
+                DigitalOperation.GrabberWristHatchPosition,
+                DigitalOperation.GrabberWristCargoPosition,
+                DigitalOperation.GrabberWristFloorPosition
             },
             new IOperation[]
             {
@@ -1146,6 +1150,10 @@ public class ButtonMap implements IButtonMap
                 DigitalOperation.ElevatorCargo3Position,
                 DigitalOperation.ElevatorCargoLoadPosition,
                 DigitalOperation.ElevatorCamReturnPosition,
+                DigitalOperation.GrabberWristStartPosition,
+                DigitalOperation.GrabberWristHatchPosition,
+                DigitalOperation.GrabberWristCargoPosition,
+                DigitalOperation.GrabberWristFloorPosition
             }),
 
         // Climber Macros
